@@ -56,7 +56,7 @@ DROP TABLE IF EXISTS `recruit`;
 CREATE TABLE `recruit` (
 	`recu_num`	int primary key auto_increment	NOT NULL,
 	`recu_go_num`	int	NOT NULL,
-	`recu_content`	text	NOT NULL,
+	`recu_content`	longtext	NOT NULL,
 	`recu_due`	datetime	NOT NULL,
 	`recu_state`	int default 1	NOT NULL,
 	`recu_type`	int	NOT NULL,
@@ -81,6 +81,17 @@ CREATE TABLE `group_apply` (
 	`goap_me_id`	varchar(50)	NOT NULL
 );
 
+DROP TABLE IF EXISTS `mutual_review`;
+
+CREATE TABLE `mutual_review` (
+	`mure_num`	int auto_increment primary key	NOT NULL,
+	`mure_content`	text	NULL,
+	`mure_rate`	int default 5	NOT NULL,
+	`mure_me_id`	varchar(50)	NOT NULL,
+	`mure_target_id`	varchar(50)	NOT NULL,
+	`mure_go_num`	int	NOT NULL
+);
+
 DROP TABLE IF EXISTS `group`;
 
 CREATE TABLE `group` (
@@ -97,7 +108,7 @@ CREATE TABLE `group_member` (
 	`gome_go_num`	int	NOT NULL,
 	`gome_type`	int default 0	NOT NULL,
 	`gome_warn`	int default 0	NOT NULL,
-    primary key (`gome_me_id`, `gome_go_num`)
+    primary key(`gome_me_id`,`gome_go_num`)
 );
 
 DROP TABLE IF EXISTS `group_post`;
@@ -105,21 +116,10 @@ DROP TABLE IF EXISTS `group_post`;
 CREATE TABLE `group_post` (
 	`gopo_num`	int  primary key auto_increment	NOT NULL,
 	`gopo_title`	varchar(50)	NULL,
-	`gopo_content`	text	NULL,
+	`gopo_content`	longtext	NULL,
 	`gopo_date`	datetime	NULL,
 	`gopo_gome_me_id`	varchar(50)	NOT NULL,
 	`gopo_gome_go_num`	int	NOT NULL
-);
-
-DROP TABLE IF EXISTS `mutual_review`;
-
-CREATE TABLE `mutual_review` (
-	`mure_num`	int auto_increment primary key	NOT NULL,
-	`mure_content`	text	NULL,
-	`mure_rate`	int default 5	NOT NULL,
-	`mure_me_id`	varchar(50)	NOT NULL,
-	`mure_target_id`	varchar(50)	NOT NULL,
-	`mure_go_num`	int	NOT NULL
 );
 
 DROP TABLE IF EXISTS `lecture_review`;
@@ -156,7 +156,7 @@ CREATE TABLE `lecture` (
 	`lect_num`	int auto_increment primary key	NOT NULL,
 	`lect_mentIf_me_id`	varchar(50)	NOT NULL,
 	`lect_name`	varchar(100)	NOT NULL,
-	`lect_intro`	text	NOT NULL,
+	`lect_intro`	longtext	NOT NULL,
 	`lect_price`	int	NOT NULL,
 	`lect_posting`	date	NOT NULL,
 	`lect_update`	date	NOT NULL
@@ -174,7 +174,7 @@ DROP TABLE IF EXISTS `post`;
 CREATE TABLE `post` (
 	`post_num`	int auto_increment primary key	NOT NULL,
 	`post_name`	varchar(100)	NOT NULL,
-	`post_content`	text	NOT NULL,
+	`post_content`	longtext	NOT NULL,
 	`post_view`	int	NOT NULL,
 	`post_date`	datetime	NOT NULL,
 	`post_board_num`	int	NOT NULL,
@@ -197,6 +197,7 @@ CREATE TABLE `mentoring` (
 	`ment_num`	int primary key auto_increment	NOT NULL,
 	`ment_title`	varchar(30)	NOT NULL,
 	`ment_duration`	datetime	NOT NULL,
+	`ment_content`	longtext	NULL,
 	`ment_me_id`	varchar(50)	NOT NULL,
 	`ment_state`	int default 1	NOT NULL
 );
@@ -301,7 +302,7 @@ CREATE TABLE `total_language` (
 DROP TABLE IF EXISTS `report`;
 
 CREATE TABLE `report` (
-	`repo_num`	int  primary key auto_increment	NOT NULL,
+	`repo_num`	int primary key auto_increment	NOT NULL,
 	`repo_repo_content`	varchar(100)	NOT NULL,
 	`repo_repo_state`	varchar(10)	NOT NULL,
 	`repo_me_id`	varchar(50)	NOT NULL,
@@ -395,7 +396,7 @@ REFERENCES `member` (
 );
 
 ALTER TABLE `mutual_review` ADD CONSTRAINT `FK_group_member_TO_mutual_review_1` FOREIGN KEY (
-	`mure_me_id`, `mure_go_num`
+	`mure_me_id`,	`mure_go_num`
 )
 REFERENCES `group_member` (
 	`gome_me_id`, `gome_go_num`
