@@ -1,5 +1,15 @@
 package kr.kh.team2.model.vo.group;
 
-public class GroupApplyVO {
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+public class GroupApplyVO {
+	private int goap_num;
+    private int goap_go_num;
+    private int goap_recu_num;
+    private String goap_content;
+    private int goap_state;
+    private String goap_me_id;
 }

@@ -1,5 +1,14 @@
 package kr.kh.team2.model.vo.member;
 
-public class MeVerifyVO {
+import java.util.Date;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class MeVerifyVO {
+	private String mv_me_id;
+    private String mv_code;
+    private Date mv_durate;
 }
