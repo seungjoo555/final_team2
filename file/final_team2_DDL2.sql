@@ -199,6 +199,7 @@ CREATE TABLE `post` (
 	`post_content`	longtext	NOT NULL,
 	`post_view`	int	NOT NULL default 0,
 	`post_date`	datetime	NOT NULL,
+    `post_repoCount` int default 0 not null,
 	`post_board_num`	int	NOT NULL,
 	`post_me_id`	varchar(50)	NOT NULL
 );

@@ -22,6 +22,7 @@ insert into report_content(repo_content)
 
 -- ==========report=========
 /* 
+member, post, comment, recruit 신고 가능
 	신고 내역1 : asdfg@final.com 유저 신고
 	신고 내역2 : 1번 그룹 신고
     신고 내역3 : 1번 강의 신고
@@ -32,8 +33,8 @@ insert into report(repo_repo_content,repo_repo_state, repo_me_id, repo_detail,
 				now(), "member", "asdfg@final.com"),
                ("스팸 또는 광고", "대기중", "qwert@final.com", "스팸글입니다.",
 				now(), "recruit", "1"),
-                ("부정확한 정보", "대기중", "qwert@final.com", "이상한 강좌입니다.",
-				now(), "lecture", "1");
+                ("부정확한 정보", "대기중", "qwert@final.com", "부적절한 정보를 담은 글입니다.",
+				now(), "post", "1");
 
 -- ==========file=========
 /* 
