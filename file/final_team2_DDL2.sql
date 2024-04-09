@@ -641,3 +641,11 @@ insert into member_auth(ma_auth) values("관리자"),("멘토"), ("일반");
 insert into member(me_id, me_pw, me_nickname, me_name, 
 	me_phone, me_address, me_ms_state, me_ma_auth)
 	values("admin", "admin", "운영자", "운영자", "010-1234-5678", "서울시 강남구 역삼동", "이용중", "관리자");
+/* 일반 유저 정보 추가 */
+insert into member(me_id, me_pw, me_nickname, me_name, 
+	me_phone, me_address, me_ms_state, me_ma_auth)
+	values("qwert@final.com", "qwert1234", "동동이", "홍길동", "010-9877-5678", "서울시 강남구 역삼동", "이용중", "일반");
+/* 멘토 유저 정보 추가 */
+insert into member(me_id, me_pw, me_nickname, me_name, 
+	me_phone, me_address, me_ms_state, me_ma_auth)
+	values("asdfg@final.com", "asdfg3214", "꺼비", "임꺽정", "010-9876-5678", "서울시 강남구 역삼동", "이용중", "멘토");
