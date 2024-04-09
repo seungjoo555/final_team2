@@ -197,7 +197,7 @@ CREATE TABLE `post` (
 	`post_num`	int auto_increment primary key	NOT NULL,
 	`post_name`	varchar(100)	NOT NULL,
 	`post_content`	longtext	NOT NULL,
-	`post_view`	int	NOT NULL,
+	`post_view`	int	NOT NULL default 0,
 	`post_date`	datetime	NOT NULL,
 	`post_board_num`	int	NOT NULL,
 	`post_me_id`	varchar(50)	NOT NULL
@@ -351,7 +351,7 @@ CREATE TABLE `file` (
 	`file_name`	varchar(150)	NOT NULL,
 	`file_ori_name`	varchar(150)	NOT NULL,
 	`file_table`	varchar(50)	NOT NULL,
-	`file_target`	varchar(50)	NOT NULL
+	`file_target`	int	NOT NULL
 );
 
 ALTER TABLE `member` ADD CONSTRAINT `FK_member_state_TO_member_1` FOREIGN KEY (
