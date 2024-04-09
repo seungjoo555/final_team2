@@ -2,6 +2,28 @@ DROP DATABASE if exists final_team2;
 CREATE DATABASE IF NOT EXISTS final_team2;
 USE final_team2;
 
+/*
+ERD CLOUD 수정사항
+
+1. group_member 테이블에 복합키 설정
+- primary key(`gome_me_id`,`gome_go_num`)
+
+2. mutual_review 테이블에서 group_member 테이블을 참조하면서 생기는 복합키 외래키 참조 오류 수정
+- FK_group_member_TO_mutual_review_2 제약조건 설정 쿼리를 삭제하고, FK_group_member_TO_mutual_review_1에서 두 개의 참조 내용을 한 번에 설정하도록 함
+- 따로하면 오류가 뜸(이유 불명...)
+- 결과적으로,
+	
+    ALTER TABLE `mutual_review` ADD CONSTRAINT `FK_group_member_TO_mutual_review_1` FOREIGN KEY (
+		`mure_me_id`, `mure_go_num`
+	)
+	REFERENCES `group_member` (
+		`gome_me_id`, `gome_go_num`
+	);
+	
+    이거만 있으면 되고,
+    그 아래에 있을 FK_group_member_TO_mutual_review_2 제약조건은 삭제해야함
+*/
+
 DROP TABLE IF EXISTS `member`;
 
 CREATE TABLE `member` (
