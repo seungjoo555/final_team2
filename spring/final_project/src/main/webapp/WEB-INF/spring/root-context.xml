@@ -18,7 +18,7 @@
 	      class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
 		<property name="url"
-		          value="jdbc:log4jdbc:mysql://localhost:3306/DB명?useSSL=false&amp;serverTimezone=Asia/Seoul"/>
+		          value="jdbc:log4jdbc:mysql://localhost:3306/final_team2?useSSL=false&amp;serverTimezone=Asia/Seoul"/>
 	    <property name="username" value="root"></property>
 	    <property name="password" value="root"></property>
 	</bean>  
@@ -26,7 +26,7 @@
 	<!-- mapper 정보 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	    <property name="dataSource" ref="dataSource" />
-	    <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+	    <property name="mapperLocations" value="classpath:mapper/**/*Mapper.xml"></property>
 	    <property name="configLocation" value="/WEB-INF/spring/mybatis-config.xml" />
 	</bean>
 	<!-- dao 패키지 연결 -->
