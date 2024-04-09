@@ -627,3 +627,17 @@ REFERENCES `member` (
 	`me_id`
 );
 
+
+/*
+========================================================================================================
+Sample Data
+========================================================================================================
+*/
+
+-- ==========member=========
+insert into member_state(ms_state) values("이용중"),("기간정지"), ("영구정지"), ("탈퇴");
+insert into member_auth(ma_auth) values("관리자"),("멘토"), ("일반");
+/* 운영자 정보 추가 */
+insert into member(me_id, me_pw, me_nickname, me_name, 
+	me_phone, me_address, me_ms_state, me_ma_auth)
+	values("admin", "admin", "운영자", "운영자", "010-1234-5678", "서울시 강남구 역삼동", "이용중", "관리자");
