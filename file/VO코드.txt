@@ -1,0 +1,251 @@
+public class MemberVO {
+    private String me_id;
+    private String me_ms_state;
+    private String me_ma_auth;
+    private String me_pw;
+    private String me_nickname;
+    private String me_name;
+    private String me_phone;
+    private int me_point;
+    private String me_address;
+    private int me_failcount;
+    private int me_reportcount;
+    private int me_login;
+    private Date me_date;
+    private int me_type;
+    private float me_degree;
+    private String me_interests;
+    private String me_preferloc;
+    private int me_prefertime;
+    private int me_onoff;
+    private String me_intro;
+}
+
+public class MentorInfoVO {
+    private String mentIf_me_id;
+    private int mentIf_exp;
+    private String mentIf_job;
+    private String mentIf_portfolio;
+    private String mentIf_intro;
+    private String mentIf_account;
+    private Date mentIf_date;
+    private int mentIf_state;
+}
+
+public class MentoringReviewVO {
+    private int mentRv_num;
+    private String mentRv_content;
+    private int mentRv_rate;
+    private Date	 mentRv_date;
+    private int mentRv_ment_num;
+    private int mentRv_mentAp_num;
+}
+
+public class RecruitVO {
+    private int recu_num;
+    private int recu_go_num;
+    private String recu_content;
+    private Date recu_due;
+    private int recu_state;
+    private int recu_type;
+    private String recu_topic;
+    private String recu_target;
+    private int recu_count;
+    private String recu_required;
+    private String recu_preferred;
+    private int recu_online;
+    private int recu_interview;
+    private int recu_repoCount;
+}
+
+public class GroupApplyVO {
+    private int goap_num;
+    private int goap_go_num;
+    private int goap_recu_num;
+    private String goap_content;
+    private int goap_state;
+    private String goap_me_id;
+}
+
+public class MutualReviewVO {
+    private int mure_num;
+    private String mure_content;
+    private int mure_rate;
+    private String mure_me_id;
+    private String mure_target_id;
+    private int mure_go_num;
+}
+
+public class GroupVO {
+    private int go_num;
+    private String go_name;
+    private long go_time;
+    private boolean go_update;
+}
+
+public class GroupMemberVO {
+    private String gome_me_id;
+    private int gome_go_num;
+    private int gome_type;
+    private int gome_warn;
+}
+
+public class GroupPostVO {
+    private int gopo_num;
+    private String gopo_title;
+    private String gopo_content;
+    private Date gopo_date;
+    private String gopo_gome_me_id;
+    private int gopo_gome_go_num;
+}
+
+public class LectureReviewVO {
+    private int lectRv_num;
+    private int lectRv_lect_num;
+    private String lectRv_me_id;
+    private String lectRv_content;
+    private int lectRv_score;
+}
+
+public class LectureVO {
+    private int lect_num;
+    private String lect_mentIf_me_id;
+    private String lect_name;
+    private String lect_intro;
+    private int lect_price;
+    private String lect_posting;
+    private String lect_update;
+}
+
+public class BoardVO {
+    private int board_num;
+    private String board_name;
+}
+
+public class PostVO {
+    private int post_num;
+    private String post_name;
+    private String post_content;
+    private int post_view;
+    private Date post_date;
+    private int post_board_num;
+    private String post_me_id;
+}
+
+public class CommentVO {
+    private int cmmt_num;
+    private String cmmt_content;
+    private int cmmt_repoCount;
+    private int cmmt_post_num;
+    private String cmmt_me_id;
+}
+
+public class MentoringVO {
+    private int ment_num;
+    private String ment_title;
+    private Data ment_duration;
+    private String ment_me_id;
+    private int ment_state;
+}
+
+public class MentoringApplyVO {
+    private int mentAp_num;
+    private int mentAp_ment_num;
+    private String mentAp_me_id;
+    private String mentAp_content;
+    private int mentAp_state;
+}
+
+public class LectureRegisterVO {
+    private int lectRg_num;
+    private int lectRg_lect_num;
+    private String lectRg_me_id;
+    private int lectRg_money;
+    private boolean lectRg_state;
+}
+
+public class MemberAuthVO {
+    private String ma_auth;
+}
+
+public class GroupCalendarVO {
+    private int gocal_num;
+    private String gocal_title;
+    private Date gocal_startdate;
+    private Date gocal_enddate;
+    private String gocal_memo;
+    private String gocal_me_id;
+    private int gocal_go_num;
+}
+
+public class LectureFileVO {
+    private int lectFi_num;
+    private int lectFi_lect_num;
+    private String lectFi_path;
+    private String lectFi_ori_name;
+    private boolean lectFi_choice;
+    private boolean lectFi_link;
+}
+
+public class ProgrammingCategoryVO {
+    private int progCt_num;
+    private String progCt_name;
+}
+
+public class MeVerifyVO {
+    private String mv_me_id;
+    private String mv_code;
+    private Date mv_durate;
+}
+
+public class SearchMenuVO {
+    private int sear_num;
+    private int sear_progCt_num;
+    private int sear_lang_num;
+}
+
+public class TotalCategoryVO {
+    private int toCt_num;
+    private int toCt_progCt_num;
+    private String toCt_table_name;
+    private String toCt_table_pk;
+}
+
+public class ProgrammingLanguageVO {
+    private int lang_num;
+    private String lang_name;
+}
+
+public class TotalLanguageVO {
+    private int toLg_num;
+    private int toLg_lang_num;
+    private String toLg_table_name;
+    private String toLg_table_pk;
+}
+
+public class ReportVO {
+    private int repo_num;
+    private String repo_repo_content;
+    private String repo_repo_state;
+    private String repo_me_id;
+    private String repo_detail;
+    private Date repo_date;
+    private String repo_table;
+    private String repo_target;
+}
+
+public class RecommendVO {
+    private int reco_num;
+    private String reco_me_id;
+    private int reco_state;
+    private String reco_table;
+    private String reco_target;
+}
+
+public class FileVO {
+    private int file_num;
+    private String file_name;
+    private String file_ori_name;
+    private String file_table;
+    private String file_target;
+}
