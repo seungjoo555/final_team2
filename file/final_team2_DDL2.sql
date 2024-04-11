@@ -642,6 +642,13 @@ insert into member_auth(ma_auth) values("관리자"),("멘토"), ("일반");
 insert into member(me_id, me_pw, me_nickname, me_name, 
 	me_phone, me_address, me_ms_state, me_ma_auth)
 	values("admin", "admin", "운영자", "운영자", "010-1234-5678", "서울시 강남구 역삼동", "이용중", "관리자");
+-- ==========report=========
+/* 신고 처리 상태 */
+insert into report_state(repo_state) values("대기중"), ("승인"), ("반려");
+/* 신고 사유 */
+insert into report_content(repo_content) 
+	values("욕설 및 혐오 발언"), ("스팸 또는 광고"), ("부적절한 콘텐츠"), 
+		("가짜 계정 또는 사칭"), ("부정확한 정보"), ("사용자간 분쟁"), ("기타");
 
 /*
 ========================================================================================================
