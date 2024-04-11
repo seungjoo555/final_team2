@@ -49,17 +49,22 @@ CREATE TABLE `member` (
 	`me_intro`	text	NULL
 );
 
+DROP TABLE IF EXISTS `mentor_job`;
+
+CREATE TABLE `mentor_job` (
+	`ment_job`	varchar(50) primary key	NOT NULL
+);
 DROP TABLE IF EXISTS `mentor_info`;
 
 CREATE TABLE `mentor_info` (
 	`mentIf_me_id`	varchar(50) primary key	NOT NULL,
 	`mentIf_exp`	int default 0	NOT NULL,
-	`mentIf_job`	text not null	NOT NULL,
 	`mentIf_portfolio`	text	NULL,
 	`mentIf_intro`	text	NULL,
 	`mentIf_account`	varchar(20)	NOT NULL,
 	`mentIf_date`	date	NOT NULL,
-	`mentIf_state`	int default 0	NOT NULL
+	`mentIf_state`	int default 0	NOT NULL,
+	`mentIf_ment_job`	varchar(50)	NOT NULL
 );
 
 DROP TABLE IF EXISTS `mentoring_review`;
@@ -376,6 +381,14 @@ REFERENCES `member` (
 	`me_id`
 );
 
+ALTER TABLE `mentor_info` ADD CONSTRAINT `FK_mentor_job_TO_mentor_info_1` FOREIGN KEY (
+	`mentIf_ment_job`
+)
+REFERENCES `mentor_job` (
+	`ment_job`
+);
+
+
 ALTER TABLE `mentoring_review` ADD CONSTRAINT `FK_mentoring_TO_mentoring_review_1` FOREIGN KEY (
 	`mentRv_ment_num`
 )
@@ -627,41 +640,3 @@ ALTER TABLE `recommend` ADD CONSTRAINT `FK_member_TO_recommend_1` FOREIGN KEY (
 REFERENCES `member` (
 	`me_id`
 );
-
-
-/*
-========================================================================================================
-필수 데이터
-========================================================================================================
-*/
-
--- ==========member=========
-insert into member_state(ms_state) values("이용중"),("기간정지"), ("영구정지"), ("탈퇴");
-insert into member_auth(ma_auth) values("관리자"),("멘토"), ("일반");
-/* 운영자 정보 추가 */
-insert into member(me_id, me_pw, me_nickname, me_name, 
-	me_phone, me_address, me_ms_state, me_ma_auth)
-	values("admin", "admin", "운영자", "운영자", "010-1234-5678", "서울시 강남구 역삼동", "이용중", "관리자");
--- ==========report=========
-/* 신고 처리 상태 */
-insert into report_state(repo_state) values("대기중"), ("승인"), ("반려");
-/* 신고 사유 */
-insert into report_content(repo_content) 
-	values("욕설 및 혐오 발언"), ("스팸 또는 광고"), ("부적절한 콘텐츠"), 
-		("가짜 계정 또는 사칭"), ("부정확한 정보"), ("사용자간 분쟁"), ("기타");
-
-/*
-========================================================================================================
-Sample Data
-========================================================================================================
-*/
-
--- ==========member=========
-/* 일반 유저 정보 추가 */
-insert into member(me_id, me_pw, me_nickname, me_name, 
-	me_phone, me_address, me_ms_state, me_ma_auth)
-	values("qwert@final.com", "qwert1234", "동동이", "홍길동", "010-9877-5678", "서울시 강남구 역삼동", "이용중", "일반");
-/* 멘토 유저 정보 추가 */
-insert into member(me_id, me_pw, me_nickname, me_name, 
-	me_phone, me_address, me_ms_state, me_ma_auth)
-	values("asdfg@final.com", "asdfg3214", "꺼비", "임꺽정", "010-9876-5678", "서울시 강남구 역삼동", "이용중", "멘토");
