@@ -7,26 +7,26 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-	.login-container{
+	.findpw-container{
 		padding : 100px;
 		margin : 0 auto;
 	}
-	.h-wrap{
+	.findpw-container .h-wrap{
 		text-align: center; 
 	}
-	.login-form-group{
+	.findpw-form-group{
 		width: 50%;
 		margin : 0 auto;
 		padding : 15px;
 	}
 	
-	.login-form-group input{
+	.findpw-form-group input{
 		height: 50px;
 		border-radius: 5px;
 		background-color: #EBEBEB;
 	}
 	
-	.login-btn{
+	.findpw-btn{
 		width: calc(50% - 30px);
 		display : block;
 		margin : 0 auto;
@@ -36,24 +36,17 @@
 		border-radius : 5px;
 	}
 	
-	.login-btn:hover{
+	.findpw-btn:hover{
 		background-color: #1dc078;
 		color : white;
 	}
 	
-	.login-auto-container{
-		width: calc(50% - 30px);
-		margin : 0 auto;
-		text-align : right;
-		margin-bottom: 70px;
-		
-	}
 	
 	.login-links{
 		text-align : center;
 	}
 	
-	.login-warnning{
+	.findpw-warnning{
 		width: calc(50% - 30px);
 		margin : 0 auto;
 		text-align : left;
@@ -63,35 +56,35 @@
 		text-align : center;
 	}
 	
+	.findpw-warnning .warn-msg{
+		margin-top : 70px;
+	}
+	
 </style>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 </head>
 <body>
-	<div class="login-container">
-		<form action="<c:url value="/login"/>" method="post" class="login-form">
+	<div class="findpw-container">
+		<form action="<c:url value="/findpw"/>" method="post" class="findpw-form">
 		<div class="h-wrap">
-			<h1>로그인</h1>
-			<h5>로그인 정보를 입력하세요.</h5>
+			<h1>비밀번호 찾기</h1>
+			<h5>가입한 아이디와 전화번호를 입력하면 비밀번호를 찾을 수 있습니다. </h5>
 		</div>
-			<div class="login-form-group">
+			<div class="findpw-form-group">
 				<label for="id">아이디</label>
-				<input type="text" class="form-control login-id" id="id" name="id">
+				<input type="text" class="form-control find-id" id="id" name="id">
 			</div>
-			<div class="login-form-group">
-				<label for="pw">비번</label>
-				<input type="password" class="form-control login-pw" id="pw" name="pw">
+			<div class="findpw-form-group">
+				<label for="phone">전화번호</label>
+				<input type="text" class="form-control find-phone" id="phone" name="phone">
 			</div>
-			<div class="login-auto-container">
-				<input type = "checkbox" name="login-auto" class="login-auto">
-				<label for="auto-login">자동로그인</label>
-			</div>
-			<div class="login-warnning">
-		      	<p class="warn-msg"> </p>
+			<div class="findpw-warnning">
+		      	<p class="warn-msg">&nbsp</p>
 		    </div>
-			<button class="login-btn" type="button">로그인</button>
+			<button class="findpw-btn" type="button">비밀번호찾기</button>
 			<div class="login-links">
 			    <p style="margin-top: 50px;">
-			        <a href="<c:url value="/login/findid"/>">아이디 찾기</a> | <a href="<c:url value="/login/findpw"/>">비밀번호 찾기</a>
+			        <a href="<c:url value="/login"/>">로그인</a> | <a href="<c:url value="/login/findid"/>">아이디 찾기</a>
 			    </p>
 		    </div>
 		    <div class="login-easy">
@@ -103,24 +96,24 @@
 		</form>
 	</div>
 <script type="text/javascript">
-	//로그인 필수항목 체크
-	$(".login-btn").click(function(){
-		let id = $(".login-id").val();
-		let pw = $(".login-pw").val();
+	//아이디찾기 필수항목 체크
+	$(".findpw-btn").click(function(){
+		let id = $(".find-id").val();
+		let phone = $(".find-phone").val();
 		let str = "";
 		
 		if(id==null||id.length ==0){
-			str = `<p style="color : red;">*아이디를 입력해주세요.</p>`
-			$(".login-warnning").html(str);
+			str = `<p class="warn-msg" style="color : red;">*아이디를 입력해주세요.</p>`
+			$(".findpw-warnning").html(str);
 			return false;
 		}
-		if(pw==null||pw.length==0){
-			str = `<p style="color : red;">*비밀번호를 입력해주세요.</p>`
-			$(".login-warnning").html(str);
+		if(phone==null||phone.length==0){
+			str = `<p class="warn-msg" style="color : red;">*전화번호를 입력해주세요.</p>`
+			$(".findpw-warnning").html(str);
 			return false;
 		}
 		
-		$(".login-form").submit();
+		$(".findpw-form").submit();
 	})
 	
 	
