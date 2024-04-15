@@ -67,8 +67,8 @@
 	<div class="findpw-container">
 		<form action="<c:url value="/findpw"/>" method="post" class="findpw-form">
 		<div class="h-wrap">
-			<h1>비밀번호 찾기</h1>
-			<h5>가입한 아이디와 전화번호를 입력하면 비밀번호를 찾을 수 있습니다. </h5>
+			<h2>비밀번호 찾기</h2>
+			<p>가입한 아이디와 전화번호를 입력하면 비밀번호를 찾을 수 있습니다. </p>
 		</div>
 			<div class="findpw-form-group">
 				<label for="id">아이디</label>

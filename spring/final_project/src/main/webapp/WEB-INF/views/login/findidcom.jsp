@@ -59,8 +59,8 @@
 <body>
 	<div class="findidcom-container">
 		<div class="h-wrap">
-			<h1>아이디 찾기</h1>
-			<h5>입력하신 정보와 일치하는 회원 정보입니다.</h5>
+			<h2>아이디 찾기</h2>
+			<p>입력하신 정보와 일치하는 회원 정보입니다.</p>
 		</div>
 			<div class="findidcom-form-group">
 				<label for="id">아이디</label>

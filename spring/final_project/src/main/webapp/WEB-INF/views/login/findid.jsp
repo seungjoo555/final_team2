@@ -67,8 +67,8 @@
 	<div class="findid-container">
 		<form action="<c:url value="/findid"/>" method="post" class="findid-form">
 		<div class="h-wrap">
-			<h1>아이디 찾기</h1>
-			<h5>가입한 이름과 전화번호 작성하면 회원님의 아이디를 찾을 수 있습니다.</h5>
+			<h2>아이디 찾기</h2>
+			<p>가입한 이름과 전화번호 작성하면 회원님의 아이디를 찾을 수 있습니다.</p>
 		</div>
 			<div class="findid-form-group">
 				<label for="name">이름</label>
