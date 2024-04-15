@@ -19,5 +19,15 @@ public class SignupController {
 		
 	}
 	
-
+	@PostMapping("/signup/verify")
+	public String signupVerifyPost(){
+		
+		return "/signup/detail";
+	}
+	
+	@PostMapping("/signup/detail")
+	public String signupDetailPost(){
+		
+		return "/signup/complete";
+	}
 }
