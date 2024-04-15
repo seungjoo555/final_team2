@@ -31,6 +31,14 @@
 		display : block;
 		margin : 0 auto;
 		height: 61px;
+		background-color: #DAFBD8;
+		border : none;
+		border-radius : 5px;
+	}
+	
+	.login-btn:hover{
+		background-color: #1dc078;
+		color : white;
 	}
 	
 	.login-auto-container{
@@ -80,7 +88,7 @@
 			<div class="login-warnning">
 		      	<p class="warn-msg"> </p>
 		    </div>
-			<button class="login-btn btn-success" type="button">로그인</button>
+			<button class="login-btn" type="button">로그인</button>
 			<div class="login-links">
 			    <p style="margin-top: 50px;">
 			        <a href="<c:url value="/login/findid"/>">아이디 찾기</a> | <a href="<c:url value="/login/findpw"/>">비밀번호 찾기</a>

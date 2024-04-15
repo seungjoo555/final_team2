@@ -32,6 +32,14 @@
 		display : block;
 		margin : 0 auto;
 		height: 61px;
+		background-color: #DAFBD8;
+		border : none;
+		border-radius : 5px;
+	}
+	
+	.btn-login:hover{
+		background-color: #1dc078;
+		color : white;
 	}
 	
 	
@@ -58,7 +66,7 @@
 				<label for="id">아이디</label>
 				<input type="text" class="form-control finded-id" id="id" name="id" value="">
 			</div>
-			<button class="btn-login btn-success" type="button">로그인</button>
+			<button class="btn-login" type="button">로그인</button>
 			<div class="login-links">
 			    <p style="margin-top: 50px;">
 			        <a href="<c:url value="/login"/>">로그인</a> | <a href="<c:url value="/login/findpw"/>">비밀번호 찾기</a>

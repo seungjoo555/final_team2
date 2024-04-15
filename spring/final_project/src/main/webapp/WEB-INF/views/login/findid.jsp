@@ -31,6 +31,14 @@
 		display : block;
 		margin : 0 auto;
 		height: 61px;
+		background-color: #DAFBD8;
+		border : none;
+		border-radius : 5px;
+	}
+	
+	.findid-btn:hover{
+		background-color: #1dc078;
+		color : white;
 	}
 	
 	
@@ -73,7 +81,7 @@
 			<div class="findid-warnning">
 		      	<p class="warn-msg">&nbsp</p>
 		    </div>
-			<button class="findid-btn btn-success" type="button">아이디찾기</button>
+			<button class="findid-btn" type="button">아이디찾기</button>
 			<div class="login-links">
 			    <p style="margin-top: 50px;">
 			        <a href="<c:url value="/login"/>">로그인</a> | <a href="<c:url value="/login/findpw"/>">비밀번호 찾기</a>

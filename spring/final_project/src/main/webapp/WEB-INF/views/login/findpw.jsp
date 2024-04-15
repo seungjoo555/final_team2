@@ -31,6 +31,14 @@
 		display : block;
 		margin : 0 auto;
 		height: 61px;
+		background-color: #DAFBD8;
+		border : none;
+		border-radius : 5px;
+	}
+	
+	.findpw-btn:hover{
+		background-color: #1dc078;
+		color : white;
 	}
 	
 	
@@ -73,7 +81,7 @@
 			<div class="findpw-warnning">
 		      	<p class="warn-msg">&nbsp</p>
 		    </div>
-			<button class="findpw-btn btn-success" type="button">비밀번호찾기</button>
+			<button class="findpw-btn" type="button">비밀번호찾기</button>
 			<div class="login-links">
 			    <p style="margin-top: 50px;">
 			        <a href="<c:url value="/login"/>">로그인</a> | <a href="<c:url value="/login/findid"/>">아이디 찾기</a>
