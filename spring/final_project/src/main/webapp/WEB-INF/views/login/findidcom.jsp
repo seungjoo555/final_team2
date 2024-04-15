@@ -61,7 +61,7 @@
 			<button class="btn-login btn-success" type="button">로그인</button>
 			<div class="login-links">
 			    <p style="margin-top: 50px;">
-			        <a href="#">로그인</a> | <a href="#">비밀번호 찾기</a>
+			        <a href="<c:url value="/login"/>">로그인</a> | <a href="<c:url value="/login/findpw"/>">비밀번호 찾기</a>
 			    </p>
 		    </div>
 		    <div class="login-easy">
@@ -72,5 +72,11 @@
 		   	<!-- 이 아래에 이미지 -->
 		</form>
 	</div>
+	
+<script type="text/javascript">
+	$(".btn-login").click(function(){
+		location.replace("http://localhost:8080/team2/login");
+	})
+</script>
 </body>
 </html>

@@ -76,7 +76,7 @@
 			<button class="findid-btn btn-success" type="button">아이디찾기</button>
 			<div class="login-links">
 			    <p style="margin-top: 50px;">
-			        <a href="#">로그인</a> | <a href="#">비밀번호 찾기</a>
+			        <a href="<c:url value="/login"/>">로그인</a> | <a href="<c:url value="/login/findpw"/>">비밀번호 찾기</a>
 			    </p>
 		    </div>
 		    <div class="login-easy">
