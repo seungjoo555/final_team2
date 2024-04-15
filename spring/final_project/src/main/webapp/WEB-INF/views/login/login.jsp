@@ -20,6 +20,12 @@
 		padding : 15px;
 	}
 	
+	.login-form-group input{
+		height: 50px;
+		border-radius: 5px;
+		background-color: #EBEBEB;
+	}
+	
 	.login-btn{
 		width: calc(50% - 30px);
 		display : block;
