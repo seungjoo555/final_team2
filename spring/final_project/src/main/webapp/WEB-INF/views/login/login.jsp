@@ -70,8 +70,8 @@
 	<div class="login-container">
 		<form action="<c:url value="/login"/>" method="post" class="login-form">
 		<div class="h-wrap">
-			<h1>로그인</h1>
-			<h5>로그인 정보를 입력하세요.</h5>
+			<h2>로그인</h2>
+			<p>로그인 정보를 입력하세요.</p>
 		</div>
 			<div class="login-form-group">
 				<label for="id">아이디</label>
