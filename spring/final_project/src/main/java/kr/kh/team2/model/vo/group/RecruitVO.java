@@ -2,6 +2,8 @@ package kr.kh.team2.model.vo.group;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +13,7 @@ public class RecruitVO {
 	private int recu_num;
     private int recu_go_num;
     private String recu_content;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date recu_due;
     private int recu_state;
     private int recu_type;

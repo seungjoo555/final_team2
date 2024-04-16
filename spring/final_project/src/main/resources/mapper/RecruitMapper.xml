@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team2.dao.RecruitDAO">
+	<insert id="insertGroup" useGeneratedKeys="true" keyProperty="group.go_num">
+		insert into `group`(go_name)
+		values(#{group.go_name})
+	</insert>
+	
+	<insert id="insertRecruit" useGeneratedKeys="true" keyProperty="recruit.recu_num">
+		insert into recruit(recu_go_num, recu_content, recu_due, recu_type, recu_topic, recu_target, recu_count, recu_required, recu_preferred, recu_online, recu_interview)
+		values(#{group}, #{recruit.recu_content}, #{recruit.recu_due}, #{recruit.recu_type}, #{recruit.recu_topic}, #{recruit.recu_target}, #{recruit.recu_count}, #{recruit.recu_required}, #{recruit.recu_preferred}, #{recruit.recu_online}, #{recruit.recu_interview})
+	</insert>
+</mapper>

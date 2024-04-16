@@ -5,7 +5,8 @@ import java.util.Date;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+@Data
+@NoArgsConstructor
 public class MemberVO {
 	private String me_id;
     private String me_ms_state;
