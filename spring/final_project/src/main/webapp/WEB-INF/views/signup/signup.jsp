@@ -100,11 +100,11 @@ $("form").validate({
 	rules : {
 		id : {
 			required : true,
-			regex : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+			regex : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ // 이메일 형식 regex
 		},
 		nickname : {
 			required : true,
-			regex : /^[a-zA-Z0-9!@#]{1,8}$/
+			regex : /^[a-zA-Z0-9!@#가-힣]{1,8}$/
 		},
 		pw : {
 			required : true,
@@ -132,11 +132,11 @@ $("form").validate({
 		},
 		nickname : {
 			required : "필수 입력 항목입니다.",
-			regex : "닉네임은 숫자,영문, !@#만 사용가능하며 1~8자입니다."
+			regex : "닉네임은 숫자, 한글, 영문, 특수문자 !@# 만 사용가능하며 1~8자입니다."
 		},
 		pw : {
 			required : "필수 입력 항목입니다.",
-			regex : "비밀번호는 숫자,영문, !@#만 사용가능하며 6~15자입니다."
+			regex : "비밀번호는 숫자,영문, 특수문자 !@#만 사용가능하며 6~15자입니다."
 		},
 		pw2 : {
 			equalTo : "비밀번호와 일치하지 않습니다."
@@ -213,10 +213,10 @@ $.validator.addMethod(
 	
 	$(".nickname-dup-check").click(function(){
 		let nickname = $("[name=nickname]").val();
-		let nicknameRegex = /^[a-zA-Z0-9!@#]{6,15}$/
+		let nicknameRegex = /^[a-zA-Z0-9!@#가-힣]{1,8}$/
 		
 		if(!nickname){
-			$("#id-error").text("아이디를 입력하세요.")
+			$("#nickname-error").text("닉네임을 입력하세요.")
 			return
 		}
 		
