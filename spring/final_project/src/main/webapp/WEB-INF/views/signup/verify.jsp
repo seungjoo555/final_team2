@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+<!-- signup.css -->
+<link rel="stylesheet" href="<c:url value="/resources/css/signupcss.css"/>">
+
 <style>
 	/* verify-sub */
 	.verify-sub{margin: 50px 0 100px 0;}
@@ -24,8 +28,6 @@
 
 </head>
 
-<!-- signup.css -->
-<link rel="stylesheet" href="<c:url value="/resources/css/signupcss.css"/>">
 
 <body class="center">
 
