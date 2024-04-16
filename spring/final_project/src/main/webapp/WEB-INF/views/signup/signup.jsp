@@ -28,7 +28,7 @@
 	<h1>회원가입</h1>
 	<h5 class="sub">어쩌고저쩌고</h5>
 	
-	<form action="<c:url value="/signup"/>" method="post" class="signup-form">
+	<form action="<c:url value="/signup"/>" method="post" class="signup-form" id="signup-form">
 		<div class="id-input">
 			<label for="id">아이디</label>
 			<div class="input-bg">
@@ -74,7 +74,7 @@
 			<label id="phone-error" class="error" for="phone"></label>
 		</div>
 		<div class="add-input">
-			<label for="address">주소</label>
+			<label for="add1">주소</label>
 			<div class="input-bg add1">
 				<input type="text" name="add1" id="add1" placeholder="주소를 입력하세요.">
 			</div>
@@ -96,15 +96,15 @@
 
 <!-- 입력값 유효성 검사 -->
 <script type="text/javascript">
-$("form").validate({
+$("#signup-form").validate({
 	rules : {
 		id : {
 			required : true,
-			regex : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+			regex : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ 
 		},
 		nickname : {
 			required : true,
-			regex : /^[a-zA-Z0-9!@#]{1,8}$/
+			regex : /^[a-zA-Z0-9!@#가-힣]{1,8}$/
 		},
 		pw : {
 			required : true,
@@ -132,11 +132,11 @@ $("form").validate({
 		},
 		nickname : {
 			required : "필수 입력 항목입니다.",
-			regex : "닉네임은 숫자,영문, !@#만 사용가능하며 1~8자입니다."
+			regex : "닉네임은 숫자, 한글, 영문, 특수문자 !@# 만 사용가능하며 1~8자입니다."
 		},
 		pw : {
 			required : "필수 입력 항목입니다.",
-			regex : "비밀번호는 숫자,영문, !@#만 사용가능하며 6~15자입니다."
+			regex : "비밀번호는 숫자,영문, 특수문자 !@#만 사용가능하며 6~15자입니다."
 		},
 		pw2 : {
 			equalTo : "비밀번호와 일치하지 않습니다."
@@ -201,6 +201,7 @@ $.validator.addMethod(
 					$("#id").css("color", "red")
 				}else{
 					alert("사용 가능한 아이디입니다.")
+					$("#id-error").text("")
 					idFlag = true
 				}
 			}, 
@@ -213,10 +214,10 @@ $.validator.addMethod(
 	
 	$(".nickname-dup-check").click(function(){
 		let nickname = $("[name=nickname]").val();
-		let nicknameRegex = /^[a-zA-Z0-9!@#]{6,15}$/
+		let nicknameRegex = /^[a-zA-Z0-9!@#가-힣]{1,8}$/
 		
 		if(!nickname){
-			$("#id-error").text("아이디를 입력하세요.")
+			$("#nickname-error").text("닉네임을 입력하세요.")
 			return
 		}
 		
@@ -239,6 +240,7 @@ $.validator.addMethod(
 					$("#nickname").css("color", "red")
 				}else{
 					alert("사용 가능한 닉네임입니다.");
+					$("#nickname-error").text("")
 					nicknameFlag = true;
 				}
 			},
