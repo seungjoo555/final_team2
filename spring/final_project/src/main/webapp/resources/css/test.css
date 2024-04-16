@@ -28,23 +28,24 @@ header{
 }
 header h1{ width: 110px; }
 header img{ width: 110px; }
+header .navbar { background-color: #E6F5E5; margin: 0; padding: 0; height: 80px;}
 header .navbar>.container-fluid {
-	width: 1200px;
+	width: 1200px; margin: 0 auto; padding: 0; height: 80px;
 }
 
 
-header .navbar-left{ width: 300px; justify-content: flex-start;}
-header .navbar-left a{ font-size: 14px; color: #000000; }
+header .navbar-left{ width: 300px; display: flex; justify-content: flex-start;}
+header .navbar-left a{ font-size: 16px; color: #000000; padding: 0;}
 header .navbar-left li{ position: relative; }
 header .navbar-left li:first-child::after{
 	position: absolute; right: -1px; top: 50%; transform: translateY(calc(-50% - 1px));
 }
 
 header .navbar-right{ width: 150px; display: flex; justify-content: flex-end;}
-header .navbar-right a{ font-size: 14px; color: #000000; }
+header .navbar-right a{ font-size: 16px; color: #000000; padding: 0; }
 header .navbar-right li{ position: relative; }
 header .navbar-right li:first-child::after{
-	content: '|'; color: #999; font-size: 12px;
+	color: #999; font-size: 12px;
 	position: absolute; right: -1px; top: 50%; transform: translateY(calc(-50% - 1px));
 }
 

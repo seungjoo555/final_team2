@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <header>
-	<nav class="navbar navbar-expand-sm bg-success navbar-light">
+	<nav class="navbar navbar-expand-sm navbar-light">
 		<div class="container-fluid">
 			<h1>
 				<a class="navbar-brand" href="/">
@@ -20,14 +20,13 @@
 					<a class="nav-link" href="<c:url value="#" />">커뮤니티</a>
 				</li>
 			</ul>
-			<form class="d-flex" action="<c:url value='/totalSearchList?' />"
-				method="get">
+			<form class="d-flex" action="<c:url value=''/>" method="get">
 				<input class="form-control" type="text" placeholder="검색어를 입력하세요"
 					name="totalsearch" id="totalsearch"> <input type="hidden"
 					name="page" value="1">
 				<button type="submit" class="btn btn-outline-dark"
 					id="totalsearch-btn">
-					<img alt="검색" src="/team1/images/search_icon.svg">
+					<img alt="검색" src="<c:url value="/resources/img/search_icon.svg"/>">
 				</button>
 			</form>
 
