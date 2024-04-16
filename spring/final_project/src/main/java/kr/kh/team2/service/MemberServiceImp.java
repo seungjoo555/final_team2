@@ -1,12 +1,15 @@
 package kr.kh.team2.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import kr.kh.team2.model.dto.LoginDTO;
 import kr.kh.team2.dao.MemberDAO;
 import kr.kh.team2.model.dto.SignupDTO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.utils.Methods;
+
+
 
 @Service
 public class MemberServiceImp implements MemberService {
@@ -14,6 +17,9 @@ public class MemberServiceImp implements MemberService {
 	
 	@Autowired
 	MemberDAO memberDao;
+  
+  @Autowired
+	BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
 	public boolean signUp(SignupDTO signupDto) {
@@ -52,4 +58,26 @@ public class MemberServiceImp implements MemberService {
 		return member == null;
 	}
 
+	
+	
+	
+	@Override
+	public MemberVO login(LoginDTO loginDTO) {
+		if(loginDTO == null||
+		   !methods.checkString(loginDTO.getId())||
+		   !methods.checkString(loginDTO.getPw())) {
+			return null;
+		}
+		
+		MemberVO user = memberDao.findMemberById(loginDTO.getId());
+		
+		if(user == null ||
+		   !passwordEncoder.matches(loginDTO.getPw(), user.getMe_pw())){
+			return null;
+		}
+		
+		return user;
+	}
+	
+	
 }
