@@ -7,4 +7,8 @@ public interface MemberService {
 
 	boolean signUp(SignupDTO signupDto);
 
+	boolean idCheck(String id);
+
+	boolean nicknameCheck(String nickname);
+
 }

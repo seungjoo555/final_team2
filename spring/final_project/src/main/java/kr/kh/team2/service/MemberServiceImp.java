@@ -40,4 +40,16 @@ public class MemberServiceImp implements MemberService {
 		return memberDao.insertMember(member);
 	}
 
+	@Override
+	public boolean idCheck(String id) {
+		MemberVO member = memberDao.findMemberById(id);
+		return member == null;
+	}
+
+	@Override
+	public boolean nicknameCheck(String nickname) {
+		MemberVO member = memberDao.findMemberByNickname(nickname);
+		return member == null;
+	}
+
 }
