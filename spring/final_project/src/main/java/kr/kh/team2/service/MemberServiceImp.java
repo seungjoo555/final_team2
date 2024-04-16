@@ -18,7 +18,7 @@ public class MemberServiceImp implements MemberService {
 	@Autowired
 	MemberDAO memberDao;
   
-  @Autowired
+	@Autowired
 	BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
@@ -40,6 +40,8 @@ public class MemberServiceImp implements MemberService {
 			System.out.println("signupDto : "+signupDto);
 			return false;
 		}
+		
+		signupDto.setPw(passwordEncoder.encode(signupDto.getPw()));
 		
 		MemberVO member = new MemberVO(signupDto);
 			
