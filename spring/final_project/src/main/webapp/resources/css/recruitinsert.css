@@ -1,5 +1,42 @@
 @charset "UTF-8";
 
-.container{
-
+.main-wrap{
+	margin-top: 100px;
 }
+
+.recruit-inputList {
+	display: flex;
+    grid-gap: 15px;
+    gap: 15px;
+}
+
+
+.recruit-listItem {
+	display: flex;
+	flex-direction: column;
+	flex: 1 1;	
+}
+
+.inputbox-lableText {
+	font-weight: 700;
+}
+
+.inputbox-input {
+	height: 50px;
+	border: 1px solid #c9c9c9;
+	border-radius: 5px;
+}
+
+.second-container {
+	margin-top: 100px;
+}
+
+.inputbox-input-topic {
+	display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px
+}
+
