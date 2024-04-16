@@ -34,20 +34,11 @@ header .navbar>.container-fluid {
 }
 
 
-header .navbar-left{ width: 300px; display: flex; justify-content: flex-start;}
+header .navbar-left{ width: 300px; display: flex; justify-content: space-around; margin:0;}
 header .navbar-left a{ font-size: 16px; color: #000000; padding: 0;}
-header .navbar-left li{ position: relative; }
-header .navbar-left li:first-child::after{
-	position: absolute; right: -1px; top: 50%; transform: translateY(calc(-50% - 1px));
-}
 
-header .navbar-right{ width: 150px; display: flex; justify-content: flex-end;}
+header .navbar-right{ width: 150px; display: flex; justify-content: space-around; margin:0;}
 header .navbar-right a{ font-size: 16px; color: #000000; padding: 0; }
-header .navbar-right li{ position: relative; }
-header .navbar-right li:first-child::after{
-	color: #999; font-size: 12px;
-	position: absolute; right: -1px; top: 50%; transform: translateY(calc(-50% - 1px));
-}
 
 header .d-flex {
 	width: calc(100% - 560px); justify-content: flex-end;

@@ -5,8 +5,8 @@
 	<nav class="navbar navbar-expand-sm navbar-light">
 		<div class="container-fluid">
 			<h1>
-				<a class="navbar-brand" href="/">
-					<img alt="LOGO" src="<c:url value="/resources/img/somany.png"/>">
+				<a class="navbar-brand" href="<c:url value="/"/>">
+					<img alt="LOGO" src="<c:url value="/resources/img/smo.png"/>">
 				</a>
 			</h1>
 			<ul class="navbar-left">
