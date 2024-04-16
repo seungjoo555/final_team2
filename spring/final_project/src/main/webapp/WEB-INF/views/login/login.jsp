@@ -8,7 +8,8 @@
 <title>Insert title here</title>
 <style type="text/css">
 	.login-container{
-		padding : 100px;
+		width : 800px;
+		padding-top : 100px;
 		margin : 0 auto;
 	}
 	.h-wrap{
