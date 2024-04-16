@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+
 	.signup-form{margin-top: 50px;}
 	
 	/*상세주소 margin-top 설정*/
@@ -14,7 +15,8 @@
 		
 			
 	/*simple-login-btn-group margin-top*/
-		.simple-login-btn-group{margin-top: 50px;}
+	.simple-login-btn-group{margin-top: 50px;}
+	
 </style>
 </head>
 <link rel="stylesheet" href="<c:url value="/resources/css/signupcss.css"/>">
@@ -69,7 +71,7 @@
 			<div class="phone-error">전화번호 확인 오류</div>
 		</div>
 		<div class="add-input">
-			<label for="address">주소</label>
+			<label for="add1">주소</label>
 			<div class="input-bg add1">
 				<input type="text" name="add1" id="add1" placeholder="주소를 입력하세요.">
 			</div>
