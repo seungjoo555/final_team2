@@ -17,9 +17,7 @@
   width: 1200px;
   min-height: 1000px;
   margin: 0 auto;
-  display: flex;
   background-color: #fff;
-  align-items: stretch;
 }
 
 /* header구역 */
