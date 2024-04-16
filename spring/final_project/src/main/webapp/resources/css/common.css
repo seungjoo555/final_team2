@@ -35,7 +35,7 @@ header .navbar-left{ width: 300px; display: flex; justify-content: space-around;
 header .navbar-left a{ font-size: 16px; color: #000000; padding: 0;}
 
 header .navbar-right{ width: 150px; display: flex; justify-content: space-around; margin:0;}
-header .navbar-right a{ font-size: 16px; color: #000000; padding: 0; }
+header .navbar-right a{ font-size: 14px; color: #000000; padding: 0; }
 
 header .d-flex {
 	width: calc(100% - 560px); justify-content: flex-end;
@@ -56,6 +56,42 @@ header .d-flex {
 	border-radius: 0 5px 5px 0; border-left: none;
 }
 #totalsearch-btn img{ width: 24px; }
+
+/* header 검색 오른쪽 구역 */
+/* 드롭다운 콘텐츠 스타일 (숨김) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #E6F5E5;
+  min-width: 160px;
+  border : 1px solid black;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+/* 드롭다운 내부 링크 스타일 */
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+/* 드롭다운 내부 링크 호버 스타일 */
+.dropdown-content a:hover {
+  color: white;
+  background-color: #008040;
+}
+
+/* 드롭다운 마우스 호버 스타일 */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+
 
 /* footer구역 */
 footer{
