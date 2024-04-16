@@ -28,7 +28,7 @@
 	<h1>회원가입</h1>
 	<h5 class="sub">어쩌고저쩌고</h5>
 	
-	<form action="<c:url value="/signup"/>" method="post" class="signup-form">
+	<form action="<c:url value="/signup"/>" method="post" class="signup-form" id="signup-form">
 		<div class="id-input">
 			<label for="id">아이디</label>
 			<div class="input-bg">
@@ -74,7 +74,7 @@
 			<label id="phone-error" class="error" for="phone"></label>
 		</div>
 		<div class="add-input">
-			<label for="address">주소</label>
+			<label for="add1">주소</label>
 			<div class="input-bg add1">
 				<input type="text" name="add1" id="add1" placeholder="주소를 입력하세요.">
 			</div>
@@ -96,11 +96,11 @@
 
 <!-- 입력값 유효성 검사 -->
 <script type="text/javascript">
-$("form").validate({
+$("#signup-form").validate({
 	rules : {
 		id : {
 			required : true,
-			regex : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ // 이메일 형식 regex
+			regex : /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/ 
 		},
 		nickname : {
 			required : true,
@@ -201,6 +201,7 @@ $.validator.addMethod(
 					$("#id").css("color", "red")
 				}else{
 					alert("사용 가능한 아이디입니다.")
+					$("#id-error").text("")
 					idFlag = true
 				}
 			}, 
@@ -239,6 +240,7 @@ $.validator.addMethod(
 					$("#nickname").css("color", "red")
 				}else{
 					alert("사용 가능한 닉네임입니다.");
+					$("#nickname-error").text("")
 					nicknameFlag = true;
 				}
 			},
