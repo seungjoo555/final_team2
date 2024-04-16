@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-<link rel="stylesheet" href="<c:url value="/resources/css/signupcss.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/signup.css"/>">
 <!-- jquery validtaion -->	
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
