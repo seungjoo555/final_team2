@@ -6,14 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- signup.css -->
+<link rel="stylesheet" href="<c:url value="/resources/css/signupcss.css"/>">
 <style>
 	
 </style>
 
 </head>
 
-<!-- signup.css -->
-<link rel="stylesheet" href="<c:url value="/resources/css/signupcss.css"/>">
 
 <body class="center">
 

@@ -103,7 +103,7 @@ INSERT INTO member_auth(ma_auth) VALUES("관리자"),("멘토"), ("일반");
 
 /* 운영자 정보 추가 */
 INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth)
-	VALUES("admin", "admin", "운영자", "운영자", "010-1234-5678", "서울시 강남구 역삼동", "이용중", "관리자");
+	VALUES("admin", "$2a$10$9sW/WB0Wyz2VGvii9Odp6uTA6Y6RSZtQWoOaFowKXz6jD68a0SwCG", "운영자", "운영자", "010-1234-5678", "서울시 강남구 역삼동", "이용중", "관리자");
     
 /* 일반 유저 정보 추가 */
 INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth)
