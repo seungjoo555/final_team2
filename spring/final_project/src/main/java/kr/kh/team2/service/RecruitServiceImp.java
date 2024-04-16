@@ -28,7 +28,7 @@ public class RecruitServiceImp implements RecruitService {
 			return false;
 		}
 
-		group.setGo_name(user.getMe_id()+"의 그룹");
+		group.setGo_name(user.getMe_nickname()+"의 그룹");
 		
 		boolean makeGroup = recruitDao.insertGroup(group);
 		
