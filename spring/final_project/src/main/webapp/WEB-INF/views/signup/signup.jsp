@@ -6,8 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<c:url value="/resources/css/signupcss.css"/>">
 <style>
-
 	.signup-form{margin-top: 50px;}
 	
 	/*상세주소 margin-top 설정*/
@@ -15,11 +15,9 @@
 		
 			
 	/*simple-login-btn-group margin-top*/
-	.simple-login-btn-group{margin-top: 50px;}
-	
+		.simple-login-btn-group{margin-top: 50px;}
 </style>
 </head>
-<link rel="stylesheet" href="<c:url value="/resources/css/signupcss.css"/>">
 <body class="center">
 <div class="container">
 	<h1>회원가입</h1>
@@ -45,14 +43,14 @@
 		<div class="pw-input">
 			<label for="pw">비밀번호</label>
 			<div class="input-bg">
-				<input type="text" name="pw" id="pw" placeholder="비밀번호를 입력하세요.">
+				<input type="password" name="pw" id="pw" placeholder="비밀번호를 입력하세요.">
 			</div>
 			<div class="pw-error">비밀번호 오류</div>
 		</div>
 		<div class="pw2-input">
 			<label for="pw2">비밀번호 확인</label>
 			<div class="input-bg">
-				<input type="text" name="pw2" id="pw2" placeholder="비밀번호를 입력하세요.">
+				<input type="password" name="pw2" id="pw2" placeholder="비밀번호를 입력하세요.">
 			</div>
 			<div class="pw2-error">비밀번호 확인 오류</div>
 		</div>
@@ -71,7 +69,7 @@
 			<div class="phone-error">전화번호 확인 오류</div>
 		</div>
 		<div class="add-input">
-			<label for="add1">주소</label>
+			<label for="address">주소</label>
 			<div class="input-bg add1">
 				<input type="text" name="add1" id="add1" placeholder="주소를 입력하세요.">
 			</div>
