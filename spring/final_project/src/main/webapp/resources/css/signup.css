@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+a {
+	cursor:pointer;
+}
+
 .center .container{display: flex; flex-direction: column; justify-content: center; align-items: center;
 		margin: 100px auto 200px auto;}
 	.sub{margin-top: 20px}

@@ -11,7 +11,7 @@
 			</h1>
 			<ul class="navbar-left">
 				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/group/home"/" />">스터디/프로젝트</a>
+					<a class="nav-link" href="<c:url value="/group/home" />">스터디/프로젝트</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value="#" />">멘토링</a>
@@ -29,6 +29,7 @@
 					<img alt="검색" src="<c:url value="/resources/img/search_icon.svg"/>">
 				</button>
 			</form>
+
 			<ul class="navbar-right">
 				<c:if test="${user == null}">
 					<li class="nav-item"><a class="nav-link"

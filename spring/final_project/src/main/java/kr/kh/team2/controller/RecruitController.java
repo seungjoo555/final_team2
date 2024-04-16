@@ -34,8 +34,8 @@ public class RecruitController {
 	
 	@PostMapping("/recruit/insert")
 	public String RecruitInsertPost(Model model, GroupVO group ,RecruitVO recruit, HttpSession session) {
-		// MemberVO user = (MemberVO)session.getAttribute("user");
-		MemberVO user = new MemberVO();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		// MemberVO user = new MemberVO();
 		user.setMe_id("abc");
 		
 		boolean res = recruitService.insertRecruit(group, recruit, user);
