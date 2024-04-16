@@ -3,5 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team2.dao.GroupDAO">
- 	
+ 	<select id="selectGroupList" resultType="RecruitVO">
+        select recruit.*, me_nickname as recu_gome_me_nickname from recruit
+ 			join
+ 				group_member on gome_go_num = recu_go_num
+			join
+				`member` on gome_me_id = me_id
+			where  gome_type = 1
+			<choose>
+				<when test='cri.type == "study"'>
+					and recu_type = 1
+				</when>
+				<when test='cri.type == "project"'>
+					and recu_type = 2
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+			;
+ 	</select>
 </mapper>
