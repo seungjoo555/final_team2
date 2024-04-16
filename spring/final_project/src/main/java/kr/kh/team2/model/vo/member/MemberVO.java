@@ -2,6 +2,7 @@ package kr.kh.team2.model.vo.member;
 
 import java.util.Date;
 
+import kr.kh.team2.model.dto.SignupDTO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -28,4 +29,13 @@ public class MemberVO {
     private int me_prefertime;
     private int me_onoff;
     private String me_intro;
+    
+	public MemberVO(SignupDTO signupDto) {
+		this.me_id = signupDto.getId();
+		this.me_pw = signupDto.getPw();
+		this.me_nickname = signupDto.getNickname();
+		this.me_name = signupDto.getName();
+		this.me_phone = signupDto.getPhone();
+		this.me_address = signupDto.getAdd1() + " " + signupDto.getAdd2();
+	}
 }
