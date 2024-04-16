@@ -33,15 +33,15 @@
 			<ul class="navbar-right">
 				<c:if test="${user == null}">
 					<li class="nav-item"><a class="nav-link"
-						href="<c:url value="#" />">로그인</a></li>
+						href="<c:url value="/login" />">로그인</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="<c:url value="#" />">회원가입</a></li>
+						href="<c:url value="/signup" />">회원가입</a></li>
 				</c:if>
 				<c:if test="${user != null}">
 					<li class="nav-item"><a class="nav-link"
 						href="<c:url value="" />">마이페이지</a></li>
 					<li class="nav-item"><a class="nav-link"
-						href="<c:url value="#" />">로그아웃</a></li>
+						href="<c:url value="/logout" />">로그아웃</a></li>
 				</c:if>
 			</ul>
 		</div>
