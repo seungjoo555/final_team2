@@ -26,10 +26,11 @@ public class GroupController {
 	GroupService groupService;
 	
 	@GetMapping("/group/home")
-	public String groupHome(Model model, Criteria cri) {
+	public String groupHome(Model model) {
 
 		return "/group/home";
 	}
+	
 	@ResponseBody
 	@PostMapping("/group/home")
 	public Map<String, Object> groupHomePost(@RequestBody Criteria cri) {
