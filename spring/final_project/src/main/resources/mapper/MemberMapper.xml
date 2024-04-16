@@ -1,7 +1,29 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team2.dao.MemberDAO">
-  
+
+	<!-- =============================== INSERT =============================== -->
+
+	<insert id="insertMember">
+		INSERT INTO member(me_id, me_ms_state, me_ma_auth, me_pw, me_nickname, me_name, me_phone, me_address, me_type)
+			VALUE(#{member.me_id}, "이용중", "일반", #{member.me_pw}, #{member.me_nickname}, #{member.me_name}, #{member.me_phone}, #{member.me_address}, 0)
+	</insert>	
+	
+	<!-- =============================== DELETE =============================== -->
+	
+	<!-- =============================== UPDATE =============================== -->	
+	
+	<!-- =============================== SELECT =============================== -->	
+	
+	<select id="findMemberById" resultType="MemberVO">
+		SELECT * FROM member WHERE me_id = #{id}
+	</select>
+	
+	<select id="findMemberByNickname" resultType="MemberVO">
+		SELECT * FROM member WHERE me_nickname = #{nickname}
+	</select>
+
 </mapper>
