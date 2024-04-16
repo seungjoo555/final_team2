@@ -12,14 +12,17 @@
 	</c:choose>
 </title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/test.css"/>">
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
 	<tiles:insertAttribute name="header"/>
-	<div style="min-height: calc(100vh - 290px)">
-		<tiles:insertAttribute name="body" />
+	<div class="main-wrap">
+		<div class="main-contents">
+			<tiles:insertAttribute name="body" />
+		</div>
 	</div>
 	<tiles:insertAttribute name="footer" />
 </body>
