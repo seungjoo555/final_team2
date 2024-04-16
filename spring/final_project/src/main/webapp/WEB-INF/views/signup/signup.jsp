@@ -104,7 +104,7 @@ $("form").validate({
 		},
 		nickname : {
 			required : true,
-			regex : /^[a-zA-Z0-9!@#]{6,15}$/
+			regex : /^[a-zA-Z0-9!@#]{1,8}$/
 		},
 		pw : {
 			required : true,
@@ -115,7 +115,7 @@ $("form").validate({
 		},
 		name : {
 			required : true,
-			regex : /^[a-zA-Z가-힣]{2,17}$/
+			regex : /^[a-zA-Z가-힣]{2,20}$/
 		},
 		phone : {
 			required : true,
@@ -132,7 +132,7 @@ $("form").validate({
 		},
 		nickname : {
 			required : "필수 입력 항목입니다.",
-			regex : "닉네임은 숫자,영문, !@#만 사용가능하며 6~15자입니다."
+			regex : "닉네임은 숫자,영문, !@#만 사용가능하며 1~8자입니다."
 		},
 		pw : {
 			required : "필수 입력 항목입니다.",
@@ -143,7 +143,7 @@ $("form").validate({
 		},
 		name : {
 			required : "필수 입력 항목입니다.",
-			regex : "이름은 한글, 영문만 가능하며 2~17입니다."
+			regex : "이름은 한글, 영문만 가능하며 2~20자입니다."
 		},
 		phone : {
 			required : "필수 항목입니다.",
