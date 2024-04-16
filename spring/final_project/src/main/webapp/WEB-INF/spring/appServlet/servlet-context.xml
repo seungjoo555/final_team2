@@ -37,6 +37,15 @@
 	
 	<context:component-scan base-package="kr.kh.team2.*" />
 	
+	<!-- 인터셉터 등록 -->
+	<beans:bean id="loninInterceptor" class="kr.kh.team2.interceptor.LoginInterceptor"/>
 	
-	
+	<!-- 인터셉터 맵핑 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/login"/>
+			<beans:ref bean="loninInterceptor"/>
+		</interceptor>
+	</interceptors>	
+
 </beans:beans>
