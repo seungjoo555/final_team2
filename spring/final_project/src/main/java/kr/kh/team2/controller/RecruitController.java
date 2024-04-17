@@ -38,10 +38,10 @@ public class RecruitController {
 		boolean res = recruitService.insertRecruit(group, recruit, user);
 		
 		if(res) {
-			model.addAttribute("msg", "게시글을 등록했습니다.");
+			model.addAttribute("msg", "모집공고를 등록했습니다.");
 			model.addAttribute("url", "/group/home"); 
 		} else {
-			model.addAttribute("msg", "게시글을 등록하지 못했습니다.");
+			model.addAttribute("msg", "모집공고를 등록하지 못했습니다.");
 			model.addAttribute("url", "/recruit/insert");
 		}
 		

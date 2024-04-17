@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 	<link rel="stylesheet" href="<c:url value="/resources/css/recruitinsert.css"/>">
-	
 </head>
 <body>
 	<form action="<c:url value="/recruit/insert"/>" method = "post" class="insert-form">
@@ -74,9 +73,9 @@
 				<div class="form-row content">
 					<textarea rows="10" class="form-control second-box" id="recu_content" name="recu_content" ></textarea>
 				</div>
-				<div>
-					<button type="button">취소</button>
-					<button>작성하기</button>
+				<div class="button-area">
+					<button type="button" class="cancel-button">취소</button>
+					<button type="submit" class="write-button">작성하기</button>
 				</div>
 			</section>
 		</div>
@@ -87,6 +86,27 @@
 		  tabsize: 2,
 		  height: 400
 		});
+		
+		<!-- 취소 버튼 클릭 이벤트-->
+		$('.cancel-button').click(function(){
+			if(confirm("작성을 취소하고 이전으로 돌아가시겠습니까?")){
+				location.href='<c:url value="/group/home"/>';
+			}
+		})
+		
+		<!-- 작성하기 버튼 클릭 이벤트-->
+		$('.write-button').click(function(){
+			if(!recu_type.value || !recu_count.value || !recu_online.value || !recu_target.value || !recu_required.value 
+				|| !recu_due.value || !recu_preferred.value || !recu_interview.value || !recu_topic.value || !recu_content.value) {
+				alert('모든 항목은 필수 입력 사항입니다.');
+				return false;
+			}
+			
+			if(confirm("입력하신 내용으로 모집 공고를 올리시겠습니까?")) {
+				location.href='<c:url value="/group/home"/>';
+			}
+		})
+		
 	</script>
 </body>
 </html>
