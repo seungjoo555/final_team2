@@ -11,7 +11,7 @@
 			</h1>
 			<ul class="navbar-left">
 				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="#" />">스터디/프로젝트</a>
+					<a class="nav-link" href="<c:url value="/group/home" />">스터디/프로젝트</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value="#" />">멘토링</a>
@@ -29,23 +29,6 @@
 					<img alt="검색" src="<c:url value="/resources/img/search_icon.svg"/>">
 				</button>
 			</form>
-
-
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-	<!-- Brand/logo -->
-	<a class="navbar-brand" href="<c:url value="/"/>">
-		<img src="<c:url value="/resources/img/bird.jpg"/>" alt="logo" style="width: 40px;">
-	</a>
-
-	<!-- Links -->
-	<ul class="navbar-nav">
-		<li class="nav-item">
-			<a class="nav-link" href="<c:url value="/group/home"/>">스터디/프로젝트</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link" href="<c:url value="/post/list"/>">게시글 목록</a>
-		</li>
-	</ul>
 
 			<ul class="navbar-right">
 				<c:if test="${user == null}">
