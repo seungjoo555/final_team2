@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 	<link rel="stylesheet" href="<c:url value="/resources/css/recruitinsert.css"/>">
+	<script type="text/javascript" src="<c:url value="/resources/js/dropdown.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/js/multi.dropdown.js"/>"></script>
 </head>
 <body>
 	<form action="<c:url value="/recruit/insert"/>" method = "post" class="insert-form">
@@ -59,6 +61,118 @@
 						<option value="0">예</option>
 						<option value="1">아니오</option>
 					</select>
+				</li>
+			</ul>
+			<ul class="recruit-inputList">
+				<li class="recruit-listItem">
+					<label for="progCt_name" class="inputbox-lableText">모집 분야</label>
+					<div class="input-row multi-dropdown not-label">
+               			<div class="multi-dropdown-box placeholder">	
+							<input type="hidden" name="products" id="progCt_name" value="progCt_name" />
+							<button type="button" tabindex="-1" data-placeholder="제품을 선택해 주세요.">모집 분야를 선택해 주세요.</button>
+							<div class="dropdown-list">
+								<ul>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="1"/>
+				                            웹개발
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="2"/>
+				                            프론트엔드
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="3"/>
+				                            백엔드
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
+				                            풀스택
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
+				                            프로그래밍 언어
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
+				                            데이터베이스
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
+				                            웹 퍼블리싱
+				                        </label>
+			                        </li>
+			                    </ul>
+               				</div>
+               			</div>
+					</div>
+				</li>
+				<li class="recruit-listItem">
+					<label for="recu_interview" class="inputbox-lableText">사용 언어</label>
+					<div class="input-row multi-dropdown not-label">
+               			<div class="multi-dropdown-box placeholder">	
+							<input type="hidden" name="products" id="progCt_name" value="progCt_name" />
+							<button type="button" tabindex="-1" data-placeholder="제품을 선택해 주세요.">사용 언어를 선택해 주세요.</button>
+							<div class="dropdown-list">
+								<ul>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="1"/>
+				                            <p>웹개발</p>
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="2"/>
+				                            <p>프론트엔드</p>
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="3"/>
+				                            <p>백엔드</p>
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
+				                            <p>풀스택</p>
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
+				                            <p>프로그래밍 언어</p>
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
+				                            <p>데이터베이스</p>
+				                        </label>
+			                        </li>
+			                        <li>
+				                        <label>
+				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
+				                            <p>웹 퍼블리싱</p>
+				                        </label>
+			                        </li>
+			                    </ul>
+               				</div>
+               			</div>
+					</div>
 				</li>
 			</ul>
 		</div>
