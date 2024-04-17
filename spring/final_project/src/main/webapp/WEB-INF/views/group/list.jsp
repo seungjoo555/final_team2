@@ -7,19 +7,19 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<link rel="stylesheet" href="<c:url value="/resources/css/grouphome.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/grouplist.css"/>">
 <body>
 <div class="container">
 	<!-- 메뉴바 -->
-	<form class="menu-bar" action="<c:url value="/group/home"/>" method="get">
+	<form class="menu-bar" action="<c:url value="/group/list"/>" method="get">
 		<div class="group-category">
-			<span class="group-category-item all" >전체</span>
+			<span class="group-category-item all"  data-category="all">전체</span>
 		</div>
-		<div class="group-category" onclick="onStudy()">
-			<span class="group-category-item study">스터디</span>
+		<div class="group-category">
+			<span class="group-category-item study"  data-category="study">스터디</span>
 		</div>
-		<div class="group-category" onclick="onProject()">
-			<span class="group-category-item project">프로젝트</span>
+		<div class="group-category" >
+			<span class="group-category-item project"  data-category="project">프로젝트</span>
 		</div>
 		<div class="group-category group-category-insert">
 			<a class="btn-outline-success insert" href="<c:url value="/recruit/insert"/>">모집글 작성</a>
@@ -29,39 +29,9 @@
 	<div class="box-group-list"></div>
 	
 	<!-- 페이지네이션 -->
-	<ul class="pagination justify-content-center">
-	 	<c:if test="${pm.prev}">
-	 		<c:url value="group/home" var="url">
-	 			<c:param name="page" value="${pm.startPage - 1 }"></c:param>
-	 			<c:param name="type" value="${pm.cri.type}"></c:param>
-	 			<c:param name="search" value="${pm.cri.search}"></c:param>
-	 		</c:url>
-		    <li class="page-item">
-		    	<a class="page-link" href="${url}">이전</a>
-		    </li>
-	 	</c:if>
-	 	<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
-	 		<c:url value="group/home" var="url">
-	 			<c:param name="page" value="${i}"></c:param>
-	 			<c:param name="type" value="${pm.cri.type}"></c:param>
-	 			<c:param name="search" value="${pm.cri.search}"></c:param>
-	 		</c:url>
-	 		<!-- 부트스트랩에서 page-item옆에 active를 붙이면 현재 페이지에 파란색을 넣어줌 -->
-		    <li class="page-item <c:if test="${pm.cri.page == i }">active</c:if>">	
-		    	<a class="page-link" href="${url}">${i}</a>
-		    </li>
-	 	</c:forEach>
-	    <c:if test="${pm.next}">
-	    	<c:url value="group/home" var="url">
-	 			<c:param name="page" value="${pm.endPage + 1 }"></c:param>
-	 			<c:param name="type" value="${pm.cri.type}"></c:param>
-	 			<c:param name="search" value="${pm.cri.search}"></c:param>
-	 		</c:url>
-		    <li class="page-item">
-		    	<a class="page-link" href="${url}">다음</a>
-		    </li>
-	    </c:if>
-  	</ul>
+	<div class="box-pagination">
+		<ul class="pagination justify-content-center"></ul>
+	</div>
 	
 </div>
 
@@ -72,11 +42,12 @@
 			page : 1,
 			type : "all"
 	}
+	
 	getGroupList(cri);
 	function getGroupList(cri){
 		$.ajax({
 			async : true, //비동기 : true(비동기), false(동기)
-			url : "<c:url value="/group/home"/>", 
+			url : "<c:url value="/group/list"/>", 
 			type : 'post', 
 			data : JSON.stringify(cri),
 			//서버로 보낼 데이터 타입
@@ -93,29 +64,10 @@
 	}	//getGroupList(cri); end
 	
 	
-	//클릭이벤트
-	$(".all").click(function(){
-		textChange('all');
-		cri.type = "all";
-		getGroupList(cri);
-	});
-	$(".study").click(function(){
-		textChange('study');
-		cri.type = "study";
-		getGroupList(cri);
-	});
-	$(".project").click(function(){
-		textChange('project');
-		cri.type = "project";
-		getGroupList(cri);
-	});
-	
-
-	
-	
 	//리스트 출력
 	function displayGroupList(list){
 		let str = '';
+		
 		if(list == null || list.length == 0){
 			str = '<h3>등록된 모임이 없습니다.</h3>';
 			$('.box-group-list').html(str);
@@ -123,6 +75,7 @@
 		}
 		for(group of list){
 			let type = "";
+
 			if(group.recu_type == 0){
 				type = "스터디";
 			}else if(group.recu_type == 1){
@@ -172,13 +125,54 @@
 	
 	//페이지네이션
 	function displayGroupPagination(pm){
+		let str = '';
 		
+		if(pm.prev){
+			str +=
+				`<li class="page-item">
+					<a class="page-link" href="javascript:void(0)" data-page="\${pm.startPage - 1}" data-type="\${pm.cri.type}">이전</a>
+			    </li>`;
+		}
+		
+		for(let i = pm.startPage; i<=pm.endPage; i++){
+			let active = pm.cri.page == i ? 'active':'';
+			str +=
+				`
+				 <li class="page-item \${active}">
+				 	<a class="page-link" href="javascript:void(0)" data-page="\${i}" data-type="\${pm.cri.type}">\${i}</a>
+			    </li>				
+				`;
+		}
+		
+		if(pm.next){
+			str +=
+				`
+				<li class="page-item">
+					<a class="page-link" href="javascript:void(0)" data-page="\${pm.endPage + 1}" data-type="\${pm.cri.type}">다음</a>
+			    </li>				
+				`;
+		}
+		$('.box-pagination>ul').html(str);
 	}
 	
 	
 	
-	
+	//클릭이벤트
+	$(document).on('click', '.box-pagination .page-link', function(){
+		cri.page = $(this).data('page');
+		cri.type = $(this).data('type');
+		console.log(cri);
+		getGroupList(cri);
+	})
 
+	$(".group-category-item").click(function(){
+		textChange($(this).data('category'));
+		cri.page = 1;
+		cri.type = $(this).data('category');
+		category ="study"; 
+		getGroupList(cri);
+	})
+	
 	//텍스트 색상 변환 함수
 	function textChange(type){
 		switch (type) {
@@ -198,22 +192,6 @@
 	
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-<!-- 메뉴 바 이벤트 -->
-<script type="text/javascript">
-	textChange('all');
-
-</script>
 
 </body>
 </html>

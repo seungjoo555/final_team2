@@ -9,4 +9,6 @@ public interface GroupService {
 
 	ArrayList<RecruitVO> getGroupList(Criteria cri);
 
+	int getGroupTotalCount(Criteria cri);
+
 }

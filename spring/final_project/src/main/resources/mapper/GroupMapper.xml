@@ -4,22 +4,40 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team2.dao.GroupDAO">
  	<select id="selectGroupList" resultType="RecruitVO">
-        select recruit.*, me_nickname as recu_gome_me_nickname from recruit
+        select recruit.*, me_nickname as recu_gome_me_nickname 
+        from recruit
  			join
  				group_member on gome_go_num = recu_go_num
 			join
 				`member` on gome_me_id = me_id
 			where  gome_type = 1
+				<choose>
+					<when test='cri.type == "study"'>
+						and recu_type = 0
+					</when>
+					<when test='cri.type == "project"'>
+						and recu_type = 1
+					</when>
+					<otherwise>
+						and recu_type = 0 or recu_type = 1
+					</otherwise>
+				</choose>
+			order by recu_num desc
+			limit #{cri.pageStart}, #{cri.perPageNum}
+ 	</select>
+ 	<select id="selectGroupTotalCount" resultType="int">
+ 		select count(*) from recruit
+ 		where
 			<choose>
 				<when test='cri.type == "study"'>
-					and recu_type = 0
+					recu_type = 0
 				</when>
 				<when test='cri.type == "project"'>
-					and recu_type = 1
+					recu_type = 1
 				</when>
 				<otherwise>
+					recu_type = 0 or recu_type = 1 
 				</otherwise>
 			</choose>
-			;
  	</select>
 </mapper>

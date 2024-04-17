@@ -25,24 +25,24 @@ public class GroupController {
 	@Autowired
 	GroupService groupService;
 	
-	@GetMapping("/group/home")
-	public String groupHome(Model model) {
+	@GetMapping("/group/list")
+	public String groupList(Model model) {
 
-		return "/group/home";
+		return "/group/list";
 	}
 	
 	@ResponseBody
-	@PostMapping("/group/home")
-	public Map<String, Object> groupHomePost(@RequestBody Criteria cri) {
+	@PostMapping("/group/list")
+	public Map<String, Object> groupListPost(@RequestBody Criteria cri) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		cri.setPerPageNum(20);
+		cri.setPerPageNum(1);
 		//그룹 리스트 가져오기
 		ArrayList<RecruitVO> groupList = groupService.getGroupList(cri);
 		
 		System.out.println("cri : " + cri);
-//		int totalCount = groupService.getGroupTotalCount(cri);
-		PageMaker pm = new PageMaker(5, cri, 5);
+		int totalCount = groupService.getGroupTotalCount(cri);
+		PageMaker pm = new PageMaker(10, cri, totalCount);
 		map.put("list", groupList);
 		map.put("pm", pm);
 		return map;

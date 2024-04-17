@@ -18,9 +18,18 @@ public class GroupServiceImp implements GroupService {
 	@Override
 	public ArrayList<RecruitVO> getGroupList(Criteria cri) {
 		if(cri == null) {
-			cri = new Criteria(1, 5);
+			cri = new Criteria(1, 10);
 		}
 		return groupDAO.selectGroupList(cri);
+	}
+
+	@Override
+	public int getGroupTotalCount(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 10);
+		}
+		System.out.println("게시글 토탈 카운트"+groupDAO.selectGroupTotalCount(cri));
+		return groupDAO.selectGroupTotalCount(cri);
 	}
 
 }

@@ -12,6 +12,8 @@ import kr.kh.team2.pagination.Criteria;
 public interface GroupDAO {
 
 	ArrayList<RecruitVO> selectGroupList(@Param("cri")Criteria cri);
+
+	int selectGroupTotalCount(@Param("cri")Criteria cri);
 	
 	
 
