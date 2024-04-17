@@ -13,7 +13,7 @@
 	<!-- 메뉴바 -->
 	<form class="menu-bar" action="<c:url value="/group/list"/>" method="get">
 		<div class="group-category">
-			<span class="group-category-item all"  data-category="all">전체</span>
+			<span class="group-category-item all"  data-category="all" >전체</span>
 		</div>
 		<div class="group-category">
 			<span class="group-category-item study"  data-category="study">스터디</span>
@@ -42,7 +42,7 @@
 			page : 1,
 			type : "all"
 	}
-	
+	textChange(cri.type);
 	getGroupList(cri);
 	function getGroupList(cri){
 		$.ajax({
@@ -86,7 +86,7 @@
 				`
 				<ul class="group-list">
 					<!-- 게시글 정보 링크 -->
-					<a class="group-list-item"  href="#">
+					<a class="group-list-item"  href="<c:url value="/group/detail?recu_num=\${group.recu_num}"/>">
 						<li>
 							<!-- 프로젝트/스터디 구분 -->
 							<div class="group-list-item-category" >
@@ -126,7 +126,6 @@
 	//페이지네이션
 	function displayGroupPagination(pm){
 		let str = '';
-		
 		if(pm.prev){
 			str +=
 				`<li class="page-item">
@@ -174,6 +173,7 @@
 	})
 	
 	//텍스트 색상 변환 함수
+	
 	function textChange(type){
 		switch (type) {
 		case 'all': 

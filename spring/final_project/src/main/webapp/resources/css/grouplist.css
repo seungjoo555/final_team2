@@ -5,12 +5,13 @@
 
 .group-category{display: inline-block; margin-right: 10px; font-weight: bold; cursor: pointer;}
 .group-category-item{font-weight: bold; }
-.all{font-size: 17px; }
+.all{font-size: 17px;}
 .group-category-insert{display:flex; float: right;}
 .group-list{
 	width:250px; height:300px; border: 1px solid black; border-radius: 30px; list-style : none;
 	display: inline-block; margin: 10px
 }
+
 li{list-style : none;   color: inherit; }
 .group-list-item-schedule > p{display: inline-block; }
 .groupSituation{display:flex; float: right;}
