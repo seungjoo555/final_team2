@@ -11,5 +11,11 @@
 	<!-- =============================== UPDATE =============================== -->	
 	
 	<!-- =============================== SELECT =============================== -->	
-
+	
+	<select id="getGroupListById" resultType="GroupVO">
+		SELECT go_num, go_name, go_time, go_update 
+			FROM `group`
+				JOIN group_member ON go_num = gome_go_num
+			WHERE gome_me_id = #{id}
+	</select>
 </mapper>
