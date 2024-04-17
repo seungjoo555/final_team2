@@ -26,9 +26,7 @@
 		</div>
 	</form>
 	<!-- 리스트 -->
-	<div class="box-group-list">
-	
-	</div>
+	<div class="box-group-list"></div>
 	
 	<!-- 페이지네이션 -->
 	<ul class="pagination justify-content-center">
@@ -93,6 +91,27 @@
 			}
 		});	//ajax and
 	}	//getGroupList(cri); end
+	
+	
+	//클릭이벤트
+	$(".all").click(function(){
+		textChange('all');
+		cri.type = "all";
+		getGroupList(cri);
+	});
+	$(".study").click(function(){
+		textChange('study');
+		cri.type = "study";
+		getGroupList(cri);
+	});
+	$(".project").click(function(){
+		textChange('project');
+		cri.type = "project";
+		getGroupList(cri);
+	});
+	
+
+	
 	
 	//리스트 출력
 	function displayGroupList(list){
@@ -160,6 +179,23 @@
 	
 	
 
+	//텍스트 색상 변환 함수
+	function textChange(type){
+		switch (type) {
+		case 'all': 
+			$(".all").css('color','black');  $(".study").css('color','gray');  $(".project").css('color','gray');
+			break;
+		case 'study' :
+			$(".all").css('color','gray');  $(".study").css('color','black');  $(".project").css('color','gray');
+			break;
+		case 'project' :
+			$(".all").css('color','gray');  $(".study").css('color','gray');  $(".project").css('color','black');
+			break;
+		default:break;
+		};
+		
+	};
+	
 </script>
 
 
@@ -177,39 +213,6 @@
 <script type="text/javascript">
 	textChange('all');
 
-	//클릭이벤트
-	$(".all").click(function(){
-		textChange('all');
-		${pm.cri.type == 'all'}
-		${'menu-bar'}.submit();
-	});
-	$(".study").click(function(){
-		textChange('study');
-		${pm.cri.type == 'study'}
-		${'menu-bar'}.submit();
-	});
-	$(".project").click(function(){
-		textChange('project');
-		${pm.cri.type == 'project'}
-		${'menu-bar'}.submit();
-	});
-	
-	//텍스트 색상 변환 함수
-	function textChange(type){
-		switch (type) {
-		case 'all': 
-			$(".all").css('color','black');  $(".study").css('color','gray');  $(".project").css('color','gray');
-			break;
-		case 'study' :
-			$(".all").css('color','gray');  $(".study").css('color','black');  $(".project").css('color','gray');
-			break;
-		case 'project' :
-			$(".all").css('color','gray');  $(".study").css('color','gray');  $(".project").css('color','black');
-			break;
-		default:break;
-		};
-		
-	};
 </script>
 
 </body>

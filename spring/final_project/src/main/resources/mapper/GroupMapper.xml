@@ -12,10 +12,10 @@
 			where  gome_type = 1
 			<choose>
 				<when test='cri.type == "study"'>
-					and recu_type = 1
+					and recu_type = 0
 				</when>
 				<when test='cri.type == "project"'>
-					and recu_type = 2
+					and recu_type = 1
 				</when>
 				<otherwise>
 				</otherwise>
