@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team2.dao.CommunityDAO">
+	<!-- =============================== INSERT =============================== -->
+
+	<insert id="insertPost">
+		insert into post(post_name,post_content,post_view,post_date,post_board_num,post_me_id)
+					value(#{post.post_name},#{post.post_content},0,now(),#{post.post_board_num},#{post.post_me_id})
+
+	</insert>
+	
+	<!-- =============================== DELETE =============================== -->
+	
+	<!-- =============================== UPDATE =============================== -->	
+	
+	<!-- =============================== SELECT =============================== -->	
+	<select id="selectBoardList" resultType="BoardVO">
+		select * from board
+	</select>
+  
+</mapper>
