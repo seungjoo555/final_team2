@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.GroupDAO;
 import kr.kh.team2.model.vo.group.GroupVO;
+import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.utils.Methods;
 
 @Service
@@ -23,6 +24,32 @@ public class GroupServiceImp implements GroupService{
 		}
 		
 		return groupDao.getGroupListById(me_id);
+	}
+
+	@Override
+	public GroupVO getGroupByGoNum(int groupNum) {
+		if(groupNum == 0) {
+			System.out.println("groupNum is 0");
+			return null;
+		}
+			
+		return groupDao.getGroupByGoNum(groupNum);
+	}
+
+	@Override
+	public boolean isGroupMember(MemberVO user, int groupNum) {
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}else if(groupNum == 0) {
+			System.out.println("groupNum is 0");
+			return false;
+		}
+		
+		if(groupDao.isGroupMember(user.getMe_id(), groupNum) == null)
+			return false;
+		else
+			return true;
 	}
 	
 	

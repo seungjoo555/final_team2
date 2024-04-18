@@ -21,4 +21,12 @@
             ) 
              GROUP BY gome_go_num;
 	</select>
+	
+	<select id="getGroupByGoNum" resultType="GroupVO">
+		SELECT * FROM `group` WHERE go_num = #{num}
+	</select>
+	
+	<select id="isGroupMember" resultType="Object">
+		SELECT * FROM group_member WHERE gome_go_num = #{num} AND gome_me_id = #{id}
+	</select>
 </mapper>
