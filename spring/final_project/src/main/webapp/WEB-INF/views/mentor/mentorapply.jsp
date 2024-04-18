@@ -61,9 +61,7 @@ $('.btn-apply-link').click(function(){
 			xmlHttpRequest.setRequestHeader("AJAX", "true");
 			},
 		success : function(data, textStatus, jqXHR){
-			console.log(data);
-			console.log(textStatus);
-			console.log(jqXHR);
+
 			if(data==="true"){
 				location.href="<c:url value='/mentor/insert'/>";
 			}else if(data ==="false"){
