@@ -12,7 +12,7 @@
 	/* info-bar style*/
 	.container-info-bar{height: 90px; width: 90%; margin: 0 auto;}
 	
-	.container-info-bar>*{line-height: 90px; float:left; color: #243323; font-size: 36px;}
+	.container-info-bar>*{line-height: 90px; float:left; color: #243323; font-size: 24px;}
 	.container-info-bar::after{content: ''; display: block;  clear:both;}
 
 	.container-info-bar [class$=title]{font-weight: 900;}
@@ -25,14 +25,19 @@
 		[class$=list]>:last-child{border:none;} /* list의 마지막 요소는 border 없음 */
 		
 		/*list 내부 info 요소 style*/
-		[class$=list] [class$=info] *{float:left}
-		[class$=list] [class$=info]::after{content: ''; display: block;  clear:both;}
+		
+		
+		[class$=list] [class$=info]{width: 100%; border-bottom: 1px solid #9C9C9C;} 
 		
 		[class$=list] [class$=info] .image{width: 60px; height: 60px; border: solid black 1px;}
+		
 	/* =================================================================================== */
+
+	.group-list tbody>:last-child{border:none;}
+	.group-list .group-info:hover{background-color: #9C9C9C;} 
 	
-	.group-title{width: 100%; height: 50px; font-size: 24px; border-bottom: 1px solid #9C9C9C;}
-	.group-title a{color: black; font-weight: bold; text-decoration: none;}
+	.group-list .group-title a{line-height: 50px; font-size: 24px; color: black; font-weight: bold; text-decoration: none;}
+	.group-list .group-time{height: 50px; line-height: 50px; font-size: 18px;}
 	
 </style>
 </head>
@@ -42,23 +47,45 @@
 			<div class="grouplist-title">나의 그룹</div>
 		</div>
 		<div class="group-list-bg">
-			<div class="group-list">
-				<c:if test="${list != null}">
-					<c:forEach items="${list}" var="group">
-						<div class="group-title">
-							<c:url value="/group/home" var="url">
-								<c:param name="group" value="${group.go_num}"/>
-							</c:url>
-							<a href="${url}">${group.go_name}</a>
-						</div>
-					</c:forEach>
-					인원수 / 플젝인지 스터디인지 / 총 공부시간 띄우기
-				</c:if>
+		
+		
+			<c:if test="${list != null}">
+				<table class="group-list">
+					<thead>
+						<tr>
+							<th>그룹명</th>
+							<th class="text-center">공부 시간</th>
+							<th class="text-center">인원</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="${list}" var="group">
+							<tr class="group-info">
+								<td class="group-title">
+									<c:url value="/group/home" var="url">
+										<c:param name="group" value="${group.go_num}"/>
+									</c:url>
+									<a href="${url}">${group.go_name}</a>
+								</td>
+								<td class="group-time text-center">
+									<c:choose>
+										<c:when test="${group.go_time < 360}">0시간</c:when>
+										<c:otherwise>${group.go_time % 360 }시간</c:otherwise>
+									</c:choose>
+								</td>
+								<td class="text-center">${group.go_member_count }명</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+			</c:if>
 				
-				<c:if test="${list == null }">
-					<div>가입한 그룹이 없습니다.</div>
-				</c:if>
-			</div>
+			<c:if test="${list == null }">
+				<div>가입한 그룹이 없습니다.</div>
+			</c:if>
+			
+			페이지네이션 추가 필요
+			
 		</div>
 	</div>
 </body>
