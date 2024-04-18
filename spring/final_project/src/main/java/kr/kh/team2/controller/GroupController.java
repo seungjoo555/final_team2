@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.team2.model.vo.common.TotalCategoryVO;
+import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupMemberVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.PageMaker;
@@ -55,9 +58,21 @@ public class GroupController {
 	public String postDetail(Model model, int num) {
 		//모집공고를 가져옴
 		RecruitVO recruit = groupService.getRecruit(num);
+		if(recruit == null) {
+			return "redirect:/";
+		}
+		//모집공고를 올린 그룹장 가져옴
+		GroupMemberVO groupKing = groupService.getGroupKing(recruit.getRecu_go_num());
+		//모집 공고에 등록된 분야, 언어 가져옴
+		String table = "recruit";
+		ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(num, table);
+		ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(num, table);
 		//화면에 전송
 		model.addAttribute("recruit", recruit);
-		return "/post/detail";
+		model.addAttribute("groupKing", groupKing);
+		model.addAttribute("totalCategory", totalCategory);
+		model.addAttribute("totalLanguage", totalLanguage);
+		return "/group/detail";
 	}
 	
 	

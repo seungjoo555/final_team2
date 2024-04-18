@@ -39,7 +39,7 @@
 			<tr>
 				<td>1</td>
 				<td>
-					<a href="<c:url value="/group/detail?num=1"/>">임시 주소</a>
+					<a href="<c:url value="/group/detail?num=2"/>">임시 주소</a>
 				</td>
 				<td>모름</td>
 				<td>1</td>
