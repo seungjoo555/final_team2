@@ -42,14 +42,15 @@
 						<div class="dropdown">
 							<a class="nav-link dropbtn">마이페이지</a>
 							<div class="dropdown-content">
-								<a href="#">내정보</a>
-								<a href="#">그룹/프로젝트</a>
+								<a href="#">내 정보</a>
+								<a href="<c:url value="/group/list"/>">나의 그룹</a>
 								<a href="#">그리고 뭐?</a>
 							</div>
 						</div>
 					</li>
-					<li class="nav-item"><a class="nav-link"
-						href="<c:url value="/logout" />">로그아웃</a></li>
+					<li class="nav-item">
+						<a class="nav-link"href="<c:url value="/logout" />">로그아웃</a>
+					</li>
 				</c:if>
 			</ul>
 		</div>

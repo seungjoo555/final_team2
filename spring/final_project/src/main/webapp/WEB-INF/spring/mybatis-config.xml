@@ -4,8 +4,15 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<!-- Mapper에서 resultType을 간단히 줄여쓰기 위해 typeAlias를 활용 -->
+    
+		<!-- ========================== member ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.member.MemberVO" alias="MemberVO"/>
+    
+    <!-- ========================== mentor ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.member.MentorJobVO" alias="MentorJobVO"/>
+		
+		<!-- ========================== group ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.group.GroupVO" alias="GroupVO"/>
+    
 	</typeAliases>
 </configuration>

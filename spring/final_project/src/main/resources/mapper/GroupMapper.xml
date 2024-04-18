@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team2.dao.GroupDAO">
+
+	<!-- =============================== INSERT =============================== -->
+
+	<!-- =============================== DELETE =============================== -->
+	
+	<!-- =============================== UPDATE =============================== -->	
+	
+	<!-- =============================== SELECT =============================== -->	
+	
+	<select id="getGroupListById" resultType="GroupVO">
+		SELECT go_num, go_name, go_time, go_update 
+			FROM `group`
+				JOIN group_member ON go_num = gome_go_num
+			WHERE gome_me_id = #{id}
+	</select>
+</mapper>
