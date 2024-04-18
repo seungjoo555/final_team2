@@ -83,12 +83,20 @@ public class MemberServiceImp implements MemberService {
 
 	@Override
 	public MemberVO getMember(String me_id) {
-		System.out.println("서임"+me_id);
 		if(me_id == null) {
 			return null;
 		}
 		System.out.println(memberDao.selectMember(me_id));
 		return memberDao.selectMember(me_id);
+	}
+
+	@Override
+	public boolean updateProfile(String me_id, MemberVO member) {
+		if(me_id == null) {
+			return false;
+		}
+		System.out.println(memberDao.updateProfile(me_id, member));
+		return memberDao.updateProfile(me_id, member);
 	}
 	
 	

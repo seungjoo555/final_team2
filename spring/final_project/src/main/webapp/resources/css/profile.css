@@ -1,17 +1,23 @@
 @charset "UTF-8";
 
-.main-contents {
-	text-align: center;
+.profile-label-box{
+	text-align: center;	
 }
 
 .profile-nickname {
+	text-align: center;
 	font-size: 24px;
     font-weight: 700;
     margin: 20px
 }
 
 .profile-joindate-box {
+	text-align: center;
 	margin: 10px;
+}
+
+.degree-box{
+	text-align: center;
 }
 
 .profile-degree{
@@ -20,4 +26,80 @@
     font-weight: 700;
     font-size: 20px;
 }
+
+#degree-bar {
+    appearance: none;
+    width: 400px;
+    height: 20px;
+}
+
+#degree-bar::-webkit-progress-bar {
+    background:#f0f0f0;
+    border-radius:10px;
+    box-shadow: inset 3px 3px 10px #ccc;
+}
+
+#degree-bar::-webkit-progress-value {
+    border-radius:10px;
+    background: #1D976C;
+    background: -webkit-linear-gradient(to right, #93F9B9, #1D976C);
+    background: linear-gradient(to right, #FFCDCD, #FF8080);
+
+}
+.profile{
+	margin-top: 100px;
+}
+
+.profile-title {
+	font-weight: 700;
+	font-size: 22px;
+	margin: 50px 0;
+}
+
+.profile-list {
+	display: flex;
+    grid-gap: 15px;
+    gap: 15px;
+    margin: 35px 0;
+}
+
+
+.profile-listItem {
+	display: flex;
+    flex-direction: column;
+	flex: 1 1;	
 	
+}
+
+.inputbox-lableText {
+	font-weight: 700;
+}
+
+.inputbox-input {
+	height: 50px;
+	width: 100%;
+	border: 1px solid #c9c9c9;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.inputbox-input-intro {
+	width: 100%;
+	border: 1px solid #c9c9c9;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.profile-btn-area {
+	display: flex;
+    justify-content: end
+}
+
+.profile-update-btn {
+	outline: none;
+    border-radius: 5px;
+	height: 50px;
+	width: 100px;
+	background-color: #E6F5E5;
+	margin: 70px 0;
+}

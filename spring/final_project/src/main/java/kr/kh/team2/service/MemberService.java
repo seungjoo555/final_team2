@@ -18,5 +18,7 @@ public interface MemberService {
 
 	MemberVO getMember(String me_id);
 
+	boolean updateProfile(String me_id, MemberVO memberVo);
+
 
 }

@@ -15,6 +15,11 @@
 	
 	<!-- =============================== UPDATE =============================== -->	
 	
+	<update id="updateProfile">
+		update member set me_interests = #{member.me_interests}, me_preferloc = #{member.me_preferloc}, me_prefertime = #{member.me_prefertime}, me_onoff = #{member.me_onoff}, me_intro = #{member.me_intro}
+		where me_id = #{me_id}
+	</update>
+
 	<!-- =============================== SELECT =============================== -->	
 	
 	<select id="findMemberById" resultType="MemberVO">

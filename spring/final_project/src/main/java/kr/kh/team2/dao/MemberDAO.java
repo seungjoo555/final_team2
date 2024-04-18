@@ -15,4 +15,5 @@ public interface MemberDAO {
 
 	MemberVO selectMember(@Param("me_id")String me_id);
 
+	boolean updateProfile(@Param("me_id")String me_id, @Param("member")MemberVO member);
 }
