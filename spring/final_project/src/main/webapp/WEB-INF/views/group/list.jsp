@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>스터디 / 프로젝트 리스트</title>
 </head>
 <link rel="stylesheet" href="<c:url value="/resources/css/grouplist.css"/>">
 <body>
