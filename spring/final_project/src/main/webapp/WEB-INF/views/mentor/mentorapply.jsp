@@ -28,7 +28,7 @@
 		background-color: #E6F5E5;
 		color : #497C36;
 		font-weight : bold;
-		font-size : 32px;
+		font-size : 24px;
 	}
 </style>
 </head>
@@ -37,7 +37,7 @@
 	<img alt="mentor-img" src="<c:url value="/resources/img/mentor.png"/>">
 	<div class="text-wrap">
 		<h2>Mentoring</h2>
-		<p style="margin-top : 60px;">
+		<p style="margin-top : 60px; margin-bottom: 60px;">
 			업계 후배들 혹은 동료들과 지식을 나눠 보세요.<br>
 			멘토가 되어 당신의 후배, 동료들이<br>
 		  	더 빨리, 더 멀리 갈 수 있도록 도와주세요.<br>
