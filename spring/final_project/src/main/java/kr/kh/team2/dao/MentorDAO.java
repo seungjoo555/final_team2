@@ -13,4 +13,6 @@ public interface MentorDAO {
 
 	boolean insertMentorInfo(@Param("mt_info")MentorInfoVO mentorInfoVO);
 
+	MentorInfoVO selectMentorInfo(@Param("me_id")String me_id);
+
 }

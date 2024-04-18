@@ -40,4 +40,15 @@ public class MentorServiceImp implements MentorService {
 		
 	}
 
+	@Override
+	public boolean checkMentor(String me_id) {
+		
+		MentorInfoVO dbMentor = mentorDAO.selectMentorInfo(me_id);
+		if(dbMentor==null) {
+			return true;
+		}
+		return false;
+		
+	}
+
 }

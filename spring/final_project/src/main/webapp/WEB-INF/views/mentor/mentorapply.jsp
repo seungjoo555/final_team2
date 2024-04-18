@@ -49,7 +49,26 @@
 			<br>
 			멘토링을 통해 성장했다면 강의를 올릴 수 있게됩니다.</p>
 	</div>
-	<button onclick="location.href='http://localhost:8080/team2/mentor/insert'">멘토 신청하러 가기</button>
+	<button class="btn-apply-link">멘토 신청하러 가기</button>
 </div>
+
+<script type="text/javascript">
+$('.btn-apply-link').click(function(){
+	$.ajax({
+		url : '<c:url value="/mentor/check"/>',
+		type : 'get',
+		success : function(data){
+			console.log(data);
+		},error : function(xhr, textStatus, errorThrown){
+			console.log(xhr);
+			console.log(textStatus);
+		}
+		
+	})
+	
+})
+
+</script>
+
 </body>
 </html>

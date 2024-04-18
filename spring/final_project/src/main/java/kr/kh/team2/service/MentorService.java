@@ -11,4 +11,6 @@ public interface MentorService {
 
 	boolean insertMentorInfo(MentorInfoVO mentorInfoVO);
 
+	boolean checkMentor(String me_id);
+
 }
