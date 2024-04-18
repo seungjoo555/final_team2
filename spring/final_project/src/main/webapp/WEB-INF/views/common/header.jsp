@@ -11,7 +11,7 @@
 			</h1>
 			<ul class="navbar-left">
 				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/group/home" />">스터디/프로젝트</a>
+					<a class="nav-link" href="<c:url value="/group/grouplist" />">스터디/프로젝트</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value="#" />">멘토링</a>
@@ -42,7 +42,7 @@
 						<div class="dropdown">
 							<a class="nav-link dropbtn">마이페이지</a>
 							<div class="dropdown-content">
-								<a href="#">내정보</a>
+								<a href="<c:url value="/mypage/profile?me_id=${user.me_id}"/>">내정보</a>
 								<a href="#">그룹/프로젝트</a>
 								<a href="#">그리고 뭐?</a>
 							</div>

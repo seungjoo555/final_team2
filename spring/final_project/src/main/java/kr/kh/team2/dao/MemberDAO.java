@@ -13,5 +13,6 @@ public interface MemberDAO {
 
 	MemberVO findMemberByNickname(@Param("nickname")String nickname);
 
+	MemberVO selectMember(@Param("me_id")String me_id);
 
 }

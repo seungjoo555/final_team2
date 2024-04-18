@@ -80,6 +80,16 @@ public class MemberServiceImp implements MemberService {
 		
 		return user;
 	}
+
+	@Override
+	public MemberVO getMember(String me_id) {
+		System.out.println("서임"+me_id);
+		if(me_id == null) {
+			return null;
+		}
+		System.out.println(memberDao.selectMember(me_id));
+		return memberDao.selectMember(me_id);
+	}
 	
 	
 }

@@ -16,5 +16,7 @@ public interface MemberService {
 
 	boolean nicknameCheck(String nickname);
 
+	MemberVO getMember(String me_id);
+
 
 }
