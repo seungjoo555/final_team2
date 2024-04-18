@@ -169,23 +169,14 @@
 
 <!-- 분야 선택 이벤트 -->
 <script type="text/javascript">
-$(".check_boolean").change(function(){
-	alert($(this).data("check"));
-	
-	//getMentoList(cri);
-	//$("#searchForm").submit();
-
-})
-
 function getCheckboxValue(event)  {
-	alert(event.target.value);
-/*
   let result = '';
   if(event.target.checked)  {
     result = event.target.value;
   }else {
     result = '';
-  }*/
+  }
+  
 }
 </script>
 
