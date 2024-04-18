@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,6 +37,9 @@
 	</div>
 	
 </div>
+
+        
+
 
 
 <!-- 게시글 조회 -->
@@ -89,7 +93,9 @@
 			}else if(group.recu_state == 1){
 				state = "모집 중";
 			}
-				
+
+			let dateString = convertDate(group.recu_due);
+			
 			str +=
 				`
 					<!-- 게시글 정보 링크 -->
@@ -97,26 +103,28 @@
 						<li>
 							<!-- 프로젝트/스터디 구분 -->
 							<div class="group-list-item-category" >
-								<div>\${type}</div>
+								<div class="item-category">\${type}</div>
 							</div>
 							<!-- 마감일 -->
 							<div class="group-list-item-schedule">
-								<p>마감일 |</p>
-								<p>\${group.recu_due }</p>
+								<p>마감일 | \${dateString}</p>	
 							</div>
-							<!-- 그룹 모집 제목 -->
-							<h3 class="group-list-item-title">\${group.recu_topic }</h3>
-							<!-- 분야 리스트 -->
-							<div class="group-list-item-contentList">
-								\${group.recu_required }
-							</div>
-							<!-- 사용언어 -->
-							<div class="group-list-item-languageList">
-								\${group.recu_preferred }
+							<div class="group-list-item-content">
+								<!-- 그룹 모집 제목 -->
+								<h3 class="group-list-item-title">\${group.recu_topic }</h3>
+								<!-- 분야 리스트 -->
+								<div class="group-list-item-contentList">
+									\${group.recu_required }
+								</div>
+								<!-- 사용언어 -->
+								<div class="group-list-item-languageList">
+									\${group.recu_preferred }
+								</div>
 							</div>
 							<!-- 구분선 -->
-							<div class="border-line"></div>
+							<div class="box-border-line"><div class="border-line"></div></div>
 							<div class="group-list-item-memberInfo" >
+								<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
 								<div class="memberNickname">\${group.recu_gome_me_nickname } </div>
 								<div class="groupSituation">\${state}</div>
 							</div>
@@ -197,7 +205,20 @@
 		
 	};
 	
+	//날짜 변경 함수
+	function convertDate(milliSecond) {
+	  const days = ['일', '월', '화', '수', '목', '금', '토'];
+	  const data = new Date(milliSecond);  //Date객체 생성
 	
+	  const year = data.getFullYear();    //0000년 가져오기
+	  const month = data.getMonth() + 1;  //월은 0부터 시작하니 +1하기
+	  const date = data.getDate();        //일자 가져오기
+	  const day = days[data.getDay()];    //요일 가져오기
+	
+//	  return `${year}.${month}.${date}. (${day})`;
+	  return `\${year}.\${month}.\${date}`;
+	}
+
 	
 </script>
 

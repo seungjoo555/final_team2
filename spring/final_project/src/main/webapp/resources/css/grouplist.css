@@ -1,13 +1,11 @@
 @charset "UTF-8";
 
 
-.menu-bar{margin: 15px 0; }
-
-
-.group-category{display: inline-block; margin-right: 10px; font-weight: bold; cursor: pointer;}
+.menu-bar{margin: 15px 0; display:flex; justify-content:flex-start; align-items: center; }
+.group-category{ margin-right: 10px; font-weight: bold; cursor: pointer; }
 .group-category-item{font-weight: bold; }
 .all{font-size: 17px;}
-.group-category-insert{display:flex; justify-content: flex-end;}
+.group-category-insert{ margin-left: auto;}
 
 .group-list{width: 100%; display: inline-block;}
 .group-item{
@@ -17,11 +15,20 @@
 .group-item:hover{
  	text-decoration: none; cursor: pointer;
 }
-
 .box-group-list li{list-style : none; text-decoration: none; color:black; }
 
 
-.group-list-item-schedule > p{display: inline-block; }
+.group-list-item-category{display:flex; justify-content:center;}
+.item-category{
+	width:100px; font-weight:bold;
+	align-content: center; text-align: center; background-color:#F2F2F2; border-radius: 50px;
+}
+.group-list-item-schedule{ display:flex; justify-content:center; font-size: 14px; color:gray;}
+.group-list-item-content{height: 150px;}
+.group-list-item-content h3{height: 60px;}
+.group-list-item-content div{height: 40px;}
 .groupSituation{display:flex; float: right;}
 .group-list-item-memberInfo > div{display: inline-block; }
-.border-line{border: 1px solid black;height: 1px; width: 180px;'}
+.box-border-line{display:flex; justify-content:center;}
+.border-line{ border: 1px solid black; height: 1px; width: 220px; margin: 5px;}
+
