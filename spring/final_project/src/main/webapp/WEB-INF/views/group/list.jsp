@@ -26,7 +26,9 @@
 		</div>
 	</form>
 	<!-- 리스트 -->
-	<div class="box-group-list"></div>
+	<div class="box-group-list">
+		<ul class="group-list"></ul>
+	</div>
 	
 	<!-- 페이지네이션 -->
 	<div class="box-pagination">
@@ -74,19 +76,24 @@
 			return;
 		}
 		for(group of list){
-			let type = "";
+			let type = "", state = "";
 
 			if(group.recu_type == 0){
 				type = "스터디";
 			}else if(group.recu_type == 1){
 				type = "프로젝트";				
 			}
+			
+			if(group.recu_state == 0){
+				state = "모집완료";
+			}else if(group.recu_state == 1){
+				state = "모집 중";
+			}
 				
 			str +=
 				`
-				<ul class="group-list">
 					<!-- 게시글 정보 링크 -->
-					<a class="group-list-item"  href="<c:url value="/group/detail?recu_num=\${group.recu_num}"/>">
+					<a class="group-item" href="<c:url value="/group/detail?recu_num=\${group.recu_num}"/>">
 						<li>
 							<!-- 프로젝트/스터디 구분 -->
 							<div class="group-list-item-category" >
@@ -111,14 +118,14 @@
 							<div class="border-line"></div>
 							<div class="group-list-item-memberInfo" >
 								<div class="memberNickname">\${group.recu_gome_me_nickname } </div>
-								<div class="groupSituation">\${group.recu_state }</div>
+								<div class="groupSituation">\${state}</div>
 							</div>
 						</li>
 					</a>
-				</ul>
 				`
+				//</ul>
 		}	//for end
-		$('.box-group-list').html(str);
+		$('.group-list').html(str);
 	}	//displayGroupList(list) end
 		
 	
@@ -189,6 +196,8 @@
 		};
 		
 	};
+	
+	
 	
 </script>
 

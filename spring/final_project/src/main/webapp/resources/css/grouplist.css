@@ -3,16 +3,24 @@
 
 .menu-bar{margin: 15px 0; }
 
+
 .group-category{display: inline-block; margin-right: 10px; font-weight: bold; cursor: pointer;}
 .group-category-item{font-weight: bold; }
 .all{font-size: 17px;}
-.group-category-insert{display:flex; float: right;}
-.group-list{
+.group-category-insert{display:flex; justify-content: flex-end;}
+
+.group-list{width: 100%; display: inline-block;}
+.group-item{
 	width:250px; height:300px; border: 1px solid black; border-radius: 30px; list-style : none;
-	display: inline-block; margin: 10px
+	display: inline-block; margin: 10px; padding: 20px;   text-decoration: none; 
+}
+.group-item:hover{
+ 	text-decoration: none; cursor: pointer;
 }
 
-li{list-style : none;   color: inherit; }
+.box-group-list li{list-style : none; text-decoration: none; color:black; }
+
+
 .group-list-item-schedule > p{display: inline-block; }
 .groupSituation{display:flex; float: right;}
 .group-list-item-memberInfo > div{display: inline-block; }

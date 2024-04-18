@@ -36,7 +36,7 @@ public class GroupController {
 	public Map<String, Object> groupListPost(@RequestBody Criteria cri) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		cri.setPerPageNum(1);	//20개
+		cri.setPerPageNum(20);	//20개
 		//그룹 리스트 가져오기
 		ArrayList<RecruitVO> groupList = groupService.getGroupList(cri);
 		System.out.println("cri : " + cri);
