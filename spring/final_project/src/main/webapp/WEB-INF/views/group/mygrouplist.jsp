@@ -39,6 +39,10 @@
 	.group-list .group-title a{line-height: 50px; font-size: 24px; color: black; font-weight: bold; text-decoration: none;}
 	.group-list .group-time{height: 50px; line-height: 50px; font-size: 18px;}
 	
+	.no-list{display: flex; flex-direction: column; justify-content: center; align-items: center;}
+	.no-list-page:first-child{font-size: 24px; font-weight: bold; margin-bottom: 30px;}
+	
+	.no-list-page a{margin: 20px auto; padding: 10px 5px; text-decoration: none; color: white; font-size: 16px; font-weight: bold; text-align: center; background-color: #9C9C9C; border-radius: 5px;}
 </style>
 </head>
 <body>
@@ -63,7 +67,7 @@
 							<tr class="group-info">
 								<td class="group-title">
 									<c:url value="/group/home" var="url">
-										<c:param name="group" value="${group.go_num}"/>
+										<c:param name="groupNum" value="${group.go_num}"/>
 									</c:url>
 									<a href="${url}">${group.go_name}</a>
 								</td>
@@ -78,13 +82,19 @@
 						</c:forEach>
 					</tbody>
 				</table>
+				페이지네이션 추가 필요
 			</c:if>
 				
 			<c:if test="${list == null }">
-				<div>가입한 그룹이 없습니다.</div>
+				<div class="no-list-page">
+					<div>가입한 그룹이 없습니다.</div>
+					<a href="<c:url value="/"/>">모집공고 보러 가기</a>
+					 링크 필요
+				</div>
+				
 			</c:if>
 			
-			페이지네이션 추가 필요
+			
 			
 		</div>
 	</div>

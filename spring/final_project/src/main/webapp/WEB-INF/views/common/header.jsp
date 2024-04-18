@@ -43,7 +43,7 @@
 							<a class="nav-link dropbtn">마이페이지</a>
 							<div class="dropdown-content">
 								<a href="#">내 정보</a>
-								<a href="<c:url value="/group/list"/>">나의 그룹</a>
+								<a href="<c:url value="/group/mylist"/>">나의 그룹</a>
 								<a href="#">그리고 뭐?</a>
 							</div>
 						</div>
