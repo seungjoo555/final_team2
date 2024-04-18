@@ -57,20 +57,25 @@ $('.btn-apply-link').click(function(){
 	$.ajax({
 		url : '<c:url value="/mentor/check"/>',
 		type : 'get',
-		success : function(data){
+		beforeSend : function(xmlHttpRequest){
+			xmlHttpRequest.setRequestHeader("AJAX", "true");
+			},
+		success : function(data, textStatus, jqXHR){
+			console.log(data);
+			console.log(textStatus);
+			console.log(jqXHR);
 			if(data==="true"){
-				location.href="<c:url value='/mentor/insert'/>"
+				location.href="<c:url value='/mentor/insert'/>";
 			}else if(data ==="false"){
 				alert("이미 멘토신청을 완료한 계정입니다.")
-			}else if(data ==="null"){
-				alert("로그인한 회원만 멘토신청이 가능합니다.")
-				if(confirm("로그인 페이지로 이동하시겠습니까?")){
-					location.href = "<c:url value='/login'/>"
+				location.href = "<c:url value='/mentor/apply'/>"
+			}else if(jqXHR.getResponseHeader("SESSION_EXPIRED") === "true"){
+				if(confirm('로그인이 필요한 서비스입니다. 로그인페이지로 이동하시겠습니까?')){
+					location.href = "<c:url value='/login'/>";
 				}
 			}
 		},error : function(xhr, textStatus, errorThrown){
-			console.log(xhr);
-			console.log(textStatus);
+			console.log(xhr)
 		}
 		
 	})

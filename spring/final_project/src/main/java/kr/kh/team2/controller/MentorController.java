@@ -37,17 +37,14 @@ public class MentorController {
 	@GetMapping("/mentor/check")
 	@ResponseBody
 	public String mentorCheck(HttpSession session) {
-		try{
-			MemberVO user = (MemberVO)session.getAttribute("user");
-			boolean res = mentorService.checkMentor(user.getMe_id());
-			if(res) {
-				return "true";
-			}
-		}catch(NullPointerException e){
-			return "null";
-		}
-		return "false";
 
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		boolean res = mentorService.checkMentor(user.getMe_id());
+		if(res) {
+			return "true";
+		}
+
+		return "false";
 	}
 	
 	@GetMapping("/mentor/insert")
