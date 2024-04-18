@@ -16,3 +16,4 @@ location.href = '<c:url value="${url}"/>'
 </script>
 </body>
 </html>
+
