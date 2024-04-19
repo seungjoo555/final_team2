@@ -33,12 +33,12 @@ public class MentoController {
 	public Map<String, Object> mentoListPost(@RequestBody Criteria cri) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		cri.setPerPageNum(1);	//20개
+		cri.setPerPageNum(20);	//default : 20
 		//그룹 리스트 가져오기
 		ArrayList<MetoringVO> mentoList = mentoService.getMentoList(cri);
 		System.out.println("[MentoController] mentoList :: " + mentoList);
 		int totalCount = mentoService.getMentoTotalCount(cri);
-		PageMaker pm = new PageMaker(3, cri, totalCount);
+		PageMaker pm = new PageMaker(10, cri, totalCount);	//default : 10
 		map.put("list", mentoList);
 		map.put("pm", pm);
 		return map;

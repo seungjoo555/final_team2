@@ -15,6 +15,12 @@
 					<foreach collection= "cri.typeList" item="type" index="index"  open="(" close=")" separator=",">
             			#{type}
         			</foreach>
+        		and
+	        		(
+		        		ment_title like concat('%', #{cri.search}, '%') or
+						ment_content like concat('%', #{cri.search}, '%') or
+						me_nickname like concat('%', #{cri.search}, '%')
+					)
  		order by ment_num desc
 		limit #{cri.pageStart}, #{cri.perPageNum}
  	</select>
@@ -30,5 +36,11 @@
 					<foreach collection= "cri.typeList" item="type" index="index"  open="(" close=")" separator=",">
             			#{type}
         			</foreach>
+        		and
+	        		(
+		        		ment_title like concat('%', #{cri.search}, '%') or
+						ment_content like concat('%', #{cri.search}, '%') or
+						me_nickname like concat('%', #{cri.search}, '%')
+					)
  	</select>
 </mapper>

@@ -12,9 +12,9 @@
 <div class="container">
 	<!-- 검색창 -->
 	<div class="menu-bar">
-		<form action="<c:url value='/mento/list'/>" method="get" id="searchForm">
+		<form action="<c:url value='/mento/list'/>" method="get" id="searchForm" onsubmit="return false;">
 			<div class="input-group" id="input-group">
-				<input class="form-control" type="text" placeholder="검색어를 입력하세요" name="mento-totalsearch" id="mento-totalsearch"> 
+				<input   class="form-control" type="text" placeholder="검색어를 입력하세요" name="mento-totalsearch" id="mento-totalsearch"> 
 				<input type="hidden" name="page" value="1">
 				<button type="button" class="btn btn-outline-dark" id="mento-totalsearch-btn">
 					<img alt="검색" src="<c:url value="/resources/img/search_icon.svg"/>">
@@ -171,7 +171,6 @@
 	//페이지네이션 클릭이벤트
 	$(document).on('click', '.box-pagination .page-link', function(){
 		cri.page = $(this).data('page');
-		console.log(cri);
 		getMentoList(cri);
 	})
 	

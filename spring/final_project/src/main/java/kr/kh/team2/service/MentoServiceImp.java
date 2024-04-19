@@ -39,7 +39,7 @@ public class MentoServiceImp implements MentoService {
 		if(cri.getTypeList() == null || cri.getTypeList().size() == 0) {
 			cri.setTypeList(new ArrayList<String>(Arrays.asList("프론트엔드","백엔드","풀스택","프로그래밍 언어","웹개발","데이터베이스","웹 퍼블리싱")));
 		}
-		
+		System.out.println("멘토 리스트" + mentoDAO.selectMentoTotalCount(cri));
 		return mentoDAO.selectMentoTotalCount(cri);
 	}
 	
