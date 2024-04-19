@@ -17,6 +17,36 @@ public class GroupServiceImp implements GroupService{
 	@Autowired
 	GroupDAO groupDao;
 
+  private boolean checkString(String str) {
+		return str != null && str.length() != 0;
+	}
+
+	@Override
+	public RecruitVO getRecruit(int num) {
+		return groupDao.selectRecruit(num);
+	}
+
+	@Override
+	public MemberVO getGroupKing(int recu_go_num) {
+		return groupDao.selectGroupKing(recu_go_num);
+	}
+
+	@Override
+	public ArrayList<TotalCategoryVO> getCategory(int num, String table) {
+		if(!checkString(table)) {
+			return null;
+		}
+		return groupDao.selectCategoryList(num, table);
+	}
+
+	@Override
+	public ArrayList<TotalLanguageVO> getLanguage(int num, String table) {
+		if(!checkString(table)) {
+			return null;
+		}
+		return groupDao.selectLanguageList(num, table);
+	}
+  
 	@Override
 	public ArrayList<GroupVO> getGroupListById(String me_id) {
 		if(!methods.checkString(me_id)) {
