@@ -7,12 +7,12 @@
 <meta charset="UTF-8">
 <title>멘토링 리스트</title>
 </head>
-<link rel="stylesheet" href="<c:url value="/resources/css/mentolist.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/mentorlist.css"/>">
 <body>
 <div class="container">
 	<!-- 검색창 -->
 	<div class="menu-bar">
-		<form action="<c:url value='/mento/list'/>" method="get" id="searchForm" onsubmit="return false;">
+		<form action="<c:url value='/mentor/list'/>" method="get" id="searchForm" onsubmit="return false;">
 			<div class="input-group" id="input-group">
 				<input   class="form-control" type="text" placeholder="검색어를 입력하세요" name="mento-totalsearch" id="mento-totalsearch"> 
 				<input type="hidden" name="page" value="1">
@@ -77,7 +77,7 @@
 	function getMentoList(cri){
 		$.ajax({
 			async : true, //비동기 : true(비동기), false(동기)
-			url : "<c:url value="/mento/list"/>", 
+			url : "<c:url value="/mentor/list"/>", 
 			type : 'post', 
 			data : JSON.stringify(cri),
 			//서버로 보낼 데이터 타입
@@ -99,7 +99,7 @@
 		if(list == null || list.length == 0){
 			str = '<h3>등록된 모임이 없습니다.</h3>';
 			$('.mento-list').html(str);
-			return;
+			return;	
 		}
 		
 		for(mentoing of list){
