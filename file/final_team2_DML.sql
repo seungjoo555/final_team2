@@ -313,4 +313,27 @@ INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_mem
 INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
 		    VALUES("스프링스터디 정기회의","2024-04-30","2024-04-30","미참시 미참 댓글 바랍니다.", "asdfg@final.com",2);     
 insert into `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
-		    VALUES("방과후 스터디 첫 모임","2024-04-09","2024-04-09","", "abcde@final.com",3);        
+		    VALUES("방과후 스터디 첫 모임","2024-04-09","2024-04-09","", "abcde@final.com",3);
+INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
+		    VALUES("d-day1","2025-04-20","2024-05-22","d-day1 memo", "qwert@final.com",1);
+INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
+		    VALUES("d-day2","2029-05-22","2029-05-22","d-day2 memo ", "qwert@final.com",1);
+INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
+		    VALUES("d-day3","2025-05-22","2025-05-22","d-day3 memo 2025-05-22", "qwert@final.com",1);
+INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
+		    VALUES("d-day4","2025-04-20","2025-04-20","d-day4 memo", "qwert@final.com",1);
+INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
+		    VALUES("d-day5","2025-04-20","2025-04-20","d-day5 memo", "qwert@final.com",1);
+INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
+		    VALUES("d-day6","2023-04-20","2023-04-20","d-day6 memo", "qwert@final.com",1);
+INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
+		    VALUES("d-day7","2023-04-20","2023-04-20","d-day7 memo", "qwert@final.com",1);
+INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
+		    VALUES("d-day8","2023-05-20","2023-04-20","d-day8 memo", "qwert@final.com",1);
+INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
+		    VALUES("d-day9","2023-06-20","2023-04-20","d-day9 memo", "qwert@final.com",1);
+INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
+		    VALUES("d-day0","2023-07-20","2023-04-20","d-day0 memo", "qwert@final.com",1);
+            
+            
+            
