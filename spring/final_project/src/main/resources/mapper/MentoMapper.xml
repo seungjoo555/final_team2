@@ -11,9 +11,8 @@
 			join
 				mentor_info on mentIf_me_id = ment_me_id
 			where
-				mentIf_job in 
-					<foreach collection= "cri.typeList" item="type" index="index"  open="(" close=")" separator=",">
-            			#{type}
+					<foreach collection= "cri.typeList" item="type" index="index"  open="(" close=")" separator="or">
+            			mentIf_job like concat('%', #{type}, '%')
         			</foreach>
         		and
 	        		(
@@ -32,10 +31,9 @@
 			join
 				mentor_info on mentIf_me_id = ment_me_id
 			where
-				mentIf_job in 
-					<foreach collection= "cri.typeList" item="type" index="index"  open="(" close=")" separator=",">
-            			#{type}
-        			</foreach>
+				<foreach collection= "cri.typeList" item="type" index="index"  open="(" close=")" separator="or">
+            			mentIf_job like concat('%', #{type}, '%')
+       			</foreach>
         		and
 	        		(
 		        		ment_title like concat('%', #{cri.search}, '%') or
