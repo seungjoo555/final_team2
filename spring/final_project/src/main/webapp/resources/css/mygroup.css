@@ -103,8 +103,8 @@
 		.dday-list li::after{display: block; content: ''; clear: both;}
 		
 		/* dday-list의 첫번째 자식 요소 style 설정 */
-		.first-child{font-weight: bold; font-size: 20px;}
-		.first-child *:first-child::before{display: none !important;}
+		.dday-list li:first-child{font-weight: bold; font-size: 20px;}
+		.dday-list li:first-child *:first-child::before{display: none !important;}
 	
 	/* group-board 관련 style*/
 		.group-board .group-board-list{width: 100%; display:flex; flex-direction: row; justify-content: flex-start;}
