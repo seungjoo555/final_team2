@@ -51,6 +51,7 @@ public class GroupController {
 		map.put("pm", pm);
 		return map;
 	}
+
 	@GetMapping("/mygroup/list")
 	public String grouplist(Model model, HttpSession session){
 		MemberVO user = (MemberVO)session.getAttribute("user");
