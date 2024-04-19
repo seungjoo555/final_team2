@@ -22,7 +22,6 @@
 	<c:choose>
 		<c:when test="${group == null }">가입한 그룹이 아닙니다.</c:when>
 		<c:otherwise>
-			${group}
 			<div class="container-info-bar">
 				<div class="float-left group-title">${group.go_name}</div>
 				<div class="float-left">그룹 페이지</div>
@@ -105,6 +104,10 @@
 				<div class="group-board box">
 					<div class="box-info-bar">
 						최근 그룹 게시글
+						<c:url value="/group/post" var="url">
+							<c:param name="groupNum" value="${group.go_num}"/>
+						</c:url>
+						<a href="${url}" class="to-post float-right">게시글 목록으로</a>
 					</div>
 					<div class="group-board-list">
 						<div>

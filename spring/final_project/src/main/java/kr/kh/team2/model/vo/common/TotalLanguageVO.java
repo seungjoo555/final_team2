@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 public class TotalLanguageVO {
 	private int toLg_num;
     private int toLg_lang_num;
+    private String toLg_lang_name;
     private String toLg_table_name;
     private String toLg_table_pk;
 }

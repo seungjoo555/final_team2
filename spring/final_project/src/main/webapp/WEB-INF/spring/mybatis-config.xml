@@ -4,6 +4,11 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
+		<!-- Mapper에서 resultType을 간단히 줄여쓰기 위해 typeAlias를 활용 -->
+		<typeAlias type="kr.kh.team2.model.vo.common.TotalCategoryVO" alias="TotalCategoryVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.common.TotalLanguageVO" alias="TotalLanguageVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.group.RecruitVO" alias="RecruitVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.group.GroupMemberVO" alias="GroupMemberVO"/>
     
 		<!-- ========================== member ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.member.MemberVO" alias="MemberVO"/>
