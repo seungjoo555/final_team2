@@ -8,5 +8,19 @@
 		<typeAlias type="kr.kh.team2.model.vo.group.RecruitVO" alias="RecruitVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.member.MemberVO" alias="MemberVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.member.MetoringVO" alias="MetoringVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.common.TotalCategoryVO" alias="TotalCategoryVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.common.TotalLanguageVO" alias="TotalLanguageVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.group.RecruitVO" alias="RecruitVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.group.GroupMemberVO" alias="GroupMemberVO"/>
+    
+		<!-- ========================== member ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.member.MemberVO" alias="MemberVO"/>
+    
+    <!-- ========================== mentor ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.member.MentorJobVO" alias="MentorJobVO"/>
+		
+		<!-- ========================== group ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.group.GroupVO" alias="GroupVO"/>
+    
 	</typeAliases>
 </configuration>
