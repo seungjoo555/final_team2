@@ -10,7 +10,7 @@
 	
 	/*btn-group 설정*/
 		[class$=btn-group]{display:flex; justify-content: space-around;}
-		[class$=btn-group] a{width: 50px; height: 50px; text-align: center; text-height: 50px; border-radius: 100%; border: 1px solid black;}
+		[class$=btn-group] a{width: 50px; height: 50px; text-align: center; line-height: 50px; border-radius: 100%; border: 1px solid black;}
 		[class$=btn-group] a::hover{text-decoration: none;}
 	
 	/*input 박스 관련 style*/
@@ -36,5 +36,29 @@
 		[class$=error]{color: red;}
 			
 		/*submit 버튼 style*/
-		[class$=form] .submit{width: 550px; height: 60px; text-height: 60px; text-align: center; border: none; border-radius: 5px;
+		[class$=form] .submit{width: 550px; height: 60px; line-height: 60px; text-align: center; border: none; border-radius: 5px;
 			background-color: #E6F5E5; font-weight: bold; margin: 70px 0 50px 0;}
+	
+	/* ======================================= signup.jsp ============================================ */
+	
+	/*상세주소 margin-top 설정*/
+	[class$=input] .add2{margin-top: 10px;}
+		
+			
+	/*simple-login-btn-group margin-top*/
+	.simple-login-btn-group{margin-top: 50px;}
+	
+	/* ======================================= verify.jsp ============================================ */
+	
+	/* verify-sub */
+	.verify-sub{margin: 50px 0 100px 0;}
+	
+	/*verify-input*/
+	.verify-input::after{content:''; display: block; clear:both;}
+	.verify-input .input-bg{width: calc(550px - 95px); float:left;}
+	
+	/*verify-submit 버튼 style*/
+	.verify-submit-btn{float:right; width: 80px; height: 50px; background-color: #E6F5E5; margin: 0;}
+	
+	/* verify-retry */
+	.verify-retry{margin-top: 20px;}

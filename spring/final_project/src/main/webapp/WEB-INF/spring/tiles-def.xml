@@ -10,5 +10,26 @@
         <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
         <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
     </definition>
- 
+ 	 <definition name="/*/*/*" template="/WEB-INF/views/layout/baseLayout.jsp">
+        <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+    </definition>
+    
+    <!-- 경로를 몇 번 더 거치는 jsp에 tiling을 적용할 때 좀 더 효율적인 코드(혹시 몰라서 백업함) -->
+    <!-- 
+    <definition name=".base" template="/WEB-INF/views/layout/baseLayout.jsp">
+        <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+    </definition>
+    <definition name="/*/*" extends=".base">
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp" />
+    </definition>
+    <definition name="/*/*/*" extends=".base">
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+    </definition>
+    <definition name="/*/*/*/*" extends=".base">
+        <put-attribute name="body" value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
+    </definition>
+     -->
 </tiles-definitions>

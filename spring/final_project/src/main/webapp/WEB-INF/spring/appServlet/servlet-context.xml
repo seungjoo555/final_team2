@@ -39,13 +39,21 @@
 	
 	<!-- 인터셉터 등록 -->
 	<beans:bean id="loninInterceptor" class="kr.kh.team2.interceptor.LoginInterceptor"/>
-	
+	<!-- MemberInterceptor를 등록 -->
+	<beans:bean id="memberInterceptor" 
+		class="kr.kh.team2.interceptor.MemberInterceptor"/>
 	<!-- 인터셉터 맵핑 -->
 	<interceptors>
 		<interceptor>
 			<mapping path="/login"/>
 			<beans:ref bean="loninInterceptor"/>
 		</interceptor>
+		<!-- MemberInceptor가 실행된 URL 지정 -->
+		<interceptor>
+			<mapping path="/mentor/check"/>
+			<mapping path="/mentor/insert"/>
+			<beans:ref bean="memberInterceptor"/>
+		</interceptor>	
 	</interceptors>	
 
 </beans:beans>
