@@ -18,6 +18,7 @@ import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.member.MemberVO;
+
 import kr.kh.team2.service.GroupService;
 import lombok.extern.log4j.Log4j;
 
@@ -28,6 +29,7 @@ public class GroupController {
 	@Autowired
 	GroupService groupService;
 	
+
 	@GetMapping("/group/list")
 	public String groupList(Model model) {
 
@@ -49,7 +51,6 @@ public class GroupController {
 		map.put("pm", pm);
 		return map;
 	}
-
 	@GetMapping("/mygroup/list")
 	public String grouplist(Model model, HttpSession session){
 		MemberVO user = (MemberVO)session.getAttribute("user");
