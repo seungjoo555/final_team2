@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
-import kr.kh.team2.pagination.Criteria;
 
 @Service
 public interface GroupDAO {
