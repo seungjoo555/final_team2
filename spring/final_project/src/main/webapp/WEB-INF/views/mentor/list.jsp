@@ -208,6 +208,8 @@ $(document).on('keyup', '#mento-totalsearch', function(){
 		getMentoList(cri);
 	}
 })
+//ㅇㄴㅇㄴ
+
 </script>
 
 
