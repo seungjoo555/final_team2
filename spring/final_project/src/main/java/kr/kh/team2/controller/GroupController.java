@@ -19,7 +19,7 @@ public class GroupController {
 	@Autowired
 	GroupService groupService;
 	
-	@GetMapping("/group/mylist")
+	@GetMapping("/mygroup/list")
 	public String grouplist(Model model, HttpSession session){
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
@@ -29,14 +29,19 @@ public class GroupController {
 			model.addAttribute("list", list);
 		}
 		
-		return "/group/mygrouplist";
+		return "/group/mygroup/list";
 	}
 	
 	@GetMapping("/group/home")
 	public String grouphome(Model model, HttpSession session, int groupNum){
-
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		return "/group/grouphome";
+		if(groupService.isGroupMember(user, groupNum)) {
+			GroupVO group = groupService.getGroupByGoNum(groupNum);
+			model.addAttribute("group", group);
+		}
+		
+		return "/group/mygroup/grouphome";
 	}
 
 	
