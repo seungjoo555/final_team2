@@ -1,15 +1,15 @@
 package kr.kh.team2.service;
 
 import java.util.ArrayList;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.GroupDAO;
+import kr.kh.team2.model.vo.group.RecruitVO;
+import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupVO;
-import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.utils.Methods;
 
@@ -19,6 +19,23 @@ public class GroupServiceImp implements GroupService{
 	
 	@Autowired
 	GroupDAO groupDao;
+
+	@Override
+	public ArrayList<RecruitVO> getGroupList(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 10);
+		}
+		return groupDao.selectGroupList(cri);
+	}
+
+	@Override
+	public int getGroupTotalCount(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 10);
+		}
+		System.out.println("게시글 토탈 카운트"+groupDao.selectGroupTotalCount(cri));
+		return groupDao.selectGroupTotalCount(cri);
+	}
 
   private boolean checkString(String str) {
 		return str != null && str.length() != 0;
