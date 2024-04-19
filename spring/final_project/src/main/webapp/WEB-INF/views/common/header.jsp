@@ -43,7 +43,7 @@
 							<a class="nav-link dropbtn">마이페이지</a>
 							<div class="dropdown-content">
 								<a href="<c:url value="/mypage/profile?me_id=${user.me_id}"/>">내정보</a>
-								<a href="<c:url value="/mypage/mygroup"/>">그룹/프로젝트</a>
+								<a href="<c:url value="/mypage/mygroup?me_id=${user.me_id}"/>">그룹/프로젝트</a>
 								<a href="#">그리고 뭐?</a>
 							</div>
 						</div>

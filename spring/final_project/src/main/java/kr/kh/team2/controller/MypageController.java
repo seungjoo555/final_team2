@@ -1,18 +1,33 @@
 package kr.kh.team2.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.team2.model.vo.group.MutualReviewVO;
+import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.service.MemberService;
+import kr.kh.team2.service.RecruitService;
+import kr.kh.team2.service.ReviewService;
 
 @Controller
 public class MypageController {
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	ReviewService reviewService;
+	
+	@Autowired
+	RecruitService recruitService;
 	
 	@GetMapping("/mypage/profile")
 	public String mypageProfile(Model model, String me_id) {
@@ -23,7 +38,19 @@ public class MypageController {
 	}
 	
 	@GetMapping("mypage/mygroup")
-	public String mypageMygroup(Model model, String me_id) {
+	public String groupListPost(Model model, String me_id) {
+		
+		MemberVO member = memberService.getMember(me_id);
+		System.out.println(member);
+		model.addAttribute("member", member);
+		
+		RecruitVO recruit = reviewService.getRecuType(me_id);
+		 model.addAttribute(recruit);
+		 
+		//그룹 리스트 가져오기
+		ArrayList<MutualReviewVO> mutualReviewList = reviewService.getMutualReviewList(me_id);
+		model.addAttribute("mutualReviewList", mutualReviewList);
+		System.out.println(mutualReviewList);
 		
 		return "/mypage/mygroup";
 	}
@@ -44,4 +71,6 @@ public class MypageController {
 		}
 		return "message";
 	}
+
+	
 }
