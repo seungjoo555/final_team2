@@ -49,6 +49,12 @@ public class GroupController {
 		
 		return "/group/mygroup/grouphome";
 	}
+	
+	@GetMapping("/group/post")
+	public String grouppost(Model model, HttpSession session, int groupNum){
+		
+		return "/group/mygroup/grouppost";
+	}
 
   @GetMapping("/group/detail")
 	public String postDetail(Model model, int num) {
