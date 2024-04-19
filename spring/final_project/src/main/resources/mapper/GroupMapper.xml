@@ -40,7 +40,6 @@
 				</otherwise>
 			</choose>
  	</select>
-</mapper>
  	<select id="getGroupListById" resultType="GroupVO">
 		SELECT go_num, go_name, go_time, go_update, COUNT(gome_me_id) as go_member_count 
 			FROM `group`
