@@ -31,7 +31,6 @@ public class GroupServiceImp implements GroupService{
 	public int getGroupTotalCount(Criteria cri) {
 		if(cri == null) {
 			cri = new Criteria(1, 20);
-
 		}
 		System.out.println("게시글 토탈 카운트"+groupDao.selectGroupTotalCount(cri));
 		return groupDao.selectGroupTotalCount(cri);
