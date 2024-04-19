@@ -64,6 +64,12 @@ public class SignupController {
 		
 	}
 	
+	@GetMapping("/signup/verify")
+	public String signupVerify(){
+		
+		return "/signup/verify";
+	}
+	
 	@PostMapping("/signup/verify")
 	public String signupVerifyPost(){
 		
