@@ -22,31 +22,31 @@
 			</div>
 			<div class="check-group" id="check-group" >
 				<div class="check_wrap">
-				  <input type="checkbox" id="check_frontend"  onclick='getCheckboxValue(event)' value="프론트엔드"/>
+				  <input type="checkbox" id="check_frontend"  class="check-input" onclick='getCheckboxValue(event)' value="프론트엔드" />
 				  <label for="check_frontend"><span>프론트엔드</span></label>
 				</div>
 				<div class="check_wrap">
-				  <input type="checkbox" id="check_backend" onclick='getCheckboxValue(event)' value="백엔드"/>
+				  <input type="checkbox" id="check_backend" class="check-input" onclick='getCheckboxValue(event)' value="백엔드"/>
 				  <label for="check_backend"><span>백엔드</span></label>
 				</div>
 				<div class="check_wrap">
-				  <input type="checkbox" id="check_full" onclick='getCheckboxValue(event)' value="풀스택"/>
+				  <input type="checkbox" id="check_full" class="check-input" onclick='getCheckboxValue(event)' value="풀스택"/>
 				  <label for="check_full"><span>풀스택</span></label>
 				</div>
 				<div class="check_wrap">
-				  <input type="checkbox" id="check_language" onclick='getCheckboxValue(event)' value="프로그래밍 언어"/>
+				  <input type="checkbox" id="check_language" class="check-input" onclick='getCheckboxValue(event)' value="프로그래밍 언어" />
 				  <label for="check_language"><span>프로그래밍 언어</span></label>
 				</div>
 				<div class="check_wrap">
-				  <input type="checkbox" id="check_web" onclick='getCheckboxValue(event)' value="웹 개발"/>
+				  <input type="checkbox" id="check_web" class="check-input" onclick='getCheckboxValue(event)' value="웹 개발" />
 				  <label for="check_web"><span>웹 개발</span></label>
 				</div>
 				<div class="check_wrap">
-				  <input type="checkbox" id="check_db" onclick='getCheckboxValue(event)' value="데이터베이스"/>
+				  <input type="checkbox" id="check_db" class="check-input" onclick='getCheckboxValue(event)' value="데이터베이스"/>
 				  <label for="check_db"><span>데이터베이스</span></label>
 				</div>
 				<div class="check_wrap">
-				  <input type="checkbox" id="check_publishing" onclick='getCheckboxValue(event)' value="웹 퍼블리싱"/>
+				  <input type="checkbox" id="check_publishing" class="check-input" onclick='getCheckboxValue(event)' value="웹 퍼블리싱" />
 				  <label for="check_publishing"><span>웹 퍼블리싱</span></label>
 				</div>
 			</div>
@@ -69,7 +69,8 @@
 <script type="text/javascript">
 	let cri = {
 			page : 1,
-			type : ""	//멘토 직무
+			type : "",
+			typeList : ["프론트엔드","백엔드","풀스택","프로그래밍 언어","웹개발","데이터베이스","웹 퍼블리싱"]
 	}
 	getMentoList(cri);
 	function getMentoList(cri){
@@ -85,12 +86,13 @@
 			success : function (data){
 				displayMentoList(data.list);
 				displayMentoPagination(data.pm);
+				pm = data.pm;
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
 			}
 		});	//ajax and
 	}	//getGroupList(cri); end
-	
+
 	//리스트 출력 함수
 	function displayMentoList(list){
 		let str = '';
@@ -170,13 +172,17 @@
 <!-- 분야 선택 이벤트 -->
 <script type="text/javascript">
 function getCheckboxValue(event)  {
-  let result = '';
-  if(event.target.checked)  {
-    result = event.target.value;
-  }else {
-    result = '';
-  }
-  
+	var arr = [];
+	$(".check-input").each(function(){
+	if($(this).prop("checked")){
+		arr.push($(this).val());	  
+	}  
+	})
+	if(arr.length == 0){
+		arr.push("프론트엔드","백엔드","풀스택","프로그래밍 언어","웹개발","데이터베이스","웹 퍼블리싱");
+	}
+	cri.typeList = arr;
+	getMentoList(cri);
 }
 </script>
 

@@ -1,6 +1,7 @@
 package kr.kh.team2.pagination;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,8 @@ public class Criteria {
 	
 	private String search = ""; //검색어 : 기본값 - 빈문자열=> 전체 검색
 	private String type = "all"; //검색 타입 : 기본값 - 전체검색
-	private ArrayList<String> cateList = new ArrayList<String>(); //검색분야
+	private ArrayList<String> typeList = //검색분야
+			new ArrayList<String>(Arrays.asList("프론트엔드","백엔드","풀스택","프로그래밍 언어","웹개발","데이터베이스","웹 퍼블리싱")); 
 	
 	public Criteria(int page) {
 		this.page = page;

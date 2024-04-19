@@ -11,9 +11,10 @@
 			join
 				mentor_info on mentIf_me_id = ment_me_id
 			where
-				mentIf_job like concat('%', #{cri.type}, '%')
-				
-				
+				mentIf_job in 
+					<foreach collection= "cri.typeList" item="type" index="index"  open="(" close=")" separator=",">
+            			#{type}
+        			</foreach>
 		
  	</select>
  	<select id="selectMentoTotalCount" resultType="int">
