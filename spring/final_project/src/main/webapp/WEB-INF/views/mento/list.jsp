@@ -16,7 +16,7 @@
 			<div class="input-group" id="input-group">
 				<input class="form-control" type="text" placeholder="검색어를 입력하세요" name="mento-totalsearch" id="mento-totalsearch"> 
 				<input type="hidden" name="page" value="1">
-				<button type="submit" class="btn btn-outline-dark" id="mento-totalsearch-btn">
+				<button type="button" class="btn btn-outline-dark" id="mento-totalsearch-btn">
 					<img alt="검색" src="<c:url value="/resources/img/search_icon.svg"/>">
 				</button>
 			</div>
@@ -70,7 +70,8 @@
 	let cri = {
 			page : 1,
 			type : "",
-			typeList : ["프론트엔드","백엔드","풀스택","프로그래밍 언어","웹개발","데이터베이스","웹 퍼블리싱"]
+			search : "",
+			typeList : ["프론트엔드","백엔드","풀스택","프로그래밍 언어","웹 개발","데이터베이스","웹 퍼블리싱"]
 	}
 	getMentoList(cri);
 	function getMentoList(cri){
@@ -86,7 +87,6 @@
 			success : function (data){
 				displayMentoList(data.list);
 				displayMentoPagination(data.pm);
-				pm = data.pm;
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
 			}
@@ -95,10 +95,11 @@
 
 	//리스트 출력 함수
 	function displayMentoList(list){
+		console.log(list);
 		let str = '';
 		if(list == null || list.length == 0){
 			str = '<h3>등록된 모임이 없습니다.</h3>';
-			$('.box-mento-list').html(str);
+			$('.mento-list').html(str);
 			return;
 		}
 		
@@ -142,7 +143,7 @@
 		if(pm.prev){
 			str +=
 				`<li class="page-item">
-					<a class="page-link" href="javascript:void(0)" data-page="\${pm.startPage - 1}" data-type="\${pm.cri.type}">이전</a>
+					<a class="page-link" href="javascript:void(0)" data-page="\${pm.startPage - 1}" >이전</a>
 			    </li>`;
 		}
 		
@@ -151,7 +152,7 @@
 			str +=
 				`
 				 <li class="page-item \${active}">
-				 	<a class="page-link" href="javascript:void(0)" data-page="\${i}" data-type="\${pm.cri.type}">\${i}</a>
+				 	<a class="page-link" href="javascript:void(0)" data-page="\${i}" >\${i}</a>
 			    </li>				
 				`;
 		}
@@ -160,12 +161,20 @@
 			str +=
 				`
 				<li class="page-item">
-					<a class="page-link" href="javascript:void(0)" data-page="\${pm.endPage + 1}" data-type="\${pm.cri.type}">다음</a>
+					<a class="page-link" href="javascript:void(0)" data-page="\${pm.endPage + 1}" >다음</a>
 			    </li>				
 				`;
 		}
 		$('.box-pagination>ul').html(str);
 	}	//displayGroupPagination() end
+	
+	//페이지네이션 클릭이벤트
+	$(document).on('click', '.box-pagination .page-link', function(){
+		cri.page = $(this).data('page');
+		console.log(cri);
+		getMentoList(cri);
+	})
+	
 	
 </script>
 
@@ -179,14 +188,22 @@ function getCheckboxValue(event)  {
 	}  
 	})
 	if(arr.length == 0){
-		arr.push("프론트엔드","백엔드","풀스택","프로그래밍 언어","웹개발","데이터베이스","웹 퍼블리싱");
+		arr.push("프론트엔드","백엔드","풀스택","프로그래밍 언어","웹 개발","데이터베이스","웹 퍼블리싱");
 	}
 	cri.typeList = arr;
+	cri.page = 1;
 	getMentoList(cri);
 }
 </script>
 
-
+<!-- 검색 창 이벤트 -->
+<script type="text/javascript">
+$(document).on('click', '#mento-totalsearch-btn', function(){
+	cri.page = 1;
+	cri.search = $("#mento-totalsearch").val();
+	getMentoList(cri);
+})
+</script>
 
 
 

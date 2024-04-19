@@ -15,13 +15,20 @@
 					<foreach collection= "cri.typeList" item="type" index="index"  open="(" close=")" separator=",">
             			#{type}
         			</foreach>
-		
+ 		order by ment_num desc
+		limit #{cri.pageStart}, #{cri.perPageNum}
  	</select>
  	<select id="selectMentoTotalCount" resultType="int">
- 		select count(*) from mentoring
- 		join
-			mentor_info on mentIf_me_id = ment_me_id
-		where
-			mentIf_job like concat('%', #{cri.type}, '%')
+ 		 select count(*)
+        from mentoring
+			join
+				`member` on me_id = ment_me_id
+			join
+				mentor_info on mentIf_me_id = ment_me_id
+			where
+				mentIf_job in 
+					<foreach collection= "cri.typeList" item="type" index="index"  open="(" close=")" separator=",">
+            			#{type}
+        			</foreach>
  	</select>
 </mapper>
