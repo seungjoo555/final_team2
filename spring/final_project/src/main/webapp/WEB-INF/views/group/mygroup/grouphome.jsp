@@ -115,7 +115,7 @@
 							<div>
 								<label class="writer">${board.nickname}</label>
 								<div class="content">${board.gopo_content}</div>
-								<div class="time">시간</div>
+								<div class="time">${board.time_ago}</div>
 							</div>
 						</c:forEach>
 						
