@@ -1,19 +1,17 @@
 package kr.kh.team2.service;
 
 import java.util.ArrayList;
-
-
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupVO;
-
 import kr.kh.team2.model.vo.member.MemberVO;
 
 public interface GroupService {
 
 	ArrayList<RecruitVO> getGroupList(Criteria cri);
+
 
 	int getGroupTotalCount(Criteria cri);
 
