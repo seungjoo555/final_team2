@@ -33,6 +33,13 @@
 			LIMIT #{count};
 	</select>
  	
+	<select id="getDday" resultType="GroupCalendarVO">
+		SELECT * FROM group_calendar 
+			WHERE gocal_go_num = #{num} AND gocal_startdate > NOW()
+		    ORDER BY gocal_startdate 
+		    LIMIT #{count};
+	</select>
+ 	
  	<select id="selectRecruit" resultType="RecruitVO">
  		select * from recruit where recu_num = #{num}
  	</select>
@@ -65,7 +72,7 @@
  		where
  			toLg_table_name = #{table} and toLg_table_pk = #{num}
  	</select>
- 		
+	
 	<!-- =============================== DELETE =============================== -->
 	
 	<!-- =============================== UPDATE =============================== -->	

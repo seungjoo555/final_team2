@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupCalendarVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
@@ -42,6 +43,7 @@ public class GroupController {
 	@GetMapping("/group/home")
 	public String grouphome(Model model, HttpSession session, int groupNum){
 		int recentBoard = 6;
+		int dday = 7;
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		if(groupService.isGroupMember(user, groupNum)) {
@@ -49,8 +51,19 @@ public class GroupController {
 			model.addAttribute("group", group);
 		}
 		
+		// 최근 게시글 불러오기
 		ArrayList<GroupPostVO> boardlist = groupService.getRecentGroupBoard(groupNum, recentBoard);
+		// d-day 불러오기
+		ArrayList<GroupCalendarVO> ddaylist = groupService.getDday(groupNum, dday);
 		
+		// 가장 마지막 일정을 dday 최상단에 표시되도록 하기(의미가 있나? 그룹 시작일로 하는게 낫지 않을지,)
+		/*
+		if(ddaylist.size() != 0 || ddaylist != null) {
+			
+		}
+		*/
+		
+		model.addAttribute("ddaylist", ddaylist);
 		model.addAttribute("boardlist", boardlist);
 		
 		return "/group/mygroup/grouphome";

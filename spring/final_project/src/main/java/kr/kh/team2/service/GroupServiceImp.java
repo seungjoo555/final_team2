@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import kr.kh.team2.dao.GroupDAO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupCalendarVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
@@ -89,11 +90,20 @@ public class GroupServiceImp implements GroupService{
 	@Override
 	public ArrayList<GroupPostVO> getRecentGroupBoard(int groupNum, int recentBoard) {
 		if(groupNum == 0 || recentBoard == 0) {
-			System.out.println("groupNum is 0");
+			System.out.println("groupNum is or count 0");
 			return null;
 		}
 		
 		return groupDao.getRecentGroupBoard(groupNum, recentBoard);
+	}
+
+	@Override
+	public ArrayList<GroupCalendarVO> getDday(int groupNum, int dday) {
+		if(groupNum == 0 || dday == 0) {
+			System.out.println("groupNum  or count is 0");
+			return null;
+		}
+		return groupDao.getDday(groupNum, dday);
 	}
 	
 	

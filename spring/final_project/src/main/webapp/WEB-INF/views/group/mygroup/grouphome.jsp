@@ -53,38 +53,13 @@
 						</div>
 						<div>
 							<ul class="dday-list">
-								<li class="first-child">
-									<div>D-000</div>
-									<div>1111111111111111111111111111111</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>2222222222222222222222222222222</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>3333333333333333333333333333333</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>44444444444444444444444444444444</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>5555555555555555555555555555555</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>6666666666666666666666666666666</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>7777777777777777777777777777777</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>8888888888888888888888888888888</div>
-								</li>
+								<c:forEach items= "${ddaylist}" var="dday">
+									<li>
+										<div>D${dday.dday}</div>
+										<div>${dday.gocal_title}</div>
+									</li>
+								</c:forEach>
+								
 							</ul>					
 						</div>
 					</div>
