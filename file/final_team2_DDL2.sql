@@ -142,7 +142,6 @@ DROP TABLE IF EXISTS `group_post`;
 
 CREATE TABLE `group_post` (
 	`gopo_num`	int  primary key auto_increment	NOT NULL,
-	`gopo_title`	varchar(50)	NULL,
 	`gopo_content`	longtext	NULL,
 	`gopo_date`	datetime	NULL,
 	`gopo_gome_me_id`	varchar(50)	NOT NULL,
