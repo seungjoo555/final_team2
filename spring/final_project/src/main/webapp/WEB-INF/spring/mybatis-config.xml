@@ -18,6 +18,7 @@
 		
 		<!-- ========================== group ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.group.GroupVO" alias="GroupVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.group.GroupPostVO" alias="GroupPostVO"/>
     
 	</typeAliases>
 </configuration>

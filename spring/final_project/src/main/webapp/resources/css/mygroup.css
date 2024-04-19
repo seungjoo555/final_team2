@@ -108,8 +108,8 @@
 	
 	/* group-board 관련 style*/
 		.group-board .group-board-list{width: 100%; display:flex; flex-direction: row; justify-content: flex-start;}
-		.group-board .group-board-list>*{width: calc(100% / 6); padding: 2px 2px 2px 20px;}
-		.group-board .group-board-list *:first-child{padding-left: 0px;} 
+		.group-board .group-board-list>*{width: calc(100% / 6); padding: 2px 2px 2px 10px;}
+		.group-board .group-board-list *:first-child{padding-left: 0px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}  
 		
 		.group-board .writer{font-size: 16px; font-weight: bold;}
 		.group-board .content{

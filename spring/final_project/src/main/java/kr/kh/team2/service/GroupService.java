@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
@@ -23,5 +24,7 @@ public interface GroupService {
 	ArrayList<TotalCategoryVO> getCategory(int num, String table);
 
 	ArrayList<TotalLanguageVO> getLanguage(int num, String table);
+
+	ArrayList<GroupPostVO> getRecentGroupBoard(int groupNum, int recentBoard);
 
 }

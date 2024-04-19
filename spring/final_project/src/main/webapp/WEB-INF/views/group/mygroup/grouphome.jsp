@@ -101,6 +101,7 @@
 				</div>
 			</div>
 			<div class="container-bottom">
+				
 				<div class="group-board box">
 					<div class="box-info-bar">
 						최근 그룹 게시글
@@ -110,41 +111,15 @@
 						<a href="${url}" class="to-post float-right">게시글 목록으로</a>
 					</div>
 					<div class="group-board-list">
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
+						<c:forEach items="${boardlist}" var="board">
+							<div>
+								<label class="writer">${board.nickname}</label>
+								<div class="content">${board.gopo_content}</div>
+								<div class="time">시간</div>
+							</div>
+						</c:forEach>
+						
+						
 					</div>
 				</div>
 			</div>
@@ -152,5 +127,6 @@
 		</c:otherwise>
 	</c:choose> 
 </div>
+
 </body>
 </html>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
@@ -40,12 +41,17 @@ public class GroupController {
 	
 	@GetMapping("/group/home")
 	public String grouphome(Model model, HttpSession session, int groupNum){
+		int recentBoard = 6;
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		if(groupService.isGroupMember(user, groupNum)) {
 			GroupVO group = groupService.getGroupByGoNum(groupNum);
 			model.addAttribute("group", group);
 		}
+		
+		ArrayList<GroupPostVO> boardlist = groupService.getRecentGroupBoard(groupNum, recentBoard);
+		
+		model.addAttribute("boardlist", boardlist);
 		
 		return "/group/mygroup/grouphome";
 	}

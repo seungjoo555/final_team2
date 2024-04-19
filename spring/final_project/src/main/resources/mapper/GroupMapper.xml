@@ -3,6 +3,9 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team2.dao.GroupDAO">
+	
+	<!-- =============================== SELECT =============================== -->
+	
  	<select id="getGroupListById" resultType="GroupVO">
 		SELECT go_num, go_name, go_time, go_update, COUNT(gome_me_id) as go_member_count 
 			FROM `group`
@@ -19,6 +22,15 @@
 	
 	<select id="isGroupMember" resultType="Object">
 		SELECT * FROM group_member WHERE gome_go_num = #{num} AND gome_me_id = #{id}
+	</select>
+	
+	<select id="getRecentGroupBoard" resultType="GroupPostVO">
+		SELECT group_post.*, me_nickname as nickname 
+			FROM group_post 
+				JOIN member ON me_id = gopo_gome_me_id
+			WHERE gopo_gome_go_num = #{num}  
+			ORDER BY gopo_date DESC 
+			LIMIT #{count};
 	</select>
  	
  	<select id="selectRecruit" resultType="RecruitVO">
@@ -53,5 +65,11 @@
  		where
  			toLg_table_name = #{table} and toLg_table_pk = #{num}
  	</select>
- 	
+ 		
+	<!-- =============================== DELETE =============================== -->
+	
+	<!-- =============================== UPDATE =============================== -->	
+	
+	<!-- =============================== SELECT =============================== -->	
+	
 </mapper>
