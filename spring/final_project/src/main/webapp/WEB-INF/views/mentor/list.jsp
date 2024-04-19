@@ -14,7 +14,7 @@
 	<div class="menu-bar">
 		<form action="<c:url value='/mentor/list'/>" method="get" id="searchForm" onsubmit="return false;">
 			<div class="input-group" id="input-group">
-				<input   class="form-control" type="text" placeholder="검색어를 입력하세요" name="mento-totalsearch" id="mento-totalsearch"> 
+				<input   class="form-control" type="text" placeholder="검색어를 입력하세요" name="mento-totalsearch" id="mento-totalsearch" onkeypress=""> 
 				<input type="hidden" name="page" value="1">
 				<button type="button" class="btn btn-outline-dark" id="mento-totalsearch-btn">
 					<img alt="검색" src="<c:url value="/resources/img/search_icon.svg"/>">
@@ -200,6 +200,13 @@ $(document).on('click', '#mento-totalsearch-btn', function(){
 	cri.page = 1;
 	cri.search = $("#mento-totalsearch").val();
 	getMentoList(cri);
+})
+$(document).on('keyup', '#mento-totalsearch', function(){
+	if(event.keyCode === 13){
+		cri.page = 1;
+		cri.search = $("#mento-totalsearch").val();
+		getMentoList(cri);
+	}
 })
 </script>
 
