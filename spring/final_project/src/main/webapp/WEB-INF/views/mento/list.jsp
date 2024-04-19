@@ -95,7 +95,6 @@
 
 	//리스트 출력 함수
 	function displayMentoList(list){
-		console.log(list);
 		let str = '';
 		if(list == null || list.length == 0){
 			str = '<h3>등록된 모임이 없습니다.</h3>';
