@@ -13,9 +13,20 @@
 	<!-- =============================== SELECT =============================== -->	
 	
 	<select id="getGroupListById" resultType="GroupVO">
-		SELECT go_num, go_name, go_time, go_update 
+		SELECT go_num, go_name, go_time, go_update, COUNT(gome_me_id) as go_member_count 
 			FROM `group`
 				JOIN group_member ON go_num = gome_go_num
-			WHERE gome_me_id = #{id}
+			WHERE go_num in (
+				SELECT gome_go_num FROM group_member WHERE gome_me_id = #{id}
+            ) 
+             GROUP BY gome_go_num;
+	</select>
+	
+	<select id="getGroupByGoNum" resultType="GroupVO">
+		SELECT * FROM `group` WHERE go_num = #{num}
+	</select>
+	
+	<select id="isGroupMember" resultType="Object">
+		SELECT * FROM group_member WHERE gome_go_num = #{num} AND gome_me_id = #{id}
 	</select>
 </mapper>

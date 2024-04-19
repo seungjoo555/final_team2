@@ -10,4 +10,8 @@ public interface GroupDAO {
 
 	ArrayList<GroupVO> getGroupListById(@Param("id")String me_id);
 
+	GroupVO getGroupByGoNum(@Param("num")int groupNum);
+
+	Object isGroupMember(@Param("id")String me_id, @Param("num")int groupNum);
+
 }
