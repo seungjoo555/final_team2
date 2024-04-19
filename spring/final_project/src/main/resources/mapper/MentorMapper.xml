@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team2.dao.MentorDAO">
+
+	<!-- =============================== INSERT =============================== -->
+	<insert id="insertMentorInfo">
+		insert into mentor_info(mentif_me_id,mentif_exp,mentif_portfolio,mentif_bank,mentif_account,mentif_date,mentif_state,mentif_ment_job) 
+		values(#{mt_info.mentIf_me_id},#{mt_info.mentIf_exp},#{mt_info.mentIf_portfolio},#{mt_info.mentIf_bank},#{mt_info.mentIf_account},
+			   now(),0,#{mt_info.mentIf_ment_job})
+		
+		
+	</insert>
+	
+	<!-- =============================== DELETE =============================== -->
+	
+	<!-- =============================== UPDATE =============================== -->	
+	
+	<!-- =============================== SELECT =============================== -->	
+	<select id="selectJobList" resultType="MentorJobVO">
+		select * from mentor_job
+	</select>
+	
+	<select id="selectMentorInfo" resultType="kr.kh.team2.model.vo.member.MentorInfoVO">
+		select * from mentor_info where mentIf_me_id = #{me_id}
+	</select>
+	
+
+</mapper>

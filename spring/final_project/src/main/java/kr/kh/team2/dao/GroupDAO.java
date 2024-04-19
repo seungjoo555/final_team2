@@ -14,7 +14,11 @@ import kr.kh.team2.pagination.Criteria;
 @Service
 public interface GroupDAO {
 
-	ArrayList<RecruitVO> selectGroupList(@Param("cri")Criteria cri);
+	ArrayList<GroupVO> getGroupListById(@Param("id")String me_id);
+
+	GroupVO getGroupByGoNum(@Param("num")int groupNum);
+
+	Object isGroupMember(@Param("id")String me_id, @Param("num")int groupNum);
 
 	RecruitVO selectRecruit(@Param("num")int num);
 

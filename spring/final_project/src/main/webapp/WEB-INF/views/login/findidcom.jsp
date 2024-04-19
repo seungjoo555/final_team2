@@ -83,7 +83,7 @@
 	
 <script type="text/javascript">
 	$(".btn-login").click(function(){
-		location.replace("http://localhost:8080/team2/login");
+		location.replace("<c:url value='/login'/>");
 	})
 </script>
 </body>

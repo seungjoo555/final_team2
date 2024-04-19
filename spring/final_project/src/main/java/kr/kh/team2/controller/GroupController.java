@@ -1,8 +1,5 @@
 package kr.kh.team2.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,33 +26,32 @@ public class GroupController {
 	@Autowired
 	GroupService groupService;
 	
-	@GetMapping("/group/home")
-	public String groupHome(Model model) {
-
-		return "/group/home";
+	@GetMapping("/mygroup/list")
+	public String grouplist(Model model, HttpSession session){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		ArrayList<GroupVO> list = groupService.getGroupListById(user.getMe_id());
+		
+		if(list.size() > 0) {
+			model.addAttribute("list", list);
+		}
+		
+		return "/group/mygroup/list";
 	}
 	
-	@ResponseBody
-	@PostMapping("/group/home")
-	public Map<String, Object> groupHomePost(@RequestBody Criteria cri) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	@GetMapping("/group/home")
+	public String grouphome(Model model, HttpSession session, int groupNum){
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		cri.setPerPageNum(20);
-		//그룹 리스트 가져오기
-		ArrayList<RecruitVO> groupList = groupService.getGroupList(cri);
+		if(groupService.isGroupMember(user, groupNum)) {
+			GroupVO group = groupService.getGroupByGoNum(groupNum);
+			model.addAttribute("group", group);
+		}
 		
-		System.out.println("cri : " + cri);
-		for(RecruitVO tmp : groupList) {
-			System.out.println(tmp);
-		}	
-//		int totalCount = groupService.getGroupTotalCount(cri);
-		PageMaker pm = new PageMaker(5, cri, 5);
-		map.put("list", groupList);
-		map.put("pm", pm);
-		return map;
+		return "/group/mygroup/grouphome";
 	}
 
-	@GetMapping("/group/detail")
+  @GetMapping("/group/detail")
 	public String postDetail(Model model, int num) {
 		//모집공고를 가져옴
 		RecruitVO recruit = groupService.getRecruit(num);
@@ -75,7 +71,5 @@ public class GroupController {
 		model.addAttribute("totalLanguage", totalLanguage);
 		return "/group/detail";
 	}
-	
-	
 	
 }

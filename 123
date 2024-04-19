@@ -1,4 +1,4 @@
-package kr.kh.team2.interceptor;
+package kr.kh.spring.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.spring.model.vo.MemberVO;
 
 public class MemberInterceptor extends HandlerInterceptorAdapter {
 
@@ -20,25 +20,28 @@ public class MemberInterceptor extends HandlerInterceptorAdapter {
 		Object handler)
 	    throws Exception {
 		MemberVO user = (MemberVO) request.getSession().getAttribute("user");
+		//로그인 안했으면
 		if(user == null) {
-		      if(isAjaxRequest(request)) {
-		    	  response.setHeader("SESSION_EXPIRED", "true");
-		    	  return false;
-		      }else {
-		    	  response.setContentType("text/html;charset=UTF-8");
-		    	  response.getWriter().write("<script>if(confirm('로그인이 필요한 서비스입니다. 로그인페이지로 이동하시겠습니까?')){location.href='" + request.getContextPath() + "/login'};</script>");
-		    	  return false;
-		      }
-		  }
+			response.getWriter().write("<script>alert(\"로그인이필요한서비스입니다.\"</script>");
+			response.sendRedirect(request.getContextPath() + "/login");
+			return false;
+		}
 		
 		return true;
 	}
-	
-	private boolean isAjaxRequest(HttpServletRequest req) {
-			String ajaxHeader = "AJAX";
-			return req.getHeader(ajaxHeader) != null && req.getHeader(ajaxHeader).equals(Boolean.TRUE.toString());
-
-	}
-	
 
 }
+<!-- MemberInterceptor를 등록 -->
+<beans:bean id="memberInterceptor" 
+		class="kr.kh.spring.interceptor.MemberInterceptor"/>
+
+<interceptors>
+<!-- MemberInceptor가 실행된 URL 지정 -->
+		<interceptor>
+			<mapping path="/board/insert"/>
+			<mapping path="/board/update"/>
+			<mapping path="/board/delete"/>
+			<mapping path="/mypage"/>
+			<beans:ref bean="memberInterceptor"/>
+		</interceptor>
+</interceptors>

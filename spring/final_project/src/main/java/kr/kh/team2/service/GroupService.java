@@ -11,7 +11,11 @@ import kr.kh.team2.pagination.Criteria;
 
 public interface GroupService {
 
-	ArrayList<RecruitVO> getGroupList(Criteria cri);
+	ArrayList<GroupVO> getGroupListById(String me_id);
+
+	GroupVO getGroupByGoNum(int groupNum);
+
+	boolean isGroupMember(MemberVO user, int groupNum);
 
 	RecruitVO getRecruit(int num);
 

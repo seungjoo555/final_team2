@@ -276,6 +276,12 @@ INSERT INTO `group_member`(gome_me_id,gome_go_num,gome_type)
 			VALUES("asdfg@final.com",2,0);
 INSERT INTO `group_member`(gome_me_id,gome_go_num,gome_type)
 			VALUES("abcde@final.com",3,0);
+INSERT INTO  `group_member`(gome_me_id,gome_go_num,gome_type)
+			VALUES("admin",1,1);
+INSERT INTO  `group_member`(gome_me_id,gome_go_num,gome_type)
+			VALUES("admin",2,1);
+INSERT INTO  `group_member`(gome_me_id,gome_go_num,gome_type)
+			VALUES("admin",3,1);
 
 INSERT INTO `group_post`(gopo_title,gopo_content,gopo_date,gopo_gome_me_id,gopo_gome_go_num)
 			VALUES("프로젝트 일정 확인부탁드립니다.","프로젝트 진행 일정을 게시하였으니 확인 부탁드립니다.",now(),"qwert@final.com",1);
