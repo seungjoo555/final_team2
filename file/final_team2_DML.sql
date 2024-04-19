@@ -289,6 +289,24 @@ INSERT INTO `group_post`(gopo_title,gopo_content,gopo_date,gopo_gome_me_id,gopo_
 			VALUES("스터디 가입했습니다.","다들 잘 부탁드립니다.",now(),"asdfg@final.com",2);
 INSERT INTO `group_post`(gopo_title,gopo_content,gopo_date,gopo_gome_me_id,gopo_gome_go_num)
 			VALUES("방과후 저녁 드시나요?","저메추",now(),"abcde@final.com",3);
+insert into group_post(gopo_title, gopo_content, gopo_date, gopo_gome_me_id, gopo_gome_go_num) 
+	values("group 1 post 1 title", "group 1 post 1 content", "2024-03-12 13:21:42", "qwert@final.com", 1);
+insert into group_post(gopo_title, gopo_content, gopo_date, gopo_gome_me_id, gopo_gome_go_num) 
+	values("group 1 post 2 title", "group 1 post 2 content", "2024-03-14 13:21:42", "qwert@final.com", 1);
+insert into group_post(gopo_title, gopo_content, gopo_date, gopo_gome_me_id, gopo_gome_go_num) 
+	values("group 1 post 3 title", "group 1 post 3 content", "2024-02-18 11:26:12", "qwert@final.com", 1);
+insert into group_post(gopo_title, gopo_content, gopo_date, gopo_gome_me_id, gopo_gome_go_num) 
+	values("group 1 post 4 title", "group 1 post 4 content", "2023-02-11 10:26:52", "qwert@final.com", 1);
+insert into group_post(gopo_title, gopo_content, gopo_date, gopo_gome_me_id, gopo_gome_go_num) 
+	values("group 1 post 5 title", "group 1 post 5 content", "2023-11-13 09:26:52", "qwert@final.com", 1);
+insert into group_post(gopo_title, gopo_content, gopo_date, gopo_gome_me_id, gopo_gome_go_num) 
+	values("group 1 post 6 title", "group 1 post 6 content", "2021-02-18 11:26:52", "qwert@final.com", 1);
+insert into group_post(gopo_title, gopo_content, gopo_date, gopo_gome_me_id, gopo_gome_go_num) 
+	values("group 1 post 7 title", "group 1 post 7content", "2023-02-18 11:26:52", "qwert@final.com", 1);
+insert into group_post(gopo_title, gopo_content, gopo_date, gopo_gome_me_id, gopo_gome_go_num) 
+	values("group 1 post 8 title", "group 1 post 8 content", "2023-12-18 17:22:52", "qwert@final.com", 1);
+insert into group_post(gopo_title, gopo_content, gopo_date, gopo_gome_me_id, gopo_gome_go_num) 
+	values("group 1 post 9 title", "group 1 post 9 content", "2021-02-18 11:26:52", "qwert@final.com", 1);
 
 INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
 		    VALUES("프로젝트 진행일정","2024-04-20","2024-05-22","확인 댓글 바람", "qwert@final.com",1);
