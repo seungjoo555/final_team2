@@ -8,6 +8,7 @@
 <title>멘토링 리스트</title>
 </head>
 <link rel="stylesheet" href="<c:url value="/resources/css/mentorlist.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/mentoringdetail.css"/>">
 <body>
 <div class="container">
 	<!-- 검색창 -->
@@ -62,6 +63,13 @@
 	<div class="box-pagination">
 		<ul class="pagination justify-content-center"></ul>
 	</div>
+	
+   <!-- 상세화면 -->
+
+   <div id="modal" class="modal apply-mentoring-modal" style="display:block;">
+      <div id="dimmed" class="dimmed apply-mentoring-dimmend"></div>
+      <div class="apply-mentoring__container"></div>
+   </div>
 	
 </div>
 
@@ -212,7 +220,31 @@ $(document).on('keyup', '#mento-totalsearch', function(){
 </script>
 
 
+<!-- ============================================멘토링 글 상세 ================================================================ -->
 
+<script type="text/javascript">
+/* 아이템 클릭 이벤트 - 상세 화면 */
+ 
+$(document).on('click', '.mento-item', function(event){
+   let ment_num = $(this).data("num");
+   $("#modal").css('display','block');
+   //스크롤 비활성화 부터
+   $('body').addclass('scroll-disable').on('scroll touchmove mousewheel', function(e) {
+      e.preventDefault();
+       e.stopPropagation();
+      //return false;
+   });
+   
+})
+/* dimmed 클릭 시 창 없애기 */
+$(document).on('click', '#dimmed', function(){
+   $("#modal").css('display','none');
+   
+   //$('#element').off('scroll touchmove mousewheel');
+})
+
+
+</script>
 
 
 
