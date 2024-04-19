@@ -8,16 +8,22 @@
 </head>
 <body>
 	<div class="first-container">
-		<div class="recruit_topic">${recruit.recu_topic}</div>
+		<a href="<c:url value="/group/home"/>">
+			<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" color="808080" 
+				cursor="pointer" height="30" width="30" xmlns="http://www.w3.org/2000/svg" style="color: rgb(128, 128, 128);">
+				<path d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"></path>
+			</svg>
+		</a>
+		<div class="recruit_topic">${recruit.recu_topic}(${recruit.recu_state == 1 ? "모집중":"모집 완료"})</div>
 		<div class="recruit_userAndDate">
-			<div class="recruit_user">${groupKing.gome_me_id}</div>
+			<div class="recruit_user">${groupKing}</div>
 			<!-- <div class="recruit_regDate">날짜</div> -->
 		</div>
 		<hr>		
 		<ul class="recruit-inputList">
 			<li class="recruit-listItem">
 				<label for="recu_type" class="inputbox-lableText">모집 구분</label>
-				<span id="recu_type" class="inputbox-input">${recruit.recu_type == 1? "스터디":"프로젝트"}</span>
+				<span id="recu_type" class="inputbox-input">${recruit.recu_type == 0? "스터디":"프로젝트"}</span>
 			</li>
 			<li class="recruit-listItem">
 				<label for="recu_count" class="inputbox-lableText">모집 인원</label>
@@ -29,8 +35,8 @@
 				<label for="recu_online" class="inputbox-lableText">온·오프라인 여부</label>
 				<span id="recu_online" class="inputbox-input">
 					<c:choose>
-						<c:when test="${recruit.recu_online == 1}">온라인</c:when>
-						<c:when test="${recruit.recu_online == 2}">오프라인</c:when>
+						<c:when test="${recruit.recu_online == 0}">온라인</c:when>
+						<c:when test="${recruit.recu_online == 1}">오프라인</c:when>
 						<c:otherwise>온/오프라인 병행</c:otherwise>
 					</c:choose>
 				</span>
@@ -59,7 +65,7 @@
 			</li>
 			<li class="recruit-listItem">
 				<label for="recu_interview" class="inputbox-lableText">면접 여부</label>
-				<span id="recu_interview" class="inputbox-input">${recruit.recu_interview == 0 ? "아니요":"예"}</span>
+				<span id="recu_interview" class="inputbox-input">${recruit.recu_interview == 1 ? "아니요":"예"}</span>
 			</li>
 		</ul>
 		<div class="recruit-inputList">
@@ -90,5 +96,6 @@
 			</div>
 		</section>
 	</div>
+	<a class="btn btn-success col-12 mt-5" href="<c:url value="#"/>">신청하기</a>
 </body>
 </html>

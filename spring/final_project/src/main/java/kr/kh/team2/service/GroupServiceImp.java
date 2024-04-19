@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import kr.kh.team2.dao.GroupDAO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
-import kr.kh.team2.model.vo.group.GroupMemberVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
+import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
 
 @Service
@@ -36,7 +36,7 @@ public class GroupServiceImp implements GroupService {
 	}
 
 	@Override
-	public GroupMemberVO getGroupKing(int recu_go_num) {
+	public MemberVO getGroupKing(int recu_go_num) {
 		return groupDao.selectGroupKing(recu_go_num);
 	}
 

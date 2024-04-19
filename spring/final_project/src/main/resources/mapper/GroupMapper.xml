@@ -27,8 +27,9 @@
  		select * from recruit where recu_num = #{num}
  	</select>
  	
- 	<select id="selectGroupKing" resultType="GroupMemberVO">
- 		select * from group_member where gome_go_num = #{recu_go_num} and gome_type = 0
+ 	<select id="selectGroupKing" resultType="MemberVO">
+ 		select * from member where me_id = 
+ 		(select gome_me_id from group_member where gome_go_num = #{recu_go_num} and gome_type = 0)
  	</select>
  	
  	<select id="selectCategoryList" resultType="TotalCategoryVO">
