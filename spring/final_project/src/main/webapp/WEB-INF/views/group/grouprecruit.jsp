@@ -9,7 +9,7 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/multi.dropdown.js"/>"></script>
 </head>
 <body>
-	<form action="<c:url value="/recruit/insert"/>" method = "post" class="insert-form">
+	<form action="<c:url value="/group/grouprecruit"/>" method = "post" class="insert-form">
 		<div class="first-container">
 			<h5>1. 프로젝트 기본 정보를 입력해 주세요.</h5>
 			<hr>		
@@ -68,69 +68,35 @@
 					<label for="progCt_name" class="inputbox-lableText">모집 분야</label>
 					<div class="input-row multi-dropdown not-label">
                			<div class="multi-dropdown-box placeholder">	
-							<input type="hidden" name="products" id="progCt_name" value="progCt_name" />
-							<button type="button" tabindex="-1" data-placeholder="제품을 선택해 주세요.">모집 분야를 선택해 주세요.</button>
+							<!-- <input type="hidden" name="products" id="progCt_name" value="progCt_name" />  -->
+							<button type="button" tabindex="-1" data-placeholder="모집 분야를 선택해 주세요.">모집 분야를 선택해 주세요.</button>
 							<div class="dropdown-list">
 								<ul>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="1"/>
-				                            웹개발
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="2"/>
-				                            프론트엔드
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="3"/>
-				                            백엔드
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
-				                            풀스택
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
-				                            프로그래밍 언어
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
-				                            데이터베이스
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
-				                            웹 퍼블리싱
-				                        </label>
-			                        </li>
+									<c:forEach items="${categoryList}" var="progCt">
+										<li>
+											<label>
+												<input type="checkbox" class="multi-dropdown-item" value="${progCt.progCt_num}"/>
+												${progCt.progCt_name}
+											</label>
+										</li>
+									</c:forEach>
 			                    </ul>
                				</div>
                			</div>
 					</div>
 				</li>
 				<li class="recruit-listItem">
-					<label for="recu_interview" class="inputbox-lableText">사용 언어</label>
+					<label for="lang_name" class="inputbox-lableText">사용 언어</label>
 					<div class="input-row multi-dropdown not-label">
                			<div class="multi-dropdown-box placeholder">	
-							<input type="hidden" name="products" id="progCt_name" value="progCt_name" />
-							<button type="button" tabindex="-1" data-placeholder="제품을 선택해 주세요.">사용 언어를 선택해 주세요.</button>
+							<input type="hidden" name="products" id="lang_name" value="lang_name" />
+							<button type="button" tabindex="-1" data-placeholder="사용 언어를 선택해 주세요.">사용 언어를 선택해 주세요.</button>
 							<div class="dropdown-list">
 								<ul>
 			                        <li>
 				                        <label>
 				                            <input type="checkbox" class="multi-dropdown-item" value="1"/>
-				                            <p>웹개발</p>
+				                            <p>JavaScript</p>
 				                        </label>
 			                        </li>
 			                        <li>
@@ -153,19 +119,19 @@
 			                        </li>
 			                        <li>
 				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
+				                            <input type="checkbox" class="multi-dropdown-item" value="5"/>
 				                            <p>프로그래밍 언어</p>
 				                        </label>
 			                        </li>
 			                        <li>
 				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
+				                            <input type="checkbox" class="multi-dropdown-item" value="6"/>
 				                            <p>데이터베이스</p>
 				                        </label>
 			                        </li>
 			                        <li>
 				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
+				                            <input type="checkbox" class="multi-dropdown-item" value="7"/>
 				                            <p>웹 퍼블리싱</p>
 				                        </label>
 			                        </li>
@@ -204,7 +170,7 @@
 		<!-- 취소 버튼 클릭 이벤트-->
 		$('.cancel-button').click(function(){
 			if(confirm("작성을 취소하고 이전으로 돌아가시겠습니까?")){
-				location.href='<c:url value="/group/home"/>';
+				location.href='<c:url value="/group/grouplist"/>';
 			}
 		})
 		
@@ -217,7 +183,7 @@
 			}
 			
 			if(confirm("입력하신 내용으로 모집 공고를 올리시겠습니까?")) {
-				location.href='<c:url value="/group/home"/>';
+				location.href='<c:url value="/group/grouplist"/>';
 			}
 		})
 		
