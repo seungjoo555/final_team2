@@ -32,6 +32,11 @@ public class RecruitController {
 	@GetMapping("/group/grouprecruit") 
 	public String RecruitInsert(Model model) {
 		model.addAttribute("title","스터디·프로젝트 모집");
+		
+		ArrayList<ProgrammingCategoryVO> categoryList = recruitService.getProgrammingCategoryList();
+		model.addAttribute("categoryList", categoryList);
+		System.out.println(categoryList);
+		
 		return "/group/grouprecruit";
 	}
 	
@@ -39,10 +44,6 @@ public class RecruitController {
 	@PostMapping("/group/grouprecruit")
 	public String RecruitInsertPost(Model model, GroupVO group ,RecruitVO recruit, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		
-		ArrayList<ProgrammingCategoryVO> categoryList = recruitService.getProgrammingCategoryList();
-		model.addAttribute("categoryList", categoryList);
-		System.out.println(categoryList);
 		
   		
 		boolean res = recruitService.insertRecruit(group, recruit, user);

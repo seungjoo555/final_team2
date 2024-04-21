@@ -74,9 +74,9 @@
 								<ul>
 									<c:forEach items="${categoryList}" var="progCt">
 										<li>
-											<label>
-												<input type="checkbox" class="multi-dropdown-item" value="${progCt.progCt_num}"/>
-												${progCt.progCt_name}
+											<label for="progCate_${progCt.progCt_num}">
+												<input type="checkbox" class="multi-dropdown-item" value="${progCt.progCt_num}" id="progCate_${progCt.progCt_num}" name = "progCate"/>
+												<p>${progCt.progCt_name}</p>
 											</label>
 										</li>
 									</c:forEach>
