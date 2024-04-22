@@ -89,10 +89,10 @@
     width: 20px;
     height: 20px;
     margin: 0px;
-    background: url("/resources/resources/img/icon_checkbox_off.svg") no-repeat center center;
+    background: url("../resources/img/icon_checkbox_off.svg") no-repeat center center;
     border: none; }
     .check-box > label input:checked {
-      background: url("/resources/img/icon_checkbox_on.svg") no-repeat center center; }
+      background: url("../resources/img/icon_checkbox_on.svg") no-repeat center center; }
     .check-box > label input:disabled {
       opacity: 0.5; }
   .check-box > input {
@@ -104,10 +104,10 @@
       display: inline-block;
       height: 16px;
       padding-left: 26px;
-      background: url("/resources/resources/img/icon_checkbox_off.svg") no-repeat center left;
+      background: url("../resources/img/icon_checkbox_off.svg") no-repeat center left;
       background-size: contain; }
     .check-box > input:checked + label {
-      background: url("/resources/img/icon_checkbox_on.svg") no-repeat center left;
+      background: url("") no-repeat center left;
       background-size: contain; }
     .check-box > input:disabled + label {
       opacity: 0.5; }
@@ -277,7 +277,7 @@
       z-index: 1; }
       .multi-dropdown-box .dropdown-list .list-search input {
         padding-left: 46px;
-        background: #fff url(/resources/img/icon_search.svg) no-repeat center left 12px;
+        background: #fff url("/resources/img/icon_search.svg") no-repeat center left 12px;
         border: none;
         border-bottom: 1px solid #ccc;
         border-radius: 0px; }
@@ -297,7 +297,7 @@
           display: none; }
           .multi-dropdown-box .dropdown-list ul li label input + p {
             padding: 5px 10px 5px 35px;
-            background: #fff url(/resources/img/icon_checkbox_off.svg) no-repeat center left 5px;
+            background: #fff url("/resources/img/icon_checkbox_off.svg") no-repeat center left 5px;
             border-radius: 5px;
             color: #333;
             font-size: 16px;
@@ -307,7 +307,7 @@
               background: #fefae7;
               border-radius: 3px; }
           .multi-dropdown-box .dropdown-list ul li label input:checked + p {
-            background: #fefae7 url(/resources/img/icon_checkbox_on.svg) no-repeat center left 5px; }
+            background: #fefae7 url("/resources/img/icon_checkbox_on.svg") no-repeat center left 5px; }
         .multi-dropdown-box .dropdown-list ul li p {
           color: #333;
           font-size: 16px;

@@ -75,7 +75,7 @@
 									<c:forEach items="${categoryList}" var="progCt">
 										<li>
 											<label for="progCate_${progCt.progCt_num}">
-												<input type="checkbox" class="multi-dropdown-item" value="${progCt.progCt_num}" id="progCate_${progCt.progCt_num}" name = "progCate"/>
+												<input type="checkbox" class="multi-dropdown-item" value="${progCt.progCt_num}" id="progCate_${progCt.progCt_num}" name = "toCt_progCt_num"/>
 												<p>${progCt.progCt_name}</p>
 											</label>
 										</li>
@@ -93,48 +93,14 @@
 							<button type="button" tabindex="-1" data-placeholder="사용 언어를 선택해 주세요.">사용 언어를 선택해 주세요.</button>
 							<div class="dropdown-list">
 								<ul>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="1"/>
-				                            <p>JavaScript</p>
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="2"/>
-				                            <p>프론트엔드</p>
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="3"/>
-				                            <p>백엔드</p>
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="4"/>
-				                            <p>풀스택</p>
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="5"/>
-				                            <p>프로그래밍 언어</p>
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="6"/>
-				                            <p>데이터베이스</p>
-				                        </label>
-			                        </li>
-			                        <li>
-				                        <label>
-				                            <input type="checkbox" class="multi-dropdown-item" value="7"/>
-				                            <p>웹 퍼블리싱</p>
-				                        </label>
-			                        </li>
+									<c:forEach items="${languageList}" var="progLang">
+										<li>
+											<label for="progCate${progLang.lang_num}">
+												<input type="checkbox" class="multi-dropdown-item" value="${progLang.lang_num}" id="progCate${progLang.lang_num}" name = "toLg_lang_num"/>
+												<p>${progLang.lang_name}</p>
+											</label>
+										</li>
+									</c:forEach>
 			                    </ul>
                				</div>
                			</div>

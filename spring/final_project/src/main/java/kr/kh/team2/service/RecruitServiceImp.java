@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.RecruitDAO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
+import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
+import kr.kh.team2.model.vo.common.TotalCategoryVO;
+import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
@@ -51,9 +54,34 @@ public class RecruitServiceImp implements RecruitService {
 	}
 
 	@Override
+	public boolean insertTotalCate(TotalCategoryVO totalCate, int recu_num) {
+		if(totalCate == null) {
+			return false;
+		}
+		totalCate.setToCt_table_name("recruit");
+		totalCate.setToCt_table_pk(""+recu_num);
+		System.out.println(totalCate + "공고번호 : " + recu_num);
+		return recruitDao.insertTotalCate(totalCate);
+	}
+	
+	@Override
+	public boolean insertTotalLang(TotalLanguageVO totalLang, int recu_num) {
+		if(totalLang == null) {
+			return false;
+		}
+		totalLang.setToLg_table_name("recruit");
+		totalLang.setToLg_table_pk(""+recu_num);
+		return recruitDao.insertTotalLang(totalLang);
+	}
+
+	@Override
 	public ArrayList<ProgrammingCategoryVO> getProgrammingCategoryList() {
-		
 		return recruitDao.selectProgrammingCategoryList();
+	}
+
+	@Override
+	public ArrayList<ProgrammingLanguageVO> getProgrammingLanguageList() {
+		return recruitDao.selectProgrammingLanguageList();
 	}
 
 }
