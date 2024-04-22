@@ -3,7 +3,7 @@
 	.float-rignt{float: right;}
 	.float-left{float: left;}
 
-	.container{width:960px; background-color: #F9F9F9; margin: 100px auto 200px auto; padding: 60px 0; box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);}
+	.container{width:960px; background-color: #F9F9F9; margin: 100px auto 200px auto; padding: 0 0 60px 0; box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);}
 	
 	.container-row{height: 580px; display: flex;}
 	.container-row .container-left{height: 100%; width: 33%; padding: 90px 40px 0 40px;}
@@ -103,17 +103,17 @@
 		.dday-list li::after{display: block; content: ''; clear: both;}
 		
 		/* dday-list의 첫번째 자식 요소 style 설정 */
-		.first-child{font-weight: bold; font-size: 20px;}
-		.first-child *:first-child::before{display: none !important;}
+		.dday-list li:first-child{font-weight: bold; font-size: 20px;}
+		.dday-list li:first-child *:first-child::before{display: none !important;}
 	
 	/* group-board 관련 style*/
 		.group-board .group-board-list{width: 100%; display:flex; flex-direction: row; justify-content: flex-start;}
-		.group-board .group-board-list>*{width: calc(100% / 6); padding: 2px 2px 2px 20px;}
-		.group-board .group-board-list *:first-child{padding-left: 0px;} 
+		.group-board .group-board-list>*{width: calc(100% / 6); padding: 2px 2px 2px 10px;}
+		.group-board .group-board-list *:first-child{padding-left: 0px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}  
 		
 		.group-board .writer{font-size: 16px; font-weight: bold;}
 		.group-board .content{
 			height: 76px; font-size: 16px; color: 4F4F4F;
 			text-overflow: ellipsis; overflow: hidden; word-break: break-word; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
 		}
-		.group-board .time{text-align: right;}
+		.group-board .time{text-align: right; color: #649B60; font-weight: bold;}
