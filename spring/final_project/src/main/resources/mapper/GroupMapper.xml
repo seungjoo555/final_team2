@@ -73,6 +73,10 @@
  			toLg_table_name = #{table} and toLg_table_pk = #{num}
  	</select>
 	
+	<select id="getGroupTime" resultType="long">
+		SELECT go_time FROM `group` WHERE go_num = #{num}  
+	</select>
+	
 	<!-- =============================== DELETE =============================== -->
 	
 	<!-- =============================== UPDATE =============================== -->	

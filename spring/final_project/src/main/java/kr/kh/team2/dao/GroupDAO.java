@@ -33,5 +33,7 @@ public interface GroupDAO {
 	ArrayList<GroupPostVO> getRecentGroupBoard(@Param("num")int groupNum, @Param("count")int recentBoard);
 
 	ArrayList<GroupCalendarVO> getDday(@Param("num")int groupNum, @Param("count")int dday);
+
+	long getGroupTime(@Param("num")int groupNum);
 	
 }

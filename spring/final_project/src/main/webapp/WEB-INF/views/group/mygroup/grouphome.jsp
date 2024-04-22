@@ -41,7 +41,7 @@
 					<!-- 그룹 타이머 -->
 					<div class="group-timer">
 						<label class="group-timer-title">스터디 시계</label>
-						<div class="group-timer-box">공부 시간</div>
+						<div class="group-timer-box"></div>
 						<div class="group-timer-btn-group">
 							<a class="start-btn">시작</a>
 							<a class="pause-btn">중지</a>
@@ -105,5 +105,41 @@
 	</c:choose> 
 </div>
 
+<!-- timer 시간 표시하기 -->
+<script type="text/javascript">
+	setTimer(${time});
+
+	// 그룹 시간을 타이머 형식으로 변환하여 출력하도록 함.
+	function setTimer(time){
+		let hour = Math.floor(time / 3600)	// 시 구하기
+		
+		if(${time} < 0){		// 에러시간
+			$(".group-timer-box").text("-999 : 59 : 59") 
+		}
+		else if (hour > 999){	// 최대시간 초과시,
+			$(".group-timer-box").text("999 : 59 : 59 +") 
+			
+		}else{
+			hour = numberPad(hour, 2)
+			let min = numberPad(Math.floor(time % 3600 / 60), 2) 		// 분 구하기
+			let sec = numberPad(time % 60, 2)					// 초 구하기
+			
+			$(".group-timer-box").text(hour + " : " + min + " : " + sec)
+		}
+		
+	}
+	
+	// lpad 구현
+	function numberPad(n, width) {
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+}
+	
+</script>
+
+<!-- 매초 타이머가 증가하는 script -->
+<script type="text/javascript">
+
+</script>
 </body>
 </html>

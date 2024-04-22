@@ -30,4 +30,6 @@ public interface GroupService {
 
 	ArrayList<GroupCalendarVO> getDday(int groupNum, int dday);
 
+	long getGroupTime(int groupNum);
+
 }

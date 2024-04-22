@@ -49,6 +49,9 @@ public class GroupController {
 		if(groupService.isGroupMember(user, groupNum)) {
 			GroupVO group = groupService.getGroupByGoNum(groupNum);
 			model.addAttribute("group", group);
+			
+			long groupTime = groupService.getGroupTime(groupNum);
+			model.addAttribute("time", groupTime);
 		}
 		
 		// 최근 게시글 불러오기

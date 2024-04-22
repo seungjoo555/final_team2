@@ -105,6 +105,15 @@ public class GroupServiceImp implements GroupService{
 		}
 		return groupDao.getDday(groupNum, dday);
 	}
+
+	@Override
+	public long getGroupTime(int groupNum) {
+		if(groupNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return -1;
+		}
+		return groupDao.getGroupTime(groupNum);
+	}
 	
 	
 }
