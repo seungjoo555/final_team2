@@ -19,22 +19,25 @@
 	
 	<!-- =============================== SELECT =============================== -->	
 	<select id="selectMentorList" resultType="MetoringVO">
-        select mentoring.*, me_nickname as ment_me_nickname, mentIf_exp as ment_mentIf_exp, mentIf_job as ment_mentIf_job
+        select mentoring.*, me_nickname as ment_me_nickname, mentIf_exp as ment_mentIf_exp, mentIf_ment_job as ment_mentIf_job
         from mentoring
 			join
 				`member` on me_id = ment_me_id
 			join
 				mentor_info on mentIf_me_id = ment_me_id
 			where
-					<foreach collection= "cri.typeList" item="type" index="index"  open="(" close=")" separator="or">
-            			mentIf_job like concat('%', #{type}, '%')
-        			</foreach>
-        		and
-	        		(
+					(
 		        		ment_title like concat('%', #{cri.search}, '%') or
 						ment_content like concat('%', #{cri.search}, '%') or
 						me_nickname like concat('%', #{cri.search}, '%')
 					)
+        		and
+        		(
+					<foreach collection= "cri.jobList" item="job" index="index"  open="(" close=")" separator="or">
+            			mentIf_ment_job like concat('%', #{job.ment_job}, '%')
+        			</foreach>
+        		)
+	        		
  		order by ment_num desc
 		limit #{cri.pageStart}, #{cri.perPageNum}
  	</select>
@@ -46,15 +49,18 @@
 			join
 				mentor_info on mentIf_me_id = ment_me_id
 			where
-				<foreach collection= "cri.typeList" item="type" index="index"  open="(" close=")" separator="or">
-            			mentIf_job like concat('%', #{type}, '%')
-       			</foreach>
-        		and
 	        		(
 		        		ment_title like concat('%', #{cri.search}, '%') or
 						ment_content like concat('%', #{cri.search}, '%') or
 						me_nickname like concat('%', #{cri.search}, '%')
 					)
+        		and
+	        		(
+						<foreach collection= "cri.jobList" item="job" index="index"  open="(" close=")" separator="or">
+	            			mentIf_ment_job like concat('%', #{job.ment_job}, '%')
+	       				</foreach>
+	        		
+	        		)
  	</select>
 	
 	<select id="selectJobList" resultType="MentorJobVO">
