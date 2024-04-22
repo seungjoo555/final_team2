@@ -53,38 +53,13 @@
 						</div>
 						<div>
 							<ul class="dday-list">
-								<li class="first-child">
-									<div>D-000</div>
-									<div>1111111111111111111111111111111</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>2222222222222222222222222222222</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>3333333333333333333333333333333</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>44444444444444444444444444444444</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>5555555555555555555555555555555</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>6666666666666666666666666666666</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>7777777777777777777777777777777</div>
-								</li>
-								<li>
-									<div>D-000</div>
-									<div>8888888888888888888888888888888</div>
-								</li>
+								<c:forEach items= "${ddaylist}" var="dday">
+									<li>
+										<div>D${dday.dday}</div>
+										<div>${dday.gocal_title}</div>
+									</li>
+								</c:forEach>
+								
 							</ul>					
 						</div>
 					</div>
@@ -101,6 +76,7 @@
 				</div>
 			</div>
 			<div class="container-bottom">
+				
 				<div class="group-board box">
 					<div class="box-info-bar">
 						최근 그룹 게시글
@@ -110,41 +86,15 @@
 						<a href="${url}" class="to-post float-right">게시글 목록으로</a>
 					</div>
 					<div class="group-board-list">
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
-						<div>
-							<label class="writer">작성자</label>
-							<div class="content">내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</div>
-							<div class="time">1분전</div>
-						</div>
+						<c:forEach items="${boardlist}" var="board">
+							<div>
+								<label class="writer">${board.nickname}</label>
+								<div class="content">${board.gopo_content}</div>
+								<div class="time">${board.time_ago}</div>
+							</div>
+						</c:forEach>
+						
+						
 					</div>
 				</div>
 			</div>
@@ -152,5 +102,6 @@
 		</c:otherwise>
 	</c:choose> 
 </div>
+
 </body>
 </html>

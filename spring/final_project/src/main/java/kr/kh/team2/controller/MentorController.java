@@ -20,6 +20,7 @@ import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.Criteria;
+import kr.kh.team2.pagination.CriteriaMentor;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.MentorService;
 import lombok.extern.log4j.Log4j;
@@ -32,23 +33,28 @@ public class MentorController {
 	MentorService mentorService;
 	
 	@GetMapping("/mentor/list")
-	public String mentorList() {
+	public String mentorList(Model model) {
+		
+		ArrayList<MentorJobVO> jobList = mentorService.getJobList();
+		model.addAttribute("jobList",jobList);
 		return "/mentor/list";
 	}
 	
 	@ResponseBody
 	@PostMapping("/mentor/list")
-	public Map<String, Object> mentorListPost(@RequestBody Criteria cri) {
+	public Map<String, Object> mentorListPost(@RequestBody CriteriaMentor cri) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		cri.setPerPageNum(20);	//default : 20
 		//그룹 리스트 가져오기
 		ArrayList<MetoringVO> mentoList = mentorService.getMentorList(cri);
-		System.out.println("[MentoController] mentoList :: " + mentoList);
 		int totalCount = mentorService.getMentorTotalCount(cri);
 		PageMaker pm = new PageMaker(10, cri, totalCount);	//default : 10
+		ArrayList<MentorJobVO> JobList = mentorService.getJobList();
+		map.put("jobList",JobList);
 		map.put("list", mentoList);
 		map.put("pm", pm);
+		
 		return map;
 	}
 	
