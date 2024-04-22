@@ -13,6 +13,7 @@ public class MetoringVO {
     private Date ment_duration;
     private String ment_me_id;
     private int ment_state;
+    private String ment_content;
     //멘토 닉네임
     private String ment_me_nickname;
     //멘토 경력
