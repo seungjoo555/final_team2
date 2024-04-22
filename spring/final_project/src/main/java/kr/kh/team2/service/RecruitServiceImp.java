@@ -1,10 +1,16 @@
 
 package kr.kh.team2.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.RecruitDAO;
+import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
+import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
+import kr.kh.team2.model.vo.common.TotalCategoryVO;
+import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
@@ -16,6 +22,10 @@ public class RecruitServiceImp implements RecruitService {
 	@Autowired
 	private RecruitDAO recruitDao;
 
+	private boolean checkString(String str) {
+		return str != null && str.length() != 0;
+	}
+	
 	@Override
 	public boolean insertRecruit(GroupVO group, RecruitVO recruit, MemberVO user) {
 		if (recruit == null || recruit.getRecu_topic() == null || recruit.getRecu_content() == null
@@ -46,5 +56,87 @@ public class RecruitServiceImp implements RecruitService {
 		return true;
 		
 	}
+	
+	@Override
+	public boolean insertTotalCate(int recu_num) {
+		return false;
+	}
+
+	@Override
+	public boolean insertTotalLang(int recu_num) {
+		return false;
+	}
+	
+	
+	@Override
+	public boolean insertTotalCate(String progCtList, int recu_num) {
+		if(!checkString(progCtList)) {
+	        return false;
+	    }
+		//문자열을 스플릿으로 쪼개 -> 배열
+		//배열의 길이만큼 for문 돌리기
+		//for문 안에서는 setToCt_progCt_num 하나 넣고
+		//테이블 네임 recruit 넣고
+		//테이블 PK 넣고
+		//인서트
+		String [] progCt = progCtList.split(",");
+		
+		
+		for(String tmp : progCt) {
+			int ct = Integer.parseInt(tmp);
+			TotalCategoryVO totalCateVo = new TotalCategoryVO();
+			totalCateVo.setToCt_progCt_num(ct);
+			totalCateVo.setToCt_table_name("recruit");
+			totalCateVo.setToCt_table_pk(""+recu_num);
+			System.out.println(totalCateVo + "공고번호" + recu_num);
+			boolean res = recruitDao.insertTotalCate(totalCateVo);
+			
+			if(!res) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
+
+	@Override
+	public boolean insertTotalLang(String progLangList, int recu_num) {
+		if(!checkString(progLangList)) {
+			return false;
+		}
+		String [] progLang = progLangList.split(",");
+		
+		
+		for(String tmp : progLang) {
+			int ct = Integer.parseInt(tmp);
+			TotalLanguageVO totalLangVo = new TotalLanguageVO();
+			totalLangVo.setToLg_lang_num(ct);
+			totalLangVo.setToLg_table_name("recruit");
+			totalLangVo.setToLg_table_pk(""+recu_num);
+			System.out.println(totalLangVo + "공고번호" + recu_num);
+			boolean res = recruitDao.insertTotalLang(totalLangVo);
+			
+			if(!res) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
+	@Override
+	public ArrayList<ProgrammingCategoryVO> getProgrammingCategoryList() {
+		return recruitDao.selectProgrammingCategoryList();
+	}
+
+	@Override
+	public ArrayList<ProgrammingLanguageVO> getProgrammingLanguageList() {
+		return recruitDao.selectProgrammingLanguageList();
+	}
+
+
+
+	
 
 }

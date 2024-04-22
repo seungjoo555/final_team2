@@ -23,6 +23,11 @@
 	border: 1px solid #c9c9c9;
 	border-radius: 5px;
 	padding: 10px;
+	color: #000;
+}
+
+.inputbox-input > placeholder {
+	color: #666;
 }
 
 .second-container {
@@ -90,10 +95,10 @@
     width: 20px;
     height: 20px;
     margin: 0px;
-    background: url("/resources/resources/img/icon_checkbox_off.svg") no-repeat center center;
+    background: url("../resources/img/icon_checkbox_off.svg") no-repeat center center;
     border: none; }
     .check-box > label input:checked {
-      background: url("/resources/img/icon_checkbox_on.svg") no-repeat center center; }
+      background: url("../resources/img/icon_checkbox_on.svg") no-repeat center center; }
     .check-box > label input:disabled {
       opacity: 0.5; }
   .check-box > input {
@@ -105,10 +110,10 @@
       display: inline-block;
       height: 16px;
       padding-left: 26px;
-      background: url("/resources/resources/img/icon_checkbox_off.svg") no-repeat center left;
+      background: url("../resources/img/icon_checkbox_off.svg") no-repeat center left;
       background-size: contain; }
     .check-box > input:checked + label {
-      background: url("/resources/img/icon_checkbox_on.svg") no-repeat center left;
+      background: url("") no-repeat center left;
       background-size: contain; }
     .check-box > input:disabled + label {
       opacity: 0.5; }
@@ -222,11 +227,11 @@
   .multi-dropdown-box > button {
     width: 100%;
     height: 48px;
-    padding: 0px 52px 0px 20px;
+    padding: 10px;
     background: #fff;
-    border: 1px solid #dbdbdb;
+    border: 1px solid #c9c9c9;
     border-radius: 5px;
-    color: #666;
+    color: #000;
     font-size: 16px;
     line-height: 24px;
     text-align: left;
@@ -256,7 +261,7 @@
     .multi-dropdown-box > button:disabled {
       border-color: #ccc;
       background: #eee;
-      color: #666; }
+      color: #000; }
   .multi-dropdown-box .dropdown-list {
     display: none;
     position: absolute;
@@ -278,7 +283,7 @@
       z-index: 1; }
       .multi-dropdown-box .dropdown-list .list-search input {
         padding-left: 46px;
-        background: #fff url(/resources/img/icon_search.svg) no-repeat center left 12px;
+        background: #fff url("/resources/img/icon_search.svg") no-repeat center left 12px;
         border: none;
         border-bottom: 1px solid #ccc;
         border-radius: 0px; }
@@ -298,7 +303,7 @@
           display: none; }
           .multi-dropdown-box .dropdown-list ul li label input + p {
             padding: 5px 10px 5px 35px;
-            background: #fff url(/resources/img/icon_checkbox_off.svg) no-repeat center left 5px;
+            background: #fff url("/resources/img/icon_checkbox_off.svg") no-repeat center left 5px;
             border-radius: 5px;
             color: #333;
             font-size: 16px;
@@ -308,13 +313,13 @@
               background: #fefae7;
               border-radius: 3px; }
           .multi-dropdown-box .dropdown-list ul li label input:checked + p {
-            background: #fefae7 url(/resources/img/icon_checkbox_on.svg) no-repeat center left 5px; }
+            background: #fefae7 url("/resources/img/icon_checkbox_on.svg") no-repeat center left 5px; }
         .multi-dropdown-box .dropdown-list ul li p {
           color: #333;
           font-size: 16px;
           line-height: 24px; }
   .multi-dropdown-box.placeholder > button {
-    color: #aaa;
+    color: #666;
     font-weight: normal; }
   .multi-dropdown-box[direction=top] .list-search {
     top: unset;

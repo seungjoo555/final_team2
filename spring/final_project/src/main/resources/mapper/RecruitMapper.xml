@@ -12,4 +12,20 @@
 		insert into recruit(recu_go_num, recu_content, recu_due, recu_type, recu_topic, recu_target, recu_count, recu_required, recu_preferred, recu_online, recu_interview)
 		values(#{group}, #{recruit.recu_content}, #{recruit.recu_due}, #{recruit.recu_type}, #{recruit.recu_topic}, #{recruit.recu_target}, #{recruit.recu_count}, #{recruit.recu_required}, #{recruit.recu_preferred}, #{recruit.recu_online}, #{recruit.recu_interview})
 	</insert>
+	
+	<insert id="insertTotalCate">
+		insert into total_category(toCt_progCt_num, toCt_table_name, toCt_table_pk) VALUES (#{totalCate.toCt_progCt_num}, #{totalCate.toCt_table_name}, #{totalCate.toCt_table_pk});
+	</insert>
+	
+	<insert id="insertTotalLang">
+		insert into total_language(toLg_lang_num, toLg_table_name, toLg_table_pk) VALUES (#{totalLang.toLg_lang_num}, #{totalLang.toLg_table_name}, #{totalLang.toLg_table_pk});
+	</insert>
+	
+	<select id="selectProgrammingCategoryList" resultType="ProgrammingCategoryVO">
+		select * from programming_category
+	</select>
+	
+	<select id="selectProgrammingLanguageList" resultType="ProgrammingLanguageVO">
+		select * from programming_language
+	</select>
 </mapper>

@@ -1,5 +1,7 @@
 package kr.kh.team2.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
+import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
+import kr.kh.team2.model.vo.common.TotalCategoryVO;
+import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
@@ -28,16 +34,26 @@ public class RecruitController {
 	@GetMapping("/group/grouprecruit") 
 	public String RecruitInsert(Model model) {
 		model.addAttribute("title","스터디·프로젝트 모집");
+		
+		ArrayList<ProgrammingCategoryVO> categoryList = recruitService.getProgrammingCategoryList();
+		ArrayList<ProgrammingLanguageVO> languageList = recruitService.getProgrammingLanguageList();
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("languageList", languageList);
+		
 		return "/group/grouprecruit";
 	}
 	
 	@PostMapping("/group/grouprecruit")
-	public String RecruitInsertPost(Model model, GroupVO group ,RecruitVO recruit, HttpSession session) {
+
+	public String RecruitInsertPost(Model model, String progCtList, String progLangList, GroupVO group ,RecruitVO recruit, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		boolean res = recruitService.insertRecruit(group, recruit, user);
+		boolean res1 = recruitService.insertRecruit(group, recruit, user);
+		boolean res2 = recruitService.insertTotalCate(progCtList, recruit.getRecu_num());
+		boolean res3 = recruitService.insertTotalLang(progLangList, recruit.getRecu_num());
 		
-		if(res) {
+		
+		if(res1 && res2 && res3) {
 			model.addAttribute("msg", "모집공고를 등록했습니다.");
 			model.addAttribute("url", "/group/grouplist"); 
 		} else {

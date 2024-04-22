@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+
 public class TotalCategoryVO {
     private int toCt_num;
     private int toCt_progCt_num;
