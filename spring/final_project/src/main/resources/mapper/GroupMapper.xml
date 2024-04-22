@@ -35,7 +35,7 @@
  	
 	<select id="getDday" resultType="GroupCalendarVO">
 		SELECT * FROM group_calendar 
-			WHERE gocal_go_num = #{num} AND gocal_startdate > NOW()
+			WHERE gocal_go_num = #{num} AND gocal_startdate >= date_format(Now(), '%Y-%m-%d')
 		    ORDER BY gocal_startdate 
 		    LIMIT #{count};
 	</select>

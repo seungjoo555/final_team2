@@ -91,13 +91,13 @@
 		
 		.dday-list li>*:first-child::before{
 			width: 5px; height: 5px; 
-			margin: calc(25% - 4px) 8px calc(25% - 4px) 0px; border-radius: 100%; 
+			margin: 10px 8px 10px 0px; border-radius: 100%; 
 			background-color: black; 
 			float: left; display: block; content: ''; 
 		}
-		.dday-list li *:first-child{float: left; width: 30%;}
+		.dday-list li *:first-child{float: left; width: 45%; height: 24px}
 		.dday-list li *:last-child{
-			float: right; width: 60%; text-align: right; 
+			float: right; width: 50%; text-align: right; 
 			text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
 		}
 		.dday-list li::after{display: block; content: ''; clear: both;}
