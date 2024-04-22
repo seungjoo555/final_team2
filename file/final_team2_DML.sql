@@ -147,12 +147,12 @@ INSERT INTO comment(cmmt_content, cmmt_post_num, cmmt_me_id)
         ("좋은 질문입니다~", 2, "asdfg@final.com"), 
         ("안녕하세요!", 3, "qwert@final.com");
 
-INSERT INTO mentor_job VALUES ("SW 엔지니어"), ("백엔스/서버 개발자"), ("프론트엔드/웹퍼블리셔"), ("데이터 엔지니어"), ("데이터 분석가");
+INSERT INTO mentor_job VALUES ("SW 엔지니어"), ("백엔드 / 서버 개발자"), ("프론트엔드 / 웹 퍼블리셔"), ("데이터 엔지니어"), ("데이터 분석가");
 
 INSERT INTO mentor_info VALUES 
 ("admin", 				0, 	"admin test", 	"admin test", 	"0000-000-0000", NOW(), 0, "SW 엔지니어"),
-("asdfg@final.com", 	3, 	"", 			"개발자 임꺽정입니다.", 	"0000-000-0000", NOW(), 1, "백엔스/서버 개발자"),
-("qwert@final.com", 	0, 	"", 			"멘토 신청 테스트.", 	"0000-000-0000", NOW(), -1, "프론트엔드/웹퍼블리셔");
+("asdfg@final.com", 	3, 	"", 			"개발자 임꺽정입니다.", 	"0000-000-0000", NOW(), 1, "백엔드 /서버 개발자"),
+("qwert@final.com", 	0, 	"", 			"멘토 신청 테스트.", 	"0000-000-0000", NOW(), -1, "프론트엔드 / 웹퍼블리셔");
 
 SELECT * FROM final_team2.mentor_info;
 

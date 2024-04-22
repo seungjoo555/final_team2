@@ -23,7 +23,7 @@
 						and recu_type = 1
 					</when>
 					<otherwise>
-						and recu_type = 0 or recu_type = 1
+						and (recu_type = 0 or recu_type = 1)
 					</otherwise>
 				</choose>
 			order by recu_num desc
