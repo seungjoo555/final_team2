@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -6,6 +6,45 @@
 	
 	<!-- =============================== SELECT =============================== -->
 	
+
+ 	<select id="selectGroupList" resultType="RecruitVO">
+        select recruit.*, me_nickname as recu_gome_me_nickname 
+        from recruit
+ 			join
+ 				group_member on gome_go_num = recu_go_num
+			join
+				`member` on gome_me_id = me_id
+			where  gome_type = 1
+				<choose>
+					<when test='cri.type == "study"'>
+						and recu_type = 0
+					</when>
+					<when test='cri.type == "project"'>
+						and recu_type = 1
+					</when>
+					<otherwise>
+						and recu_type = 0 or recu_type = 1
+					</otherwise>
+				</choose>
+			order by recu_num desc
+			limit #{cri.pageStart}, #{cri.perPageNum}
+ 	</select>
+ 	<select id="selectGroupTotalCount" resultType="int">
+ 		select count(*) from recruit
+ 		where
+			<choose>
+				<when test='cri.type == "study"'>
+					recu_type = 0
+				</when>
+				<when test='cri.type == "project"'>
+					recu_type = 1
+				</when>
+				<otherwise>
+					recu_type = 0 or recu_type = 1 
+				</otherwise>
+			</choose>
+ 	</select>
+
  	<select id="getGroupListById" resultType="GroupVO">
 		SELECT go_num, go_name, go_time, go_update, COUNT(gome_me_id) as go_member_count 
 			FROM `group`
@@ -89,4 +128,6 @@
 	
 	<!-- =============================== SELECT =============================== -->	
 	
+
+ 	
 </mapper>
