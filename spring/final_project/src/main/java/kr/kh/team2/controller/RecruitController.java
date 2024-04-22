@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
@@ -40,22 +39,18 @@ public class RecruitController {
 		ArrayList<ProgrammingLanguageVO> languageList = recruitService.getProgrammingLanguageList();
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("languageList", languageList);
-		System.out.println(categoryList);
 		
 		return "/group/grouprecruit";
 	}
 	
 	@PostMapping("/group/grouprecruit")
-	public String RecruitInsertPost(Model model, GroupVO group ,RecruitVO recruit, TotalCategoryVO totalCate, TotalLanguageVO totalLang, HttpSession session) {
+	public String RecruitInsertPost(Model model, String progCtList, String progLangList, GroupVO group ,RecruitVO recruit, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-  		
 		boolean res1 = recruitService.insertRecruit(group, recruit, user);
-		boolean res2 = recruitService.insertTotalCate(totalCate, recruit.getRecu_num());
-		boolean res3 = recruitService.insertTotalLang(totalLang, recruit.getRecu_num());
+		boolean res2 = recruitService.insertTotalCate(progCtList, recruit.getRecu_num());
+		boolean res3 = recruitService.insertTotalLang(progLangList, recruit.getRecu_num());
 		
-		System.out.println(totalCate + "공고번호 : " + recruit.getRecu_num());
-		System.out.println(totalLang + "공고번호 : " + recruit.getRecu_num());
 		
 		if(res1 && res2 && res3) {
 			model.addAttribute("msg", "모집공고를 등록했습니다.");

@@ -18,9 +18,13 @@ public interface RecruitService {
 
 	ArrayList<ProgrammingLanguageVO> getProgrammingLanguageList();
 
-	boolean insertTotalCate(TotalCategoryVO totalCate, int recu_num);
+	boolean insertTotalCate(String progCtList, int recu_num);
 
-	boolean insertTotalLang(TotalLanguageVO totalLang, int recu_num);
+	boolean insertTotalLang(String progLangList, int recu_num);
+
+	boolean insertTotalCate(int recu_num);
+
+	boolean insertTotalLang(int recu_num);
 
 
 }

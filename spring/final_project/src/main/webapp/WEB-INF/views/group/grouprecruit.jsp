@@ -70,12 +70,13 @@
                			<div class="multi-dropdown-box placeholder">	
 							<!-- <input type="hidden" name="products" id="progCt_name" value="progCt_name" />  -->
 							<button type="button" tabindex="-1" data-placeholder="모집 분야를 선택해 주세요.">모집 분야를 선택해 주세요.</button>
+							<input type="hidden" name="progCtList" />
 							<div class="dropdown-list">
 								<ul>
 									<c:forEach items="${categoryList}" var="progCt">
 										<li>
 											<label for="progCate_${progCt.progCt_num}">
-												<input type="checkbox" class="multi-dropdown-item" onClick="countCate_ck(this)" value="${progCt.progCt_num}" id="progCate_${progCt.progCt_num}" name ="toCt_progCt_num"/>
+												<input type="checkbox" class="multi-dropdown-item" onClick="countCate_ck(this)" value="${progCt.progCt_num}" id="progCate_${progCt.progCt_num}" name ="toCt_progCt"/>
 												<p>${progCt.progCt_name}</p>
 											</label>
 										</li>
@@ -89,14 +90,14 @@
 					<label for="lang_name" class="inputbox-lableText">사용 언어</label>
 					<div class="input-row multi-dropdown not-label">
                			<div class="multi-dropdown-box placeholder">	
-							<input type="hidden" name="products" id="lang_name" value="lang_name" />
+							<input type="hidden" name="progLangList" />
 							<button type="button" tabindex="-1" data-placeholder="사용 언어를 선택해 주세요.">사용 언어를 선택해 주세요.</button>
 							<div class="dropdown-list">
 								<ul>
 									<c:forEach items="${languageList}" var="progLang">
 										<li>
 											<label for="progCate${progLang.lang_num}">
-												<input type="checkbox" class="multi-dropdown-item" onClick="countLang_ck(this)" value="${progLang.lang_num}" id="progCate${progLang.lang_num}" name ="toLg_lang_num"/>
+												<input type="checkbox" class="multi-dropdown-item" onClick="countLang_ck(this)" value="${progLang.lang_num}" id="progCate${progLang.lang_num}" name ="toLg_lang"/>
 												<p>${progLang.lang_name}</p>
 											</label>
 										</li>
@@ -161,7 +162,7 @@
 		})
 		
 		function countCate_ck(obj) {
-			var chkbox = document.getElementsByName("toCt_progCt_num");
+			var chkbox = document.getElementsByName("toCt_progCt");
 			var chkCnt = 0;
 			
 			for (var i = 0; i < chkbox.length; i++) {
@@ -178,7 +179,7 @@
 		}
 		
 		function countLang_ck(obj) {
-			var chkbox = document.getElementsByName("toLg_lang_num");
+			var chkbox = document.getElementsByName("toLg_lang");
 			var chkCnt = 0;
 			
 			for (var i = 0; i < chkbox.length; i++) {
