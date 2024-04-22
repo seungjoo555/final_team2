@@ -39,8 +39,9 @@
 								</td>
 								<td class="group-time text-center">
 									<c:choose>
-										<c:when test="${group.go_time < 360}">0시간</c:when>
-										<c:otherwise>${group.go_time % 360 }시간</c:otherwise>
+										<c:when test="${group.go_time < 3600}">0시간</c:when>
+										<c:when test="${group.go_time / 3600 > 999}">999+시간</c:when>
+										<c:otherwise>${Math.round(group.go_time / 3600)}시간</c:otherwise>
 									</c:choose>
 								</td>
 								<td class="text-center">${group.go_member_count }명</td>
@@ -48,7 +49,7 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				페이지네이션 추가 필요
+				페이지네이션 추가 필요 
 			</c:if>
 				
 			<c:if test="${list == null }">
