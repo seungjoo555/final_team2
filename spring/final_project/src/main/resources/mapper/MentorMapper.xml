@@ -67,9 +67,12 @@
 		select * from mentor_job
 	</select>
 	
-	<select id="selectMentorInfo" resultType="kr.kh.team2.model.vo.member.MentorInfoVO">
+	<select id="selectMentorInfo" resultType="MentorInfoVO">
 		select * from mentor_info where mentIf_me_id = #{me_id}
 	</select>
 	
+	<select id="selectMentoring" resultType="MetoringVO">
+		select * from mentoring where ment_num = #{ment_num}
+	</select>
 
 </mapper>

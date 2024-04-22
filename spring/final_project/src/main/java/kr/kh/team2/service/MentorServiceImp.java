@@ -75,5 +75,18 @@ public class MentorServiceImp implements MentorService {
 		
 	}
 
+	@Override
+	public MetoringVO getMentoring(int ment_num) {
+		if(ment_num <= 0) {
+			return null;
+		}
+		return mentorDAO.selectMentoring(ment_num);
+	}
+
+	@Override
+	public MentorInfoVO getMentor(String ment_me_id) {
+		return mentorDAO.selectMentorInfo(ment_me_id);
+	}
+
 
 }

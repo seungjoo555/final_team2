@@ -19,5 +19,9 @@ public interface MentorService {
 
 	boolean checkMentor(String me_id);
 
+	MetoringVO getMentoring(int ment_num);
+
+	MentorInfoVO getMentor(String ment_me_id);
+
 
 }

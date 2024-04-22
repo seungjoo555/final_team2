@@ -46,9 +46,19 @@
 	
    <!-- 상세화면 -->
 
-   <div id="modal" class="modal apply-mentoring-modal" style="display:block;">
+   <div id="modal" class="modal apply-mentoring-modal" style="display:none;">
       <div id="dimmed" class="dimmed apply-mentoring-dimmend"></div>
-      <div class="apply-mentoring__container"></div>
+      <div class="apply-mentoring_container">
+      	<div class="apply-mentoring_box">
+	      	<div class="apply-mentoring_header"></div>
+	      	<div class="apply-mentoring_body">
+	      		<div class="apply-mentoring_body_info_header"></div>
+	      		<div class="apply-mentoring_body_info_list"></div>
+	      		<div class="apply-mentoring_body_content"></div>
+	      	</div>
+	      	<div class="apply-mentoring_footer"></div>
+      	</div>
+      </div>
    </div>
 	
 </div>
@@ -94,7 +104,7 @@
 			str +=
 				`
 				<!-- 게시글 정보 링크 -->
-				<a class="mento-item" href="<c:url value="/mento/detail?ment_num=\${mentoing.ment_num}"/>">
+				<a class="mento-item" data-num="\${mentoing.ment_num}">
 					<li>
 						<!--그룹 모집 내용-->
 						<div class="mento-list-item-content">
@@ -207,23 +217,49 @@ function search() {
 
 <script type="text/javascript">
 /* 아이템 클릭 이벤트 - 상세 화면 */
- 
 $(document).on('click', '.mento-item', function(event){
    let ment_num = $(this).data("num");
+
    $("#modal").css('display','block');
-   //스크롤 비활성화 부터
-   $('body').addclass('scroll-disable').on('scroll touchmove mousewheel', function(e) {
-      e.preventDefault();
-       e.stopPropagation();
-      //return false;
-   });
+   //스크롤 비활성화
+   $("body").css('overflow','hidden');
+   //출력
+	getMentoing(ment_num);
+	function getMentoing(ment_num){
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/mentor/detail"/>", 
+			type : 'post', 
+			data : {
+				ment_num : ment_num
+			},
+			dataType :"json", 
+			success : function (data){
+				displayMentoringDetail(data.mentoring, data.mentor);
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+			}
+		});	//ajax end
+	}	//getMentoing(ment_num); end
+	
+	/* 멘토링 모집 글 상세 출력 */
+	function displayMentoringDetail(mentoring, mentor) {
+		let str="";
+		
+		
+		
+		console.log("mentoring :: " + mentoring.ment_num);
+		console.log("mentor :: " + mentor.mentIf_me_id);
+		
+		$('.apply-mentoring_box').html(str);
+	}//displayMentoringDetail(); end
    
 })
+
 /* dimmed 클릭 시 창 없애기 */
 $(document).on('click', '#dimmed', function(){
    $("#modal").css('display','none');
-   
-   //$('#element').off('scroll touchmove mousewheel');
+   $("body").css('overflow','visible');
 })
 
 

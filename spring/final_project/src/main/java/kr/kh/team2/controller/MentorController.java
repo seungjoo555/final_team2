@@ -58,6 +58,21 @@ public class MentorController {
 		return map;
 	}
 	
+	@ResponseBody
+	@PostMapping("/mentor/detail")
+	public Map<String, Object> mentorDetailPost(@RequestParam("ment_num")int ment_num) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		//멘토링 정보 받아오기
+		MetoringVO mentoring = mentorService.getMentoring(ment_num);
+		//멘토 정보 받아오기
+		MentorInfoVO mentorInfo = mentorService.getMentor(mentoring.getMent_me_id());
+		
+		map.put("mentoring",mentoring);
+		map.put("mentor", mentorInfo);
+		
+		return map;
+	}
+	
 	@GetMapping("/mentor/apply")
 	public String mentorApply() {
 		
