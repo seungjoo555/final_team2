@@ -114,6 +114,25 @@ public class GroupServiceImp implements GroupService{
 		}
 		return groupDao.getGroupTime(groupNum);
 	}
+
+	@Override
+	public boolean updateGoTime(int groupNum) {
+		if(groupNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return false;
+		}
+		return groupDao.updateGoTime(groupNum);
+	}
+
+	@Override
+	public long getGoTimeByGoNum(int groupNum) {
+		if(groupNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return -1;
+		}
+		
+		return groupDao.getGroupTime(groupNum);
+	}
 	
 	
 }

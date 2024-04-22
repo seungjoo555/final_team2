@@ -81,6 +81,12 @@
 	
 	<!-- =============================== UPDATE =============================== -->	
 	
+	<update id="updateGoTime">
+		UPDATE `group` 
+			SET go_time = go_time + 1 
+		WHERE go_num = #{num}
+	</update>
+	
 	<!-- =============================== SELECT =============================== -->	
 	
 </mapper>

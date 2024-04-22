@@ -32,4 +32,8 @@ public interface GroupService {
 
 	long getGroupTime(int groupNum);
 
+	boolean updateGoTime(int goNum);
+
+	long getGoTimeByGoNum(int goNum);
+
 }

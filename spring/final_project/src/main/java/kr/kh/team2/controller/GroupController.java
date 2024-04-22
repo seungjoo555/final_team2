@@ -2,6 +2,8 @@ package kr.kh.team2.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
@@ -27,6 +32,8 @@ public class GroupController {
 	@Autowired
 	GroupService groupService;
 	
+	// ================================ mygroup ================================
+
 	@GetMapping("/mygroup/list")
 	public String grouplist(Model model, HttpSession session){
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -71,6 +78,26 @@ public class GroupController {
 		
 		return "/group/mygroup/grouphome";
 	}
+	
+	@ResponseBody
+	@PostMapping("/group/timerWork")
+	public Map<String, Object> 메서드명(@RequestParam("goNum")int goNum){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean isTimeupdated = groupService.updateGoTime(goNum);
+		
+		if(isTimeupdated) {
+			long time = groupService.getGoTimeByGoNum(goNum);
+			
+			map.put("time", time);
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	// ================================ group ================================
 	
 	@GetMapping("/group/post")
 	public String grouppost(Model model, HttpSession session, int groupNum){

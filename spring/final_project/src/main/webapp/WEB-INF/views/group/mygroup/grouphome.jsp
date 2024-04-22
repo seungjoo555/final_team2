@@ -107,6 +107,8 @@
 
 <!-- timer 시간 표시하기 -->
 <script type="text/javascript">
+	let timerOn = true; // 타이머 작동 여부 결정
+	
 	setTimer(${time});
 
 	// 그룹 시간을 타이머 형식으로 변환하여 출력하도록 함.
@@ -114,10 +116,12 @@
 		let hour = Math.floor(time / 3600)	// 시 구하기
 		
 		if(${time} < 0){		// 에러시간
+			timerOn = false;
 			$(".group-timer-box").text("-999 : 59 : 59") 
 		}
 		else if (hour > 999){	// 최대시간 초과시,
-			$(".group-timer-box").text("999 : 59 : 59 +") 
+			timerOn = false;
+			$(".group-timer-box").text("999 : 59 : 59+") 
 			
 		}else{
 			hour = numberPad(hour, 2)
@@ -139,7 +143,54 @@
 
 <!-- 매초 타이머가 증가하는 script -->
 <script type="text/javascript">
+	let timerWork
+	let isTimerWork = false;
+	
+	$(".start-btn").click(function(){
+		
+		// 타이머가 비활성화 되어있을 경우(에러 or 1000시간 이상)
+		if(!timerOn){
+			if(confirm("기록 가능한 시간 범위를 초과했습니다. 타이머를 초기화할까요?")){
+				// 타이머 초기화 구현
+				
+				alert("타이머를 초기화 했습니다.")
+			}else{
+				return
+			}
+		}
+		
+		if(!isTimerWork){
+			isTimerWork = true;
+			
+			 timerWork = setInterval(function(){ // 매 1000미리초(1초)에 1번 실행됨.
+				 $.ajax({
+						async : true, //비동기 : true(비동기), false(동기)
+						url : '<c:url value="/group/timerWork"/>', 
+						type : 'post', 
+						data : {goNum : ${group.go_num}}, 
+						dataType : "json", 
+						success : function (data){
+							if(data.data == "ok"){
+								setTimer(data.time)
+							}
+							
+						}, 
+						error : function(jqXHR, textStatus, errorThrown){
 
+						}
+					});
+				 
+	         }, 1000) // 1초에 한 번 씩 서버와 통신
+		}else{
+			alert("이미 타이머가 작동 중입니다.")
+		}
+
+	})
+	
+	$(".pause-btn").click(function(){
+		isTimerWork = false;
+		clearInterval(timerWork)		
+	})
 </script>
 </body>
 </html>
