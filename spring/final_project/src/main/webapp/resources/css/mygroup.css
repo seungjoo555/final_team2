@@ -79,8 +79,9 @@
 		.group-timer{margin-top: -46px;}
 		.group-timer .group-timer-title{color: #243323; font-size: 24px;}
 		.group-timer .group-timer-box{
-			width: clac(100% - 80px); height: 115px; line-height: 115px; text-align:center; border-radius: 25px; 
-			box-shadow:inset 1px 1px 7px rgba(0, 0, 0, 8.7);
+			width: clac(100% - 80px); height: 115px; line-height: 115px; border-radius: 15px; 
+			font-size: 36px;text-align:center; 
+			box-shadow:inset 1px 1px 7px rgba(0, 0, 0, .3);
 		}
 		
 		.group-timer .group-timer-btn-group{margin-top: 10px;}
