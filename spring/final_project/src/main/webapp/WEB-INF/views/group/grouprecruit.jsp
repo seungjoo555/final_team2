@@ -75,7 +75,7 @@
 									<c:forEach items="${categoryList}" var="progCt">
 										<li>
 											<label for="progCate_${progCt.progCt_num}">
-												<input type="checkbox" class="multi-dropdown-item" value="${progCt.progCt_num}" id="progCate_${progCt.progCt_num}" name = "toCt_progCt_num"/>
+												<input type="checkbox" class="multi-dropdown-item" onClick="countCate_ck(this)" value="${progCt.progCt_num}" id="progCate_${progCt.progCt_num}" name ="toCt_progCt_num"/>
 												<p>${progCt.progCt_name}</p>
 											</label>
 										</li>
@@ -96,7 +96,7 @@
 									<c:forEach items="${languageList}" var="progLang">
 										<li>
 											<label for="progCate${progLang.lang_num}">
-												<input type="checkbox" class="multi-dropdown-item" value="${progLang.lang_num}" id="progCate${progLang.lang_num}" name = "toLg_lang_num"/>
+												<input type="checkbox" class="multi-dropdown-item" onClick="countLang_ck(this)" value="${progLang.lang_num}" id="progCate${progLang.lang_num}" name ="toLg_lang_num"/>
 												<p>${progLang.lang_name}</p>
 											</label>
 										</li>
@@ -148,10 +148,51 @@
 				return false;
 			}
 			
+			var chkCount = /^[0-9]*$/;
+			
+			if(!chkCount.test(recu_count.value)) {
+				alert("모집 인원은 숫자만 작성 가능합니다.")
+				return false;
+			}
+			
 			if(confirm("입력하신 내용으로 모집 공고를 올리시겠습니까?")) {
 				location.href='<c:url value="/group/grouplist"/>';
 			}
 		})
+		
+		function countCate_ck(obj) {
+			var chkbox = document.getElementsByName("toCt_progCt_num");
+			var chkCnt = 0;
+			
+			for (var i = 0; i < chkbox.length; i++) {
+				if(chkbox[i].checked) {
+					chkCnt++;
+				}
+			}
+			
+			if(chkCnt > 3) {
+				alert("모집 분야는 최대 3개까지 선택 가능합니다.");
+				obj.checked = false;
+				return false;
+			}
+		}
+		
+		function countLang_ck(obj) {
+			var chkbox = document.getElementsByName("toLg_lang_num");
+			var chkCnt = 0;
+			
+			for (var i = 0; i < chkbox.length; i++) {
+				if(chkbox[i].checked) {
+					chkCnt++;
+				}
+			}
+			
+			if(chkCnt > 3) {
+				alert("사용 언어는 최대 3개까지 선택 가능합니다.");
+				obj.checked = false;
+				return false;
+			}
+		}
 		
 	</script>
 </body>
