@@ -14,7 +14,7 @@
 	/* group-calendar 관련 */
 		.group-calendar{height: 100%; padding: 67px 30px 30px 30px;}
 		.group-calendar .calendar{width: 100%; height:100%; border: 1px solid black;}
-		
+	
 </style>
 </head>
 <body>
@@ -26,10 +26,12 @@
 				<div class="float-left group-title">${group.go_name}</div>
 				<div class="float-left">그룹 페이지</div>
 				<div class="setting-btn float-rignt">
-					버튼
+					<a href="#">
+						<img class="hamburger-btn" src="<c:url value="/resources/img/hamburger-btn.png"/>">
+					</a>
 				</div>
 				<div class="user-info float-rignt">
-					멤버이름
+					${user.me_nickname} 님
 				</div>
 				
 			</div>
