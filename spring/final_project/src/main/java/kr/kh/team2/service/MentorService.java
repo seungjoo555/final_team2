@@ -2,6 +2,8 @@ package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
+import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
+import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
@@ -18,6 +20,15 @@ public interface MentorService {
 	boolean insertMentorInfo(MentorInfoVO mentorInfoVO);
 
 	boolean checkMentor(String me_id);
+
+	MentorInfoVO getMentorInfo(String me_id);
+
+	MetoringVO getMetoring(String me_id);
+
+	ArrayList<ProgrammingCategoryVO> getProgrammingCategory();
+
+	boolean insertMentoring(MetoringVO mentoring, TotalCategoryVO toCt);
+
 
 
 }
