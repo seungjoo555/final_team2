@@ -11,10 +11,10 @@
 			</h1>
 			<ul class="navbar-left">
 				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/group/home" />">스터디/프로젝트</a>
+					<a class="nav-link" href="<c:url value="/group/list" />">스터디/프로젝트</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="#" />">멘토링</a>
+					<a class="nav-link" href="<c:url value="/mentor/list" />">멘토링</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value="#" />">커뮤니티</a>
@@ -56,3 +56,4 @@
 		</div>
 	</nav>
 </header>
+
