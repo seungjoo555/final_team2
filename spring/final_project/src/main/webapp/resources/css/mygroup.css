@@ -83,6 +83,7 @@
 			font-size: 36px;text-align:center; 
 			box-shadow:inset 1px 1px 7px rgba(0, 0, 0, .3);
 		}
+		.group-timer .timer-on{font-weight: bold; color: #649B60;}
 		
 		.group-timer .group-timer-btn-group{margin-top: 10px;}
 		.group-timer .group-timer-btn-group>*{border: none; font-weight: bold;}
@@ -90,7 +91,7 @@
 		.group-timer a::hover{text-decoration: none;}
 		.group-timer-btn-group .start-btn{background-color: #649B60; color: #243323;}
 		.group-timer-btn-group .pause-btn{background-color: #C9C9C9; color: #243323;}
-	
+		
 	/* group-dday 관련 style*/
 	
 		.group-dday{margin-top: 35px; height: calc(100% - 193px);}

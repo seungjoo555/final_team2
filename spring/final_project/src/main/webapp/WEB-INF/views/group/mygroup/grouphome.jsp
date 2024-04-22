@@ -162,6 +162,8 @@
 		if(!isTimerWork){
 			isTimerWork = true;
 			
+			$(".group-timer-box").addClass("timer-on")
+			
 			 timerWork = setInterval(function(){ // 매 1000미리초(1초)에 1번 실행됨.
 				 $.ajax({
 						async : true, //비동기 : true(비동기), false(동기)
@@ -189,6 +191,8 @@
 	
 	$(".pause-btn").click(function(){
 		isTimerWork = false;
+
+		$(".group-timer-box").removeClass("timer-on")
 		clearInterval(timerWork)		
 	})
 </script>
