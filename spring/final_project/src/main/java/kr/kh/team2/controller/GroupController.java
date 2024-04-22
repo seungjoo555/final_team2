@@ -9,8 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.PageMaker;
@@ -31,28 +32,7 @@ public class GroupController {
 	@Autowired
 	GroupService groupService;
 	
-
-	@GetMapping("/group/list")
-	public String groupList(Model model) {
-
-		return "/group/list";
-	}
-	
-	@ResponseBody
-	@PostMapping("/group/list")
-	public Map<String, Object> groupListPost(@RequestBody Criteria cri) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		cri.setPerPageNum(20);	//20개
-		//그룹 리스트 가져오기
-		ArrayList<RecruitVO> groupList = groupService.getGroupList(cri);
-		System.out.println("cri : " + cri);
-		int totalCount = groupService.getGroupTotalCount(cri);
-		PageMaker pm = new PageMaker(10, cri, totalCount);
-		map.put("list", groupList);
-		map.put("pm", pm);
-		return map;
-	}
+	// ================================ mygroup ================================
 
 	@GetMapping("/mygroup/list")
 	public String grouplist(Model model, HttpSession session){
@@ -76,6 +56,9 @@ public class GroupController {
 		if(groupService.isGroupMember(user, groupNum)) {
 			GroupVO group = groupService.getGroupByGoNum(groupNum);
 			model.addAttribute("group", group);
+			
+			long groupTime = groupService.getGroupTime(groupNum);
+			model.addAttribute("time", groupTime);
 		}
 		
 		// 최근 게시글 불러오기
@@ -94,6 +77,49 @@ public class GroupController {
 		model.addAttribute("boardlist", boardlist);
 		
 		return "/group/mygroup/grouphome";
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/timerWork")
+	public Map<String, Object> 메서드명(@RequestParam("goNum")int goNum){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean isTimeupdated = groupService.updateGoTime(goNum);
+		
+		if(isTimeupdated) {
+			long time = groupService.getGoTimeByGoNum(goNum);
+			
+			map.put("time", time);
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	// ================================ group ================================
+		
+
+	@GetMapping("/group/list")
+	public String groupList(Model model) {
+
+		return "/group/list";
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/list")
+	public Map<String, Object> groupListPost(@RequestBody Criteria cri) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		cri.setPerPageNum(20);	//20개
+		//그룹 리스트 가져오기
+		ArrayList<RecruitVO> groupList = groupService.getGroupList(cri);
+		System.out.println("cri : " + cri);
+		int totalCount = groupService.getGroupTotalCount(cri);
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		map.put("list", groupList);
+		map.put("pm", pm);
+		return map;
 	}
 	
 	@GetMapping("/group/post")

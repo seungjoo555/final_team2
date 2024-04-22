@@ -37,4 +37,10 @@ public interface GroupService {
 
 	ArrayList<GroupCalendarVO> getDday(int groupNum, int dday);
 
+	long getGroupTime(int groupNum);
+
+	boolean updateGoTime(int goNum);
+
+	long getGoTimeByGoNum(int goNum);
+
 }

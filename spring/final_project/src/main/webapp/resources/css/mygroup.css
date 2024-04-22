@@ -32,6 +32,8 @@
 
 	.container-info-bar [class$=title]{font-weight: 900; margin-right: 10px;}
 	
+	.container-info-bar .hamburger-btn{width: 24px; height: 24px; margin-bottom: 8px;}
+	
 	[class$=-bg]{width: 90%; margin: 30px auto; background-color: white; padding: 55px 0; 
 		display:flex; flex-direction: column; justify-content: center; align-items: center;}
 	
@@ -69,12 +71,17 @@
 	
 	/* ======================================= grouphome.jsp ============================================ */
 	
+	/* container-info-bar 관련 */
+	
+	.user-info{font-size: 18px; margin-right: 15px;}
+	
 	/* group-timer 관련 style */
 		.group-timer{margin-top: -46px;}
 		.group-timer .group-timer-title{color: #243323; font-size: 24px;}
 		.group-timer .group-timer-box{
-			width: clac(100% - 80px); height: 115px; line-height: 115px; text-align:center; border-radius: 25px; 
-			box-shadow:inset 1px 1px 7px rgba(0, 0, 0, 8.7);
+			width: clac(100% - 80px); height: 115px; line-height: 115px; border-radius: 15px; 
+			font-size: 36px;text-align:center; 
+			box-shadow:inset 1px 1px 7px rgba(0, 0, 0, .3);
 		}
 		
 		.group-timer .group-timer-btn-group{margin-top: 10px;}
@@ -91,13 +98,13 @@
 		
 		.dday-list li>*:first-child::before{
 			width: 5px; height: 5px; 
-			margin: calc(25% - 4px) 8px calc(25% - 4px) 0px; border-radius: 100%; 
+			margin: 10px 8px 10px 0px; border-radius: 100%; 
 			background-color: black; 
 			float: left; display: block; content: ''; 
 		}
-		.dday-list li *:first-child{float: left; width: 30%;}
+		.dday-list li *:first-child{float: left; width: 45%; height: 24px}
 		.dday-list li *:last-child{
-			float: right; width: 60%; text-align: right; 
+			float: right; width: 50%; text-align: right; 
 			text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
 		}
 		.dday-list li::after{display: block; content: ''; clear: both;}
@@ -107,9 +114,9 @@
 		.dday-list li:first-child *:first-child::before{display: none !important;}
 	
 	/* group-board 관련 style*/
-		.group-board .group-board-list{width: 100%; display:flex; flex-direction: row; justify-content: flex-start;}
-		.group-board .group-board-list>*{width: calc(100% / 6); padding: 2px 2px 2px 10px;}
-		.group-board .group-board-list *:first-child{padding-left: 0px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}  
+		.group-board .group-board-list{width: calc(100% + 20px); margin-left: -10px; display:flex; flex-direction: row; justify-content: flex-start;}
+		.group-board .group-board-list>*{width: calc(100% / 6); padding: 2px 10px 2px 10px; border-right: .5px solid #C9C9C9;}
+		.group-board .group-board-list *:last-child{ border-right: none;}  
 		
 		.group-board .writer{font-size: 16px; font-weight: bold;}
 		.group-board .content{
@@ -117,3 +124,6 @@
 			text-overflow: ellipsis; overflow: hidden; word-break: break-word; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
 		}
 		.group-board .time{text-align: right; color: #649B60; font-weight: bold;}
+		
+		
+		

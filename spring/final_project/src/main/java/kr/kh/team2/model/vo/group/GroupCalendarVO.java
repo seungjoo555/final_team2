@@ -25,7 +25,7 @@ public class GroupCalendarVO {
 	}
 
 	private void calcDday() {
-		int year, month, day; String result = "";
+		long todayMs, calMs; long result; String ddayResult = "";
 		Calendar calDate = Calendar.getInstance();
 		Calendar today = Calendar.getInstance();
 		
@@ -34,29 +34,25 @@ public class GroupCalendarVO {
 		// Date를 Calendar형으로 변환
 		today.setTime(now);
 		calDate.setTime(gocal_startdate); 
-
-				
-		// 날짜 계산
-		year = calDate.get(Calendar.YEAR) - today.get(Calendar.YEAR);
-		month = calDate.get(Calendar.MONTH) - today.get(Calendar.MONTH); // 결과값이 0~11
-		day = calDate.get(Calendar.DATE) - today.get(Calendar.DATE);
 		
-		if(year != 0) { 
-			// 다른 해에 설정된 일정일 경우,
+		// Calendar에 있는 날짜 정보를 ms(밀리세컨드) 단위로 변환해서 저장
+		todayMs = today.getTimeInMillis();
+		calMs = calDate.getTimeInMillis();
+		
+		result = (todayMs-calMs)/(60*60*1000*24);
+		
+		if(result == 0) {
+			ddayResult = "-day";
+		}
+		else if(result >= 999) {
+			ddayResult = "+999+";
+		}else if(result <= -999) {
+			ddayResult = "-999+";
+		}else {
+			ddayResult = "" + (result - 1);
 		}
 		
-		else if(month != 0) { 
-			// 같은 해 다른 달에 설정된 일정일 경우
-		}
-		
-		else if(day != 0) { 
-			// 같은 달 다른 일에 설정된 일정일 경우
-		}
-		else { 
-			result = "-DAY";
-		}
-			
-		setDday(result);
+		setDday(ddayResult);
 		
 	}
     

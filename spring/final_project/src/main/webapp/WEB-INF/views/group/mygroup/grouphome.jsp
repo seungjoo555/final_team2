@@ -14,7 +14,7 @@
 	/* group-calendar 관련 */
 		.group-calendar{height: 100%; padding: 67px 30px 30px 30px;}
 		.group-calendar .calendar{width: 100%; height:100%; border: 1px solid black;}
-		
+	
 </style>
 </head>
 <body>
@@ -26,10 +26,12 @@
 				<div class="float-left group-title">${group.go_name}</div>
 				<div class="float-left">그룹 페이지</div>
 				<div class="setting-btn float-rignt">
-					버튼
+					<a href="#">
+						<img class="hamburger-btn" src="<c:url value="/resources/img/hamburger-btn.png"/>">
+					</a>
 				</div>
 				<div class="user-info float-rignt">
-					멤버이름
+					${user.me_nickname} 님
 				</div>
 				
 			</div>
@@ -39,7 +41,7 @@
 					<!-- 그룹 타이머 -->
 					<div class="group-timer">
 						<label class="group-timer-title">스터디 시계</label>
-						<div class="group-timer-box">공부 시간</div>
+						<div class="group-timer-box"></div>
 						<div class="group-timer-btn-group">
 							<a class="start-btn">시작</a>
 							<a class="pause-btn">중지</a>
@@ -103,5 +105,92 @@
 	</c:choose> 
 </div>
 
+<!-- timer 시간 표시하기 -->
+<script type="text/javascript">
+	let timerOn = true; // 타이머 작동 여부 결정
+	
+	setTimer(${time});
+
+	// 그룹 시간을 타이머 형식으로 변환하여 출력하도록 함.
+	function setTimer(time){
+		let hour = Math.floor(time / 3600)	// 시 구하기
+		
+		if(${time} < 0){		// 에러시간
+			timerOn = false;
+			$(".group-timer-box").text("-999 : 59 : 59") 
+		}
+		else if (hour > 999){	// 최대시간 초과시,
+			timerOn = false;
+			$(".group-timer-box").text("999 : 59 : 59+") 
+			
+		}else{
+			hour = numberPad(hour, 2)
+			let min = numberPad(Math.floor(time % 3600 / 60), 2) 		// 분 구하기
+			let sec = numberPad(time % 60, 2)					// 초 구하기
+			
+			$(".group-timer-box").text(hour + " : " + min + " : " + sec)
+		}
+		
+	}
+	
+	// lpad 구현
+	function numberPad(n, width) {
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+}
+	
+</script>
+
+<!-- 매초 타이머가 증가하는 script -->
+<script type="text/javascript">
+	let timerWork
+	let isTimerWork = false;
+	
+	$(".start-btn").click(function(){
+		
+		// 타이머가 비활성화 되어있을 경우(에러 or 1000시간 이상)
+		if(!timerOn){
+			if(confirm("기록 가능한 시간 범위를 초과했습니다. 타이머를 초기화할까요?")){
+				// 타이머 초기화 구현
+				
+				alert("타이머를 초기화 했습니다.")
+			}else{
+				return
+			}
+		}
+		
+		if(!isTimerWork){
+			isTimerWork = true;
+			
+			 timerWork = setInterval(function(){ // 매 1000미리초(1초)에 1번 실행됨.
+				 $.ajax({
+						async : true, //비동기 : true(비동기), false(동기)
+						url : '<c:url value="/group/timerWork"/>', 
+						type : 'post', 
+						data : {goNum : ${group.go_num}}, 
+						dataType : "json", 
+						success : function (data){
+							if(data.data == "ok"){
+								setTimer(data.time)
+							}
+							
+						}, 
+						error : function(jqXHR, textStatus, errorThrown){
+
+						}
+					});
+				 
+	         }, 1000) // 1초에 한 번 씩 서버와 통신
+		}else{
+			alert("이미 타이머가 작동 중입니다.")
+		}
+
+	})
+	
+	$(".pause-btn").click(function(){
+		isTimerWork = false;
+		clearInterval(timerWork)		
+	})
+</script>
 </body>
 </html>

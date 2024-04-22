@@ -74,7 +74,7 @@
  	
 	<select id="getDday" resultType="GroupCalendarVO">
 		SELECT * FROM group_calendar 
-			WHERE gocal_go_num = #{num} AND gocal_startdate > NOW()
+			WHERE gocal_go_num = #{num} AND gocal_startdate >= date_format(Now(), '%Y-%m-%d')
 		    ORDER BY gocal_startdate 
 		    LIMIT #{count};
 	</select>
@@ -112,9 +112,19 @@
  			toLg_table_name = #{table} and toLg_table_pk = #{num}
  	</select>
 	
+	<select id="getGroupTime" resultType="long">
+		SELECT go_time FROM `group` WHERE go_num = #{num}  
+	</select>
+	
 	<!-- =============================== DELETE =============================== -->
 	
 	<!-- =============================== UPDATE =============================== -->	
+	
+	<update id="updateGoTime">
+		UPDATE `group` 
+			SET go_time = go_time + 1 
+		WHERE go_num = #{num}
+	</update>
 	
 	<!-- =============================== SELECT =============================== -->	
 	
