@@ -23,7 +23,7 @@
 						and recu_type = 1
 					</when>
 					<otherwise>
-						and recu_type = 0 or recu_type = 1
+						and (recu_type = 0 or recu_type = 1)
 					</otherwise>
 				</choose>
 			order by recu_num desc
@@ -85,7 +85,7 @@
  	
  	<select id="selectGroupKing" resultType="MemberVO">
  		select * from member where me_id = 
- 		(select gome_me_id from group_member where gome_go_num = #{recu_go_num} and gome_type = 0)
+ 		(select gome_me_id from group_member where gome_go_num = #{recu_go_num} and gome_type = 1)
  	</select>
  	
  	<select id="selectCategoryList" resultType="TotalCategoryVO">

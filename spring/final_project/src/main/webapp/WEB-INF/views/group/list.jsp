@@ -101,7 +101,7 @@
 			str +=
 				`
 					<!-- 게시글 정보 링크 -->
-					<a class="group-item" href="<c:url value="/group/detail?recu_num=\${group.recu_num}"/>">
+					<a class="group-item" href="<c:url value="/group/detail?num=\${group.recu_num}"/>">
 						<li>
 							<!-- 프로젝트/스터디 구분 -->
 							<div class="group-list-item-category" >
