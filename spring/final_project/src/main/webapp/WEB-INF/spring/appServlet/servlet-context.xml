@@ -41,7 +41,7 @@
 	<beans:bean id="loninInterceptor" class="kr.kh.team2.interceptor.LoginInterceptor"/>
 	<!-- MemberInterceptor를 등록 -->
 	<beans:bean id="memberInterceptor" class="kr.kh.team2.interceptor.MemberInterceptor"/>
-	
+
 	<!-- 인터셉터 맵핑 -->
 	<interceptors>
 		<interceptor>

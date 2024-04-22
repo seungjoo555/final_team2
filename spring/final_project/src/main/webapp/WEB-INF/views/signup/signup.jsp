@@ -11,17 +11,6 @@
 <!-- jquery validtaion -->	
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
-
-<style>
-	.signup-form{margin-top: 50px;}
-	
-	/*상세주소 margin-top 설정*/
-	[class$=input] .add2{margin-top: 10px;}
-		
-			
-	/*simple-login-btn-group margin-top*/
-	.simple-login-btn-group{margin-top: 50px;}
-</style>
 </head>
 <body class="center">
 <div class="container">

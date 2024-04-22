@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team2.dao.GroupDAO">
+	
+	<!-- =============================== SELECT =============================== -->
+	
+
+ 	<select id="selectGroupList" resultType="RecruitVO">
+        select recruit.*, me_nickname as recu_gome_me_nickname 
+        from recruit
+ 			join
+ 				group_member on gome_go_num = recu_go_num
+			join
+				`member` on gome_me_id = me_id
+			where  gome_type = 1
+				<choose>
+					<when test='cri.type == "study"'>
+						and recu_type = 0
+					</when>
+					<when test='cri.type == "project"'>
+						and recu_type = 1
+					</when>
+					<otherwise>
+						and (recu_type = 0 or recu_type = 1)
+					</otherwise>
+				</choose>
+			order by recu_num desc
+			limit #{cri.pageStart}, #{cri.perPageNum}
+ 	</select>
+ 	<select id="selectGroupTotalCount" resultType="int">
+ 		select count(*) from recruit
+ 		where
+			<choose>
+				<when test='cri.type == "study"'>
+					recu_type = 0
+				</when>
+				<when test='cri.type == "project"'>
+					recu_type = 1
+				</when>
+				<otherwise>
+					recu_type = 0 or recu_type = 1 
+				</otherwise>
+			</choose>
+ 	</select>
+
+ 	<select id="getGroupListById" resultType="GroupVO">
+		SELECT go_num, go_name, go_time, go_update, COUNT(gome_me_id) as go_member_count 
+			FROM `group`
+				JOIN group_member ON go_num = gome_go_num
+			WHERE go_num in (
+				SELECT gome_go_num FROM group_member WHERE gome_me_id = #{id}
+            ) 
+             GROUP BY gome_go_num;
+	</select>
+	
+	<select id="getGroupByGoNum" resultType="GroupVO">
+		SELECT * FROM `group` WHERE go_num = #{num}
+	</select>
+	
+	<select id="isGroupMember" resultType="Object">
+		SELECT * FROM group_member WHERE gome_go_num = #{num} AND gome_me_id = #{id}
+	</select>
+	
+	<select id="getRecentGroupBoard" resultType="GroupPostVO">
+		SELECT group_post.*, me_nickname as nickname 
+			FROM group_post 
+				JOIN member ON me_id = gopo_gome_me_id
+			WHERE gopo_gome_go_num = #{num}  
+			ORDER BY gopo_date DESC 
+			LIMIT #{count};
+	</select>
+ 	
+	<select id="getDday" resultType="GroupCalendarVO">
+		SELECT * FROM group_calendar 
+			WHERE gocal_go_num = #{num} AND gocal_startdate >= date_format(Now(), '%Y-%m-%d')
+		    ORDER BY gocal_startdate 
+		    LIMIT #{count};
+	</select>
+ 	
+ 	<select id="selectRecruit" resultType="RecruitVO">
+ 		select * from recruit where recu_num = #{num}
+ 	</select>
+ 	
+ 	<select id="selectGroupKing" resultType="MemberVO">
+ 		select * from member where me_id = 
+ 		(select gome_me_id from group_member where gome_go_num = #{recu_go_num} and gome_type = 1)
+ 	</select>
+ 	
+ 	<select id="selectCategoryList" resultType="TotalCategoryVO">
+ 		select
+ 			total_category.*,
+ 			progCt_name as toCt_progCt_name
+ 		from
+ 			total_category
+ 				join
+ 			programming_category on progCt_num = toCt_progCt_num
+ 		where
+ 			toCt_table_name = #{table} and toCt_table_pk = #{num}
+ 	</select>
+ 	
+ 	<select id="selectLanguageList" resultType="TotalLanguageVO">
+ 		select
+ 			total_language.*,
+ 			lang_name as toLg_lang_name
+ 		from
+ 			total_language
+ 				join
+ 			programming_language on lang_num = toLg_lang_num
+ 		where
+ 			toLg_table_name = #{table} and toLg_table_pk = #{num}
+ 	</select>
+	
+	<select id="getGroupTime" resultType="long">
+		SELECT go_time FROM `group` WHERE go_num = #{num}  
+	</select>
+	
+	<!-- =============================== DELETE =============================== -->
+	
+	<!-- =============================== UPDATE =============================== -->	
+	
+	<update id="updateGoTime">
+		UPDATE `group` 
+			SET go_time = go_time + 1 
+		WHERE go_num = #{num}
+	</update>
+	
+	<!-- =============================== SELECT =============================== -->	
+	
+
+ 	
+</mapper>

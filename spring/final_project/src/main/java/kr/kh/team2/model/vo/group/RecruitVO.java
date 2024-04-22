@@ -25,4 +25,6 @@ public class RecruitVO {
     private int recu_online;
     private int recu_interview;
     private int recu_repoCount;
+    //리더 닉네임
+    private String recu_gome_me_nickname;
 }

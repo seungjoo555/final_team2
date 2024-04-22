@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class TotalCategoryVO {
     private int toCt_num;
     private int toCt_progCt_num;
+    private String toCt_progCt_name;
     private String toCt_table_name;
     private String toCt_table_pk;
 }
