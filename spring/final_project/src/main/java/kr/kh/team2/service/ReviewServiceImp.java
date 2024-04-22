@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.ReviewDAO;
+import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.MutualReviewVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 
@@ -20,8 +21,4 @@ public class ReviewServiceImp implements ReviewService {
 		return reviewDao.selectMutualReviewList(me_id);
 	}
 
-	@Override
-	public RecruitVO getRecuType(String me_id) {
-		return reviewDao.selectRecuType(me_id);
-	}
 }

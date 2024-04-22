@@ -4,15 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team2.dao.ReviewDAO">
 	<select id="selectMutualReviewList" resultType="MutualReviewVO">
-		SELECT * FROM mutual_review WHERE mure_target_id = #{me_id}
+		SELECT mutual_review.*,
+			recruit.recu_type AS recu_type
+		FROM mutual_review 
+		    JOIN recruit ON mure_go_num = recu_go_num
+		WHERE mure_target_id = #{me_id}
 	</select>
 	
-	<select id="selectRecuType" resultType="MutualReviewVO">
-		SELECT *
-		FROM mutual_review 
-			JOIN group_member ON mure_go_num = gome_go_num
-		    JOIN `group` ON mure_go_num = go_num
-		    JOIN recruit ON go_num = recu_go_num
-		WHERE mure_target_id = #{me_id} and go_num = #{go_num};
-	</select>
 </mapper>
