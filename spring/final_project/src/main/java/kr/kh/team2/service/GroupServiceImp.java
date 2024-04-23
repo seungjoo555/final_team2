@@ -149,6 +149,16 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.getGroupTime(groupNum);
 	}
+
+	@Override
+	public ArrayList<GroupPostVO> getGroupPostByGoNum(int groupNum) {
+		if(groupNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return null;
+		}
+		
+		return groupDao.getGroupPostByGoNum(groupNum);
+	}
 	
 	
 }

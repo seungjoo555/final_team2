@@ -43,4 +43,6 @@ public interface GroupService {
 
 	long getGoTimeByGoNum(int goNum);
 
+	ArrayList<GroupPostVO> getGroupPostByGoNum(int groupNum);
+
 }

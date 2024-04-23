@@ -116,6 +116,14 @@
 		SELECT go_time FROM `group` WHERE go_num = #{num}  
 	</select>
 	
+	<select id="getGroupPostByGoNum" resultType="GroupPostVO">
+		SELECT group_post.*, me_nickname as nickname 
+			FROM group_post 
+				JOIN member ON me_id = gopo_gome_me_id
+			WHERE gopo_gome_go_num = #{num} 
+			ORDER BY gopo_date DESC
+	</select>
+	
 	<!-- =============================== DELETE =============================== -->
 	
 	<!-- =============================== UPDATE =============================== -->	

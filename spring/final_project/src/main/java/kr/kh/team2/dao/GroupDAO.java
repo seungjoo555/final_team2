@@ -41,4 +41,6 @@ public interface GroupDAO {
 
 	boolean updateGoTime(@Param("num")int groupNum);
 
+	ArrayList<GroupPostVO> getGroupPostByGoNum(@Param("num")int groupNum);
+
 }

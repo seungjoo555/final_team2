@@ -107,11 +107,16 @@ public class GroupController {
 	public String grouppost(Model model, HttpSession session, int groupNum){
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		if(groupService.isGroupMember(user, groupNum)) {
-			GroupVO group = groupService.getGroupByGoNum(groupNum);
-			model.addAttribute("group", group);
-			
+		// 가입하지 않은 그룹 게시판에 접근했을 경우
+		if(!groupService.isGroupMember(user, groupNum)) {
+			return "/group/mygroup/grouppost";
 		}
+		
+		GroupVO group = groupService.getGroupByGoNum(groupNum);
+		model.addAttribute("group", group);
+		
+		ArrayList<GroupPostVO> postList = groupService.getGroupPostByGoNum(groupNum);
+		model.addAttribute("list", postList);
 		
 		return "/group/mygroup/grouppost";
 	}
