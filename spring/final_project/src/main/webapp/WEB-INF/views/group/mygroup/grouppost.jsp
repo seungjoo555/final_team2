@@ -65,26 +65,7 @@
 					<button class="submit float-right">등록</button>
 				</div>
 				<div class="post-list-bg">
-					<!--  
-					<c:forEach var="post" items="${list}">
-						<div>
-							<div class="post-info">
-								<div class="writer float-left">${post.nickname}</div>
-								<div class="time float-left">${post.time_ago}</div>
-							</div>
-							<div class="post-content">
-								${post.gopo_content }
-							</div>
-							<c:if test="${user.me_id == post.gopo_gome_me_id }">
-								<div class="post-manage-btn-group">
-									<a class="float-left">수정</a>
-									<a class="float-left">삭제</a>
-								</div>
-							</c:if>
-						</div>
-					
-					</c:forEach>
-					-->
+					<!-- 게시글 불러오기 script로 리스트 출력됨 -->
 				</div>
 				페이지네이션 추가 필요
 			</c:otherwise>
@@ -166,6 +147,18 @@
 					}
 				});
 		})
+	</script>
+
+	<!-- 게시글 수정 script -->
+	<script type="text/javascript">
+		// 구현 예정
+		
+	</script>
+
+	<!-- 게시글 삭제 script -->
+	<script type="text/javascript">
+		// 구현 예정
+		
 	</script>
 </body>
 </html>
