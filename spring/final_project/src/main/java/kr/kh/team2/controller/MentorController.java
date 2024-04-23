@@ -74,8 +74,8 @@ public class MentorController {
 	}
 	
 	@GetMapping("/mentor/apply")
-	public String mentorApply() {
-		
+	public String mentorApply(Model model, String test) {
+		System.out.println("테스트 :: " + test);
 		return "/mentor/mentorapply";
 	}
 	

@@ -46,17 +46,10 @@
 	
    <!-- 상세화면 -->
 
-   <div id="modal" class="modal apply-mentoring-modal" style="display:none;">
+   <div id="modal" class="modal apply-mentoring-modal" style="display:block;">
       <div id="dimmed" class="dimmed apply-mentoring-dimmend"></div>
       <div class="apply-mentoring_container">
       	<div class="apply-mentoring_box">
-	      	<div class="apply-mentoring_header"></div>
-	      	<div class="apply-mentoring_body">
-	      		<div class="apply-mentoring_body_info_header"></div>
-	      		<div class="apply-mentoring_body_info_list"></div>
-	      		<div class="apply-mentoring_body_content"></div>
-	      	</div>
-	      	<div class="apply-mentoring_footer"></div>
       	</div>
       </div>
    </div>
@@ -246,11 +239,45 @@ $(document).on('click', '.mento-item', function(event){
 	function displayMentoringDetail(mentoring, mentor) {
 		let str="";
 		
+		if(mentoring == null || mentor == null){
+			str += `<h1>등록되지 않은 멘토링 정보입니다.<h1>`;
+		}
+		
+		//직무, 경력, 포토폴리오가 없을 경우 출력 메세지 설정
 		
 		
-		console.log("mentoring :: " + mentoring.ment_num);
-		console.log("mentor :: " + mentor.mentIf_me_id);
-		
+		str += 
+			`
+	      	<div class="apply-mentoring_header">
+	      		<div class="header-title"><h1>멘토링 소개</h1></div>
+	      		<div class="btn-cancel"> <button>X</button> </div>
+	      	</div>
+	      	<div class="apply-mentoring_body">
+	      		<div class="apply-mentoring_body_info_header">
+      				<div class="memberInfo" >
+						<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+						<div class="memberNickname">\${mentor.mentIf_me_nickname} </div>
+						<img class="more-Menu" style="width: 15px; height: 20px;" src="<c:url value="/resources/img/more.png"/>">
+					</div>
+	      		</div>
+	      		<h1>\${mentoring.ment_title}</h1>
+	      		<div class="apply-mentoring_body_info_list">
+	      			<ul>
+	      				<li>직무 : \${mentor.mentIf_ment_job}</li>
+	      				<li>경력 : \${mentor.mentIf_date}년</li>
+	      				<li>포토폴리오 : \${mentor.mentIf_portfolio}</li>
+	      			</ul>
+	      		</div>
+	      		<div class="apply-box-border-line"><div class="apply-border-line"></div></div>
+	      		<div class="apply-mentoring_body_content">
+	      			<div>\${mentoring.ment_content}</div>
+	      		</div>
+	      	</div>
+	      	<div class="apply-mentoring_footer">
+				<div class="apply-due">종료일 : \${mentoring.ment_duration}</div>
+				<div class="btn-apply"><button>신청하기</button></div>
+			</div>
+			`
 		$('.apply-mentoring_box').html(str);
 	}//displayMentoringDetail(); end
    
@@ -261,13 +288,32 @@ $(document).on('click', '#dimmed', function(){
    $("#modal").css('display','none');
    $("body").css('overflow','visible');
 })
+/* X 클릭 시 창 없애기 */
+$(document).on('click', '.btn-cancel', function(){
+   $("#modal").css('display','none');
+   $("body").css('overflow','visible');
+})
 
 
 </script>
 
+<script type="text/javascript">
+
+/* 신청 창 */
+$(document).on('click', '.btn-apply', function(){
+   let str = 
+	   `
+	   <input name="test">
+   
+   		<btn>
+	   `
+	   ;
+	$('.apply-mentoring_box').html(str);
+   
+})
 
 
-
+</script>
 
 
 </body>

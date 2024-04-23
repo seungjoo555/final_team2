@@ -68,7 +68,11 @@
 	</select>
 	
 	<select id="selectMentorInfo" resultType="MentorInfoVO">
-		select * from mentor_info where mentIf_me_id = #{me_id}
+		select mentor_info.*, me_nickname as mentIf_me_nickname
+		from mentor_info 
+		join `member` on me_id = mentIf_me_id
+		where mentIf_me_id = #{me_id} 
+	
 	</select>
 	
 	<select id="selectMentoring" resultType="MetoringVO">

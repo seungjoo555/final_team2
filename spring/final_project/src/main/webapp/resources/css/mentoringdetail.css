@@ -1,6 +1,7 @@
 @charset "UTF-8";
 body{width:100%; overflow : visible; 
   height: 100%;}
+*{box-sizing: border-box;}
 .modal{
    display: flex; align-items: center; flex-direction: column; justify-content: center;
    box-sizing: border-box;  margin:auto;
@@ -15,7 +16,39 @@ body{width:100%; overflow : visible;
    border-radius: 10px; padding: 40px;
 }
 /* 상세화면 */
-.apply-mentoring_box{width:100%; height:100%; margin:0; background-color: lime;}
-.apply-mentoring_header{background-color: red;width:100%; height: 10%;}
-.apply-mentoring_body{background-color: aqua; width:100%; height: 80%;}
-.apply-mentoring_footer{background-color: orange; width:100%; height: 10%;}
+.apply-mentoring_box{width:100%; height:100%; margin:0; }
+/*헤더*/
+.apply-mentoring_header{
+	 width:100%; height: 7%; display: flex;
+	justify-content: space-between;
+}
+.header-title{display: flex; align-items: center;}
+.header-title > h1{font-size: 20px; margin-left: 10px; font-weight: bold;}
+.btn-cancel{margin-right: 10px; font-size: 20px; font-weight: bold; background-color:transparent;}	
+.btn-cancel > button{background-color:transparent;}	
+
+/*body*/
+.apply-mentoring_body{ width:100%; height: 80%; overflow: scroll; overflow-x:hidden; }
+/* 프로필 */
+.memberInfo{ display: flex; flex-direction: row; align-items: center;}
+.basic-profile{margin-right: 5px;}
+/*제목*/
+h1{font-size: 18px; margin: 10px 0;}
+/* 멘토정보 */
+.apply-mentoring_body_info_list{
+	border: 1px solid rgba(11, 19, 30, .37);  border-width:0px 0px 0px 5px; width: 100%; height: 100px;
+	margin: 10px; padding: 10px; font-size: 15px;
+}
+.apply-mentoring_body_info_list > li{
+	margin-bottom: 20px;
+}
+/* 구분선 */
+.apply-box-border-line{display:flex; justify-content:center;}
+.apply-border-line{ border: 1px solid rgba(11, 19, 30, .37); height: 1px; width: 100%; margin: 5px;}
+
+/* footer */
+.apply-mentoring_footer{
+	width:100%; height: 10%; display: flex; flex-direction: row; align-items: center;
+	padding: 0 10px;
+}
+.btn-apply{display: flex; justify-content: flex-end; margin-left: auto;}
