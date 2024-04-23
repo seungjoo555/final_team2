@@ -55,13 +55,16 @@ public class GroupController {
 		int dday = 7;
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		if(groupService.isGroupMember(user, groupNum)) {
-			GroupVO group = groupService.getGroupByGoNum(groupNum);
-			model.addAttribute("group", group);
-			
-			long groupTime = groupService.getGroupTime(groupNum);
-			model.addAttribute("time", groupTime);
+		// 해당 그룹 가입 유저가 아니라면
+		if(!groupService.isGroupMember(user, groupNum)) {
+			return "/group/mygroup/grouphome";
 		}
+		
+		GroupVO group = groupService.getGroupByGoNum(groupNum);
+		model.addAttribute("group", group);
+		
+		long groupTime = groupService.getGroupTime(groupNum);
+		model.addAttribute("time", groupTime);
 		
 		// 최근 게시글 불러오기
 		ArrayList<GroupPostVO> boardlist = groupService.getRecentGroupBoard(groupNum, recentBoard);
@@ -99,6 +102,20 @@ public class GroupController {
 		
 		return map;
 	}
+	
+	@GetMapping("/group/post")
+	public String grouppost(Model model, HttpSession session, int groupNum){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(groupService.isGroupMember(user, groupNum)) {
+			GroupVO group = groupService.getGroupByGoNum(groupNum);
+			model.addAttribute("group", group);
+			
+		}
+		
+		return "/group/mygroup/grouppost";
+	}
+	
 	// ================================ group ================================
 		
 
@@ -124,12 +141,6 @@ public class GroupController {
 		return map;
 	}
 	
-	@GetMapping("/group/post")
-	public String grouppost(Model model, HttpSession session, int groupNum){
-		
-		return "/group/mygroup/grouppost";
-	}
-
   @GetMapping("/group/detail")
 	public String postDetail(Model model, int num) {
 		//모집공고를 가져옴

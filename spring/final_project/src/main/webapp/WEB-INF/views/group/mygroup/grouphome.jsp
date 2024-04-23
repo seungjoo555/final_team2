@@ -20,7 +20,12 @@
 <body>
 <div class="container">
 	<c:choose>
-		<c:when test="${group == null }">가입한 그룹이 아닙니다.</c:when>
+		<c:when test="${group == null }">
+			<div class="not-group-member">
+				<div>가입한 그룹이 아닙니다.</div>
+				<a href="<c:url value="/"/>">홈으로 가기</a>
+			</div>
+		</c:when>
 		<c:otherwise>
 			<div class="container-info-bar">
 				<div class="float-left group-title">${group.go_name}</div>
