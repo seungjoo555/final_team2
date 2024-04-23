@@ -41,7 +41,13 @@
 					<!-- 그룹 타이머 -->
 					<div class="group-timer">
 						<label class="group-timer-title">스터디 시계</label>
-						<div class="group-timer-box"></div>
+						<div class="group-timer-box">
+							<div class="hour"></div>
+							<div class="colon"> : </div>
+							<div class="min"></div>
+							<div class="colon"> : </div>
+							<div class="sec"></div>
+						</div>
 						<div class="group-timer-btn-group">
 							<a class="start-btn">시작</a>
 							<a class="pause-btn">중지</a>
@@ -117,18 +123,24 @@
 		
 		if(${time} < 0){		// 에러시간
 			timerOn = false;
-			$(".group-timer-box").text("-999 : 59 : 59") 
+			$(".hour").text("-999") 
+			$(".min").text("59") 
+			$(".sec").text("59") 
 		}
 		else if (hour > 999){	// 최대시간 초과시,
 			timerOn = false;
-			$(".group-timer-box").text("999 : 59 : 59+") 
+			$(".hour").text("999") 
+			$(".min").text("59") 
+			$(".sec").text("59+") 
 			
 		}else{
 			hour = numberPad(hour, 2)
 			let min = numberPad(Math.floor(time % 3600 / 60), 2) 		// 분 구하기
 			let sec = numberPad(time % 60, 2)					// 초 구하기
 			
-			$(".group-timer-box").text(hour + " : " + min + " : " + sec)
+			$(".hour").text(hour)  
+			$(".min").text(min) 
+			$(".sec").text(sec) 
 		}
 		
 	}
@@ -144,6 +156,7 @@
 <!-- 매초 타이머가 증가하는 script -->
 <script type="text/javascript">
 	let timerWork
+	let colonToggle
 	let isTimerWork = false;
 	
 	$(".start-btn").click(function(){
@@ -162,7 +175,7 @@
 		if(!isTimerWork){
 			isTimerWork = true;
 			
-			$(".group-timer-box").addClass("timer-on")
+			$(".hour, .min, .sec").addClass("timer-on")
 			
 			 timerWork = setInterval(function(){ // 매 1000미리초(1초)에 1번 실행됨.
 				 $.ajax({
@@ -183,6 +196,10 @@
 					});
 				 
 	         }, 1000) // 1초에 한 번 씩 서버와 통신
+	         
+	         colonToggle = setInterval(function(){
+	        	 $(".colon").toggleClass("invisible");
+	         }, 500)
 		}else{
 			alert("이미 타이머가 작동 중입니다.")
 		}
@@ -191,9 +208,14 @@
 	
 	$(".pause-btn").click(function(){
 		isTimerWork = false;
-
-		$(".group-timer-box").removeClass("timer-on")
-		clearInterval(timerWork)		
+		
+		// 타이머 가동 종료 및 원래 style로 되돌리기
+		clearInterval(timerWork)
+		$(".hour, .min, .sec").removeClass("timer-on")
+		
+		// 타이머 깜빡임 종료 및 원래 style로 되돌리기
+		clearInterval(colonToggle)
+   		 $(".colon").removeClass("invisible");
 	})
 </script>
 </body>

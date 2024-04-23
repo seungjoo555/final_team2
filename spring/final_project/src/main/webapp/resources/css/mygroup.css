@@ -11,6 +11,8 @@
 	
 	.container-bottom{height: 25%; width: 100%; padding: 40px 40px 0 40px;}
 	
+	.invisible{visibility: hidden;}
+	
 	/* box style */
 	
 	.box{width: 100%; border: solid 3px #C9C9C9; padding: 52px 15px 15px 15px; position: relative; }
@@ -80,9 +82,11 @@
 		.group-timer .group-timer-title{color: #243323; font-size: 24px;}
 		.group-timer .group-timer-box{
 			width: clac(100% - 80px); height: 115px; line-height: 115px; border-radius: 15px; 
-			font-size: 36px;text-align:center; 
+			display: flex; justify-content: center;
+			font-size: 36px; text-align:center; 
 			box-shadow:inset 1px 1px 7px rgba(0, 0, 0, .3);
 		}
+		.group-timer .colon{margin: 0 3px;}
 		.group-timer .timer-on{font-weight: bold; color: #649B60;}
 		
 		.group-timer .group-timer-btn-group{margin-top: 10px;}
