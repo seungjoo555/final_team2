@@ -86,7 +86,7 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/timerWork")
-	public Map<String, Object> 메서드명(@RequestParam("goNum")int goNum){
+	public Map<String, Object> groupTimerWork(@RequestParam("goNum")int goNum){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		boolean isTimeupdated = groupService.updateGoTime(goNum);
@@ -119,6 +119,21 @@ public class GroupController {
 		model.addAttribute("list", postList);
 		
 		return "/group/mygroup/grouppost";
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/post/insert")
+	public Map<String, Object> groupPostInsert(@RequestParam("goNum")int goNum, @RequestParam("content")String content, @RequestParam("writer")String writer){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.insertGroupPost(goNum, writer, content);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		return map;
 	}
 	
 	// ================================ group ================================

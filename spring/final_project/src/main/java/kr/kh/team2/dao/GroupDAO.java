@@ -43,4 +43,6 @@ public interface GroupDAO {
 
 	ArrayList<GroupPostVO> getGroupPostByGoNum(@Param("num")int groupNum);
 
+	boolean insertGroupPost(@Param("num")int goNum, @Param("writer")String writer, @Param("content")String content);
+
 }

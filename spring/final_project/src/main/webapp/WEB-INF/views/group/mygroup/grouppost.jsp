@@ -61,10 +61,8 @@
 					<div class="float-left">그룹 게시판</div>
 				</div>
 				<div class="group-post-input">
-					<form action="">
-						<textarea class="input" cols="5"></textarea>
-						<button class="submit float-right">등록</button>
-					</form>
+					<textarea class="input" cols="5"></textarea>
+					<button class="submit float-right">등록</button>
 				</div>
 				<div class="post-list-bg">
 					<c:forEach var="post" items="${list}">
@@ -90,5 +88,30 @@
 			</c:otherwise>
 	</c:choose> 
 	</div>
+	
+	<!-- 게시글 작성 script -->
+	<script type="text/javascript">
+		$(".group-post-input .submit").click(function(){
+			 $.ajax({
+					async : false, 
+					url : '<c:url value="/group/post/insert"/>', 
+					type : 'post', 
+					data : {
+						goNum : ${group.go_num},
+						content: $(".group-post-input .input").val(),
+						writer: "${user.me_id}"
+					}, 
+					dataType : "json", 
+					success : function (data){
+						alert("게시글이 등록되었습니다.")
+						$(".group-post-input .input").val("") // 입력창 초기화
+						
+					}, 
+					error : function(jqXHR, textStatus, errorThrown){
+						alert("게시글을 등록하지 못했습니다.")
+					}
+				});
+		})
+	</script>
 </body>
 </html>

@@ -159,6 +159,19 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.getGroupPostByGoNum(groupNum);
 	}
+
+	@Override
+	public boolean insertGroupPost(int goNum, String  writer, String content) {
+		if(goNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return false;
+		}else if(!methods.checkString(content) || !methods.checkString(writer)) {
+			System.out.println("invalid content or writer: "+ content + ", " + writer);
+			return false;
+		}
+		
+		return groupDao.insertGroupPost(goNum, writer, content);
+	}
 	
 	
 }

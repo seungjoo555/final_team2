@@ -134,8 +134,11 @@
 		WHERE go_num = #{num}
 	</update>
 	
-	<!-- =============================== SELECT =============================== -->	
+	<!-- =============================== INSERT =============================== -->	
 	
+	<insert id="insertGroupPost">
+		INSERT INTO group_post(gopo_gome_go_num, gopo_gome_me_id, gopo_content, gopo_date) VALUES(#{num}, #{writer}, #{content}, NOW());
+	</insert>
 
  	
 </mapper>

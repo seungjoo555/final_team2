@@ -45,4 +45,6 @@ public interface GroupService {
 
 	ArrayList<GroupPostVO> getGroupPostByGoNum(int groupNum);
 
+	boolean insertGroupPost(int goNum, String  writer, String content);
+
 }
