@@ -30,12 +30,12 @@
 			<div class="container-info-bar">
 				<div class="float-left group-title">${group.go_name}</div>
 				<div class="float-left">그룹 페이지</div>
-				<div class="setting-btn float-rignt">
+				<div class="setting-btn float-right">
 					<a href="#">
 						<img class="hamburger-btn" src="<c:url value="/resources/img/hamburger-btn.png"/>">
 					</a>
 				</div>
-				<div class="user-info float-rignt">
+				<div class="user-info float-right">
 					${user.me_nickname} 님
 				</div>
 				
