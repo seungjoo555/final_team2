@@ -65,6 +65,7 @@
 					<button class="submit float-right">등록</button>
 				</div>
 				<div class="post-list-bg">
+					<!--  
 					<c:forEach var="post" items="${list}">
 						<div>
 							<div class="post-info">
@@ -83,11 +84,63 @@
 						</div>
 					
 					</c:forEach>
+					-->
 				</div>
 				페이지네이션 추가 필요
 			</c:otherwise>
 	</c:choose> 
 	</div>
+	
+	<!-- 게시글 불러오기 script -->
+	<script type="text/javascript">
+	getGroupPostList();
+	
+	function getGroupPostList(){
+		let str = '';
+		$.ajax({
+			url : '<c:url value="/group/post/list"/>',
+			method : "post",
+			data : {
+				goNum : ${group.go_num}
+			},
+			success : function(data){
+				for(post of data.list){
+					let btns = '';
+					//현재 로그인한 유저와 댓글을 쓰기 위한 유저의 아이디가 동일하거나 댓글 관리 권한이 있다면 수정,삭제 버튼이 나타나고 아니라면 나타나지 않음
+					if('${user.me_id}' == '${post.gopo_gome_me_id}'){	
+					btns +=
+						`
+						<div class="post-manage-btn-group">
+							<a class="float-left">수정</a>
+							<a class="float-left">삭제</a>
+						</div>
+						`
+					}
+					
+				str +=
+					`
+					<div>
+						<div class="post-info">
+							<div class="writer float-left">\${post.nickname}</div>
+							<div class="time float-left">\${post.time_ago}</div>
+						</div>
+						<div class="post-content">
+							\${post.gopo_content }
+						</div>
+						\${btns}
+					</div>
+					`;
+				}
+				
+				$(".post-list-bg").html(str);
+		
+			}, 
+			error : function(a, b, c){
+				
+			}
+		});
+	}
+	</script>
 	
 	<!-- 게시글 작성 script -->
 	<script type="text/javascript">
@@ -105,6 +158,7 @@
 					success : function (data){
 						alert("게시글이 등록되었습니다.")
 						$(".group-post-input .input").val("") // 입력창 초기화
+						getGroupPostList();
 						
 					}, 
 					error : function(jqXHR, textStatus, errorThrown){

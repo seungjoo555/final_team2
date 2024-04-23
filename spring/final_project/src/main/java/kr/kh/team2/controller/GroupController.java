@@ -115,10 +115,20 @@ public class GroupController {
 		GroupVO group = groupService.getGroupByGoNum(groupNum);
 		model.addAttribute("group", group);
 		
-		ArrayList<GroupPostVO> postList = groupService.getGroupPostByGoNum(groupNum);
-		model.addAttribute("list", postList);
+		
 		
 		return "/group/mygroup/grouppost";
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/post/list")
+	public Map<String, Object> getGroupPostList(@RequestParam("goNum")int goNum){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<GroupPostVO> postList = groupService.getGroupPostByGoNum(goNum);
+		map.put("list", postList);
+		
+		return map;
 	}
 	
 	@ResponseBody
