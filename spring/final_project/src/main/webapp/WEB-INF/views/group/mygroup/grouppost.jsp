@@ -107,7 +107,7 @@
 				for(post of data.list){
 					let btns = '';
 					//현재 로그인한 유저와 댓글을 쓰기 위한 유저의 아이디가 동일하거나 댓글 관리 권한이 있다면 수정,삭제 버튼이 나타나고 아니라면 나타나지 않음
-					if('${user.me_id}' == '${post.gopo_gome_me_id}'){	
+					if('${user.me_id}' == post.gopo_gome_me_id){	
 					btns +=
 						`
 						<div class="post-manage-btn-group">
