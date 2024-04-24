@@ -97,7 +97,7 @@
  				join
  			programming_category on progCt_num = toCt_progCt_num
  		where
- 			toCt_table_name = #{table} and toCt_table_pk = #{num}
+	        toCt_table_name = #{table} and toCt_table_pk = #{num}
  	</select>
  	
  	<select id="selectLanguageList" resultType="TotalLanguageVO">
@@ -117,14 +117,7 @@
 	</select>
 	
 	<select id="selectStudyGroupList" resultType="GroupVO">
-		SELECT final_team2.group.*, group_apply.goap_state as goap_state, recruit.recu_topic as recu_topic, recruit.recu_count as recu_count, `member`.me_nickname as recu_gome_me_nickname
-		, group_member.*
-		FROM final_team2.group
-			JOIN group_apply ON go_num = goap_num
-			JOIN group_member ON go_num = gome_go_num
-			JOIN recruit ON go_num = recu_go_num
-			JOIN `member` ON gome_me_id = me_id
-		WHERE goap_me_id = #{me_id}
+		
 	</select>
 	
 	<select id="selectStudyCategoryList" resultType="TotalCategoryVO">

@@ -15,4 +15,5 @@ public class GroupVO {
     private String recu_topic; // 그룹 주제
     private int recu_count; // 모집 인원
     private String recu_gome_me_nickname; //리더 닉네임
+    private int recu_num;	//공고 번호
 }
