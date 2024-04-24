@@ -173,7 +173,6 @@ function getCheckboxValue(event)  {
 	var arr =  [];
 	cri.jobList = getCheckInput(arr);
 	cri.page = 1;
-	console.log(cri);
 	getMentoList(cri);
 }
 
@@ -282,10 +281,7 @@ $(document).on('click', '.mento-item', function(event){
 	}//displayMentoringDetail(); end
    
 })
-/* btn-apply 클릭 시 신청화면 */
-$(document).on('click', '.btn-apply', function(){
-   console.log("test : "+$('.btn-apply').val());
-})
+
 /* dimmed 클릭 시 창 없애기 */
 $(document).on('click', '#dimmed', function(){
    $("#modal").css('display','none');
