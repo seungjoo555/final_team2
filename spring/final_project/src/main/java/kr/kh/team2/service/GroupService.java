@@ -43,4 +43,6 @@ public interface GroupService {
 
 	long getGoTimeByGoNum(int goNum);
 
+	ArrayList<GroupVO> getStudyGroupList(String me_id);
+
 }

@@ -149,6 +149,15 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.getGroupTime(groupNum);
 	}
+
+	@Override
+	public ArrayList<GroupVO> getStudyGroupList(String me_id) {
+		if (me_id == null) {
+			return null;
+		}
+		
+		return groupDao.selectStudyGroupList(me_id);
+	}
 	
 	
 }

@@ -73,12 +73,7 @@ public class RecruitServiceImp implements RecruitService {
 		if(!checkString(progCtList)) {
 	        return false;
 	    }
-		//문자열을 스플릿으로 쪼개 -> 배열
-		//배열의 길이만큼 for문 돌리기
-		//for문 안에서는 setToCt_progCt_num 하나 넣고
-		//테이블 네임 recruit 넣고
-		//테이블 PK 넣고
-		//인서트
+
 		String [] progCt = progCtList.split(",");
 		
 		

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.MutualReviewVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
@@ -45,10 +46,18 @@ public class MypageController {
 		System.out.println(member);
 		model.addAttribute("member", member);
 		
-		//그룹 리스트 가져오기
+		// 그룹 리스트 가져오기
 		ArrayList<MutualReviewVO> mutualReviewList = reviewService.getMutualReviewList(me_id);
 		model.addAttribute("mutualReviewList", mutualReviewList);
 		System.out.println(mutualReviewList);
+		
+		// 스터디 리스트 가져오기
+		ArrayList<GroupVO> groupList = groupService.getStudyGroupList(me_id);
+		model.addAttribute("groupList", groupList);
+		System.out.println(groupList);
+		
+		ArrayList<TotalCategoryVO> categoryList = groupService.getCategory(0, me_id);
+		
 		
 		return "/mypage/mygroup";
 	}

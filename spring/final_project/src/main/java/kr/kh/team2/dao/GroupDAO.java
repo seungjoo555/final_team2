@@ -41,4 +41,6 @@ public interface GroupDAO {
 
 	boolean updateGoTime(@Param("num")int groupNum);
 
+	ArrayList<GroupVO> selectStudyGroupList(@Param("me_id") String me_id);
+
 }

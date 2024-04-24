@@ -55,7 +55,7 @@ public class RecruitController {
 		
 		if(res1 && res2 && res3) {
 			model.addAttribute("msg", "모집공고를 등록했습니다.");
-			model.addAttribute("url", "/group/grouplist"); 
+			model.addAttribute("url", "/group/list"); 
 		} else {
 			model.addAttribute("msg", "모집공고를 등록하지 못했습니다.");
 			model.addAttribute("url", "/group/grouprecruit");

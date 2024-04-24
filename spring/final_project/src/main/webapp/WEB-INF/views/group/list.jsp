@@ -25,7 +25,7 @@
 			<span class="group-category-item project"  data-category="project">프로젝트</span>
 		</div>
 		<div class="group-category group-category-insert">
-			<a class="btn-outline-success insert" href="<c:url value="/recruit/insert"/>">모집글 작성</a>
+			<a class="btn-outline-success insert" href="<c:url value="/group/grouprecruit"/>">모집글 작성</a>
 		</div>
 	</form>
 	<!-- 리스트 -->
