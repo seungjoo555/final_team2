@@ -52,7 +52,8 @@
 			WHERE go_num in (
 				SELECT gome_go_num FROM group_member WHERE gome_me_id = #{id}
             ) 
-             GROUP BY gome_go_num;
+            GROUP BY gome_go_num
+            limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	
 	<select id="getGroupByGoNum" resultType="GroupVO">
@@ -122,6 +123,10 @@
 				JOIN member ON me_id = gopo_gome_me_id
 			WHERE gopo_gome_go_num = #{num} 
 			ORDER BY gopo_date DESC
+	</select>
+	
+	<select id="getMyGroupTotalCount" resultType="int">
+		SELECT COUNT(*) FROM group_member WHERE gome_me_id = #{id}
 	</select>
 	
 	<!-- =============================== DELETE =============================== -->

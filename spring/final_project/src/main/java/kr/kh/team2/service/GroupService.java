@@ -16,10 +16,9 @@ public interface GroupService {
 
 	ArrayList<RecruitVO> getGroupList(Criteria cri);
 
-
 	int getGroupTotalCount(Criteria cri);
 
-	ArrayList<GroupVO> getGroupListById(String me_id);
+	ArrayList<GroupVO> getGroupListById(String me_id, Criteria cri);
 
 	GroupVO getGroupByGoNum(int groupNum);
 
@@ -46,5 +45,7 @@ public interface GroupService {
 	ArrayList<GroupPostVO> getGroupPostByGoNum(int groupNum);
 
 	boolean insertGroupPost(int goNum, String  writer, String content);
+
+	int getMyGroupTotalCount(String me_id);
 
 }

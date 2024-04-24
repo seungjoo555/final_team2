@@ -69,12 +69,16 @@ public class GroupServiceImp implements GroupService{
 	}
   
 	@Override
-	public ArrayList<GroupVO> getGroupListById(String me_id) {
+	public ArrayList<GroupVO> getGroupListById(String me_id, Criteria cri) {
 		if(!methods.checkString(me_id)) {
+			System.out.println("wrong id: "+me_id);
+			return null;
+		}else if(cri == null) {
+			System.out.println("null cri");
 			return null;
 		}
 		
-		return groupDao.getGroupListById(me_id);
+		return groupDao.getGroupListById(me_id, cri);
 	}
 
 	@Override
@@ -171,6 +175,15 @@ public class GroupServiceImp implements GroupService{
 		}
 		
 		return groupDao.insertGroupPost(goNum, writer, content);
+	}
+
+	@Override
+	public int getMyGroupTotalCount(String me_id) {
+		if(!methods.checkString(me_id)) {
+			System.out.println("wrong id: "+me_id);
+			return -1;
+		}
+		return groupDao.getMyGroupTotalCount(me_id);
 	}
 	
 	

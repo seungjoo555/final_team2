@@ -37,16 +37,30 @@ public class GroupController {
 	// ================================ mygroup ================================
 
 	@GetMapping("/mygroup/list")
-	public String grouplist(Model model, HttpSession session){
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		
-		ArrayList<GroupVO> list = groupService.getGroupListById(user.getMe_id());
-		
-		if(list.size() > 0) {
-			model.addAttribute("list", list);
-		}
+	public String grouplist(Model model){
 		
 		return "/group/mygroup/list";
+	}
+	
+	@ResponseBody
+	@PostMapping("/mygroup/list")
+	public Map<String, Object> mygrouplistPost(HttpSession session, @RequestBody Criteria cri) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		cri.setPerPageNum(5);
+		
+		//그룹 리스트 가져오기
+		ArrayList<GroupVO> list = groupService.getGroupListById(user.getMe_id(), cri);
+		
+		int totalCount = groupService.getMyGroupTotalCount(user.getMe_id());
+		
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		map.put("list", list);
+		map.put("pm", pm);
+		
+		return map;
 	}
 	
 	@GetMapping("/group/home")

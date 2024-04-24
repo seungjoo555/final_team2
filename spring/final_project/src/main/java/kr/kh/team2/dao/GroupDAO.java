@@ -19,7 +19,7 @@ public interface GroupDAO {
 
 	int selectGroupTotalCount(@Param("cri")Criteria cri);
 	
-	ArrayList<GroupVO> getGroupListById(@Param("id")String me_id);
+	ArrayList<GroupVO> getGroupListById(@Param("id")String me_id, @Param("cri")Criteria cri);
 
 	GroupVO getGroupByGoNum(@Param("num")int groupNum);
 
@@ -44,5 +44,7 @@ public interface GroupDAO {
 	ArrayList<GroupPostVO> getGroupPostByGoNum(@Param("num")int groupNum);
 
 	boolean insertGroupPost(@Param("num")int goNum, @Param("writer")String writer, @Param("content")String content);
+
+	int getMyGroupTotalCount(@Param("id")String me_id);
 
 }
