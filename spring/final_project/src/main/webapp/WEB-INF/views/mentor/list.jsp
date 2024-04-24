@@ -334,7 +334,7 @@ function displayMentoringApply(mentoring){
 		      	<div class="apply-mentoring_body" style="overflow: hidden; height: 80%;">
 			      	<!-- 폼 -->
 			      	<div class="form-apply-box">
-				      	<form action="<c:url value="/mentor/apply"/>" method="post" class="form-apply">
+				      	<form action="<c:url value="/mentor/list"/>" method="post" class="form-apply">
 							<input type="hidden" value="\${mentoring.ment_num}" id="mentAp_ment_num" name="mentAp_ment_num">
 				      		<div class="mentor-apply-form-group">
 								<label for="id">멘토링 명</label>
@@ -373,8 +373,41 @@ $(document).on('click', '.btn-apply-prev', function(){
 })
 /* 신청버튼 이벤트 */
 $(document).on('click', '.btn-apply-insert', function(){
-   $(".form-apply").submit();
+   //$(".form-apply").submit();
    //alert("신청하기");
+   
+	//서버에 보낼 데이터 생성
+	//빈 값 들어옴...
+	let mentoApVO = {
+		mentAp_ment_num : $(".mentAp_ment_num").val(),
+		mentAp_contact :  $(".mentAp_contact").val(),
+		mentAp_content :  $(".mentAp_content").val()
+			
+	}
+	console.log(mentoApVO);
+	/*
+	$.ajax({
+		async : true, //비동기 : true(비동기), false(동기)
+		url : '<c:url value="/mentor/apply"/>', 
+		type : 'post', 
+		data : JSON.stringify(comment), 
+		contentType : "application/json; charset=utf-8",
+		dataType : "json", 
+		success : function (data){
+			if(data.result){
+				alert("댓글을 등록했습니다.");
+				$('.textarea-comment').val('');
+				cri.page = 1;
+				getCommentList(cri);
+			}else{
+				alert("댓글을 등록하지 못했습니다.");
+			}
+		}, 
+		error : function(jqXHR, textStatus, errorThrown){	//errorThrown얘는 거의 비어있음(굳이 체크 안하기로)
+			console.log(jqXHR);
+			console.log(textStatus);
+		}
+	});*/
 })
 </script>
 

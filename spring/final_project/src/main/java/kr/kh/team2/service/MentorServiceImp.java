@@ -91,19 +91,15 @@ public class MentorServiceImp implements MentorService {
 
 	@Override
 	public boolean insertMentoringApply(MentoringApplyVO mentoApVO) {
-		System.out.println("검사전 :: " + mentoApVO);
 		if(mentoApVO == null || !methods.checkString(mentoApVO.getMentAp_me_id()) 
 			|| !methods.checkString(mentoApVO.getMentAp_contact())
 			|| !methods.checkString(mentoApVO.getMentAp_content())
 			) {
-			System.out.println("비어잇음1");
 			return false;
 		}
 		if(getMentoring(mentoApVO.getMentAp_ment_num()) == null) {
-			System.out.println("비어잇음2");
 			return false;
 		}
-		System.out.println("안 비었음 :: " + mentoApVO);
 		
 		return mentorDAO.insertMentoringApply(mentoApVO);
 	}

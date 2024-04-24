@@ -86,18 +86,18 @@ public class MentorController {
 	
 	@ResponseBody
 	@PostMapping("/mentor/apply")
-	public String mentorApplyPost(Model model, HttpSession session, MentoringApplyVO mentoApVO) {
+	public Map<String, Object> mentorApplyPost(HttpSession session, MentoringApplyVO mentoApVO) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		//로그인 정보 가져오기
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		//신청정보 가져오기
 		mentoApVO.setMentAp_me_id(user.getMe_id());
 		//신청하기
-		System.out.println("mentoApVO :: "+mentoApVO);
+		System.out.println("mentoApVO :: "+ mentoApVO);
 		boolean res = mentorService.insertMentoringApply(mentoApVO);
 		//페이지 이동하기
-		System.out.println("등록 성공 실패 :: "+res);
-		
-		return "/mentor/list";
+		map.put("result", res);
+		return map;
 	}
 	
 	@GetMapping("/mentor/check")
