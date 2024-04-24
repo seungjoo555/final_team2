@@ -47,6 +47,10 @@ public interface GroupDAO {
 
 	int getMyGroupTotalCount(@Param("id")String me_id);
 
-	int getGroupPostTotalCount(int goNum);
+	int getGroupPostTotalCount(@Param("num")int goNum);
+
+	boolean deleteGroupPost(@Param("num")int gopoNum);
+
+	GroupPostVO getGroupPostByGopoNum(@Param("num")int gopoNum);
 
 }

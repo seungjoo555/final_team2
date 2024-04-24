@@ -134,7 +134,16 @@
 		SELECT COUNT(*) FROM group_post WHERE gopo_gome_go_num = #{num}
 	</select>
 	
+	<select id="getGroupPostByGopoNum" resultType="GroupPostVO">
+		SELECT * FROM group_post WHERE gopo_num = #{num}
+	</select>
+	
 	<!-- =============================== DELETE =============================== -->
+	
+	<delete id="deleteGroupPost">
+		DELETE FROM group_post WHERE gopo_num = #{num}
+	</delete>
+	
 	
 	<!-- =============================== UPDATE =============================== -->	
 	

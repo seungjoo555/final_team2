@@ -39,8 +39,8 @@
 		.post-manage-btn-group{width: 20%;}
 		.post-manage-btn-group *{width: 100px; height: 30px; line-height: 30px; text-align: center; 
 			font-size: 14px; border-radius: 5px; margin-top: 20px;}
-		.post-manage-btn-group *:first-child{color: black; background-color: #C9C9C9}
-		.post-manage-btn-group *:last-child{margin-left: 10px; color: white; background-color: #5A7059}	
+		.post-manage-btn-group .post-edit-btn{color: black; background-color: #C9C9C9}
+		.post-manage-btn-group .post-delete-btn{margin-left: 10px; color: white; background-color: #5A7059}	
 		
 		.more-post{width: 90%; margin: 0px auto; text-align: center;}
 		.more-post-btn{width: 100%; height: 45px; line-height: 45px;
@@ -102,8 +102,8 @@ function getGroupPostList(cri){
 				btns +=
 					`
 					<div class="post-manage-btn-group">
-						<a class="float-left">수정</a>
-						<a class="float-left">삭제</a>
+						<a class="float-left post-edit-btn" data-num="\${post.gopo_num}">수정</a>
+						<a class="float-left post-delete-btn" data-num="\${post.gopo_num}">삭제</a>
 					</div>
 					`
 				}
@@ -170,13 +170,12 @@ $(".group-post-input .submit").click(function(){
 			success : function (data){
 				alert("게시글이 등록되었습니다.")
 				$(".group-post-input .input").val("") // 입력창 초기화
-				getGroupPostList();
 				
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
 				alert("게시글을 등록하지 못했습니다.")
 			}
-		});
+	});
 })
 </script>
 
@@ -188,8 +187,31 @@ $(".group-post-input .submit").click(function(){
 
 <!-- 게시글 삭제 script -->
 <script type="text/javascript">
-	// 구현 예정
+// 구현 예정
+$(document).on("click",".post-delete-btn", function(){
 	
+	$.ajax({
+		async : true, 
+		url : '<c:url value="/group/post/delete"/>', 
+		type : 'post', 
+		data : {
+			gopoNum : this.dataset.num
+		}, 
+		dataType : "json", 
+		success : function (data){
+			if(data.data == "ok"){
+				alert("게시글이 삭제되었습니다.")
+			}else{
+				alert("게시글을 삭제하지 못했습니다.")
+			}
+			
+		}, 
+		error : function(jqXHR, textStatus, errorThrown){
+			alert("게시글을 삭제하지 못했습니다. (오류발생)")
+		}
+});
+})
+
 </script>
 </body>
 </html>

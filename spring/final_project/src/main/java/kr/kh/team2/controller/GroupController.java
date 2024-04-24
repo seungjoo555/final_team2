@@ -147,7 +147,6 @@ public class GroupController {
 		}
 		
 		cri.setPerPageNum(5); 
-		System.out.println("cri: "+cri);
 		
 		ArrayList<GroupPostVO> postList = groupService.getGroupPostByGoNum(goNum, cri);
 		
@@ -176,6 +175,22 @@ public class GroupController {
 		return map;
 	}
 	
+	@ResponseBody
+	@PostMapping("/group/post/delete")
+	public Map<String, Object> groupPostDelete( HttpSession session, @RequestParam("gopoNum")int gopoNum){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.deleteGroupPost(gopoNum, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
 	// ================================ group ================================
 		
 

@@ -50,4 +50,8 @@ public interface GroupService {
 
 	int getGroupPostTotalCount(int goNum);
 
+	boolean deleteGroupPost(int gopoNum, MemberVO user);
+	
+	 GroupPostVO getGroupPostByGopoNum(int gopoNum);
+
 }

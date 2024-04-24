@@ -1,17 +1,19 @@
 package kr.kh.team2.service;
 
 import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import kr.kh.team2.dao.GroupDAO;
-import kr.kh.team2.model.vo.group.RecruitVO;
-import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
+import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.utils.Methods;
 
 @Service
@@ -196,6 +198,36 @@ public class GroupServiceImp implements GroupService{
 			return -1;
 		}
 		return groupDao.getGroupPostTotalCount(goNum);
+	}
+
+	@Override
+	public boolean deleteGroupPost(int gopoNum, MemberVO user) {
+		if(gopoNum == 0 ) {
+			System.out.println("gopoNum is 0");
+			return false;
+		}else if(user == null){
+			System.out.println("null user");
+			return false;
+		}
+		
+		GroupPostVO post = getGroupPostByGopoNum(gopoNum);
+		
+		if(post == null) {
+			System.out.println("no post with gopoNum: "+gopoNum);
+			return false;
+		}
+		
+		if(!post.getGopo_gome_me_id().equals(user.getMe_id())) {
+			System.out.println("not writer or authorized");
+			return false;
+		}
+		
+		return groupDao.deleteGroupPost(gopoNum);
+	}
+	
+	@Override
+	public GroupPostVO getGroupPostByGopoNum(int gopoNum) {
+		return groupDao.getGroupPostByGopoNum(gopoNum);
 	}
 	
 	
