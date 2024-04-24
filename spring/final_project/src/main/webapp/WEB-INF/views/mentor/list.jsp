@@ -379,9 +379,9 @@ $(document).on('click', '.btn-apply-insert', function(){
 	//서버에 보낼 데이터 생성
 	//빈 값 들어옴...
 	let mentoApVO = {
-		mentAp_ment_num : $(".mentAp_ment_num").val(),
-		mentAp_contact :  $(".mentAp_contact").val(),
-		mentAp_content :  $(".mentAp_content").val()
+		mentAp_ment_num : $("#mentAp_ment_num").val(),
+		mentAp_contact :  $("#mentAp_contact").val(),
+		mentAp_content :  $("#mentAp_content").val()
 			
 	}
 	console.log(mentoApVO);
