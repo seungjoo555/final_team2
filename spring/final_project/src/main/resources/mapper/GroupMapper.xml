@@ -123,10 +123,15 @@
 				JOIN member ON me_id = gopo_gome_me_id
 			WHERE gopo_gome_go_num = #{num} 
 			ORDER BY gopo_date DESC
+			limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	
 	<select id="getMyGroupTotalCount" resultType="int">
 		SELECT COUNT(*) FROM group_member WHERE gome_me_id = #{id}
+	</select>
+	
+	<select id="getGroupPostTotalCount" resultType="int">
+		SELECT COUNT(*) FROM group_post WHERE gopo_gome_go_num = #{num}
 	</select>
 	
 	<!-- =============================== DELETE =============================== -->

@@ -41,10 +41,12 @@ public interface GroupDAO {
 
 	boolean updateGoTime(@Param("num")int groupNum);
 
-	ArrayList<GroupPostVO> getGroupPostByGoNum(@Param("num")int groupNum);
+	ArrayList<GroupPostVO> getGroupPostByGoNum(@Param("num")int groupNum, @Param("cri")Criteria cri);
 
 	boolean insertGroupPost(@Param("num")int goNum, @Param("writer")String writer, @Param("content")String content);
 
 	int getMyGroupTotalCount(@Param("id")String me_id);
+
+	int getGroupPostTotalCount(int goNum);
 
 }

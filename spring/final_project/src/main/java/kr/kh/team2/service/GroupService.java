@@ -42,10 +42,12 @@ public interface GroupService {
 
 	long getGoTimeByGoNum(int goNum);
 
-	ArrayList<GroupPostVO> getGroupPostByGoNum(int groupNum);
+	ArrayList<GroupPostVO> getGroupPostByGoNum(int groupNum, Criteria cri);
 
 	boolean insertGroupPost(int goNum, String  writer, String content);
 
 	int getMyGroupTotalCount(String me_id);
+
+	int getGroupPostTotalCount(int goNum);
 
 }

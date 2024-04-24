@@ -136,11 +136,27 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/post/list")
-	public Map<String, Object> getGroupPostList(@RequestParam("goNum")int goNum){
+	public Map<String, Object> getGroupPostList(@RequestBody Criteria cri){
 		Map<String, Object> map = new HashMap<String, Object>();
+		int goNum = -1;
 		
-		ArrayList<GroupPostVO> postList = groupService.getGroupPostByGoNum(goNum);
+		try {
+			goNum = Integer.parseInt(cri.getSearch());
+		}catch(Exception e) {
+			System.out.println("error ParseInt: " + cri.getSearch());
+		}
+		
+		cri.setPerPageNum(5); 
+		System.out.println("cri: "+cri);
+		
+		ArrayList<GroupPostVO> postList = groupService.getGroupPostByGoNum(goNum, cri);
+		
+		int totalCount = groupService.getGroupPostTotalCount(goNum);
+		
+		PageMaker pm = new PageMaker(1, cri, totalCount);
+		
 		map.put("list", postList);
+		map.put("pm", pm);
 		
 		return map;
 	}

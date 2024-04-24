@@ -155,13 +155,16 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public ArrayList<GroupPostVO> getGroupPostByGoNum(int groupNum) {
+	public ArrayList<GroupPostVO> getGroupPostByGoNum(int groupNum, Criteria cri) {
 		if(groupNum == 0 ) {
 			System.out.println("groupNum is 0");
 			return null;
+		}else if(cri == null) {
+			System.out.println("null cri");
+			return null;
 		}
 		
-		return groupDao.getGroupPostByGoNum(groupNum);
+		return groupDao.getGroupPostByGoNum(groupNum, cri);
 	}
 
 	@Override
@@ -184,6 +187,15 @@ public class GroupServiceImp implements GroupService{
 			return -1;
 		}
 		return groupDao.getMyGroupTotalCount(me_id);
+	}
+
+	@Override
+	public int getGroupPostTotalCount(int goNum) {
+		if(goNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return -1;
+		}
+		return groupDao.getGroupPostTotalCount(goNum);
 	}
 	
 	
