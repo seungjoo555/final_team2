@@ -7,8 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
+import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.MutualReviewVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
@@ -41,7 +44,8 @@ public class MypageController {
 	}
 	
 	@GetMapping("mypage/mygroup")
-	public String groupListPost(Model model, String me_id) {
+	public String groupListPost(Model model, String me_id, @RequestParam int num) {
+		// 멤버 가져오기
 		MemberVO member = memberService.getMember(me_id);
 		System.out.println(member);
 		model.addAttribute("member", member);
@@ -56,8 +60,16 @@ public class MypageController {
 		model.addAttribute("groupList", groupList);
 		System.out.println(groupList);
 		
-		ArrayList<TotalCategoryVO> categoryList = groupService.getCategory(0, me_id);
+		// 모집 공고에 등록된 분야 가져오기
+		String table = "recruit";
+		ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(num, table);
+		ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(num, table);
 		
+		model.addAttribute("totalCategory", totalCategory);
+		model.addAttribute("totalLanguage", totalLanguage);
+		System.out.println(num);
+		System.out.println(totalCategory);
+		System.out.println(totalLanguage);
 		
 		return "/mypage/mygroup";
 	}

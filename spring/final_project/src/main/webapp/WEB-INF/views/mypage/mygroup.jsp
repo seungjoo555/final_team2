@@ -38,13 +38,12 @@
 				</div>
 			</c:if>
 		</div>
-		<!-- 여기부터 해라 -->
 		<div class="mygroup-study-container">	
 
 				<h3 class="mygroup-study">스터디 / 프로젝트</h3>
 				<div class="mutual-list-box">
 					<ul class="mutual-list">
-						<c:forEach items="${groupList}" var="grouplist" varStatus="status">								
+						<c:forEach items="${groupList}" var="grouplist">
 							<li class="mutual-item">
 								<div class="item-category">
 									<c:if test="${grouplist.goap_state == 0}">
@@ -61,15 +60,17 @@
 									${grouplist.recu_topic}
 								</div>
 								<div></div>
-								<div>
-									<!-- total_category : toCt_progCt_num / programming_category : progCt_name -->
-									${grouplist.progCt_name}
-								</div>
+								<c:forEach items="${totalCategory}" var="cate">
+									<li class="recruit-position">${cate.toCt_progCt_name}</li>
+								</c:forEach>
 								<div>
 									<!-- total_language : toLg_lang_num / programming_language : lang_name -->
-									${grouplist.lang_name}
+									<c:forEach items="${totalLanguage}" var="lang">
+										<li class="recruit-position">${lang.toLg_lang_name}</li>
+									</c:forEach>
 								</div>
 								<div>
+									<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
 									${grouplist.recu_gome_me_nickname}
 								</div>
 								<div>
@@ -79,10 +80,34 @@
 						</c:forEach>
 					</ul>
 				</div>
-
 		</div>
 		<div class="mygroup-mentoring-container">
 			<h3 class="mygroup-mentoring">멘토링</h3>
+			<div class="mutual-list-box">
+				<ul class="mutual-list">
+					<c:forEach items="${mutualReviewList}" var="mure">								
+						<li class="mutual-item">
+							<!-- 프로젝트/스터디 구분 -->
+							<c:if test="${mure.recu_type== '0'}">
+								<div class="item-study">
+									스터디
+								</div>
+							</c:if>
+							<c:if test="${mure.recu_type== '1'}">
+								<div class="item-project">
+									프로젝트
+								</div>
+							</c:if>
+							<!-- 상호평가 내용 -->
+							<div class="mutual-item-category" >
+								<div class="item-category">
+										${mure.mure_content}
+								</div>
+							</div>  
+						</li>
+					</c:forEach>
+				</ul>
+			</div>
 		</div>
 	</div>
 </body>

@@ -126,6 +126,13 @@
 			JOIN `member` ON gome_me_id = me_id
 		WHERE goap_me_id = #{me_id}
 	</select>
+	
+	<select id="selectStudyCategoryList" resultType="TotalCategoryVO">
+		SELECT total_category.*, programming_category.progCt_name as toCt_progCt_name
+		FROM final_team2.total_category
+			JOIN programming_category ON toCt_progCt_num = progCt_num
+		WHERE toCt_table_name = 'recruit' and toCt_table_pk = #{recu_num}
+	</select>
     
 	<!-- =============================== DELETE =============================== -->
 	

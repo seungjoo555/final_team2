@@ -157,7 +157,6 @@ public class GroupServiceImp implements GroupService{
 		}
 		
 		return groupDao.selectStudyGroupList(me_id);
-	}
-	
+	}	
 	
 }
