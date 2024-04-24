@@ -16,8 +16,10 @@ import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.MutualReviewVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.service.GroupService;
 import kr.kh.team2.service.MemberService;
+import kr.kh.team2.service.MentorService;
 import kr.kh.team2.service.RecruitService;
 import kr.kh.team2.service.ReviewService;
 
@@ -35,6 +37,9 @@ public class MypageController {
 	@Autowired
 	GroupService groupService;
 	
+	@Autowired
+	MentorService mentorService;
+	
 	@GetMapping("/mypage/profile")
 	public String mypageProfile(Model model, String me_id) {
 		MemberVO member = memberService.getMember(me_id);
@@ -44,7 +49,7 @@ public class MypageController {
 	}
 	
 	@GetMapping("mypage/mygroup")
-	public String groupListPost(Model model, String me_id, @RequestParam int num) {
+	public String groupListPost(Model model, String me_id) {
 		// 멤버 가져오기
 		MemberVO member = memberService.getMember(me_id);
 		System.out.println(member);
@@ -62,14 +67,19 @@ public class MypageController {
 		
 		// 모집 공고에 등록된 분야 가져오기
 		String table = "recruit";
-		ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(num, table);
-		ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(num, table);
+		//ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(num, table);
+		//ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(num, table);
 		
-		model.addAttribute("totalCategory", totalCategory);
-		model.addAttribute("totalLanguage", totalLanguage);
-		System.out.println(num);
-		System.out.println(totalCategory);
-		System.out.println(totalLanguage);
+		//model.addAttribute("totalCategory", totalCategory);
+		//model.addAttribute("totalLanguage", totalLanguage);
+		//System.out.println(num);
+		//System.out.println(totalCategory);
+		//System.out.println(totalLanguage);
+		
+		// 멘토링 가져오기
+		ArrayList<MetoringVO> mentoringList = mentorService.getMentoringList(me_id);
+		model.addAttribute("mentoringList", mentoringList);
+		System.out.println(mentoringList);
 		
 		return "/mypage/mygroup";
 	}

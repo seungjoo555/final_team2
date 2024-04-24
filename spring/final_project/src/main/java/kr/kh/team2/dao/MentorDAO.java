@@ -22,4 +22,6 @@ public interface MentorDAO {
 
 	MentorInfoVO selectMentorInfo(@Param("me_id")String me_id);
 
+	ArrayList<MetoringVO> selectMentoringList(@Param("me_id") String me_id);
+
 }

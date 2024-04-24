@@ -12,6 +12,7 @@ import kr.kh.team2.model.vo.group.GroupCalendarVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.utils.Methods;
 
 @Service
@@ -157,6 +158,6 @@ public class GroupServiceImp implements GroupService{
 		}
 		
 		return groupDao.selectStudyGroupList(me_id);
-	}	
+	}
 	
 }

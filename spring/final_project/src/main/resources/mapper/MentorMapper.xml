@@ -71,5 +71,12 @@
 		select * from mentor_info where mentIf_me_id = #{me_id}
 	</select>
 	
-
+    <select id="selectMentoringList" resultType="MetoringVO">
+    	SELECT mentoring.*, mentor_info.mentIf_ment_job as ment_mentIf_job, mentor_info.mentIf_exp as ment_mentIf_exp, mentoring_apply.mentAp_state as mentAp_state, me_nickname as ment_me_nickname
+		FROM mentoring
+			JOIN mentor_info ON ment_me_id = mentIf_me_id
+		    JOIN mentoring_apply ON ment_num = mentAp_ment_num
+		    JOIN `member` ON me_id = ment_me_id
+		WHERE mentAp_me_id = #{me_id}
+    </select>
 </mapper>

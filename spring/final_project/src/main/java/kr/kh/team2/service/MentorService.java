@@ -19,5 +19,7 @@ public interface MentorService {
 
 	boolean checkMentor(String me_id);
 
+	ArrayList<MetoringVO> getMentoringList(String me_id);
+
 
 }

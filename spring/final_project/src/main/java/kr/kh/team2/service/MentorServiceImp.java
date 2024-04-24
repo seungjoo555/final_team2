@@ -75,5 +75,11 @@ public class MentorServiceImp implements MentorService {
 		
 	}
 
+	@Override
+	public ArrayList<MetoringVO> getMentoringList(String me_id) {
+		// TODO Auto-generated method stub
+		return mentorDAO.selectMentoringList(me_id);
+	}
+
 
 }

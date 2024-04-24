@@ -85,25 +85,37 @@
 			<h3 class="mygroup-mentoring">멘토링</h3>
 			<div class="mutual-list-box">
 				<ul class="mutual-list">
-					<c:forEach items="${mutualReviewList}" var="mure">								
+					<c:forEach items="${mentoringList}" var="ment">								
 						<li class="mutual-item">
-							<!-- 프로젝트/스터디 구분 -->
-							<c:if test="${mure.recu_type== '0'}">
-								<div class="item-study">
-									스터디
-								</div>
-							</c:if>
-							<c:if test="${mure.recu_type== '1'}">
+							<!-- 멘토링 허용여부 : mentAp_state -->
+							<c:if test="${ment.mentAp_state== '-1'}">
 								<div class="item-project">
-									프로젝트
+									반려
 								</div>
 							</c:if>
-							<!-- 상호평가 내용 -->
-							<div class="mutual-item-category" >
-								<div class="item-category">
-										${mure.mure_content}
+							<c:if test="${ment.mentAp_state== '0'}">
+								<div class="item-study">
+									수락 대기
 								</div>
-							</div>  
+							</c:if>
+							<c:if test="${ment.mentAp_state== '1'}">
+								<div class="item-project">
+									진행중
+								</div>
+							</c:if>
+							<!-- 클래스 이름 : mentoring.ment_title-->
+							<div>
+								${ment.ment_title}
+							</div>
+							<!-- 직무 : ment_job-->
+							<div>
+								직무 : ${ment.ment_mentIf_job}
+							</div>
+							<!-- 경력 : mentIf_exp-->
+							<div>
+								경력 : ${ment.ment_mentIf_exp}
+							</div>
+							<!-- 분야 : 분야모음 -->
 						</li>
 					</c:forEach>
 				</ul>
