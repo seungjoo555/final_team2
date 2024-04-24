@@ -45,14 +45,14 @@
 	</div>
 	
    <!-- 상세화면 -->
-
-   <div id="modal" class="modal apply-mentoring-modal" style="display:block;">
+   <div id="modal" class="modal apply-mentoring-modal" style="display:none;">
       <div id="dimmed" class="dimmed apply-mentoring-dimmend"></div>
       <div class="apply-mentoring_container">
       	<div class="apply-mentoring_box">
       	</div>
       </div>
    </div>
+   
 	
 </div>
 
@@ -275,14 +275,17 @@ $(document).on('click', '.mento-item', function(event){
 	      	</div>
 	      	<div class="apply-mentoring_footer">
 				<div class="apply-due">종료일 : \${mentoring.ment_duration}</div>
-				<div class="btn-apply"><button>신청하기</button></div>
+				<div class="btn-apply-box"><button type="button" class="btn-apply" value="\${mentoring.ment_num}">신청하기</button></div>
 			</div>
 			`
 		$('.apply-mentoring_box').html(str);
 	}//displayMentoringDetail(); end
    
 })
-
+/* btn-apply 클릭 시 신청화면 */
+$(document).on('click', '.btn-apply', function(){
+   console.log("test : "+$('.btn-apply').val());
+})
 /* dimmed 클릭 시 창 없애기 */
 $(document).on('click', '#dimmed', function(){
    $("#modal").css('display','none');
@@ -301,18 +304,78 @@ $(document).on('click', '.btn-cancel', function(){
 
 /* 신청 창 */
 $(document).on('click', '.btn-apply', function(){
-   let str = 
-	   `
-	   <input name="test">
-   
-   		<btn>
-	   `
-	   ;
-	$('.apply-mentoring_box').html(str);
-   
+	let ment_num = $('.btn-apply').val();
+	getMentoingApply(ment_num);
+	function getMentoingApply(ment_num){
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/mentor/apply"/>", 
+			type : 'get', 
+			data : {
+				ment_num : ment_num
+			},
+			dataType :"json", 
+			success : function (data){
+				displayMentoringApply(data.mentoring);
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+			}
+		});	//ajax end
+	}	//getMentoingApply(ment_num); end
 })
+	
+function displayMentoringApply(mentoring){
+	   let str = 
+		   `
+	         	<div class="apply-mentoring_header">
+		      		<div class="header-title"><h1>멘토링 신청</h1></div>
+		      		<div class="btn-cancel"> <button>X</button> </div>
+		      	</div>
+		      	<div class="apply-mentoring_body" style="overflow: hidden; height: 80%;">
+			      	<!-- 폼 -->
+			      	<div class="form-apply-box">
+				      	<form action="<c:url value="/mentor/apply"/>" method="post" class="form-apply">
+							<input type="hidden" value="\${mentoring.ment_num}" id="mentAp_ment_num" name="mentAp_ment_num">
+				      		<div class="mentor-apply-form-group">
+								<label for="id">멘토링 명</label>
+								<input type="text" readonly class="form-control apply-mentorNickname" value="\${mentoring.ment_title}" id="mentorNickname" name="mentorNickname">
+							</div>
+				      		<div class="mentor-apply-form-group">
+								<label for="id">연락처</label>
+								<input type="text" class="form-control apply-contact" id="mentAp_contact" name="mentAp_contact">
+							</div>
+				      		<div class="mentor-apply-form-group">
+								<label for="id">신청내용</label>
+								<textarea rows="11" class="form-control h-25 apply-content" id="mentAp_content" name="mentAp_content"></textarea>
+							</div>
+				      	</form>
+			      	</div>
+		      	</div>
+		      	<div class="apply-mentoring_footer">
+					<div class="btn-apply-box">
+						<button type="button" class="btn-apply-prev">이전으로</button> 
+						<button type="button" class="btn-apply-insert"class="btn-apply-insert">신청하기</button>
+					</div>
+				</div>
+		   `
+		   ;
+		$('.apply-mentoring_box').html(str);
+}
+	
+	
+   
 
 
+
+/* 이전버튼 이벤트 */
+$(document).on('click', '.btn-apply-prev', function(){
+  
+})
+/* 신청버튼 이벤트 */
+$(document).on('click', '.btn-apply-insert', function(){
+   $(".form-apply").submit();
+   //alert("신청하기");
+})
 </script>
 
 

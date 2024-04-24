@@ -236,6 +236,7 @@ CREATE TABLE `mentoring_apply` (
 	`mentAp_ment_num`	int	NOT NULL,
 	`mentAp_me_id`	varchar(50)	NOT NULL,
 	`mentAp_content`	text	NOT NULL,
+    `mentAp_contact` varchar(100)	NOT NULL,
 	`mentAp_state`	int default 0	NOT NULL
 );
 

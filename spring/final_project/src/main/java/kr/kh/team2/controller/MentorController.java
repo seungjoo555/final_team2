@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
+import kr.kh.team2.model.vo.member.MentoringApplyVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
-import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.CriteriaMentor;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.MentorService;
@@ -73,10 +73,31 @@ public class MentorController {
 		return map;
 	}
 	
+	@ResponseBody
 	@GetMapping("/mentor/apply")
-	public String mentorApply(Model model, String test) {
-		System.out.println("테스트 :: " + test);
-		return "/mentor/mentorapply";
+	public Map<String, Object> mentorApply(@RequestParam("ment_num")int ment_num) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("ment_num :: "+ment_num);
+		//멘토링 정보 받아오기
+		MetoringVO mentoring = mentorService.getMentoring(ment_num);
+		map.put("mentoring",mentoring);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/mentor/apply")
+	public String mentorApplyPost(Model model, HttpSession session, MentoringApplyVO mentoApVO) {
+		//로그인 정보 가져오기
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		//신청정보 가져오기
+		mentoApVO.setMentAp_me_id(user.getMe_id());
+		//신청하기
+		System.out.println("mentoApVO :: "+mentoApVO);
+		boolean res = mentorService.insertMentoringApply(mentoApVO);
+		//페이지 이동하기
+		System.out.println("등록 성공 실패 :: "+res);
+		
+		return "/mentor/list";
 	}
 	
 	@GetMapping("/mentor/check")

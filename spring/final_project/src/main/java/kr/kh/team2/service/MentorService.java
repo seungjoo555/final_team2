@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
+import kr.kh.team2.model.vo.member.MentoringApplyVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.CriteriaMentor;
 
@@ -22,6 +23,8 @@ public interface MentorService {
 	MetoringVO getMentoring(int ment_num);
 
 	MentorInfoVO getMentor(String ment_me_id);
+
+	boolean insertMentoringApply(MentoringApplyVO mentoApVO);
 
 
 }

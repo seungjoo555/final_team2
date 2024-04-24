@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
+import kr.kh.team2.model.vo.member.MentoringApplyVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.CriteriaMentor;
 
@@ -22,5 +23,7 @@ public interface MentorDAO {
 	MentorInfoVO selectMentorInfo(@Param("me_id")String me_id);
 
 	MetoringVO selectMentoring(@Param("ment_num")int ment_num);
+
+	boolean insertMentoringApply(@Param("mentAp")MentoringApplyVO mentoApVO);
 
 }
