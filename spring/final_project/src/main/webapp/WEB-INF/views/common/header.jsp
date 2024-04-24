@@ -11,6 +11,9 @@
 			</h1>
 			<ul class="navbar-left">
 				<li class="nav-item">
+					<a class="nav-link" href="<c:url value="/group/list" />">강의</a>
+				</li>
+				<li class="nav-item">
 					<a class="nav-link" href="<c:url value="/group/list" />">스터디/프로젝트</a>
 				</li>
 				<li class="nav-item">
