@@ -171,6 +171,15 @@ $(".group-post-input .submit").click(function(){
 				alert("게시글이 등록되었습니다.")
 				$(".group-post-input .input").val("") // 입력창 초기화
 				
+				// 게시글 처음부터 다시 보여주기
+				$(".post-list-bg").html()
+				
+				let cri = {
+					page : 1,
+					search : ${group.go_num}
+				}
+
+				getGroupPostList(cri);
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
 				alert("게시글을 등록하지 못했습니다.")
