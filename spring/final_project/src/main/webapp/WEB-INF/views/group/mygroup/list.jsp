@@ -44,7 +44,7 @@
 										<c:otherwise>${Math.round(group.go_time / 3600)}시간</c:otherwise>
 									</c:choose>
 								</td>
-								<td class="text-center">${group.go_member_count }명</td>
+								<td class="text-center">${group.go_member_count}명</td>
 							</tr>
 						</c:forEach>
 					</tbody>

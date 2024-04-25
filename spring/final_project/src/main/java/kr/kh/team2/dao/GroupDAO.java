@@ -46,4 +46,6 @@ public interface GroupDAO {
 
 	ArrayList<TotalCategoryVO> selectStudyCategoryList(@Param("recu_num")int recu_num);
 
+	ArrayList<GroupVO> getStudyApplyList(@Param("me_id") String me_id);
+
 }

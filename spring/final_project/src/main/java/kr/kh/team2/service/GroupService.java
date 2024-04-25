@@ -46,4 +46,6 @@ public interface GroupService {
 
 	ArrayList<GroupVO> getStudyGroupList(String me_id);
 
+	ArrayList<GroupVO> getStudyApplyList(String me_id);
+
 }

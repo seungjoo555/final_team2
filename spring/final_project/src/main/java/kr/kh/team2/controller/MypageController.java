@@ -55,12 +55,12 @@ public class MypageController {
 		System.out.println(member);
 		model.addAttribute("member", member);
 		
-		// 그룹 리스트 가져오기
+		// 상호평가 리스트 가져오기
 		ArrayList<MutualReviewVO> mutualReviewList = reviewService.getMutualReviewList(me_id);
 		model.addAttribute("mutualReviewList", mutualReviewList);
 		System.out.println(mutualReviewList);
 		
-		// 스터디 리스트 가져오기
+		// 내가 만든 스터디 리스트 가져오기
 		ArrayList<GroupVO> groupList = groupService.getStudyGroupList(me_id);
 		model.addAttribute("groupList", groupList);
 		System.out.println(groupList);
@@ -72,6 +72,27 @@ public class MypageController {
 		for(GroupVO group : groupList) {
 			int recu_num = group.getRecu_num();
 			System.out.println("recu_num : " + recu_num);
+			
+			ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(recu_num, table1);
+			ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(recu_num, table1);
+			model.addAttribute("totalCategory", totalCategory);
+			model.addAttribute("totalLanguage", totalLanguage);
+		}
+		
+		// 내가 지원한 스터디 리스트 가져오기
+		ArrayList<GroupVO> groupApplyList = groupService.getStudyApplyList(me_id);
+		model.addAttribute("groupApplyList", groupApplyList);
+		System.out.println(groupApplyList);
+		
+		// groupList에서 recu_num 가져오기
+		// 모집 공고에 등록된 분야 가져오기
+		// 내가 지원한 스터디 모집 공고 올린 그룹장 가져오기
+		for(GroupVO group : groupApplyList) {
+			int recu_num = group.getRecu_num();
+			System.out.println("recu_num : " + recu_num);
+			
+			MemberVO groupKing = groupService.getGroupKing(recu_num);
+			model.addAttribute("groupKing", groupKing.getMe_nickname());
 			
 			ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(recu_num, table1);
 			ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(recu_num, table1);

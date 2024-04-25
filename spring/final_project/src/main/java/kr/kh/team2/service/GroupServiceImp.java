@@ -159,5 +159,14 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.selectStudyGroupList(me_id);
 	}
+
+	@Override
+	public ArrayList<GroupVO> getStudyApplyList(String me_id) {
+		if (me_id == null) {
+			return null;
+		}
+		
+		return groupDao.getStudyApplyList(me_id);
+	}
 	
 }
