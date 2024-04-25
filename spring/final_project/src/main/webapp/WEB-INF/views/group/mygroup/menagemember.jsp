@@ -20,7 +20,7 @@
 </head>
 <body>
 <div class="container">
-	그룹 관리 goNum: ${goNum }
+	멤버 goNum: ${goNum }
 </div>
 
 </body>

@@ -71,7 +71,7 @@ public class GroupController {
 		
 		// 해당 그룹 가입 유저가 아니라면
 		if(!groupService.isGroupMember(user, groupNum)) {
-			return "/group/mygroup/grouphome";
+			return "/group/mygroup/home";
 		}
 		
 		GroupVO group = groupService.getGroupByGoNum(groupNum);
@@ -95,7 +95,7 @@ public class GroupController {
 		model.addAttribute("ddaylist", ddaylist);
 		model.addAttribute("boardlist", boardlist);
 		
-		return "/group/mygroup/grouphome";
+		return "/group/mygroup/home";
 	}
 	
 	@ResponseBody
@@ -196,21 +196,21 @@ public class GroupController {
 	public String groupmanageinfo(Model model, HttpSession session, int groupNum){
 		model.addAttribute("goNum", groupNum);
 		
-		return "/group/mygroup/groupmanage";
+		return "/group/mygroup/menageinfo";
 	}
 	
 	@GetMapping("/group/manage/member")
 	public String groupmenagemember(Model model, HttpSession session, int groupNum){
 		model.addAttribute("goNum", groupNum);
 		
-		return "/group/mygroup/groupmember";
+		return "/group/mygroup/menagemember";
 	}
 	
 	@GetMapping("/group/manage/applicant")
 	public String groupmenageapplicant(Model model, HttpSession session, int groupNum){
 		model.addAttribute("goNum", groupNum);
 		
-		return "/group/mygroup/groupapplicant";
+		return "/group/mygroup/menageapplicant";
 	}
 	
 	// ================================ group ================================
