@@ -117,14 +117,13 @@
 	</select>
 	
 	<select id="selectStudyGroupList" resultType="GroupVO">
-		
-	</select>
-	
-	<select id="selectStudyCategoryList" resultType="TotalCategoryVO">
-		SELECT total_category.*, programming_category.progCt_name as toCt_progCt_name
-		FROM final_team2.total_category
-			JOIN programming_category ON toCt_progCt_num = progCt_num
-		WHERE toCt_table_name = 'recruit' and toCt_table_pk = #{recu_num}
+		SELECT final_team2.group.*, group_apply.goap_state as goap_state, recruit.recu_num as recu_num, recruit.recu_topic as recu_topic, recruit.recu_count as recu_count, `member`.me_nickname as recu_gome_me_nickname, group_member.*
+		FROM final_team2.group
+			JOIN group_apply ON go_num = goap_num
+			JOIN group_member ON go_num = gome_go_num
+			JOIN recruit ON go_num = recu_go_num
+			JOIN `member` ON gome_me_id = me_id
+		WHERE goap_me_id = #{me_id}
 	</select>
     
 	<!-- =============================== DELETE =============================== -->

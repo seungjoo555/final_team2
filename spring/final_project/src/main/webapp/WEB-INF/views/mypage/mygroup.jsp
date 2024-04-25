@@ -116,6 +116,11 @@
 								경력 : ${ment.ment_mentIf_exp}
 							</div>
 							<!-- 분야 : 분야모음 -->
+							<div>
+								<c:forEach items="${mentoCategory}" var="ment_cate">
+									분야 : ${ment_cate.toCt_progCt_name}
+								</c:forEach>							
+							</div>
 						</li>
 					</c:forEach>
 				</ul>

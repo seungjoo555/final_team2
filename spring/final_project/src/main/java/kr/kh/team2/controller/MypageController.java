@@ -65,21 +65,38 @@ public class MypageController {
 		model.addAttribute("groupList", groupList);
 		System.out.println(groupList);
 		
+		// groupList에서 recu_num 가져오기
 		// 모집 공고에 등록된 분야 가져오기
-		String table = "recruit";
-		//ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(num, table);
-		//ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(num, table);
+		String table1 = "recruit";
 		
-		//model.addAttribute("totalCategory", totalCategory);
-		//model.addAttribute("totalLanguage", totalLanguage);
-		//System.out.println(num);
-		//System.out.println(totalCategory);
-		//System.out.println(totalLanguage);
+		for(GroupVO group : groupList) {
+			int recu_num = group.getRecu_num();
+			System.out.println("recu_num : " + recu_num);
+			
+			ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(recu_num, table1);
+			ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(recu_num, table1);
+			model.addAttribute("totalCategory", totalCategory);
+			model.addAttribute("totalLanguage", totalLanguage);
+		}
+		
 		
 		// 멘토링 가져오기
 		ArrayList<MetoringVO> mentoringList = mentorService.getMentoringList(me_id);
 		model.addAttribute("mentoringList", mentoringList);
 		System.out.println(mentoringList);
+		
+		// mentoringList에서 ment_num 가져오기
+		// 멘토링 공고에 등록된 분야 가져오기
+		
+		String table2 = "mentoring";
+		
+		for (MetoringVO mentoring : mentoringList) {
+		    int ment_num = mentoring.getMent_num();
+		    System.out.println("ment_num: " + ment_num);
+		    
+		    ArrayList<TotalCategoryVO> mentoCategory = mentorService.getMentoCategory(ment_num, table2);
+		    model.addAttribute("mentoCategory", mentoCategory);
+		}
 		
 		return "/mypage/mygroup";
 	}

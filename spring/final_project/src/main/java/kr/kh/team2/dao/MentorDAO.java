@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
@@ -23,5 +24,7 @@ public interface MentorDAO {
 	MentorInfoVO selectMentorInfo(@Param("me_id")String me_id);
 
 	ArrayList<MetoringVO> selectMentoringList(@Param("me_id") String me_id);
+
+	ArrayList<TotalCategoryVO> selectMentoCategory(@Param("ment_num")int ment_num, @Param("table")String table2);
 
 }

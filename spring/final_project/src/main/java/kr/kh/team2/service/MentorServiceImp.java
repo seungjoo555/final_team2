@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.MentorDAO;
+import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
@@ -77,8 +78,17 @@ public class MentorServiceImp implements MentorService {
 
 	@Override
 	public ArrayList<MetoringVO> getMentoringList(String me_id) {
-		// TODO Auto-generated method stub
+
 		return mentorDAO.selectMentoringList(me_id);
+	}
+
+	@Override
+	public ArrayList<TotalCategoryVO> getMentoCategory(int ment_num, String table2) {
+		if(!methods.checkString(table2)) {
+			return null;
+		}
+		
+		return mentorDAO.selectMentoCategory(ment_num, table2);
 	}
 
 
