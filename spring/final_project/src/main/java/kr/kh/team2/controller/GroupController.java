@@ -191,6 +191,28 @@ public class GroupController {
 		
 		return map;
 	}
+	
+	@GetMapping("/group/manage/info")
+	public String groupmanageinfo(Model model, HttpSession session, int groupNum){
+		model.addAttribute("goNum", groupNum);
+		
+		return "/group/mygroup/groupmanage";
+	}
+	
+	@GetMapping("/group/manage/member")
+	public String groupmenagemember(Model model, HttpSession session, int groupNum){
+		model.addAttribute("goNum", groupNum);
+		
+		return "/group/mygroup/groupmember";
+	}
+	
+	@GetMapping("/group/manage/applicant")
+	public String groupmenageapplicant(Model model, HttpSession session, int groupNum){
+		model.addAttribute("goNum", groupNum);
+		
+		return "/group/mygroup/groupapplicant";
+	}
+	
 	// ================================ group ================================
 		
 

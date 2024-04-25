@@ -122,13 +122,22 @@
 		      	<button class="cancle-btn">X</button>	
 	      		<ul class="manage-group-list">
 	      			<li>
-	      				<a href="#">그룹 정보 변경</a>
+	      				<c:url var = 'url1' value = '/group/manage/info'>
+	      					<c:param name = 'groupNum' value = "${group.go_num }"/>
+	      				</c:url>
+	      				<a href="${url1}">그룹 정보 변경</a>
 	      			</li>
 	      			<li>
-	      				<a href="#">멤버 관리</a>
+	      				<c:url var = 'url2' value = '/group/manage/member'>
+	      					<c:param name = 'groupNum' value = "${group.go_num }"/>
+	      				</c:url>
+	      				<a href="${url2}">멤버 관리</a>
 	      			</li>
 	      			<li>
-	      				<a href="#">지원자 관리</a>
+	      				<c:url var = 'url3' value = '/group/manage/applicant'>
+	      					<c:param name = 'groupNum' value = "${group.go_num }"/>
+	      				</c:url>
+	      				<a href="${url3}">지원자 관리</a>
 	      			</li>
 	      		</ul>
 		      </div>
