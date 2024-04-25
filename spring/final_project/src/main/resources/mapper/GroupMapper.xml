@@ -57,7 +57,10 @@
 	</select>
 	
 	<select id="getGroupByGoNum" resultType="GroupVO">
-		SELECT * FROM `group` WHERE go_num = #{num}
+		SELECT `group`.*, gome_me_id as leader 
+			FROM `group` 
+				JOIN group_member ON go_num = gome_go_num
+			WHERE gome_type = 1  AND go_num = #{num}; 
 	</select>
 	
 	<select id="isGroupMember" resultType="Object">

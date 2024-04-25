@@ -31,9 +31,11 @@
 				<div class="float-left group-title">${group.go_name}</div>
 				<div class="float-left">그룹 페이지</div>
 				<div class="setting-btn float-right">
-					<a href="#">
-						<img class="hamburger-btn" src="<c:url value="/resources/img/hamburger-btn.png"/>">
-					</a>
+					<c:if test="${group.leader == user.me_id}">
+						<a class="group-manage-btn">
+							<img class="hamburger-btn" src="<c:url value="/resources/img/hamburger-btn.png"/>">
+						</a>
+					</c:if>
 				</div>
 				<div class="user-info float-right">
 					${user.me_nickname} 님
@@ -78,6 +80,7 @@
 					</div>
 				</div>
 				<div class="container-right">
+					<!-- 그룹 일정 -->
 					<div class="group-calendar box">
 						<div class="box-info-bar">
 							일정
@@ -89,7 +92,7 @@
 				</div>
 			</div>
 			<div class="container-bottom">
-				
+				<!-- 최근 그룹 게시글 -->
 				<div class="group-board box">
 					<div class="box-info-bar">
 						최근 그룹 게시글
@@ -111,7 +114,25 @@
 					</div>
 				</div>
 			</div>
-	
+			
+		   <!-- 그룹 관리 화면 -->
+		   <div id="modal" class="modal apply-mentoring-modal" style="display:none;">
+		      <div id="dimmed" class="dimmed apply-mentoring-dimmend"></div>
+		      <div class="manage-group_container">
+		      	<button class="cancle-btn">X</button>	
+	      		<ul class="manage-group-list">
+	      			<li>
+	      				<a href="#">그룹 정보 변경</a>
+	      			</li>
+	      			<li>
+	      				<a href="#">멤버 관리</a>
+	      			</li>
+	      			<li>
+	      				<a href="#">지원자 관리</a>
+	      			</li>
+	      		</ul>
+		      </div>
+		   </div>
 		</c:otherwise>
 	</c:choose> 
 </div>
@@ -223,5 +244,30 @@
    		 $(".colon").removeClass("invisible");
 	})
 </script>
+
+<!-- 햄버거 버튼 클릭 script -->
+<script type="text/javascript">
+$(document).on('click', '.group-manage-btn', function(event){
+
+   $("#modal").css('display','block');
+   //스크롤 비활성화
+   $("body").css('overflow','hidden');
+
+})
+
+/* dimmed 클릭 시 창 없애기 */
+$(document).on('click', '#dimmed', function(){
+   $("#modal").css('display','none');
+   $("body").css('overflow','visible');
+})
+/* X 클릭 시 창 없애기 */
+$(document).on('click', '.cancle-btn', function(){
+   $("#modal").css('display','none');
+   $("body").css('overflow','visible');
+})
+
+
+</script>
+
 </body>
 </html>

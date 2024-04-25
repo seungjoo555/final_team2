@@ -10,5 +10,8 @@ public class GroupVO {
     private String go_name;
     private long go_time;
     private boolean go_update;
+    
     private int go_member_count; // 가입한 멤버 수
+    private String leader; // 그룹 리더의 아이디
+    
 }
