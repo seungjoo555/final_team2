@@ -21,6 +21,11 @@
 		insert into total_language(toLg_lang_num, toLg_table_name, toLg_table_pk) VALUES (#{totalLang.toLg_lang_num}, #{totalLang.toLg_table_name}, #{totalLang.toLg_table_pk});
 	</insert>
 	
+	<insert id="insertGroupMember">
+		INSERT INTO group_member (gome_me_id, gome_go_num, gome_type) VALUES (#{me_id}, #{go_num}, '1');
+		
+	</insert>
+	
 	<select id="selectProgrammingCategoryList" resultType="ProgrammingCategoryVO">
 		select * from programming_category
 	</select>
@@ -28,4 +33,5 @@
 	<select id="selectProgrammingLanguageList" resultType="ProgrammingLanguageVO">
 		select * from programming_language
 	</select>
+	
 </mapper>

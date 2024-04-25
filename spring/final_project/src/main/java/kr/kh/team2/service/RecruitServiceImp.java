@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.kh.team2.dao.GroupDAO;
 import kr.kh.team2.dao.RecruitDAO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
@@ -21,6 +22,9 @@ import lombok.extern.log4j.Log4j;
 public class RecruitServiceImp implements RecruitService {
 	@Autowired
 	private RecruitDAO recruitDao;
+	
+	@Autowired
+	private GroupDAO groupDao;
 
 	private boolean checkString(String str) {
 		return str != null && str.length() != 0;
@@ -46,13 +50,24 @@ public class RecruitServiceImp implements RecruitService {
 			return false;
 		}
 		
+		System.out.println(makeGroup);
+		System.out.println(group.getGo_num());
+		
 		int go_num = group.getGo_num();
+		
+		boolean makeGroupMember = recruitDao.insertGroupMember(user.getMe_id(), go_num);
+	    
+	    if (!makeGroupMember) {
+	    	return false;
+	    }
+		
 		
 		boolean res = recruitDao.insertRecruit(go_num, recruit, user);
 		
 		if(!res) {
 			return false;
 		}
+		
 		return true;
 		
 	}

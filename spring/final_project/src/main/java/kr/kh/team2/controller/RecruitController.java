@@ -48,8 +48,11 @@ public class RecruitController {
 	public String RecruitInsertPost(Model model, String progCtList, String progLangList, GroupVO group ,RecruitVO recruit, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
+		// 그룹 생성
 		boolean res1 = recruitService.insertRecruit(group, recruit, user);
+		// 모집 분야 insert
 		boolean res2 = recruitService.insertTotalCate(progCtList, recruit.getRecu_num());
+		// 사용 언어 insert
 		boolean res3 = recruitService.insertTotalLang(progLangList, recruit.getRecu_num());
 		
 		
