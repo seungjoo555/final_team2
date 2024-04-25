@@ -140,5 +140,38 @@
 		}
 		.group-board .time{text-align: right; color: #649B60; font-weight: bold;}
 		
+	/* ======================================= grouppost.jsp ======================================= */
+	
+	.post-list-bg{padding: 55px 70px;}
+	
+	/* 그룹 게시글 작성 form 관련 */
+		.group-post-input{margin: 0px auto; width: 90%;}
+		.group-post-input::after{display: block; content: ''; clear: both;}
 		
+		.group-post-input .input{width: 100%; height: 96px; border: 1px solid #4F4F4F}
+		.group-post-input .submit{width: 140px; height: 40px; line-height: 40px; border-radius: 3px; 
+			background-color: #649B60; color: white;}
+	
+	/* 그룹 게시글 관련 */
+		.post-list-bg>*{width: 100%; border-bottom: 1px solid #9C9C9C; padding: 20px 0;}
+		.post-list-bg>*:last-child{border-bottom: none;}
+		.post-list-bg>*:first-child{padding-top: 0px;}
+		
+		.post-info{height: 40px;}
+		.post-info>*{line-height: 40px; }
+		.post-info .writer{margin-right: 5px; font-size: 20px; font-weight: bold;}
+		.post-info .time{font-weight: normal; color: #9C9C9C;}
+		.post-info::after{display: block; content: ''; clear: both;}
+		
+		.post-content{margin-top: 10px; color: #4F4F4F;}
+		
+		.post-manage-btn-group{width: 20%;}
+		.post-manage-btn-group *{width: 100px; height: 30px; line-height: 30px; text-align: center; 
+			font-size: 14px; border-radius: 5px; margin-top: 20px;}
+		.post-manage-btn-group .post-edit-btn{color: black; background-color: #C9C9C9}
+		.post-manage-btn-group .post-delete-btn{margin-left: 10px; color: white; background-color: #5A7059}	
+		
+		.more-post{width: 90%; margin: 0px auto; text-align: center;}
+		.more-post-btn{width: 100%; height: 45px; line-height: 45px;
+			background-color: #649B60; border-radius: 5px; font-weight: bold; color: white}
 		

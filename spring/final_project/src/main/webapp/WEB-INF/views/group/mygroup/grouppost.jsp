@@ -10,43 +10,6 @@
 <!-- mygroup.css -->
 <link rel="stylesheet" href="<c:url value="/resources/css/mygroup.css"/>">
 
-<style>
-	/* ======================================= grouppost.jsp ======================================= */
-	
-	.post-list-bg{padding: 55px 70px;}
-	
-	/* 그룹 게시글 작성 form 관련 */
-		.group-post-input{margin: 0px auto; width: 90%;}
-		.group-post-input::after{display: block; content: ''; clear: both;}
-		
-		.group-post-input .input{width: 100%; height: 96px; border: 1px solid #4F4F4F}
-		.group-post-input .submit{width: 140px; height: 40px; line-height: 40px; border-radius: 3px; 
-			background-color: #649B60; color: white;}
-	
-	/* 그룹 게시글 관련 */
-		.post-list-bg>*{width: 100%; border-bottom: 1px solid #9C9C9C; padding: 20px 0;}
-		.post-list-bg>*:last-child{border-bottom: none;}
-		.post-list-bg>*:first-child{padding-top: 0px;}
-		
-		.post-info{height: 40px;}
-		.post-info>*{line-height: 40px; }
-		.post-info .writer{margin-right: 5px; font-size: 20px; font-weight: bold;}
-		.post-info .time{font-weight: normal; color: #9C9C9C;}
-		.post-info::after{display: block; content: ''; clear: both;}
-		
-		.post-content{margin-top: 10px; color: #4F4F4F;}
-		
-		.post-manage-btn-group{width: 20%;}
-		.post-manage-btn-group *{width: 100px; height: 30px; line-height: 30px; text-align: center; 
-			font-size: 14px; border-radius: 5px; margin-top: 20px;}
-		.post-manage-btn-group .post-edit-btn{color: black; background-color: #C9C9C9}
-		.post-manage-btn-group .post-delete-btn{margin-left: 10px; color: white; background-color: #5A7059}	
-		
-		.more-post{width: 90%; margin: 0px auto; text-align: center;}
-		.more-post-btn{width: 100%; height: 45px; line-height: 45px;
-			background-color: #649B60; border-radius: 5px; font-weight: bold; color: white}
-</style>
-
 </head>
 <body>
 <div class="container">
@@ -88,6 +51,7 @@ getGroupPostList(cri);
 function getGroupPostList(cri){
 	let str = '';
 	console.log(cri)
+	
 	$.ajax({
 		url : '<c:url value="/group/post/list"/>',
 		method : "post",
@@ -172,7 +136,7 @@ $(".group-post-input .submit").click(function(){
 				$(".group-post-input .input").val("") // 입력창 초기화
 				
 				// 게시글 처음부터 다시 보여주기
-				$(".post-list-bg").html()
+				$(".post-list-bg").html('')
 				
 				let cri = {
 					page : 1,
@@ -196,7 +160,6 @@ $(".group-post-input .submit").click(function(){
 
 <!-- 게시글 삭제 script -->
 <script type="text/javascript">
-// 구현 예정
 $(document).on("click",".post-delete-btn", function(){
 	
 	$.ajax({
@@ -210,6 +173,18 @@ $(document).on("click",".post-delete-btn", function(){
 		success : function (data){
 			if(data.data == "ok"){
 				alert("게시글이 삭제되었습니다.")
+				
+				// 게시글 목록 갱신
+				$(".post-list-bg").html('')
+				
+				for (let i=1; i<=page; i ++){
+					
+					let cri = {
+						page: i,
+						search : ${group.go_num}
+					}					
+					getGroupPostList(cri);
+				}
 			}else{
 				alert("게시글을 삭제하지 못했습니다.")
 			}
