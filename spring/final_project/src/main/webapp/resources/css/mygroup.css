@@ -69,7 +69,7 @@
 	}
 	
 	
-	/* ======================================= grouphome.jsp ============================================ */
+	/* ======================================= home.jsp ============================================ */
 	
 	/* 가입하지 않은 그룹 홈에 접근했을 때 */
 	.not-group-member{text-align: center;}
@@ -187,11 +187,11 @@
 		
 		.post-content{margin-top: 10px; color: #4F4F4F;}
 		
-		.post-manage-btn-group{width: 20%;}
-		.post-manage-btn-group *{width: 100px; height: 30px; line-height: 30px; text-align: center; 
+		.post-manage-btn-group, .post-edit-btn-group{width: 30%;}
+		.post-manage-btn-group *, .post-edit-btn-group *{display: inline-block; width: 100px; height: 30px; line-height: 30px; text-align: center; 
 			font-size: 14px; border-radius: 5px; margin-top: 20px;}
-		.post-manage-btn-group .post-edit-btn{color: black; background-color: #C9C9C9}
-		.post-manage-btn-group .post-delete-btn{margin-left: 10px; color: white; background-color: #5A7059}	
+		.post-manage-btn-group *:first-child, .post-edit-btn-group *:first-child{color: black; background-color: #C9C9C9}
+		.post-manage-btn-group *:last-child, .post-edit-btn-group *:last-child{margin-left: 10px; color: white; background-color: #5A7059}	
 		
 		.more-post{width: 90%; margin: 0px auto; text-align: center;}
 		.more-post-btn{width: 100%; height: 45px; line-height: 45px;

@@ -53,4 +53,8 @@ public interface GroupDAO {
 
 	GroupPostVO getGroupPostByGopoNum(@Param("num")int gopoNum);
 
+	GroupPostVO checkWriter(@Param("num")int gopoNum, @Param("id")String me_id);
+
+	boolean updateGroupPost(@Param("num")int gopoNum, @Param("content")String content);
+
 }

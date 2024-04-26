@@ -66,8 +66,8 @@ function getGroupPostList(cri){
 				btns +=
 					`
 					<div class="post-manage-btn-group">
-						<a class="float-left post-edit-btn" data-num="\${post.gopo_num}">수정</a>
-						<a class="float-left post-delete-btn" data-num="\${post.gopo_num}">삭제</a>
+						<a class="post-edit-btn" data-num="\${post.gopo_num}">수정</a>
+						<a class="post-delete-btn" data-num="\${post.gopo_num}">삭제</a>
 					</div>
 					`
 				}
@@ -82,7 +82,7 @@ function getGroupPostList(cri){
 						<div class="post-content">
 							\${post.gopo_content }
 						</div>
-						\${btns}
+							\${btns}
 					</div>
 					`;
 				}
@@ -132,21 +132,26 @@ $(".group-post-input .submit").click(function(){
 			}, 
 			dataType : "json", 
 			success : function (data){
-				alert("게시글이 등록되었습니다.")
-				$(".group-post-input .input").val("") // 입력창 초기화
-				
-				// 게시글 처음부터 다시 보여주기
-				$(".post-list-bg").html('')
-				
-				let cri = {
-					page : 1,
-					search : ${group.go_num}
-				}
+				if(data.data == "ok"){
+					alert("게시글이 등록되었습니다.")
+					$(".group-post-input .input").val("") // 입력창 초기화
+					
+					// 게시글 처음부터 다시 보여주기
+					$(".post-list-bg").html('')
+					
+					let cri = {
+						page : 1,
+						search : ${group.go_num}
+					}
 
-				getGroupPostList(cri);
+					getGroupPostList(cri);
+				}else{
+					alert("게시글을 등록권한이 없습니다.")
+				}
+				
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
-				alert("게시글을 등록하지 못했습니다.")
+				alert("게시글을 등록하지 못했습니다. (에러 발생)")
 			}
 	});
 })
@@ -154,8 +159,89 @@ $(".group-post-input .submit").click(function(){
 
 <!-- 게시글 수정 script -->
 <script type="text/javascript">
-	// 구현 예정
+let content
+let btnGroup
+let num
+
+	// 수정 버튼 클릭 시 기존 내용은 숨기고, textarea 창을 띄움.
+	$(document).on("click",".post-edit-btn", function(){
+		initComment()
+		
+		content = $(this).parent().parent().find(".post-content")
+		btnGroup = $(this).parent()
+		
+		content.hide() // 기존 게시글 내용 숨기기
+		btnGroup.hide() // 버튼들 숨기기
+		
+		let text = content.text().trim()
+		num = $(this).data("num")
+		
+		
+		let edit = `
+			<div class="edit-box">
+				<textarea class="post-content-edit" style="width: 100%; height: 100px; border: 1px solid black;">\${text}</textarea>
+				<div class="post-edit-btn-group float-right">
+					<a class="post-finish-btn">완료</a>
+					<a class="post-cancel-btn" onclick="initComment()">취소</a>
+				</div>
+			</div>
+		`
+		
+		content.after(edit)
+	})
 	
+	// 완료버튼 클릭 시
+	$(document).on("click",".edit-box .post-finish-btn", function(){
+		$.ajax({
+			async : false, 
+			url : '<c:url value="/group/post/update"/>', 
+			type : 'post', 
+			data : {
+				gopoNum : num,
+				content: $(".post-content-edit").val()
+			}, 
+			dataType : "json", 
+			success : function (data){
+				if(data.data == "ok"){
+					alert("게시글이 수정되었습니다.")
+					
+					initComment() // 수정 창 없애기
+					refresh() // 게시글 목록 새로고침
+				}else{
+					alert("게시글을 수정권한이 없습니다.")
+				}
+				
+				
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+				alert("게시글을 등록하지 못했습니다. (에러발생)")
+			}
+		});
+	})
+	
+	// 기존 내용을 다시 보이게 하고, 수정창을 숨기는 함수
+	function initComment(){
+		// 숨겼던 기존 코드 표시하기
+		$(".post-content").show()
+		$(".post-manage-btn-group").show()
+		
+		// 수정창 숨기기
+		$(".edit-box").remove()
+	}
+	
+	// 게시글 목록 갱신 함수
+	function refresh(){
+		$(".post-list-bg").html('')
+		
+		for (let i=1; i<=page; i ++){
+			
+			let cri = {
+				page: i,
+				search : ${group.go_num}
+			}					
+			getGroupPostList(cri);
+		}
+	}
 </script>
 
 <!-- 게시글 삭제 script -->
@@ -173,18 +259,8 @@ $(document).on("click",".post-delete-btn", function(){
 		success : function (data){
 			if(data.data == "ok"){
 				alert("게시글이 삭제되었습니다.")
+				refresh() // 게시글 목록 갱신(게시글 수정 script에 정의되어 있음.)
 				
-				// 게시글 목록 갱신
-				$(".post-list-bg").html('')
-				
-				for (let i=1; i<=page; i ++){
-					
-					let cri = {
-						page: i,
-						search : ${group.go_num}
-					}					
-					getGroupPostList(cri);
-				}
 			}else{
 				alert("게시글을 삭제하지 못했습니다.")
 			}
@@ -195,6 +271,7 @@ $(document).on("click",".post-delete-btn", function(){
 		}
 });
 })
+
 
 </script>
 </body>

@@ -179,6 +179,8 @@ public class GroupServiceImp implements GroupService{
 			return false;
 		}
 		
+		// 권한 확인 필요
+		
 		return groupDao.insertGroupPost(goNum, writer, content);
 	}
 
@@ -228,6 +230,30 @@ public class GroupServiceImp implements GroupService{
 	@Override
 	public GroupPostVO getGroupPostByGopoNum(int gopoNum) {
 		return groupDao.getGroupPostByGopoNum(gopoNum);
+	}
+
+	@Override
+	public boolean updateGroupPost(int gopoNum, String content, MemberVO user) {
+		if(gopoNum == 0 ) {
+			System.out.println("gopoNum is 0");
+			return false;
+		}
+		if(!methods.checkString(content) ) {
+			System.out.println("null content: " + content );
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		// 현재 로그인한 유저가 게시글의 작성자인지 확인함
+		if(groupDao.checkWriter(gopoNum, user.getMe_id()) == null) {
+			System.out.println("not identical writer");
+			return false;
+		}
+		
+		return groupDao.updateGroupPost(gopoNum, content);
 	}
 	
 	

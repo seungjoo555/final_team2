@@ -141,6 +141,10 @@
 		SELECT * FROM group_post WHERE gopo_num = #{num}
 	</select>
 	
+	<select id="checkWriter" resultType="GroupPostVO">
+		SELECT * FROM group_post WHERE gopo_num = #{num} AND gopo_gome_me_id = #{id}
+	</select>
+	
 	<!-- =============================== DELETE =============================== -->
 	
 	<delete id="deleteGroupPost">
@@ -154,6 +158,12 @@
 		UPDATE `group` 
 			SET go_time = go_time + 1 
 		WHERE go_num = #{num}
+	</update>
+	
+	<update id="updateGroupPost">
+		UPDATE group_post
+			SET gopo_content = #{content}
+		WHERE gopo_num = #{num}
 	</update>
 	
 	<!-- =============================== INSERT =============================== -->	

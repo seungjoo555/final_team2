@@ -192,6 +192,23 @@ public class GroupController {
 		return map;
 	}
 	
+	@ResponseBody
+	@PostMapping("/group/post/update")
+	public Map<String, Object> groupPostUpdate(HttpSession session, @RequestParam("gopoNum")int gopoNum, @RequestParam("content")String content){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+
+		boolean result = groupService.updateGroupPost(gopoNum, content, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
 	@GetMapping("/group/manage/info")
 	public String groupmanageinfo(Model model, HttpSession session, int groupNum){
 		model.addAttribute("goNum", groupNum);
