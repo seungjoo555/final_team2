@@ -17,8 +17,6 @@
 			<div class="grouplist-title">나의 그룹</div>
 		</div>
 		<div class="group-list-bg">
-		
-		
 				<table class="group-list">
 					<thead>
 						<tr>
@@ -97,15 +95,15 @@
 		let time = '';
 
 		// 받아온 list가 없을 경우,
-		if(list == null || list.length == 0){
+		if(${list == null}  || ${list.length == 0}){
 			str = `
 				<div class="no-list-page">
 					<div>가입한 그룹이 없습니다.</div>
 					<a href="<c:url value="/"/>">모집공고 보러 가기</a>
 				</div>
 				`
-				
-			$('.box-group-list').html(str);
+			$('.group-list-bg').addClass("text-align-center")
+			$('.group-list-bg').html(str);
 			return;
 			}
 		
