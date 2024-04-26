@@ -463,14 +463,16 @@ ALTER TABLE `group_post` ADD CONSTRAINT `FK_group_member_TO_group_post_1` FOREIG
 )
 REFERENCES `group_member` (
 	`gome_me_id`
-);
+)
+ON DELETE CASCADE;
 
 ALTER TABLE `group_post` ADD CONSTRAINT `FK_group_member_TO_group_post_2` FOREIGN KEY (
 	`gopo_gome_go_num`
 )
 REFERENCES `group_member` (
 	`gome_go_num`
-);
+)
+ON DELETE CASCADE;
 
 ALTER TABLE `lecture_review` ADD CONSTRAINT `FK_lecture_TO_lecture_review_1` FOREIGN KEY (
 	`lectRv_lect_num`
@@ -561,14 +563,16 @@ ALTER TABLE `group_calendar` ADD CONSTRAINT `FK_group_member_TO_group_calendar_1
 )
 REFERENCES `group_member` (
 	`gome_me_id`
-);
+)
+ON DELETE CASCADE;
 
 ALTER TABLE `group_calendar` ADD CONSTRAINT `FK_group_member_TO_group_calendar_2` FOREIGN KEY (
 	`gocal_go_num`
 )
 REFERENCES `group_member` (
 	`gome_go_num`
-);
+)
+ON DELETE CASCADE;
 
 ALTER TABLE `lecture_file` ADD CONSTRAINT `FK_lecture_TO_lecture_file_1` FOREIGN KEY (
 	`lectFi_lect_num`
