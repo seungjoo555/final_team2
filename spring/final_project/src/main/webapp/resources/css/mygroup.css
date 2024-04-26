@@ -1,15 +1,17 @@
 @charset "UTF-8";
 
-	.float-rignt{float: right;}
+	.float-right{float: right;}
 	.float-left{float: left;}
 
 	.container{width:960px; background-color: #F9F9F9; margin: 100px auto 200px auto; padding: 0 0 60px 0; box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);}
 	
 	.container-row{height: 580px; display: flex;}
-	.container-row .container-left{height: 100%; width: 33%; padding: 90px 40px 0 40px;}
-	.container-row .container-right{height: 100%; width: 67%;  padding: 90px 40px 0 40px;}
+	.container-row .container-left{height: 100%; width: 33%; padding: 70px 40px 0 40px;}
+	.container-row .container-right{height: 100%; width: 67%;  padding: 70px 40px 0 40px;}
 	
 	.container-bottom{height: 25%; width: 100%; padding: 40px 40px 0 40px;}
+	
+	.invisible{visibility: hidden;}
 	
 	/* box style */
 	
@@ -42,8 +44,6 @@
 		[class$=list]>:last-child{border:none;} /* list의 마지막 요소는 border 없음 */
 		
 		/*list 내부 info 요소 style*/
-		
-		
 		[class$=list] [class$=info]{width: 100%; border-bottom: 1px solid #9C9C9C;} 
 		
 		[class$=list] [class$=info] .image{width: 60px; height: 60px; border: solid black 1px;}
@@ -69,7 +69,17 @@
 	}
 	
 	
-	/* ======================================= grouphome.jsp ============================================ */
+	/* ======================================= home.jsp ============================================ */
+	
+	/* 가입하지 않은 그룹 홈에 접근했을 때 */
+	.not-group-member{text-align: center;}
+	
+	.not-group-member *:first-child{font-size: 24px; font-weight: bold; padding-top: 60px; margin-bottom: 40px;}
+	.not-group-member *:last-child{
+		padding: 10px 10px; border-radius: 5px;
+		font-size: 16px; font-weight: bold; text-align: center; 
+		text-decoration: none; color: white; background-color: #9C9C9C;
+	}
 	
 	/* container-info-bar 관련 */
 	
@@ -80,9 +90,12 @@
 		.group-timer .group-timer-title{color: #243323; font-size: 24px;}
 		.group-timer .group-timer-box{
 			width: clac(100% - 80px); height: 115px; line-height: 115px; border-radius: 15px; 
-			font-size: 36px;text-align:center; 
+			display: flex; justify-content: center;
+			font-size: 36px; text-align:center; 
 			box-shadow:inset 1px 1px 7px rgba(0, 0, 0, .3);
 		}
+		.group-timer .colon{margin: 0 3px;}
+		.group-timer .timer-on{font-weight: bold; color: #649B60;}
 		
 		.group-timer .group-timer-btn-group{margin-top: 10px;}
 		.group-timer .group-timer-btn-group>*{border: none; font-weight: bold;}
@@ -90,7 +103,7 @@
 		.group-timer a::hover{text-decoration: none;}
 		.group-timer-btn-group .start-btn{background-color: #649B60; color: #243323;}
 		.group-timer-btn-group .pause-btn{background-color: #C9C9C9; color: #243323;}
-	
+		
 	/* group-dday 관련 style*/
 	
 		.group-dday{margin-top: 35px; height: calc(100% - 193px);}
@@ -125,5 +138,62 @@
 		}
 		.group-board .time{text-align: right; color: #649B60; font-weight: bold;}
 		
+	/* group-manage 관련 */
+		.modal{
+		   display: flex; align-items: center; flex-direction: column; justify-content: center;
+		   box-sizing: border-box;  margin:auto;
+		    position: fixed;
+		}
+		.modal, .dimmed{
+		   position: absolute; top:0; bottom:0; left:0; right:0;
+		   width:100%; height:100%; background-color: rgba(11, 19, 30, .37);}
+		.manage-group_container{
+			width: 300px; min-width:300px; 
+		   display: flex; flex-direction: column; position:relative; align-items: center;  
+		   background-color: white;  position: relative; bottom: 0;   margin:auto; margin-top: 160px;
+		   border-radius: 10px; padding: 40px;
+		}
 		
+		.manage-group_container .cancle-btn{position: absolute; top: 20px; right: 20px; background-color: transparent;}
+		.manage-group_container .cancle-btn::after{display:block; content: ''; clear: both;}
+		
+		.manage-group-list li{width: 100%; height: 33%; line-height: 40px; text-align: center; border-bottom: 1px solid #9C9C9C;}
+		.manage-group-list li:hover{background-color: #9C9C9C;}
+		.manage-group-list a{color: black;}
+		.manage-group-list a:hover{text-decoration: none;}
+		
+	/* ======================================= grouppost.jsp ======================================= */
+	
+	.post-list-bg{padding: 55px 70px;}
+	
+	/* 그룹 게시글 작성 form 관련 */
+		.group-post-input{margin: 0px auto; width: 90%;}
+		.group-post-input::after{display: block; content: ''; clear: both;}
+		
+		.group-post-input .input{width: 100%; height: 96px; border: 1px solid #4F4F4F}
+		.group-post-input .submit{width: 140px; height: 40px; line-height: 40px; border-radius: 3px; 
+			background-color: #649B60; color: white;}
+	
+	/* 그룹 게시글 관련 */
+		.post-list-bg>*{width: 100%; border-bottom: 1px solid #9C9C9C; padding: 20px 0;}
+		.post-list-bg>*:last-child{border-bottom: none;}
+		.post-list-bg>*:first-child{padding-top: 0px;}
+		
+		.post-info{height: 40px;}
+		.post-info>*{line-height: 40px; }
+		.post-info .writer{margin-right: 5px; font-size: 20px; font-weight: bold;}
+		.post-info .time{font-weight: normal; color: #9C9C9C;}
+		.post-info::after{display: block; content: ''; clear: both;}
+		
+		.post-content{margin-top: 10px; color: #4F4F4F;}
+		
+		.post-manage-btn-group, .post-edit-btn-group{width: 30%;}
+		.post-manage-btn-group *, .post-edit-btn-group *{display: inline-block; width: 100px; height: 30px; line-height: 30px; text-align: center; 
+			font-size: 14px; border-radius: 5px; margin-top: 20px;}
+		.post-manage-btn-group *:first-child, .post-edit-btn-group *:first-child{color: black; background-color: #C9C9C9}
+		.post-manage-btn-group *:last-child, .post-edit-btn-group *:last-child{margin-left: 10px; color: white; background-color: #5A7059}	
+		
+		.more-post{width: 90%; margin: 0px auto; text-align: center;}
+		.more-post-btn{width: 100%; height: 45px; line-height: 45px;
+			background-color: #649B60; border-radius: 5px; font-weight: bold; color: white}
 		

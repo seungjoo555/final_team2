@@ -6,6 +6,9 @@ INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('프로
 INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('데이터베이스');
 INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('웹 퍼블리싱');
 
+
+
+
 INSERT INTO `final_team2`.`programming_language` (`lang_name`) VALUES ('JavaScript');
 INSERT INTO `final_team2`.`programming_language` (`lang_name`) VALUES ('HTML/CSS');
 INSERT INTO `final_team2`.`programming_language` (`lang_name`) VALUES ('React');
@@ -151,9 +154,9 @@ INSERT INTO mentor_job VALUES ("SW 엔지니어"), ("백엔드 / 서버 개발�
 
 INSERT INTO mentor_info VALUES 
 ("admin", 				0, 	"admin test", 	"admin test", 	"0000-000-0000", NOW(), 0, "SW 엔지니어"),
-("asdfg@final.com", 	3, 	"", 			"개발자 임꺽정입니다.", 	"0000-000-0000", NOW(), 1, "백엔드 /서버 개발자"),
-("qwert@final.com", 	0, 	"", 			"멘토 신청 테스트.", 	"0000-000-0000", NOW(), -1, "프론트엔드 / 웹퍼블리셔");
-
+("asdfg@final.com", 	3, 	"", 			"개발자 임꺽정입니다.", 	"0000-000-0000", NOW(), 1, "백엔드 / 서버 개발자"),
+("qwert@final.com", 	0, 	"", 			"멘토 신청 테스트.", 	"0000-000-0000", NOW(), -1, "프론트엔드 / 웹 퍼블리셔");
+ 
 SELECT * FROM final_team2.mentor_info;
 
 INSERT INTO mentoring(ment_title, ment_duration, ment_content, ment_me_id, ment_state) VALUES
@@ -212,6 +215,15 @@ SELECT * FROM final_team2.recommend;
 INSERT INTO `group`(go_name,go_update) VALUES("파이썬프로젝트",1);
 INSERT INTO `group`(go_name,go_update) VALUES("스프링공부모임",1);
 INSERT INTO `group`(go_name,go_update) VALUES("KH방과후스터디",1);
+INSERT INTO `group`(go_name,go_update) VALUES("파이썬프로젝트2",1);
+INSERT INTO `group`(go_name,go_update) VALUES("스프링공부모임2",1);
+INSERT INTO `group`(go_name,go_update) VALUES("KH방과후스터디2",1);
+INSERT INTO `group`(go_name,go_update) VALUES("파이썬프로젝트3",1);
+INSERT INTO `group`(go_name,go_update) VALUES("스프링공부모임3",1);
+INSERT INTO `group`(go_name,go_update) VALUES("KH방과후스터디3",1);
+INSERT INTO `group`(go_name,go_update) VALUES("파이썬프로젝트4",1);
+INSERT INTO `group`(go_name,go_update) VALUES("스프링공부모임4",1);
+INSERT INTO `group`(go_name,go_update) VALUES("KH방과후스터디4",1);
 
 SELECT * FROM RECRUIT;
 
@@ -282,6 +294,8 @@ INSERT INTO  `group_member`(gome_me_id,gome_go_num,gome_type)
 			VALUES("admin",2,1);
 INSERT INTO  `group_member`(gome_me_id,gome_go_num,gome_type)
 			VALUES("admin",3,1);
+INSERT INTO `group_member`(gome_me_id, gome_go_num, gome_type) 
+			VALUES("admin", 4, 1), ("admin", 5, 1), ("admin", 6, 1), ("admin", 7, 1), ("admin", 8, 1), ("admin", 9, 1), ("admin", 10, 1), ("admin", 11, 1), ("admin", 12, 1);
 
 INSERT INTO `group_post`(gopo_content,gopo_date,gopo_gome_me_id,gopo_gome_go_num)
 			VALUES("프로젝트 진행 일정을 게시하였으니 확인 부탁드립니다.",now(),"qwert@final.com",1);

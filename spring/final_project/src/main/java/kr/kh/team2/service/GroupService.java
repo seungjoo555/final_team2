@@ -16,10 +16,9 @@ public interface GroupService {
 
 	ArrayList<RecruitVO> getGroupList(Criteria cri);
 
-
 	int getGroupTotalCount(Criteria cri);
 
-	ArrayList<GroupVO> getGroupListById(String me_id);
+	ArrayList<GroupVO> getGroupListById(String me_id, Criteria cri);
 
 	GroupVO getGroupByGoNum(int groupNum);
 
@@ -42,5 +41,19 @@ public interface GroupService {
 	boolean updateGoTime(int goNum);
 
 	long getGoTimeByGoNum(int goNum);
+
+	ArrayList<GroupPostVO> getGroupPostByGoNum(int groupNum, Criteria cri);
+
+	boolean insertGroupPost(int goNum, String  writer, String content);
+
+	int getMyGroupTotalCount(String me_id);
+
+	int getGroupPostTotalCount(int goNum);
+
+	boolean deleteGroupPost(int gopoNum, MemberVO user);
+	
+	 GroupPostVO getGroupPostByGopoNum(int gopoNum);
+
+	boolean updateGroupPost(int gopoNum, String content, MemberVO user);
 
 }

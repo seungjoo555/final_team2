@@ -52,11 +52,15 @@
 			WHERE go_num in (
 				SELECT gome_go_num FROM group_member WHERE gome_me_id = #{id}
             ) 
-             GROUP BY gome_go_num;
+            GROUP BY gome_go_num
+            limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	
 	<select id="getGroupByGoNum" resultType="GroupVO">
-		SELECT * FROM `group` WHERE go_num = #{num}
+		SELECT `group`.*, gome_me_id as leader 
+			FROM `group` 
+				JOIN group_member ON go_num = gome_go_num
+			WHERE gome_type = 1  AND go_num = #{num}; 
 	</select>
 	
 	<select id="isGroupMember" resultType="Object">
@@ -116,7 +120,37 @@
 		SELECT go_time FROM `group` WHERE go_num = #{num}  
 	</select>
 	
+	<select id="getGroupPostByGoNum" resultType="GroupPostVO">
+		SELECT group_post.*, me_nickname as nickname 
+			FROM group_post 
+				JOIN member ON me_id = gopo_gome_me_id
+			WHERE gopo_gome_go_num = #{num} 
+			ORDER BY gopo_date DESC
+			limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="getMyGroupTotalCount" resultType="int">
+		SELECT COUNT(*) FROM group_member WHERE gome_me_id = #{id}
+	</select>
+	
+	<select id="getGroupPostTotalCount" resultType="int">
+		SELECT COUNT(*) FROM group_post WHERE gopo_gome_go_num = #{num}
+	</select>
+	
+	<select id="getGroupPostByGopoNum" resultType="GroupPostVO">
+		SELECT * FROM group_post WHERE gopo_num = #{num}
+	</select>
+	
+	<select id="checkWriter" resultType="GroupPostVO">
+		SELECT * FROM group_post WHERE gopo_num = #{num} AND gopo_gome_me_id = #{id}
+	</select>
+	
 	<!-- =============================== DELETE =============================== -->
+	
+	<delete id="deleteGroupPost">
+		DELETE FROM group_post WHERE gopo_num = #{num}
+	</delete>
+	
 	
 	<!-- =============================== UPDATE =============================== -->	
 	
@@ -126,8 +160,17 @@
 		WHERE go_num = #{num}
 	</update>
 	
-	<!-- =============================== SELECT =============================== -->	
+	<update id="updateGroupPost">
+		UPDATE group_post
+			SET gopo_content = #{content}
+		WHERE gopo_num = #{num}
+	</update>
 	
+	<!-- =============================== INSERT =============================== -->	
+	
+	<insert id="insertGroupPost">
+		INSERT INTO group_post(gopo_gome_go_num, gopo_gome_me_id, gopo_content, gopo_date) VALUES(#{num}, #{writer}, #{content}, NOW());
+	</insert>
 
  	
 </mapper>

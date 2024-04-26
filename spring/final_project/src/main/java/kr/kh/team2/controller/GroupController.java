@@ -37,16 +37,30 @@ public class GroupController {
 	// ================================ mygroup ================================
 
 	@GetMapping("/mygroup/list")
-	public String grouplist(Model model, HttpSession session){
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		
-		ArrayList<GroupVO> list = groupService.getGroupListById(user.getMe_id());
-		
-		if(list.size() > 0) {
-			model.addAttribute("list", list);
-		}
+	public String grouplist(Model model){
 		
 		return "/group/mygroup/list";
+	}
+	
+	@ResponseBody
+	@PostMapping("/mygroup/list")
+	public Map<String, Object> mygrouplistPost(HttpSession session, @RequestBody Criteria cri) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		cri.setPerPageNum(5);
+		
+		//그룹 리스트 가져오기
+		ArrayList<GroupVO> list = groupService.getGroupListById(user.getMe_id(), cri);
+		
+		int totalCount = groupService.getMyGroupTotalCount(user.getMe_id());
+		
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		map.put("list", list);
+		map.put("pm", pm);
+		
+		return map;
 	}
 	
 	@GetMapping("/group/home")
@@ -55,13 +69,16 @@ public class GroupController {
 		int dday = 7;
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		if(groupService.isGroupMember(user, groupNum)) {
-			GroupVO group = groupService.getGroupByGoNum(groupNum);
-			model.addAttribute("group", group);
-			
-			long groupTime = groupService.getGroupTime(groupNum);
-			model.addAttribute("time", groupTime);
+		// 해당 그룹 가입 유저가 아니라면
+		if(!groupService.isGroupMember(user, groupNum)) {
+			return "/group/mygroup/home";
 		}
+		
+		GroupVO group = groupService.getGroupByGoNum(groupNum);
+		model.addAttribute("group", group);
+		
+		long groupTime = groupService.getGroupTime(groupNum);
+		model.addAttribute("time", groupTime);
 		
 		// 최근 게시글 불러오기
 		ArrayList<GroupPostVO> boardlist = groupService.getRecentGroupBoard(groupNum, recentBoard);
@@ -78,12 +95,12 @@ public class GroupController {
 		model.addAttribute("ddaylist", ddaylist);
 		model.addAttribute("boardlist", boardlist);
 		
-		return "/group/mygroup/grouphome";
+		return "/group/mygroup/home";
 	}
 	
 	@ResponseBody
 	@PostMapping("/group/timerWork")
-	public Map<String, Object> 메서드명(@RequestParam("goNum")int goNum){
+	public Map<String, Object> groupTimerWork(@RequestParam("goNum")int goNum){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		boolean isTimeupdated = groupService.updateGoTime(goNum);
@@ -99,6 +116,120 @@ public class GroupController {
 		
 		return map;
 	}
+	
+	@GetMapping("/group/post")
+	public String grouppost(Model model, HttpSession session, int groupNum){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		// 가입하지 않은 그룹 게시판에 접근했을 경우
+		if(!groupService.isGroupMember(user, groupNum)) {
+			return "/group/mygroup/grouppost";
+		}
+		
+		GroupVO group = groupService.getGroupByGoNum(groupNum);
+		model.addAttribute("group", group);
+		
+		
+		
+		return "/group/mygroup/grouppost";
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/post/list")
+	public Map<String, Object> getGroupPostList(@RequestBody Criteria cri){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int goNum = -1;
+		
+		try {
+			goNum = Integer.parseInt(cri.getSearch());
+		}catch(Exception e) {
+			System.out.println("error ParseInt: " + cri.getSearch());
+		}
+		
+		cri.setPerPageNum(5); 
+		
+		ArrayList<GroupPostVO> postList = groupService.getGroupPostByGoNum(goNum, cri);
+		
+		int totalCount = groupService.getGroupPostTotalCount(goNum);
+		
+		PageMaker pm = new PageMaker(1, cri, totalCount);
+		
+		map.put("list", postList);
+		map.put("pm", pm);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/post/insert")
+	public Map<String, Object> groupPostInsert(@RequestParam("goNum")int goNum, @RequestParam("content")String content, @RequestParam("writer")String writer){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.insertGroupPost(goNum, writer, content);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/post/delete")
+	public Map<String, Object> groupPostDelete( HttpSession session, @RequestParam("gopoNum")int gopoNum){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.deleteGroupPost(gopoNum, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/post/update")
+	public Map<String, Object> groupPostUpdate(HttpSession session, @RequestParam("gopoNum")int gopoNum, @RequestParam("content")String content){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+
+		boolean result = groupService.updateGroupPost(gopoNum, content, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@GetMapping("/group/manage/info")
+	public String groupmanageinfo(Model model, HttpSession session, int groupNum){
+		model.addAttribute("goNum", groupNum);
+		
+		return "/group/mygroup/menageinfo";
+	}
+	
+	@GetMapping("/group/manage/member")
+	public String groupmenagemember(Model model, HttpSession session, int groupNum){
+		model.addAttribute("goNum", groupNum);
+		
+		return "/group/mygroup/menagemember";
+	}
+	
+	@GetMapping("/group/manage/applicant")
+	public String groupmenageapplicant(Model model, HttpSession session, int groupNum){
+		model.addAttribute("goNum", groupNum);
+		
+		return "/group/mygroup/menageapplicant";
+	}
+	
 	// ================================ group ================================
 		
 
@@ -124,12 +255,6 @@ public class GroupController {
 		return map;
 	}
 	
-	@GetMapping("/group/post")
-	public String grouppost(Model model, HttpSession session, int groupNum){
-		
-		return "/group/mygroup/grouppost";
-	}
-
   @GetMapping("/group/detail")
 	public String postDetail(Model model, int num) {
 		//모집공고를 가져옴
