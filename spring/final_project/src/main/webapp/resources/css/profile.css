@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+/* 마이페이지 > 내정보*/
+
 .profile-label-box{
 	text-align: center;	
 }
@@ -102,4 +104,95 @@
 	width: 100px;
 	background-color: #E6F5E5;
 	margin: 70px 0;
+}
+
+/* 마이페이지 > 그룹/프로젝트*/
+
+
+.mygroup-mutual-container,
+.mygroup-study-container,
+.mygroup-mentoring-container {
+    margin-bottom: 30px;
+}
+
+.mygroup-mutual,
+.mygroup-study,
+.mygroup-mentoring {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.mutual-list,
+.study-list,
+.mutual-list,
+.mutual-list {
+    list-style: none;
+    padding: 0;
+}
+
+.mutual-item,
+.study-item,
+.apply-item,
+.mutual-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.mutual-item-category,
+.study-list-item-category,
+.apply-list-item-category,
+.mutual-item-category {
+    margin-bottom: 10px;
+}
+
+.item-category {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.box-border-line {
+    text-align: center;
+}
+
+.border-line {
+    border: 1px solid #ccc;
+    width: 90%;
+    margin: 5px auto;
+}
+
+/* 상호평가 관련 스타일 */
+.mutual-no-item {
+    font-style: italic;
+}
+
+/* 스터디 / 프로젝트 목록 관련 스타일 */
+.study-list-item-content,
+.apply-list-item-content {
+    margin-bottom: 10px;
+}
+
+.recruit-position {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+/* 멘토링 관련 스타일 */
+.mentoringList {
+    list-style: none;
+    padding: 0;
+}
+
+.mentoring-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.mentoring-item-category {
+    margin-bottom: 10px;
 }

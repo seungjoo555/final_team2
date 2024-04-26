@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<link rel="stylesheet" href="<c:url value="/resources/css/mygroup.css"/>">
+	<link rel="stylesheet" href="<c:url value="/resources/css/profile.css"/>">
 </head>
 <body>
 	<div>
@@ -15,15 +15,11 @@
 					<ul class="mutual-list">
 						<c:choose>
 							<c:when test="${empty mutualReviewList}">
-								<li>진행된 상호평가가 존재하지 않습니다.</li>
+								<li class="mutual-no-item">진행된 상호평가가 존재하지 않습니다.</li>
 							</c:when>
 							<c:otherwise>
 								<c:forEach items="${mutualReviewList}" var="mure">								
 									<li class="mutual-item">
-										<!-- 없을 때 문구 -->
-										<c:if test="${mure == null}">
-											<div>진행된 상호평가가 없습니다.</div>
-										</c:if>
 										<!-- 프로젝트/스터디 구분 -->
 										<c:if test="${mure.recu_type== '0'}">
 											<div class="item-study">
@@ -52,44 +48,52 @@
 		<div class="mygroup-study-container">	
 				<c:if test="${member.me_id == user.me_id }">
 				<h3 class="mygroup-study">스터디 / 프로젝트</h3>
-				<div class="mutual-list-box">
-					<ul class="mutual-list">
+				<div class="study-list-box">
+					<ul class="study-list">
 						<c:if test="${empty groupList && empty groupApplyList}">
 							<li>나의 스터디 / 프로젝트가 존재하지 않습니다.</li>
 						</c:if>
 						<c:choose>
 							<c:when test="${empty groupList}">
-								<li style="font-weight: 700">내가 생성한 그룹</li>
-								<li>내가 생성한 그룹이 존재하지 않습니다.</li>
+								<li class="" style="font-weight: 700">내가 생성한 그룹</li>
+								<li class="">내가 생성한 그룹이 존재하지 않습니다.</li>
 							</c:when>
 							<c:otherwise>
-								<li style="font-weight: 700">내가 생성한 그룹</li>
+								<li class=""style="font-weight: 700">내가 생성한 그룹</li>
 								<c:forEach items="${groupList}" var="grouplist">
-									<li class="mutual-item">
-										<div class="item-category">
+									<li class="study-item">
+										<div class="study-list-item-category">
 											<c:if test="${grouplist.goap_state == -1}">
-												진행 중
+												<div class="item-category">
+													진행 중
+												</div>
 											</c:if>
 										</div>
-										<div>
-											${grouplist.recu_topic}
-										</div>
-										<div></div>
-										<c:forEach items="${totalCategory}" var="cate">
-											<li class="recruit-position">${cate.toCt_progCt_name}</li>
-										</c:forEach>
-										<div>
-											<!-- total_language : toLg_lang_num / programming_language : lang_name -->
-											<c:forEach items="${totalLanguage}" var="lang">
-												<li class="recruit-position">${lang.toLg_lang_name}</li>
+										<div class="study-list-item-content">
+											<div class="study-list-item-title">
+												${grouplist.recu_topic}
+											</div>
+											<c:forEach items="${totalCategory1}" var="cate">
+												<c:if test="${grouplist.recu_num == cate.toCt_table_pk}">
+													<li class="recruit-position">${cate.toCt_progCt_name}</li>
+												</c:if>
 											</c:forEach>
-										</div>
-										<div>
-											<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
-											${grouplist.recu_gome_me_nickname}
-										</div>
-										<div>
-											${grouplist.go_member_count} / ${grouplist.recu_count}
+											<div>
+												<!-- total_language : toLg_lang_num / programming_language : lang_name -->
+												<c:forEach items="${totalLanguage1}" var="lang">
+													<c:if test="${grouplist.recu_num == lang.toLg_table_pk}">
+														<li class="recruit-position">${lang.toLg_lang_name}</li>
+													</c:if>
+												</c:forEach>
+											</div>
+											<div class="box-border-line"><div class="border-line"></div></div>
+											<div>
+												<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+												${grouplist.recu_gome_me_nickname}
+											</div>
+											<div>
+												${grouplist.go_member_count} / ${grouplist.recu_count}
+											</div>
 										</div>
 									</li>
 								</c:forEach>
@@ -97,37 +101,48 @@
 						</c:choose>
 						<c:choose>
 							<c:when test="${empty groupApplyList}">
-								<li style="font-weight: 700">내가 지원한 그룹</li>
-								<li>내가 지원한 그룹이 존재하지 않습니다.</li>
+								<li class="" style="font-weight: 700">내가 지원한 그룹</li>
+								<li class="">내가 지원한 그룹이 존재하지 않습니다.</li>
 							</c:when>
 							<c:otherwise>
-								<li style="font-weight: 700">내가 지원한 그룹</li>
+								<li class="" style="font-weight: 700">내가 지원한 그룹</li>
 								<c:forEach items="${groupApplyList}" var="applylist">
-									<li class="mutual-item">
-										<div class="item-category">
+									<li class="apply-item">
+										<div class="apply-list-item-category">
 											<c:if test="${applylist.goap_state == 0}">
-												수락 대기
+												<div class="item-category">
+													수락 대기
+												</div>
 											</c:if>
 											<c:if test="${applylist.goap_state == 1}">
-												진행 중
+												<div class="item-category">
+													진행 중
+												</div>
 											</c:if>
 											<c:if test="${applylist.goap_state == 2}">
-												반려
+												<div class="item-category">
+													반려
+												</div>
 											</c:if>
 										</div>
-										<div>
+										<div class="apply-list-item-title">
 											${applylist.recu_topic}
 										</div>
 										<div></div>
-										<c:forEach items="${totalCategory}" var="cate">
-											<li class="recruit-position">${cate.toCt_progCt_name}</li>
+										<c:forEach items="${totalCategory2}" var="cate">
+											<c:if test="${applylist.recu_num == cate.toCt_table_pk}">
+												<li class="recruit-position">${cate.toCt_progCt_name}</li>
+											</c:if>
 										</c:forEach>
 										<div>
 											<!-- total_language : toLg_lang_num / programming_language : lang_name -->
-											<c:forEach items="${totalLanguage}" var="lang">
-												<li class="recruit-position">${lang.toLg_lang_name}</li>
+											<c:forEach items="${totalLanguage2}" var="lang">
+												<c:if test="${applylist.recu_num == lang.toLg_table_pk}">
+													<li class="recruit-position">${lang.toLg_lang_name}</li>
+												</c:if>
 											</c:forEach>
 										</div>
+										<div class="box-border-line"><div class="border-line"></div></div>
 										<div>
 											<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
 											${groupKing}
@@ -181,12 +196,15 @@
 										</div>
 										<!-- 경력 : mentIf_exp-->
 										<div>
-											경력 : ${ment.ment_mentIf_exp}
+											경력 : ${ment.ment_mentIf_exp}년
 										</div>
 										<!-- 분야 : 분야모음 -->
 										<div>
+											분야 : <br/>
 											<c:forEach items="${mentoCategory}" var="ment_cate">
-												분야 : ${ment_cate.toCt_progCt_name}
+												<c:if test="${ment.ment_num == ment_cate.toCt_table_pk }">
+													${ment_cate.toCt_progCt_name}
+												</c:if>
 											</c:forEach>							
 										</div>
 									</li>

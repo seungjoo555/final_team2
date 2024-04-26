@@ -69,15 +69,21 @@ public class MypageController {
 		// 모집 공고에 등록된 분야 가져오기
 		String table1 = "recruit";
 		
+		ArrayList<TotalCategoryVO> totalCategory1 = new ArrayList<TotalCategoryVO>();
+		ArrayList<TotalLanguageVO> totalLanguage1 = new ArrayList<TotalLanguageVO>();
+		
 		for(GroupVO group : groupList) {
 			int recu_num = group.getRecu_num();
 			System.out.println("recu_num : " + recu_num);
 			
-			ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(recu_num, table1);
-			ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(recu_num, table1);
-			model.addAttribute("totalCategory", totalCategory);
-			model.addAttribute("totalLanguage", totalLanguage);
+			ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table1);
+			ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table1);
+			
+			totalCategory1.addAll(Category);
+			totalLanguage1.addAll(Language);			
 		}
+		model.addAttribute("totalCategory1", totalCategory1);
+		model.addAttribute("totalLanguage1", totalLanguage1);
 		
 		// 내가 지원한 스터디 리스트 가져오기
 		ArrayList<GroupVO> groupApplyList = groupService.getStudyApplyList(me_id);
@@ -87,6 +93,8 @@ public class MypageController {
 		// groupList에서 recu_num 가져오기
 		// 모집 공고에 등록된 분야 가져오기
 		// 내가 지원한 스터디 모집 공고 올린 그룹장 가져오기
+		ArrayList<TotalCategoryVO> totalCategory2 = new ArrayList<TotalCategoryVO>();
+		ArrayList<TotalLanguageVO> totalLanguage2 = new ArrayList<TotalLanguageVO>();
 		for(GroupVO group : groupApplyList) {
 			int recu_num = group.getRecu_num();
 			System.out.println("recu_num : " + recu_num);
@@ -94,11 +102,14 @@ public class MypageController {
 			MemberVO groupKing = groupService.getGroupKing(recu_num);
 			model.addAttribute("groupKing", groupKing.getMe_nickname());
 			
-			ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(recu_num, table1);
-			ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(recu_num, table1);
-			model.addAttribute("totalCategory", totalCategory);
-			model.addAttribute("totalLanguage", totalLanguage);
+			ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table1);
+			ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table1);
+
+			totalCategory2.addAll(Category);
+			totalLanguage2.addAll(Language);			
 		}
+		model.addAttribute("totalCategory2", totalCategory2);
+		model.addAttribute("totalLanguage2", totalLanguage2);
 		
 		// 그룹 회원 수 count
 		ArrayList<GroupVO> memberCount = groupService.getGroupListById(me_id);
@@ -114,14 +125,16 @@ public class MypageController {
 		// 멘토링 공고에 등록된 분야 가져오기
 		
 		String table2 = "mentoring";
+		 ArrayList<TotalCategoryVO> mentoCategory = new ArrayList<TotalCategoryVO>();
 		
 		for (MetoringVO mentoring : mentoringList) {
 		    int ment_num = mentoring.getMent_num();
 		    System.out.println("ment_num: " + ment_num);
 		    
-		    ArrayList<TotalCategoryVO> mentoCategory = mentorService.getMentoCategory(ment_num, table2);
-		    model.addAttribute("mentoCategory", mentoCategory);
+		    ArrayList<TotalCategoryVO> Category = mentorService.getMentoCategory(ment_num, table2);
+		    mentoCategory.addAll(Category);
 		}
+		model.addAttribute("mentoCategory", mentoCategory);
 		
 		return "/mypage/mygroup";
 	}
