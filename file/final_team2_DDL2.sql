@@ -359,6 +359,7 @@ CREATE TABLE `file` (
 	`file_target`	int	NOT NULL
 );
 
+/* ============================= 외래키 설정 ============================= */
 ALTER TABLE `member` ADD CONSTRAINT `FK_member_state_TO_member_1` FOREIGN KEY (
 	`me_ms_state`
 )
@@ -407,14 +408,16 @@ ALTER TABLE `recruit` ADD CONSTRAINT `FK_group_TO_recruit_1` FOREIGN KEY (
 )
 REFERENCES `group` (
 	`go_num`
-);
+)
+ON DELETE CASCADE;
 
 ALTER TABLE `group_apply` ADD CONSTRAINT `FK_group_TO_group_apply_1` FOREIGN KEY (
 	`goap_go_num`
 )
 REFERENCES `group` (
 	`go_num`
-);
+)
+ON DELETE CASCADE;
 
 ALTER TABLE `group_apply` ADD CONSTRAINT `FK_recruit_TO_group_apply_1` FOREIGN KEY (
 	`goap_recu_num`
@@ -435,7 +438,8 @@ ALTER TABLE `mutual_review` ADD CONSTRAINT `FK_group_member_TO_mutual_review_1` 
 )
 REFERENCES `group_member` (
 	`gome_me_id`, `gome_go_num`
-);
+)
+ON DELETE CASCADE;
 
 ALTER TABLE `mutual_review` ADD CONSTRAINT `FK_member_TO_mutual_review_1` FOREIGN KEY (
 	`mure_target_id`
@@ -456,7 +460,8 @@ ALTER TABLE `group_member` ADD CONSTRAINT `FK_group_TO_group_member_1` FOREIGN K
 )
 REFERENCES `group` (
 	`go_num`
-);
+)
+ON DELETE CASCADE;
 
 ALTER TABLE `group_post` ADD CONSTRAINT `FK_group_member_TO_group_post_1` FOREIGN KEY (
 	`gopo_gome_me_id`
