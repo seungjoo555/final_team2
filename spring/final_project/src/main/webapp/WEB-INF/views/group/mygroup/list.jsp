@@ -93,9 +93,9 @@
 		let str = '';
 		let url = `team2/group/home?groupNum=`;
 		let time = '';
-
+		
 		// 받아온 list가 없을 경우,
-		if(${list == null}  || ${list.length == 0}){
+		if(list == null  || list.length == 0){
 			str = `
 				<div class="no-list-page">
 					<div>가입한 그룹이 없습니다.</div>
@@ -105,34 +105,36 @@
 			$('.group-list-bg').addClass("text-align-center")
 			$('.group-list-bg').html(str);
 			return;
+		}else{
+			for(group of list){
+				
+				if(group.go_time < 3600){
+					time = '0시간'
+				}else if(group.go_time / 3600 > 999){
+					time = '999+시간'
+				}else{
+					time = Math.round(group.go_time / 3600) + '시간'
+				}
+				
+				str +=
+					`
+						<tr class="group-info">
+							<td class="group-title">
+								<a href="<c:url value="/group/home?groupNum=\${group.go_num}"/>">\${group.go_name}</a>
+							</td>
+							<td class="group-time text-center">
+								\${time}
+							</td>
+							<td class="text-center">\${group.go_member_count}명</td>
+						</tr>
+					`
+				
 			}
-		
-		for(group of list){
 			
-			if(group.go_time < 3600){
-				time = '0시간'
-			}else if(group.go_time / 3600 > 999){
-				time = '999+시간'
-			}else{
-				time = Math.round(group.go_time / 3600) + '시간'
-			}
-			
-			str +=
-				`
-					<tr class="group-info">
-						<td class="group-title">
-							<a href="<c:url value="/group/home?groupNum=\${group.go_num}"/>">\${group.go_name}</a>
-						</td>
-						<td class="group-time text-center">
-							\${time}
-						</td>
-						<td class="text-center">\${group.go_member_count}명</td>
-					</tr>
-				`
-			
+			$('.group-list tbody').html(str);
 		}
 		
-		$('.group-list tbody').html(str);
+		
 		
 	}
 		
