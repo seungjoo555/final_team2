@@ -111,7 +111,8 @@ INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_
 INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth)
 	VALUES("qwert@final.com", "qwert1234", "동동이", "홍길동", "010-9877-5678", "서울시 강남구 역삼동", "이용중", "일반"),
 		  ("dkdlel@final.com", "dkdlel1234", "텐텐먹고쑥쑥", "최유리", "010-4658-4214", "서울시 강남구 도곡동", "이용중", "일반"),
-          ("abcde@final.com", "abcde1234", "투털이박성훈", "김병구", "010-2483-0419", "서울시 마포구 연희동", "이용중", "일반");
+          ("abcde@final.com", "abcde1234", "투털이박성훈", "김병구", "010-2483-0419", "서울시 마포구 연희동", "이용중", "일반"),
+		  ("user@naver.com", "$2a$10$lQRMm/SAJ.9AJ6FjsP8BkekX8eTcv2xzIe5rgmyLz2RXDcxEWdn2O", "user123", "최유리", "010-4651-4214", "서울시 강남구 도곡동", "이용중", "일반");
           
 /* 멘토 유저 정보 추가 */
 INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth)
