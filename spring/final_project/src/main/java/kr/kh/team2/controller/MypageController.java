@@ -100,6 +100,10 @@ public class MypageController {
 			model.addAttribute("totalLanguage", totalLanguage);
 		}
 		
+		// 그룹 회원 수 count
+		ArrayList<GroupVO> memberCount = groupService.getGroupListById(me_id);
+		model.addAttribute("memberCount", memberCount);
+		
 		
 		// 멘토링 가져오기
 		ArrayList<MetoringVO> mentoringList = mentorService.getMentoringList(me_id);

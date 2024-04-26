@@ -153,20 +153,38 @@ public class GroupServiceImp implements GroupService{
 
 	@Override
 	public ArrayList<GroupVO> getStudyGroupList(String me_id) {
-		if (me_id == null) {
+		if (me_id == null || me_id.isEmpty()) {
 			return null;
 		}
 		
-		return groupDao.selectStudyGroupList(me_id);
+		ArrayList<GroupVO> groupList = groupDao.selectStudyGroupList(me_id);
+		
+		// 각 그룹의 가입 멤버 수
+        for (GroupVO group : groupList) {
+            int go_num = group.getGo_num();
+            int memberCount = groupDao.selectGroupMemberCount(go_num);
+            group.setGo_member_count(memberCount);
+        }
+		
+		return groupList;
 	}
 
 	@Override
 	public ArrayList<GroupVO> getStudyApplyList(String me_id) {
-		if (me_id == null) {
+		if (me_id == null || me_id.isEmpty()) {
 			return null;
 		}
 		
-		return groupDao.getStudyApplyList(me_id);
+		ArrayList<GroupVO> groupApplyList = groupDao.getStudyApplyList(me_id);
+		
+		// 각 그룹의 가입 멤버 수
+        for (GroupVO group : groupApplyList) {
+            int go_num = group.getGo_num();
+            int memberCount = groupDao.selectGroupMemberCount(go_num);
+            group.setGo_member_count(memberCount);
+        }
+        
+		return groupApplyList;
 	}
 	
 }

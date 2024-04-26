@@ -48,4 +48,7 @@ public interface GroupDAO {
 
 	ArrayList<GroupVO> getStudyApplyList(@Param("me_id") String me_id);
 
+	int selectGroupMemberCount(@Param("go_num")int go_num);
+
+
 }

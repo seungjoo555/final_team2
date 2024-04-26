@@ -134,6 +134,10 @@
 			LEFT JOIN recruit ON go_num = recu_go_num
 		WHERE goap_me_id = #{me_id}
     </select>
+    
+    <select id="selectGroupMemberCount" resultType="int" parameterType="int">
+    	select COUNT(*) FROM group_member WHERE gome_go_num = #{go_num}
+    </select>
 	<!-- =============================== DELETE =============================== -->
 	
 	<!-- =============================== UPDATE =============================== -->	
