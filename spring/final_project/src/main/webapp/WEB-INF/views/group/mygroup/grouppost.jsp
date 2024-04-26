@@ -126,7 +126,7 @@ $(".group-post-input .submit").click(function(){
 			url : '<c:url value="/group/post/insert"/>', 
 			type : 'post', 
 			data : {
-				goNum : ${group.go_num},
+				num : ${group.go_num},
 				content: $(".group-post-input .input").val(),
 				writer: "${user.me_id}"
 			}, 
@@ -197,7 +197,7 @@ let num
 			url : '<c:url value="/group/post/update"/>', 
 			type : 'post', 
 			data : {
-				gopoNum : num,
+				num : num,
 				content: $(".post-content-edit").val()
 			}, 
 			dataType : "json", 
@@ -253,7 +253,7 @@ $(document).on("click",".post-delete-btn", function(){
 		url : '<c:url value="/group/post/delete"/>', 
 		type : 'post', 
 		data : {
-			gopoNum : this.dataset.num
+			num : this.dataset.num
 		}, 
 		dataType : "json", 
 		success : function (data){

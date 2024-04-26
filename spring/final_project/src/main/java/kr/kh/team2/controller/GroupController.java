@@ -64,26 +64,26 @@ public class GroupController {
 	}
 	
 	@GetMapping("/group/home")
-	public String grouphome(Model model, HttpSession session, int groupNum){
+	public String grouphome(Model model, HttpSession session, int num){
 		int recentBoard = 6;
 		int dday = 7;
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		// 해당 그룹 가입 유저가 아니라면
-		if(!groupService.isGroupMember(user, groupNum)) {
+		if(!groupService.isGroupMember(user, num)) {
 			return "/group/mygroup/home";
 		}
 		
-		GroupVO group = groupService.getGroupByGoNum(groupNum);
+		GroupVO group = groupService.getGroupByGoNum(num);
 		model.addAttribute("group", group);
 		
-		long groupTime = groupService.getGroupTime(groupNum);
+		long groupTime = groupService.getGroupTime(num);
 		model.addAttribute("time", groupTime);
 		
 		// 최근 게시글 불러오기
-		ArrayList<GroupPostVO> boardlist = groupService.getRecentGroupBoard(groupNum, recentBoard);
+		ArrayList<GroupPostVO> boardlist = groupService.getRecentGroupBoard(num, recentBoard);
 		// d-day 불러오기
-		ArrayList<GroupCalendarVO> ddaylist = groupService.getDday(groupNum, dday);
+		ArrayList<GroupCalendarVO> ddaylist = groupService.getDday(num, dday);
 		
 		// 가장 마지막 일정을 dday 최상단에 표시되도록 하기(의미가 있나? 그룹 시작일로 하는게 낫지 않을지,)
 		/*
@@ -100,13 +100,13 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/timerWork")
-	public Map<String, Object> groupTimerWork(@RequestParam("goNum")int goNum){
+	public Map<String, Object> groupTimerWork(@RequestParam("num")int num){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		boolean isTimeupdated = groupService.updateGoTime(goNum);
+		boolean isTimeupdated = groupService.updateGoTime(num);
 		
 		if(isTimeupdated) {
-			long time = groupService.getGoTimeByGoNum(goNum);
+			long time = groupService.getGoTimeByGoNum(num);
 			
 			map.put("time", time);
 			map.put("data", "ok");
@@ -118,15 +118,15 @@ public class GroupController {
 	}
 	
 	@GetMapping("/group/post")
-	public String grouppost(Model model, HttpSession session, int groupNum){
+	public String grouppost(Model model, HttpSession session, int num){
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		// 가입하지 않은 그룹 게시판에 접근했을 경우
-		if(!groupService.isGroupMember(user, groupNum)) {
+		if(!groupService.isGroupMember(user, num)) {
 			return "/group/mygroup/grouppost";
 		}
 		
-		GroupVO group = groupService.getGroupByGoNum(groupNum);
+		GroupVO group = groupService.getGroupByGoNum(num);
 		model.addAttribute("group", group);
 		
 		
@@ -162,10 +162,10 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/post/insert")
-	public Map<String, Object> groupPostInsert(@RequestParam("goNum")int goNum, @RequestParam("content")String content, @RequestParam("writer")String writer){
+	public Map<String, Object> groupPostInsert(@RequestParam("num")int num, @RequestParam("content")String content, @RequestParam("writer")String writer){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		boolean result = groupService.insertGroupPost(goNum, writer, content);
+		boolean result = groupService.insertGroupPost(num, writer, content);
 		
 		if(result) {
 			map.put("data", "ok");
@@ -177,11 +177,11 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/post/delete")
-	public Map<String, Object> groupPostDelete( HttpSession session, @RequestParam("gopoNum")int gopoNum){
+	public Map<String, Object> groupPostDelete( HttpSession session, @RequestParam("num")int num){
 		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		boolean result = groupService.deleteGroupPost(gopoNum, user);
+		boolean result = groupService.deleteGroupPost(num, user);
 		
 		if(result) {
 			map.put("data", "ok");
@@ -194,11 +194,11 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/post/update")
-	public Map<String, Object> groupPostUpdate(HttpSession session, @RequestParam("gopoNum")int gopoNum, @RequestParam("content")String content){
+	public Map<String, Object> groupPostUpdate(HttpSession session, @RequestParam("num")int num, @RequestParam("content")String content){
 		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
 
-		boolean result = groupService.updateGroupPost(gopoNum, content, user);
+		boolean result = groupService.updateGroupPost(num, content, user);
 		
 		if(result) {
 			map.put("data", "ok");
@@ -210,9 +210,9 @@ public class GroupController {
 	}
 	
 	@GetMapping("/group/manage/info")
-	public String groupmanageinfo(Model model, HttpSession session, int groupNum){
+	public String groupmanageinfo(Model model, HttpSession session, int num){
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		GroupVO group = groupService.getGroupByGoNum(groupNum);
+		GroupVO group = groupService.getGroupByGoNum(num);
 		
 		if(group.getLeader().equals(user.getMe_id())) {
 			model.addAttribute("group", group);
@@ -222,10 +222,27 @@ public class GroupController {
 		return "/group/mygroup/manageinfo";
 	}
 	
-	@GetMapping("/group/manage/member")
-	public String groupmanagemember(Model model, HttpSession session, int groupNum){
+	@ResponseBody
+	@PostMapping("/group/manage/info/update")
+	public Map<String, Object> groupManageUpdate(HttpSession session, @RequestParam("num")int num, @RequestParam("name")String name){
+		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		GroupVO group = groupService.getGroupByGoNum(groupNum);
+
+		// boolean result = groupService.updateGroupName(num, name, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@GetMapping("/group/manage/member")
+	public String groupmanagemember(Model model, HttpSession session, int num){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		GroupVO group = groupService.getGroupByGoNum(num);
 		
 		if(group.getLeader().equals(user.getMe_id())) {
 			model.addAttribute("group", group);
@@ -235,9 +252,9 @@ public class GroupController {
 	}
 	
 	@GetMapping("/group/manage/applicant")
-	public String groupmanageapplicant(Model model, HttpSession session, int groupNum){
+	public String groupmanageapplicant(Model model, HttpSession session, int num){
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		GroupVO group = groupService.getGroupByGoNum(groupNum);
+		GroupVO group = groupService.getGroupByGoNum(num);
 		
 		if(group.getLeader().equals(user.getMe_id())) {
 			model.addAttribute("group", group);

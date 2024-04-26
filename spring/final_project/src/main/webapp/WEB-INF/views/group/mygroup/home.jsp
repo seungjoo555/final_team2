@@ -97,7 +97,7 @@
 					<div class="box-info-bar">
 						최근 그룹 게시글
 						<c:url value="/group/post" var="url">
-							<c:param name="groupNum" value="${group.go_num}"/>
+							<c:param name="num" value="${group.go_num}"/>
 						</c:url>
 						<a href="${url}" class="to-post float-right">게시글 목록으로</a>
 					</div>
@@ -123,19 +123,19 @@
 	      		<ul class="manage-group-list">
 	      			<li>
 	      				<c:url var = 'url1' value = '/group/manage/info'>
-	      					<c:param name = 'groupNum' value = "${group.go_num }"/>
+	      					<c:param name = 'num' value = "${group.go_num }"/>
 	      				</c:url>
 	      				<a href="${url1}">그룹 정보 변경</a>
 	      			</li>
 	      			<li>
 	      				<c:url var = 'url2' value = '/group/manage/member'>
-	      					<c:param name = 'groupNum' value = "${group.go_num }"/>
+	      					<c:param name = 'num' value = "${group.go_num }"/>
 	      				</c:url>
 	      				<a href="${url2}">멤버 관리</a>
 	      			</li>
 	      			<li>
 	      				<c:url var = 'url3' value = '/group/manage/applicant'>
-	      					<c:param name = 'groupNum' value = "${group.go_num }"/>
+	      					<c:param name = 'num' value = "${group.go_num }"/>
 	      				</c:url>
 	      				<a href="${url3}">지원자 관리</a>
 	      			</li>
@@ -212,7 +212,7 @@
 						async : true, //비동기 : true(비동기), false(동기)
 						url : '<c:url value="/group/timerWork"/>', 
 						type : 'post', 
-						data : {goNum : ${group.go_num}}, 
+						data : {num : ${group.go_num}}, 
 						dataType : "json", 
 						success : function (data){
 							if(data.data == "ok"){
