@@ -91,7 +91,7 @@
 	//리스트 출력
 	function displayGroupList(list){
 		let str = '';
-		let url = `team2/group/home?groupNum=`;
+		let url = `team2/group/home?num=`;
 		let time = '';
 		
 		// 받아온 list가 없을 경우,
@@ -120,7 +120,7 @@
 					`
 						<tr class="group-info">
 							<td class="group-title">
-								<a href="<c:url value="/group/home?groupNum=\${group.go_num}"/>">\${group.go_name}</a>
+								<a href="<c:url value="/group/home?num=\${group.go_num}"/>">\${group.go_name}</a>
 							</td>
 							<td class="group-time text-center">
 								\${time}

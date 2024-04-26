@@ -56,4 +56,6 @@ public interface GroupService {
 
 	boolean updateGroupPost(int gopoNum, String content, MemberVO user);
 
+	boolean updateGroupName(int num, String name, MemberVO user);
+
 }

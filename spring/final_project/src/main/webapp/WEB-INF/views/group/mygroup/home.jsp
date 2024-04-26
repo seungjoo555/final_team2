@@ -97,7 +97,7 @@
 					<div class="box-info-bar">
 						최근 그룹 게시글
 						<c:url value="/group/post" var="url">
-							<c:param name="groupNum" value="${group.go_num}"/>
+							<c:param name="num" value="${group.go_num}"/>
 						</c:url>
 						<a href="${url}" class="to-post float-right">게시글 목록으로</a>
 					</div>
@@ -123,19 +123,19 @@
 	      		<ul class="manage-group-list">
 	      			<li>
 	      				<c:url var = 'url1' value = '/group/manage/info'>
-	      					<c:param name = 'groupNum' value = "${group.go_num }"/>
+	      					<c:param name = 'num' value = "${group.go_num }"/>
 	      				</c:url>
 	      				<a href="${url1}">그룹 정보 변경</a>
 	      			</li>
 	      			<li>
 	      				<c:url var = 'url2' value = '/group/manage/member'>
-	      					<c:param name = 'groupNum' value = "${group.go_num }"/>
+	      					<c:param name = 'num' value = "${group.go_num }"/>
 	      				</c:url>
 	      				<a href="${url2}">멤버 관리</a>
 	      			</li>
 	      			<li>
 	      				<c:url var = 'url3' value = '/group/manage/applicant'>
-	      					<c:param name = 'groupNum' value = "${group.go_num }"/>
+	      					<c:param name = 'num' value = "${group.go_num }"/>
 	      				</c:url>
 	      				<a href="${url3}">지원자 관리</a>
 	      			</li>
@@ -198,13 +198,8 @@
 		
 		// 타이머가 비활성화 되어있을 경우(에러 or 1000시간 이상)
 		if(!timerOn){
-			if(confirm("기록 가능한 시간 범위를 초과했습니다. 타이머를 초기화할까요?")){
-				// 타이머 초기화 구현
-				
-				alert("타이머를 초기화 했습니다.")
-			}else{
-				return
-			}
+			alert("기록 가능한 시간을 초과했습니다. '관리자 메뉴 > 그룹 정보 관리 페이지'에서 타이머를 초기화 해주세요.")
+			return
 		}
 		
 		if(!isTimerWork){
@@ -217,7 +212,7 @@
 						async : true, //비동기 : true(비동기), false(동기)
 						url : '<c:url value="/group/timerWork"/>', 
 						type : 'post', 
-						data : {goNum : ${group.go_num}}, 
+						data : {num : ${group.go_num}}, 
 						dataType : "json", 
 						success : function (data){
 							if(data.data == "ok"){

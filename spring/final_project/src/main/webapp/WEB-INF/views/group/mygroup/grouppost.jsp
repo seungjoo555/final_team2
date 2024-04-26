@@ -126,7 +126,7 @@ $(".group-post-input .submit").click(function(){
 			url : '<c:url value="/group/post/insert"/>', 
 			type : 'post', 
 			data : {
-				goNum : ${group.go_num},
+				num : ${group.go_num},
 				content: $(".group-post-input .input").val(),
 				writer: "${user.me_id}"
 			}, 
@@ -180,7 +180,7 @@ let num
 		let edit = `
 			<div class="edit-box">
 				<textarea class="post-content-edit" style="width: 100%; height: 100px; border: 1px solid black;">\${text}</textarea>
-				<div class="post-edit-btn-group float-right">
+				<div class="post-edit-btn-group">
 					<a class="post-finish-btn">완료</a>
 					<a class="post-cancel-btn" onclick="initComment()">취소</a>
 				</div>
@@ -189,7 +189,7 @@ let num
 		
 		content.after(edit)
 	})
-	
+		
 	// 완료버튼 클릭 시
 	$(document).on("click",".edit-box .post-finish-btn", function(){
 		$.ajax({
@@ -197,7 +197,7 @@ let num
 			url : '<c:url value="/group/post/update"/>', 
 			type : 'post', 
 			data : {
-				gopoNum : num,
+				num : num,
 				content: $(".post-content-edit").val()
 			}, 
 			dataType : "json", 
@@ -253,7 +253,7 @@ $(document).on("click",".post-delete-btn", function(){
 		url : '<c:url value="/group/post/delete"/>', 
 		type : 'post', 
 		data : {
-			gopoNum : this.dataset.num
+			num : this.dataset.num
 		}, 
 		dataType : "json", 
 		success : function (data){
