@@ -180,8 +180,15 @@ public class GroupServiceImp implements GroupService{
 		}
 		
 		// 권한 확인 필요
+		MemberVO tmp = new MemberVO(writer);
 		
-		return groupDao.insertGroupPost(goNum, writer, content);
+		if(!isGroupMember(tmp, goNum)) {
+			System.out.println("not group member");
+			return false;
+		}else {
+			return groupDao.insertGroupPost(goNum, writer, content);
+		}
+		
 	}
 
 	@Override
