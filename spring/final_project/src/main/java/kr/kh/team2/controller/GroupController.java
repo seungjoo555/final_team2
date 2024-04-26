@@ -211,21 +211,37 @@ public class GroupController {
 	
 	@GetMapping("/group/manage/info")
 	public String groupmanageinfo(Model model, HttpSession session, int groupNum){
-		model.addAttribute("goNum", groupNum);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		GroupVO group = groupService.getGroupByGoNum(groupNum);
+		
+		if(group.getLeader().equals(user.getMe_id())) {
+			model.addAttribute("group", group);
+		}
+		
 		
 		return "/group/mygroup/menageinfo";
 	}
 	
 	@GetMapping("/group/manage/member")
 	public String groupmenagemember(Model model, HttpSession session, int groupNum){
-		model.addAttribute("goNum", groupNum);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		GroupVO group = groupService.getGroupByGoNum(groupNum);
+		
+		if(group.getLeader().equals(user.getMe_id())) {
+			model.addAttribute("group", group);
+		}
 		
 		return "/group/mygroup/menagemember";
 	}
 	
 	@GetMapping("/group/manage/applicant")
 	public String groupmenageapplicant(Model model, HttpSession session, int groupNum){
-		model.addAttribute("goNum", groupNum);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		GroupVO group = groupService.getGroupByGoNum(groupNum);
+		
+		if(group.getLeader().equals(user.getMe_id())) {
+			model.addAttribute("group", group);
+		}
 		
 		return "/group/mygroup/menageapplicant";
 	}

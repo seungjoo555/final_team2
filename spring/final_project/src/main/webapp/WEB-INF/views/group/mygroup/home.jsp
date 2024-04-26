@@ -21,7 +21,7 @@
 <div class="container">
 	<c:choose>
 		<c:when test="${group == null }">
-			<div class="not-group-member">
+			<div class="not-authorized text-align-center">
 				<div>가입한 그룹이 아닙니다.</div>
 				<a href="<c:url value="/"/>">홈으로 가기</a>
 			</div>
