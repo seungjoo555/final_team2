@@ -1,3 +1,5 @@
+use final_team2;
+
 INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('웹 개발');
 INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('프론트엔드');
 INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('백엔드');
@@ -5,9 +7,6 @@ INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('풀스
 INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('프로그래밍 언어');
 INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('데이터베이스');
 INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('웹 퍼블리싱');
-
-
-
 
 INSERT INTO `final_team2`.`programming_language` (`lang_name`) VALUES ('JavaScript');
 INSERT INTO `final_team2`.`programming_language` (`lang_name`) VALUES ('HTML/CSS');
