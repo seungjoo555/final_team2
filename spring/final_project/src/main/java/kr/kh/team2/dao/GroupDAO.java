@@ -57,4 +57,6 @@ public interface GroupDAO {
 
 	boolean updateGroupPost(@Param("num")int gopoNum, @Param("content")String content);
 
+	boolean updateGroupName(@Param("num")int num, @Param("name")String name);
+
 }

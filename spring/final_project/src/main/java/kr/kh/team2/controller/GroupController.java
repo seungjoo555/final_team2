@@ -227,8 +227,8 @@ public class GroupController {
 	public Map<String, Object> groupManageUpdate(HttpSession session, @RequestParam("num")int num, @RequestParam("name")String name){
 		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
-
-		// boolean result = groupService.updateGroupName(num, name, user);
+		
+		boolean result = groupService.updateGroupName(num, name, user);
 		
 		if(result) {
 			map.put("data", "ok");

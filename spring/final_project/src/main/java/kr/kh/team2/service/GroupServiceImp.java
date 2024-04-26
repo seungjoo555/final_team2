@@ -262,6 +262,31 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.updateGroupPost(gopoNum, content);
 	}
+
+	@Override
+	public boolean updateGroupName(int num, String name, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(!methods.checkString(name)) {
+			System.out.println("name is invalid: "+name);
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		return groupDao.updateGroupName(num, name);
+	}
 	
 	
 }

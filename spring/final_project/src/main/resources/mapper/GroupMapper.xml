@@ -166,6 +166,12 @@
 		WHERE gopo_num = #{num}
 	</update>
 	
+	<update id="updateGroupName">
+		UPDATE `group`
+			SET go_name = #{name}
+		WHERE go_num = #{num}
+	</update>
+	
 	<!-- =============================== INSERT =============================== -->	
 	
 	<insert id="insertGroupPost">
