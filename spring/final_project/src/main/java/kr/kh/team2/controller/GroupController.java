@@ -219,11 +219,11 @@ public class GroupController {
 		}
 		
 		
-		return "/group/mygroup/menageinfo";
+		return "/group/mygroup/manageinfo";
 	}
 	
 	@GetMapping("/group/manage/member")
-	public String groupmenagemember(Model model, HttpSession session, int groupNum){
+	public String groupmanagemember(Model model, HttpSession session, int groupNum){
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		GroupVO group = groupService.getGroupByGoNum(groupNum);
 		
@@ -231,11 +231,11 @@ public class GroupController {
 			model.addAttribute("group", group);
 		}
 		
-		return "/group/mygroup/menagemember";
+		return "/group/mygroup/managemember";
 	}
 	
 	@GetMapping("/group/manage/applicant")
-	public String groupmenageapplicant(Model model, HttpSession session, int groupNum){
+	public String groupmanageapplicant(Model model, HttpSession session, int groupNum){
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		GroupVO group = groupService.getGroupByGoNum(groupNum);
 		
@@ -243,7 +243,7 @@ public class GroupController {
 			model.addAttribute("group", group);
 		}
 		
-		return "/group/mygroup/menageapplicant";
+		return "/group/mygroup/manageapplicant";
 	}
 	
 	// ================================ group ================================
