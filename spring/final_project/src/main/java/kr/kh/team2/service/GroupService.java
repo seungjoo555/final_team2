@@ -63,4 +63,6 @@ public interface GroupService {
 
 	boolean updateGroupName(int num, String name, MemberVO user);
 
+	ArrayList<GroupVO> countGroupListById(String me_id);
+
 }
