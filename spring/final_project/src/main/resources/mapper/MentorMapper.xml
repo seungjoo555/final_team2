@@ -13,6 +13,17 @@
 		
 	</insert>
 	
+	<insert id="insertMentoring" useGeneratedKeys="true" keyProperty="ment.ment_num">
+		insert into mentoring(ment_title,ment_duration,ment_content,ment_me_id,ment_state)
+					values(#{ment.ment_title},#{ment.ment_duration},#{ment.ment_content},#{ment.ment_me_id},0)
+	</insert>
+	
+	<insert id="insertTotalCategory">
+		insert into total_category(toCt_progCt_num,toCt_table_name,toCt_table_pk)
+					values(#{toCt.toCt_progCt_num},#{toCt.toCt_table_name},#{toCt.toCt_table_pk})
+	</insert>
+
+	
 	<!-- =============================== DELETE =============================== -->
 	
 	<!-- =============================== UPDATE =============================== -->	
@@ -71,5 +82,12 @@
 		select * from mentor_info where mentIf_me_id = #{me_id}
 	</select>
 	
+	<select id="selectMetoring" resultType="MetoringVO">
+		select * from mentoring where ment_me_id = #{me_id}
+	</select>
+	
+	<select id="selectProgrammingCategoryList" resultType ="kr.kh.team2.model.vo.common.ProgrammingCategoryVO">
+		select * from programming_category
+	</select>
 
 </mapper>
