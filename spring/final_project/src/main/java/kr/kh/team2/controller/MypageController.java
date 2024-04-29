@@ -2,19 +2,18 @@ package kr.kh.team2.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.MutualReviewVO;
-import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.service.GroupService;
@@ -156,5 +155,9 @@ public class MypageController {
 		return "message";
 	}
 
+	@PostMapping("/applyList/detail")
+	public String applyListDetaul(Model model, HttpSession session) {
+		return null;
+	}
 	
 }
