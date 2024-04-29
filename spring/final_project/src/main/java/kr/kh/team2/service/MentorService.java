@@ -9,6 +9,7 @@ import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MentoringApplyVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
+import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.CriteriaMentor;
 
 public interface MentorService {
@@ -40,6 +41,10 @@ public interface MentorService {
 	ArrayList<ProgrammingCategoryVO> getProgrammingCategory();
 
 	boolean insertMentoring(MetoringVO mentoring, TotalCategoryVO toCt);
+
+	ArrayList<MentorInfoVO> getMentorInfoList(Criteria cri);
+
+	int getMentorInfoTotalCount(Criteria cri);
 
 
 }

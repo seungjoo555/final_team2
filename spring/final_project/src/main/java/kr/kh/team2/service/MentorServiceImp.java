@@ -165,5 +165,22 @@ public class MentorServiceImp implements MentorService {
 		return true;
 	}
 
+	@Override
+	public ArrayList<MentorInfoVO> getMentorInfoList(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 20);
+		}
+
+		return mentorDAO.selectMentorInfoList(cri);
+	}
+
+	@Override
+	public int getMentorInfoTotalCount(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 20);
+		}
+		return mentorDAO.selectMentorInfoTotalCount(cri);
+	}
+
 
 }

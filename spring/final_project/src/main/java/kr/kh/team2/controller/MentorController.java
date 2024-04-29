@@ -181,7 +181,6 @@ public class MentorController {
 		
 		MentorInfoVO mentIf = mentorService.getMentorInfo(me_id);
 		ArrayList<ProgrammingCategoryVO> progCt = mentorService.getProgrammingCategory();
-		System.out.println(progCt);
 		
 		model.addAttribute("progCtList",progCt);
 		model.addAttribute("mentIf",mentIf);

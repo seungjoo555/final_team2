@@ -89,6 +89,22 @@
 	
 	</select>
 	
+	<select id="selectMentorInfoList" resultType ="MentorInfoVO">
+		select * 
+		from mentor_info
+		where
+			mentIf_ment_job like concat("%",#{cri.search},"%")
+		order by mentIf_date DESC
+		limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="selectMentorInfoTotalCount" resultType="int">
+		select count(*) 
+		from mentor_info
+		where
+			mentIf_ment_job like concat("%",#{cri.search},"%")
+	</select>
+	
 	<select id="selectMentoring" resultType="MetoringVO">
 		select * from mentoring where ment_num = #{ment_num}
 	</select>
