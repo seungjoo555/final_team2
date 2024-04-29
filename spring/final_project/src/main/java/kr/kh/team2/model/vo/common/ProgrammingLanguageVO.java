@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class ProgrammingCategoryVO {
-    private int progCt_num;
-    private String progCt_name;
+public class ProgrammingLanguageVO {
+    private int lang_num;
+    private String lang_name;
 }

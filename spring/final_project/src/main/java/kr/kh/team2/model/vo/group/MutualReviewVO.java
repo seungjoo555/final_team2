@@ -12,4 +12,5 @@ public class MutualReviewVO {
     private String mure_me_id;
     private String mure_target_id;
     private int mure_go_num;
+    private int recu_type;
 }

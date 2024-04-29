@@ -13,6 +13,7 @@ import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.utils.Methods;
 
@@ -157,6 +158,41 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
+	public ArrayList<GroupVO> getStudyGroupList(String me_id) {
+		if (me_id == null || me_id.isEmpty()) {
+			return null;
+		}
+		
+		ArrayList<GroupVO> groupList = groupDao.selectStudyGroupList(me_id);
+		
+		// 각 그룹의 가입 멤버 수
+        for (GroupVO group : groupList) {
+            int go_num = group.getGo_num();
+            int memberCount = groupDao.selectGroupMemberCount(go_num);
+            group.setGo_member_count(memberCount);
+        }
+		
+		return groupList;
+	}
+
+	@Override
+	public ArrayList<GroupVO> getStudyApplyList(String me_id) {
+		if (me_id == null || me_id.isEmpty()) {
+			return null;
+		}
+		
+		ArrayList<GroupVO> groupApplyList = groupDao.getStudyApplyList(me_id);
+		
+		// 각 그룹의 가입 멤버 수
+        for (GroupVO group : groupApplyList) {
+            int go_num = group.getGo_num();
+            int memberCount = groupDao.selectGroupMemberCount(go_num);
+            group.setGo_member_count(memberCount);
+        }
+        
+		return groupApplyList;
+	}
+  
 	public ArrayList<GroupPostVO> getGroupPostByGoNum(int groupNum, Criteria cri) {
 		if(groupNum == 0 ) {
 			System.out.println("groupNum is 0");

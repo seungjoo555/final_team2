@@ -78,6 +78,20 @@ public class MentorServiceImp implements MentorService {
 	}
 
 	@Override
+	public ArrayList<MetoringVO> getMentoringList(String me_id) {
+
+		return mentorDAO.selectMentoringList(me_id);
+	}
+
+	@Override
+	public ArrayList<TotalCategoryVO> getMentoCategory(int ment_num, String table2) {
+		if(!methods.checkString(table2)) {
+			return null;
+		}
+		
+		return mentorDAO.selectMentoCategory(ment_num, table2);
+  }
+  
 	public MentorInfoVO getMentorInfo(String me_id) {
 		
 		return mentorDAO.selectMentorInfo(me_id);

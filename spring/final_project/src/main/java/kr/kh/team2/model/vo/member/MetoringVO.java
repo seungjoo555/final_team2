@@ -23,4 +23,6 @@ public class MetoringVO {
     private String ment_mentIf_exp;
     //멘토 직무
     private String ment_mentIf_job;
+    //멘토링 허용여부
+    private int mentAp_state;
 }
