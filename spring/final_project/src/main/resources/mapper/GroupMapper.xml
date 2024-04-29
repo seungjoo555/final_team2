@@ -3,6 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team2.dao.GroupDAO">
+	
+	<!-- =============================== SELECT =============================== -->
+	
+
  	<select id="selectGroupList" resultType="RecruitVO">
         select recruit.*, me_nickname as recu_gome_me_nickname 
         from recruit
@@ -19,7 +23,7 @@
 						and recu_type = 1
 					</when>
 					<otherwise>
-						and recu_type = 0 or recu_type = 1
+						and (recu_type = 0 or recu_type = 1)
 					</otherwise>
 				</choose>
 			order by recu_num desc
@@ -40,6 +44,7 @@
 				</otherwise>
 			</choose>
  	</select>
+
  	<select id="getGroupListById" resultType="GroupVO">
 		SELECT go_num, go_name, go_time, go_update, COUNT(gome_me_id) as go_member_count 
 			FROM `group`
@@ -47,15 +52,35 @@
 			WHERE go_num in (
 				SELECT gome_go_num FROM group_member WHERE gome_me_id = #{id}
             ) 
-             GROUP BY gome_go_num;
+            GROUP BY gome_go_num
+            limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	
 	<select id="getGroupByGoNum" resultType="GroupVO">
-		SELECT * FROM `group` WHERE go_num = #{num}
+		SELECT `group`.*, gome_me_id as leader 
+			FROM `group` 
+				JOIN group_member ON go_num = gome_go_num
+			WHERE gome_type = 1  AND go_num = #{num}; 
 	</select>
 	
 	<select id="isGroupMember" resultType="Object">
 		SELECT * FROM group_member WHERE gome_go_num = #{num} AND gome_me_id = #{id}
+	</select>
+	
+	<select id="getRecentGroupBoard" resultType="GroupPostVO">
+		SELECT group_post.*, me_nickname as nickname 
+			FROM group_post 
+				JOIN member ON me_id = gopo_gome_me_id
+			WHERE gopo_gome_go_num = #{num}  
+			ORDER BY gopo_date DESC 
+			LIMIT #{count};
+	</select>
+ 	
+	<select id="getDday" resultType="GroupCalendarVO">
+		SELECT * FROM group_calendar 
+			WHERE gocal_go_num = #{num} AND gocal_startdate >= date_format(Now(), '%Y-%m-%d')
+		    ORDER BY gocal_startdate 
+		    LIMIT #{count};
 	</select>
  	
  	<select id="selectRecruit" resultType="RecruitVO">
@@ -64,7 +89,7 @@
  	
  	<select id="selectGroupKing" resultType="MemberVO">
  		select * from member where me_id = 
- 		(select gome_me_id from group_member where gome_go_num = #{recu_go_num} and gome_type = 0)
+ 		(select gome_me_id from group_member where gome_go_num = #{recu_go_num} and gome_type = 1)
  	</select>
  	
  	<select id="selectCategoryList" resultType="TotalCategoryVO">
@@ -76,7 +101,7 @@
  				join
  			programming_category on progCt_num = toCt_progCt_num
  		where
- 			toCt_table_name = #{table} and toCt_table_pk = #{num}
+	        toCt_table_name = #{table} and toCt_table_pk = #{num}
  	</select>
  	
  	<select id="selectLanguageList" resultType="TotalLanguageVO">
@@ -90,5 +115,102 @@
  		where
  			toLg_table_name = #{table} and toLg_table_pk = #{num}
  	</select>
+	
+	<select id="getGroupTime" resultType="long">
+		SELECT go_time FROM `group` WHERE go_num = #{num}  
+	</select>
+	
+	<select id="selectStudyGroupList" resultType="GroupVO">
+		SELECT final_team2.group.*, group_apply.goap_state as goap_state, recruit.recu_num as recu_num, recruit.recu_topic as recu_topic, recruit.recu_count as recu_count, `member`.me_nickname as recu_gome_me_nickname, group_member.*
+		FROM final_team2.group
+			LEFT JOIN group_apply ON go_num = goap_num
+			LEFT JOIN group_member ON go_num = gome_go_num
+			LEFT JOIN recruit ON go_num = recu_go_num
+			LEFT JOIN `member` ON gome_me_id = me_id
+		WHERE gome_me_id = #{me_id} and gome_type = '1'
+	</select>
+    
+  <select id="getStudyApplyList" resultType="GroupVO">
+  SELECT final_team2.group.*, group_apply.goap_state as goap_state, group_apply.goap_me_id as goap_me_id, recruit.recu_num as recu_num, 
+  recruit.recu_topic as recu_topic, recruit.recu_count as recu_count
+  FROM final_team2.group
+    LEFT JOIN group_apply ON go_num = goap_go_num
+    LEFT JOIN recruit ON go_num = recu_go_num
+  WHERE goap_me_id = #{me_id}
+  </select>
+
+  <select id="selectGroupMemberCount" resultType="int" parameterType="int">
+    select COUNT(*) FROM group_member WHERE gome_go_num = #{go_num}
+  </select>
+  
+	<select id="getGroupPostByGoNum" resultType="GroupPostVO">
+		SELECT group_post.*, me_nickname as nickname 
+			FROM group_post 
+				JOIN member ON me_id = gopo_gome_me_id
+			WHERE gopo_gome_go_num = #{num} 
+			ORDER BY gopo_date DESC
+			limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="getMyGroupTotalCount" resultType="int">
+		SELECT COUNT(*) FROM group_member WHERE gome_me_id = #{id}
+	</select>
+	
+	<select id="getGroupPostTotalCount" resultType="int">
+		SELECT COUNT(*) FROM group_post WHERE gopo_gome_go_num = #{num}
+	</select>
+	
+	<select id="getGroupPostByGopoNum" resultType="GroupPostVO">
+		SELECT * FROM group_post WHERE gopo_num = #{num}
+	</select>
+	
+	<select id="checkWriter" resultType="GroupPostVO">
+		SELECT * FROM group_post WHERE gopo_num = #{num} AND gopo_gome_me_id = #{me_id}
+	</select>
+	
+	<select id="countGroupListById" resultType="GroupVO">
+		SELECT go_num, go_name, go_time, go_update, COUNT(gome_me_id) as go_member_count 
+			FROM `group`
+				JOIN group_member ON go_num = gome_go_num
+			WHERE go_num in (
+				SELECT gome_go_num FROM group_member WHERE gome_me_id = #{me_id}
+            ) 
+           GROUP BY gome_go_num;
+	</select>
+	
+	
+	<!-- =============================== DELETE =============================== -->
+	
+	<delete id="deleteGroupPost">
+		DELETE FROM group_post WHERE gopo_num = #{num}
+	</delete>
+	
+	
+	<!-- =============================== UPDATE =============================== -->	
+	
+	<update id="updateGoTime">
+		UPDATE `group` 
+			SET go_time = go_time + 1 
+		WHERE go_num = #{num}
+	</update>
+	
+	<update id="updateGroupPost">
+		UPDATE group_post
+			SET gopo_content = #{content}
+		WHERE gopo_num = #{num}
+	</update>
+	
+	<update id="updateGroupName">
+		UPDATE `group`
+			SET go_name = #{name}
+		WHERE go_num = #{num}
+	</update>
+	
+	<!-- =============================== INSERT =============================== -->	
+	
+	<insert id="insertGroupPost">
+		INSERT INTO group_post(gopo_gome_go_num, gopo_gome_me_id, gopo_content, gopo_date) VALUES(#{num}, #{writer}, #{content}, NOW());
+	</insert>
+
  	
 </mapper>

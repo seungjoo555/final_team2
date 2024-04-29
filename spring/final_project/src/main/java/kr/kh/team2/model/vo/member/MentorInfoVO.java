@@ -17,4 +17,7 @@ public class MentorInfoVO {
     private String mentIf_account;
     private Date mentIf_date;
     private int mentIf_state;
+    
+    /* join 멘토 닉네임 */
+    private String mentIf_me_nickname;
 }

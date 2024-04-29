@@ -6,7 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>스터디 / 프로젝트 리스트</title>
+
 </head>
 <link rel="stylesheet" href="<c:url value="/resources/css/grouplist.css"/>">
 <body>
@@ -23,7 +25,7 @@
 			<span class="group-category-item project"  data-category="project">프로젝트</span>
 		</div>
 		<div class="group-category group-category-insert">
-			<a class="btn-outline-success insert" href="<c:url value="/recruit/insert"/>">모집글 작성</a>
+			<a class="btn-outline-success insert" href="<c:url value="/group/grouprecruit"/>">모집글 작성</a>
 		</div>
 	</form>
 	<!-- 리스트 -->
@@ -99,7 +101,7 @@
 			str +=
 				`
 					<!-- 게시글 정보 링크 -->
-					<a class="group-item" href="<c:url value="/group/detail?recu_num=\${group.recu_num}"/>">
+					<a class="group-item" href="<c:url value="/group/detail?num=\${group.recu_num}"/>">
 						<li>
 							<!-- 프로젝트/스터디 구분 -->
 							<div class="group-list-item-category" >

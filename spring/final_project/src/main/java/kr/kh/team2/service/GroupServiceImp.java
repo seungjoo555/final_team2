@@ -4,13 +4,17 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import kr.kh.team2.dao.GroupDAO;
-import kr.kh.team2.model.vo.group.RecruitVO;
-import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupCalendarVO;
+import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
+import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.vo.member.MetoringVO;
+import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.utils.Methods;
 
 @Service
@@ -68,12 +72,16 @@ public class GroupServiceImp implements GroupService{
 	}
   
 	@Override
-	public ArrayList<GroupVO> getGroupListById(String me_id) {
+	public ArrayList<GroupVO> getGroupListById(String me_id, Criteria cri) {
 		if(!methods.checkString(me_id)) {
+			System.out.println("wrong id: "+me_id);
+			return null;
+		}else if(cri == null) {
+			System.out.println("null cri");
 			return null;
 		}
 		
-		return groupDao.getGroupListById(me_id);
+		return groupDao.getGroupListById(me_id, cri);
 	}
 
 	@Override
@@ -101,5 +109,228 @@ public class GroupServiceImp implements GroupService{
 		else
 			return true;
 	}
+
+	@Override
+	public ArrayList<GroupPostVO> getRecentGroupBoard(int groupNum, int recentBoard) {
+		if(groupNum == 0 || recentBoard == 0) {
+			System.out.println("groupNum is or count 0");
+			return null;
+		}
+		
+		return groupDao.getRecentGroupBoard(groupNum, recentBoard);
+	}
+
+	@Override
+	public ArrayList<GroupCalendarVO> getDday(int groupNum, int dday) {
+		if(groupNum == 0 || dday == 0) {
+			System.out.println("groupNum  or count is 0");
+			return null;
+		}
+		return groupDao.getDday(groupNum, dday);
+	}
+
+	@Override
+	public long getGroupTime(int groupNum) {
+		if(groupNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return -1;
+		}
+		return groupDao.getGroupTime(groupNum);
+	}
+
+	@Override
+	public boolean updateGoTime(int groupNum) {
+		if(groupNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return false;
+		}
+		return groupDao.updateGoTime(groupNum);
+	}
+
+	@Override
+	public long getGoTimeByGoNum(int groupNum) {
+		if(groupNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return -1;
+		}
+		
+		return groupDao.getGroupTime(groupNum);
+	}
+
+	@Override
+	public ArrayList<GroupVO> getStudyGroupList(String me_id) {
+		if (me_id == null || me_id.isEmpty()) {
+			return null;
+		}
+		
+		ArrayList<GroupVO> groupList = groupDao.selectStudyGroupList(me_id);
+		
+		// 각 그룹의 가입 멤버 수
+        for (GroupVO group : groupList) {
+            int go_num = group.getGo_num();
+            int memberCount = groupDao.selectGroupMemberCount(go_num);
+            group.setGo_member_count(memberCount);
+        }
+		
+		return groupList;
+	}
+
+	@Override
+	public ArrayList<GroupVO> getStudyApplyList(String me_id) {
+		if (me_id == null || me_id.isEmpty()) {
+			return null;
+		}
+		
+		ArrayList<GroupVO> groupApplyList = groupDao.getStudyApplyList(me_id);
+		
+		// 각 그룹의 가입 멤버 수
+        for (GroupVO group : groupApplyList) {
+            int go_num = group.getGo_num();
+            int memberCount = groupDao.selectGroupMemberCount(go_num);
+            group.setGo_member_count(memberCount);
+        }
+        
+		return groupApplyList;
+	}
+  
+	public ArrayList<GroupPostVO> getGroupPostByGoNum(int groupNum, Criteria cri) {
+		if(groupNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return null;
+		}else if(cri == null) {
+			System.out.println("null cri");
+			return null;
+		}
+		
+		return groupDao.getGroupPostByGoNum(groupNum, cri);
+	}
+
+	@Override
+	public boolean insertGroupPost(int goNum, String  writer, String content) {
+		if(goNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return false;
+		}else if(!methods.checkString(content) || !methods.checkString(writer)) {
+			System.out.println("invalid content or writer: "+ content + ", " + writer);
+			return false;
+		}
+		
+		// 권한 확인 필요
+		MemberVO tmp = new MemberVO(writer);
+		
+		if(!isGroupMember(tmp, goNum)) {
+			System.out.println("not group member");
+			return false;
+		}else {
+			return groupDao.insertGroupPost(goNum, writer, content);
+		}
+		
+	}
+
+	@Override
+	public int getMyGroupTotalCount(String me_id) {
+		if(!methods.checkString(me_id)) {
+			System.out.println("wrong id: "+me_id);
+			return -1;
+		}
+		return groupDao.getMyGroupTotalCount(me_id);
+	}
+
+	@Override
+	public int getGroupPostTotalCount(int goNum) {
+		if(goNum == 0 ) {
+			System.out.println("groupNum is 0");
+			return -1;
+		}
+		return groupDao.getGroupPostTotalCount(goNum);
+	}
+
+	@Override
+	public boolean deleteGroupPost(int gopoNum, MemberVO user) {
+		if(gopoNum == 0 ) {
+			System.out.println("gopoNum is 0");
+			return false;
+		}else if(user == null){
+			System.out.println("null user");
+			return false;
+		}
+		
+		GroupPostVO post = getGroupPostByGopoNum(gopoNum);
+		
+		if(post == null) {
+			System.out.println("no post with gopoNum: "+gopoNum);
+			return false;
+		}
+		
+		if(!post.getGopo_gome_me_id().equals(user.getMe_id())) {
+			System.out.println("not writer or authorized");
+			return false;
+		}
+		
+		return groupDao.deleteGroupPost(gopoNum);
+	}
+	
+	@Override
+	public GroupPostVO getGroupPostByGopoNum(int gopoNum) {
+		return groupDao.getGroupPostByGopoNum(gopoNum);
+	}
+
+	@Override
+	public boolean updateGroupPost(int gopoNum, String content, MemberVO user) {
+		if(gopoNum == 0 ) {
+			System.out.println("gopoNum is 0");
+			return false;
+		}
+		if(!methods.checkString(content) ) {
+			System.out.println("null content: " + content );
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		// 현재 로그인한 유저가 게시글의 작성자인지 확인함
+		if(groupDao.checkWriter(gopoNum, user.getMe_id()) == null) {
+			System.out.println("not identical writer");
+			return false;
+		}
+		
+		return groupDao.updateGroupPost(gopoNum, content);
+	}
+
+	@Override
+	public boolean updateGroupName(int num, String name, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(!methods.checkString(name)) {
+			System.out.println("name is invalid: "+name);
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		return groupDao.updateGroupName(num, name);
+	}
+
+	@Override
+	public ArrayList<GroupVO> countGroupListById(String me_id) {
+		if(!checkString(me_id)) {
+			return null;
+		}		
+		return groupDao.countGroupListById(me_id);
+	}
+	
 	
 }
