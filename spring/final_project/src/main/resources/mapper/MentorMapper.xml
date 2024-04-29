@@ -9,8 +9,11 @@
 		insert into mentor_info(mentif_me_id,mentif_exp,mentif_portfolio,mentif_bank,mentif_account,mentif_date,mentif_state,mentif_ment_job) 
 		values(#{mt_info.mentIf_me_id},#{mt_info.mentIf_exp},#{mt_info.mentIf_portfolio},#{mt_info.mentIf_bank},#{mt_info.mentIf_account},
 			   now(),0,#{mt_info.mentIf_ment_job})
-		
-		
+	</insert>
+	
+	<insert id="insertMentoringApply">
+		insert into mentoring_apply(mentAp_ment_num, mentAp_me_id, mentAp_content, mentAp_contact, mentAp_state)
+		values(#{mentAp.mentAp_ment_num}, #{mentAp.mentAp_me_id}, #{mentAp.mentAp_content},#{mentAp.mentAp_contact}, 0 )
 	</insert>
 	
 	<insert id="insertMentoring" useGeneratedKeys="true" keyProperty="ment.ment_num">
@@ -78,10 +81,18 @@
 		select * from mentor_job
 	</select>
 	
-	<select id="selectMentorInfo" resultType="kr.kh.team2.model.vo.member.MentorInfoVO">
-		select * from mentor_info where mentIf_me_id = #{me_id}
+	<select id="selectMentorInfo" resultType="MentorInfoVO">
+		select mentor_info.*, me_nickname as mentIf_me_nickname
+		from mentor_info 
+		join `member` on me_id = mentIf_me_id
+		where mentIf_me_id = #{me_id} 
+	
 	</select>
 	
+	<select id="selectMentoring" resultType="MetoringVO">
+		select * from mentoring where ment_num = #{ment_num}
+	</select>
+		
   <select id="selectMentoringList" resultType="MetoringVO">
     SELECT mentoring.*, mentor_info.mentIf_ment_job as ment_mentIf_job, mentor_info.mentIf_exp as ment_mentIf_exp, mentoring_apply.mentAp_state as mentAp_state, me_nickname as ment_me_nickname
   FROM mentoring

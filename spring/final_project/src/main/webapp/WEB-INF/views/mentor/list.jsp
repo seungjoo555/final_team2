@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,10 +9,19 @@
 <title>멘토링 리스트</title>
 </head>
 <link rel="stylesheet" href="<c:url value="/resources/css/mentorlist.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/mentoringdetail.css"/>">
 <body>
 <div class="container">
 	<!-- 검색창 -->
 	<div class="menu-bar">
+		<div class="mentor mentor-insert">
+			<c:if test="${user.me_ma_auth == '일반'}">
+				<a class="btn-outline-success mentor-insert" href="<c:url value="/mentor/apply"/>">멘토 신청하기</a>
+			</c:if>
+			<c:if test="${user.me_ma_auth == '멘토'}">
+				<a class="btn-outline-success mentor-mentoring-insert" href="<c:url value="/mentor/mentoring/insert"/>">멘토링 열기</a>
+			</c:if>
+		</div>
 		<form action="<c:url value='/mentor/list'/>" method="get" id="searchForm" onsubmit="return false;">
 			<div class="input-group" id="input-group">
 				<input   class="form-control" type="text" placeholder="검색어를 입력하세요" name="mento-totalsearch" id="mento-totalsearch" onkeypress=""> 
@@ -42,6 +52,16 @@
 	<div class="box-pagination">
 		<ul class="pagination justify-content-center"></ul>
 	</div>
+	
+   <!-- 상세화면 -->
+   <div id="modal" class="modal apply-mentoring-modal" style="display:none;">
+      <div id="dimmed" class="dimmed apply-mentoring-dimmend"></div>
+      <div class="apply-mentoring_container">
+      	<div class="apply-mentoring_box">
+      	</div>
+      </div>
+   </div>
+   
 	
 </div>
 
@@ -86,7 +106,7 @@
 			str +=
 				`
 				<!-- 게시글 정보 링크 -->
-				<a class="mento-item" href="<c:url value="/mento/detail?ment_num=\${mentoing.ment_num}"/>">
+				<a class="mento-item" data-num="\${mentoing.ment_num}">
 					<li>
 						<!--그룹 모집 내용-->
 						<div class="mento-list-item-content">
@@ -162,7 +182,6 @@ function getCheckboxValue(event)  {
 	var arr =  [];
 	cri.jobList = getCheckInput(arr);
 	cri.page = 1;
-	console.log(cri);
 	getMentoList(cri);
 }
 
@@ -195,10 +214,292 @@ function search() {
 </script>
 
 
+<!-- ============================================멘토링 글 상세 ================================================================ -->
+
+<script type="text/javascript">
+/* 아이템 클릭 이벤트 - 상세 화면 */
+$(document).on('click', '.mento-item', function(event){
+   let ment_num = $(this).data("num");
+
+   $("#modal").css('display','block');
+   //스크롤 비활성화
+   $("body").css('overflow','hidden');
+   //출력
+	getMentoring(ment_num);
+	function getMentoring(ment_num){
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/mentor/detail"/>", 
+			type : 'post', 
+			data : {
+				ment_num : ment_num
+			},
+			dataType :"json", 
+			success : function (data){
+				displayMentoringDetail(data.mentoring, data.mentor);
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+			}
+		});	//ajax end
+	}	//getMentoring(ment_num); end
+	
+	/* 멘토링 모집 글 상세 출력 */
+	function displayMentoringDetail(mentoring, mentor) {
+		let str="";
+		
+		if(mentoring == null || mentor == null){
+			str += `<h1>등록되지 않은 멘토링 정보입니다.<h1>`;
+		}
+		
+		//직무, 경력, 포토폴리오가 없을 경우 출력 메세지 설정
+		
+		
+		str += 
+			`
+	      	<div class="apply-mentoring_header">
+	      		<div class="header-title"><h1>멘토링 소개</h1></div>
+	      		<div class="btn-cancel"> <button>X</button> </div>
+	      	</div>
+	      	<div class="apply-mentoring_body">
+	      		<div class="apply-mentoring_body_info_header">
+      				<div class="memberInfo" >
+						<img class="basic-profile" value="\${mentor.mentIf_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+						<div class="memberNickname" value="\${mentor.mentIf_me_id}">\${mentor.mentIf_me_nickname} </div>
+					</div>
+	      		</div>
+	      		<h1>\${mentoring.ment_title}</h1>
+	      		<div class="apply-mentoring_body_info_list">
+	      			<ul>
+	      				<li>직무 : \${mentor.mentIf_ment_job}</li>
+	      				<li>경력 : \${mentor.mentIf_date}년</li>
+	      				<li>포토폴리오 : \${mentor.mentIf_portfolio}</li>
+	      			</ul>
+	      		</div>
+	      		<div class="apply-box-border-line"><div class="apply-border-line"></div></div>
+	      		<div class="apply-mentoring_body_content">
+	      			<div>\${mentoring.ment_content}</div>
+	      		</div>
+	      	</div>
+	      	<div class="apply-mentoring_footer">
+				<div class="apply-due">종료일 : \${mentoring.ment_duration}</div>
+				<div class="btn-apply-box"><button type="button" class="btn-apply" value="\${mentoring.ment_num}">신청하기</button></div>
+			</div>
+			`
+		$('.apply-mentoring_box').html(str);
+	}//displayMentoringDetail(); end
+   
+})
+
+/* 프로필 클릭 이벤트 */
+$(document).on('click', '.basic-profile', function(){
+	location.href = '<c:url value=""/>';	//프로필 주소
+})
+$(document).on('click', '.memberNickname', function(){
+	location.href = '<c:url value=""/>';	//프로필 주소
+})
+
+/* dimmed 클릭 시 창 없애기 */
+$(document).on('click', '#dimmed', function(){
+   $("#modal").css('display','none');
+   $("body").css('overflow','visible');
+})
+/* X 클릭 시 창 없애기 */
+$(document).on('click', '.btn-cancel', function(){
+   $("#modal").css('display','none');
+   $("body").css('overflow','visible');
+})
+
+
+</script>
+
+<script type="text/javascript">
+
+/* 신청 창 */
+$(document).on('click', '.btn-apply', function(){
+	if(${user == null}){
+		if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?") == true){
+			location.href = '<c:url value="/login"/>';			
+		}else{
+			return false;
+		}
+	}
+	let ment_num = $('.btn-apply').val();
+	getMentoringApply(ment_num);
+	function getMentoringApply(ment_num){
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/mentoring/apply"/>", 
+			type : 'get', 
+			data : {
+				ment_num : ment_num
+			},
+			dataType :"json", 
+			success : function (data){
+				displayMentoringApply(data.mentoring);
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+			}
+		});	//ajax end
+	}	//getMentoringApply(ment_num); end
+})
+	
+function displayMentoringApply(mentoring){
+	   let str = 
+		   `
+	         	<div class="apply-mentoring_header">
+		      		<div class="header-title"><h1>멘토링 신청</h1></div>
+		      		<div class="btn-cancel"> <button>X</button> </div>
+		      	</div>
+		      	<div class="apply-mentoring_body" style="overflow: hidden; height: 80%;">
+			      	<!-- 폼 -->
+			      	<div class="form-apply-box">
+				      	<form action="<c:url value="/mentor/list"/>" method="post" class="form-apply">
+							<input type="hidden" value="\${mentoring.ment_num}" id="mentAp_ment_num" name="mentAp_ment_num">
+				      		<div class="mentor-apply-form-group">
+								<label for="id">멘토링 명</label>
+								<input type="text" readonly class="form-control apply-mentorNickname" value="\${mentoring.ment_title}" id="mentorNickname" name="mentorNickname">
+							</div>
+				      		<div class="mentor-apply-form-group">
+								<label for="id">연락처</label>
+								<input type="text" class="form-control apply-contact" id="mentAp_contact" name="mentAp_contact">
+							</div>
+				      		<div class="mentor-apply-form-group">
+								<label for="id">신청내용</label>
+								<textarea rows="11" class="form-control h-25 apply-content" id="mentAp_content" name="mentAp_content"></textarea>
+							</div>
+				      	</form>
+			      	</div>
+		      	</div>
+		      	<div class="apply-mentoring_footer">
+					<div class="btn-apply-box">
+						<button type="button" class="btn-apply-prev">이전으로</button> 
+						<button type="button" class="btn-apply-insert"class="btn-apply-insert">신청하기</button>
+					</div>
+				</div>
+		   `
+		   ;
+		$('.apply-mentoring_box').html(str);
+}
+	
+	
+   
 
 
 
-
+/* 이전버튼 이벤트 */
+$(document).on('click', '.btn-apply-prev', function(){
+	ment_num = $("#mentAp_ment_num").val();
+	getMentoring(ment_num);
+	
+	function getMentoring(ment_num){
+		console.log("함수");
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/mentor/detail"/>", 
+			type : 'post', 
+			data : {
+				ment_num : ment_num
+			},
+			dataType :"json", 
+			success : function (data){
+				displayMentoringDetail(data.mentoring, data.mentor);
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+			}
+		});	//ajax end
+	}	//getMentoring(ment_num); end
+	
+	function displayMentoringDetail(mentoring, mentor) {
+		let str="";
+		
+		if(mentoring == null || mentor == null){
+			str += `<h1>등록되지 않은 멘토링 정보입니다.<h1>`;
+		}
+		
+		//직무, 경력, 포토폴리오가 없을 경우 출력 메세지 설정
+		
+		
+		str += 
+			`
+	      	<div class="apply-mentoring_header">
+	      		<div class="header-title"><h1>멘토링 소개</h1></div>
+	      		<div class="btn-cancel"> <button>X</button> </div>
+	      	</div>
+	      	<div class="apply-mentoring_body">
+	      		<div class="apply-mentoring_body_info_header">
+      				<div class="memberInfo" >
+						<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+						<div class="memberNickname">\${mentor.mentIf_me_nickname} </div>
+						<img class="more-Menu" style="width: 15px; height: 20px;" src="<c:url value="/resources/img/more.png"/>">
+					</div>
+	      		</div>
+	      		<h1>\${mentoring.ment_title}</h1>
+	      		<div class="apply-mentoring_body_info_list">
+	      			<ul>
+	      				<li>직무 : \${mentor.mentIf_ment_job}</li>
+	      				<li>경력 : \${mentor.mentIf_date}년</li>
+	      				<li>포토폴리오 : \${mentor.mentIf_portfolio}</li>
+	      			</ul>
+	      		</div>
+	      		<div class="apply-box-border-line"><div class="apply-border-line"></div></div>
+	      		<div class="apply-mentoring_body_content">
+	      			<div>\${mentoring.ment_content}</div>
+	      		</div>
+	      	</div>
+	      	<div class="apply-mentoring_footer">
+				<div class="apply-due">종료일 : \${mentoring.ment_duration}</div>
+				<div class="btn-apply-box"><button type="button" class="btn-apply" value="\${mentoring.ment_num}">신청하기</button></div>
+			</div>
+			`
+		$('.apply-mentoring_box').html(str);
+	}//displayMentoringDetail(); end
+   
+	
+})
+/* 신청버튼 이벤트 */
+ //신청중일 때(추가필요)
+$(document).on('click', '.btn-apply-insert', function(){
+	//서버에 보낼 데이터 생성
+	let mentoApVO = {
+		mentAp_ment_num : $("#mentAp_ment_num").val(),
+		mentAp_contact :  $("#mentAp_contact").val(),
+		mentAp_content :  $("#mentAp_content").val()
+	}
+	if(mentoApVO.mentAp_contact.length == 0 || mentoApVO.mentAp_content.length == 0){
+		alert("신청 내용을 입력하세요.");
+		return;
+	}
+	
+	$.ajax({
+		async : true, //비동기 : true(비동기), false(동기)
+		url : '<c:url value="/mentoring/apply"/>', 
+		type : 'post', 
+		data : JSON.stringify(mentoApVO), 
+		contentType : "application/json; charset=utf-8",
+		dataType : "json", 
+		success : function (data){
+			if(data.result){
+				alert("멘토링을 신청했습니다.");
+				$("#modal").css('display','none');
+			   $("body").css('overflow','visible');
+				let cri = {
+						page : 1,
+						type : "",
+						search : "",
+						jobList :[]
+				}
+				getMentoList(cri);
+			}else{
+				alert("멘토링을 신청하지 못했습니다.");
+			}
+		}, 
+		error : function(jqXHR, textStatus, errorThrown){	//errorThrown얘는 거의 비어있음(굳이 체크 안하기로)
+			console.log(jqXHR);
+			console.log(textStatus);
+		}
+	});
+})
+</script>
 
 
 

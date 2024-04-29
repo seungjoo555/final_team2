@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
@@ -19,6 +20,7 @@ import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
+import kr.kh.team2.model.vo.member.MentoringApplyVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.CriteriaMentor;
 import kr.kh.team2.pagination.PageMaker;
@@ -37,6 +39,7 @@ public class MentorController {
 		
 		ArrayList<MentorJobVO> jobList = mentorService.getJobList();
 		model.addAttribute("jobList",jobList);
+		
 		return "/mentor/list";
 	}
 	
@@ -58,11 +61,52 @@ public class MentorController {
 		return map;
 	}
 	
+	@ResponseBody
+	@PostMapping("/mentor/detail")
+	public Map<String, Object> mentorDetailPost(@RequestParam("ment_num")int ment_num) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		//멘토링 정보 받아오기
+		MetoringVO mentoring = mentorService.getMentoring(ment_num);
+		//멘토 정보 받아오기
+		MentorInfoVO mentorInfo = mentorService.getMentor(mentoring.getMent_me_id());
+		
+		map.put("mentoring",mentoring);
+		map.put("mentor", mentorInfo);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@GetMapping("/mentoring/apply")
+	public Map<String, Object> mentorApply(@RequestParam("ment_num")int ment_num) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("ment_num :: "+ment_num);
+		//멘토링 정보 받아오기
+		MetoringVO mentoring = mentorService.getMentoring(ment_num);
+		map.put("mentoring",mentoring);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/mentoring/apply")
+	public Map<String, Object> mentorApplyPost(HttpSession session,@RequestBody MentoringApplyVO mentoApVO) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		//로그인 정보 가져오기
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		//신청하기
+		System.out.println("mentoApVO :: "+ mentoApVO);
+		boolean res = mentorService.insertMentoringApply(mentoApVO, user);
+		//페이지 이동하기
+		map.put("result", res);
+		return map;
+	}
+	
 	@GetMapping("/mentor/apply")
 	public String mentorApply() {
 		
 		return "/mentor/mentorapply";
 	}
+	
 	
 	@GetMapping("/mentor/check")
 	@ResponseBody
@@ -90,7 +134,7 @@ public class MentorController {
 		
 		if(mentorService.getMentorInfo(user.getMe_id())!=null) {
 			model.addAttribute("msg","이미 멘토 신청을 완료한 계정입니다.");
-			model.addAttribute("url","/mentor/apply");
+			model.addAttribute("url","/");
 			return "message";
 		}
 		
