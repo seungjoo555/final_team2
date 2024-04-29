@@ -77,7 +77,7 @@ public class MentorController {
 	}
 	
 	@ResponseBody
-	@GetMapping("/mentor/apply")
+	@GetMapping("/mentoring/apply")
 	public Map<String, Object> mentorApply(@RequestParam("ment_num")int ment_num) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("ment_num :: "+ment_num);
@@ -88,7 +88,7 @@ public class MentorController {
 	}
 	
 	@ResponseBody
-	@PostMapping("/mentor/apply")
+	@PostMapping("/mentoring/apply")
 	public Map<String, Object> mentorApplyPost(HttpSession session,@RequestBody MentoringApplyVO mentoApVO) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		//로그인 정보 가져오기
@@ -100,6 +100,13 @@ public class MentorController {
 		map.put("result", res);
 		return map;
 	}
+	
+	@GetMapping("/mentor/apply")
+	public String mentorApply() {
+		
+		return "/mentor/mentorapply";
+	}
+	
 	
 	@GetMapping("/mentor/check")
 	@ResponseBody
@@ -127,7 +134,7 @@ public class MentorController {
 		
 		if(mentorService.getMentorInfo(user.getMe_id())!=null) {
 			model.addAttribute("msg","이미 멘토 신청을 완료한 계정입니다.");
-			model.addAttribute("url","/mentor/apply");
+			model.addAttribute("url","/");
 			return "message";
 		}
 		

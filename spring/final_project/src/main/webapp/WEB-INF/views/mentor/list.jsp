@@ -16,7 +16,7 @@
 	<div class="menu-bar">
 		<div class="mentor mentor-insert">
 			<c:if test="${user.me_ma_auth == '일반'}">
-				<a class="btn-outline-success mentor-insert" href="<c:url value="/mentor/insert"/>">멘토 신청하기</a>
+				<a class="btn-outline-success mentor-insert" href="<c:url value="/mentor/apply"/>">멘토 신청하기</a>
 			</c:if>
 			<c:if test="${user.me_ma_auth == '멘토'}">
 				<a class="btn-outline-success mentor-mentoring-insert" href="<c:url value="/mentor/mentoring/insert"/>">멘토링 열기</a>
@@ -328,7 +328,7 @@ $(document).on('click', '.btn-apply', function(){
 	function getMentoringApply(ment_num){
 		$.ajax({
 			async : true, //비동기 : true(비동기), false(동기)
-			url : "<c:url value="/mentor/apply"/>", 
+			url : "<c:url value="/mentoring/apply"/>", 
 			type : 'get', 
 			data : {
 				ment_num : ment_num
@@ -472,7 +472,7 @@ $(document).on('click', '.btn-apply-insert', function(){
 	
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
-		url : '<c:url value="/mentor/apply"/>', 
+		url : '<c:url value="/mentoring/apply"/>', 
 		type : 'post', 
 		data : JSON.stringify(mentoApVO), 
 		contentType : "application/json; charset=utf-8",
