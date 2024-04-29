@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.MentorDAO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
+import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MentoringApplyVO;
@@ -106,6 +108,59 @@ public class MentorServiceImp implements MentorService {
 		//회원 아이디 
 		mentoApVO.setMentAp_me_id(user.getMe_id());
 		return mentorDAO.insertMentoringApply(mentoApVO);
+	public ArrayList<MetoringVO> getMentoringList(String me_id) {
+
+		return mentorDAO.selectMentoringList(me_id);
+	}
+
+	@Override
+	public ArrayList<TotalCategoryVO> getMentoCategory(int ment_num, String table2) {
+		if(!methods.checkString(table2)) {
+			return null;
+		}
+		
+		return mentorDAO.selectMentoCategory(ment_num, table2);
+  }
+  
+	public MentorInfoVO getMentorInfo(String me_id) {
+		
+		return mentorDAO.selectMentorInfo(me_id);
+		
+	}
+
+	@Override
+	public MetoringVO getMetoring(String me_id) {
+		
+		return mentorDAO.selectMetoring(me_id);
+	}
+
+	@Override
+	public ArrayList<ProgrammingCategoryVO> getProgrammingCategory() {
+		
+		return mentorDAO.selectProgrammingCategoryList();
+	}
+
+	@Override
+	public boolean insertMentoring(MetoringVO mentoring, TotalCategoryVO toCt) {
+		if(!methods.checkString(mentoring.getMent_title())||
+		   !methods.checkString(mentoring.getMent_content())||
+		   !methods.checkString(mentoring.getMent_duration()+"")||
+		   !methods.checkString(mentoring.getMent_me_id())) {
+			return false;
+		}
+		
+		
+		if(!mentorDAO.insertMentoring(mentoring)) {
+			return false;
+		}
+		
+		toCt.setToCt_table_pk(mentoring.getMent_num()+"");
+		
+		if(!mentorDAO.insertTotalCategory(toCt)) {
+			return false;
+		}
+		
+		return true;
 	}
 
 

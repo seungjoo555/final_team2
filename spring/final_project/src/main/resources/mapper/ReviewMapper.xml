@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team2.dao.ReviewDAO">
+	<select id="selectMutualReviewList" resultType="MutualReviewVO">
+		SELECT mutual_review.*,
+			recruit.recu_type AS recu_type
+		FROM mutual_review 
+		    JOIN recruit ON mure_go_num = recu_go_num
+		WHERE mure_target_id = #{me_id}
+	</select>
+	
+</mapper>

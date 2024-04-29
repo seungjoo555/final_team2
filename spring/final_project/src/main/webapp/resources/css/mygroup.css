@@ -1,15 +1,32 @@
 @charset "UTF-8";
 
-	.float-rignt{float: right;}
+	h3 {
+		font-weight: 700;
+		font-size: 22px;
+		margin: 50px 0;
+	}
+	
+	.float-right{float: right;}
 	.float-left{float: left;}
 
 	.container{width:960px; background-color: #F9F9F9; margin: 100px auto 200px auto; padding: 0 0 60px 0; box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);}
 	
 	.container-row{height: 580px; display: flex;}
-	.container-row .container-left{height: 100%; width: 33%; padding: 90px 40px 0 40px;}
-	.container-row .container-right{height: 100%; width: 67%;  padding: 90px 40px 0 40px;}
+	.container-row .container-left{height: 100%; width: 33%; padding: 70px 40px 0 40px;}
+	.container-row .container-right{height: 100%; width: 67%;  padding: 70px 40px 0 40px;}
 	
 	.container-bottom{height: 25%; width: 100%; padding: 40px 40px 0 40px;}
+	
+	.invisible{visibility: hidden;}
+	
+	.text-align-center{text-align: center;}
+	
+	.not-authorized *:first-child{font-size: 24px; font-weight: bold; padding-top: 60px; margin-bottom: 40px;}
+	.not-authorized *:last-child{
+		padding: 10px 10px; border-radius: 5px;
+		font-size: 16px; font-weight: bold; text-align: center; 
+		text-decoration: none; color: white; background-color: #9C9C9C;
+	}
 	
 	/* box style */
 	
@@ -22,8 +39,13 @@
 	.box .box-info-bar a{font-weight: normal; font-size: 14px; color: white; text-decoration: underline;}
 	
 	/*btn-group 설정*/
-		[class$=btn-group]{display:flex; justify-content: space-between;}
+		[class$=btn-group]{display:flex;}
 	
+		[class$=btn-group] *{display: inline-block; width: 100px; height: 30px; line-height: 30px; text-align: center; 
+			font-size: 14px; border-radius: 5px; margin-top: 20px;}
+		[class$=btn-group] *:first-child{color: black; background-color: #C9C9C9}
+		[class$=btn-group] *:last-child, .post-edit-btn-group *:last-child{margin-left: 10px; color: white; background-color: #5A7059}	
+		
 	/* info-bar style*/
 	.container-info-bar{height: 90px; width: 90%; margin: 0 auto;}
 	
@@ -32,32 +54,29 @@
 
 	.container-info-bar [class$=title]{font-weight: 900; margin-right: 10px;}
 	
-	[class$=-bg]{width: 90%; margin: 30px auto; background-color: white; padding: 55px 0; 
-		display:flex; flex-direction: column; justify-content: center; align-items: center;}
+	.container-info-bar .hamburger-btn{width: 24px; height: 24px; margin-bottom: 8px;}
+	
+	[class$=-bg]{width: 90%; margin: 30px auto; background-color: white; padding: 55px 0;}
 	
 	/*list 내부 요소 style*/
 		[class$=list]{width: 90%;}
 		[class$=list]>:last-child{border:none;} /* list의 마지막 요소는 border 없음 */
 		
 		/*list 내부 info 요소 style*/
-		
-		
 		[class$=list] [class$=info]{width: 100%; border-bottom: 1px solid #9C9C9C;} 
 		
 		[class$=list] [class$=info] .image{width: 60px; height: 60px; border: solid black 1px;}
 		
 		
 	/* ======================================= list.jsp ============================================ */
-
+	
+	.group-list{margin: 0 auto;}
 	.group-list tbody>:last-child{border:none;}
 	.group-list .group-info:hover{background-color: #9C9C9C;} 
 	
 	.group-list .group-title a{line-height: 50px; font-size: 24px; color: black; font-weight: bold; text-decoration: none;}
 	.group-list .group-time{height: 50px; line-height: 50px; font-size: 18px;}
 	
-	/* 가입한 그룹이 없을 때 */
-	
-	.no-list-page{text-align: center;}
 	
 	.no-list-page *:first-child{font-size: 24px; font-weight: bold; margin-bottom: 30px; margin-bottom: 40px;}
 	.no-list-page *:last-child{
@@ -67,15 +86,23 @@
 	}
 	
 	
-	/* ======================================= grouphome.jsp ============================================ */
+	/* ======================================= home.jsp ============================================ */
+	
+	/* container-info-bar 관련 */
+	
+	.user-info{font-size: 18px; margin-right: 15px;}
 	
 	/* group-timer 관련 style */
 		.group-timer{margin-top: -46px;}
 		.group-timer .group-timer-title{color: #243323; font-size: 24px;}
 		.group-timer .group-timer-box{
-			width: clac(100% - 80px); height: 115px; line-height: 115px; text-align:center; border-radius: 25px; 
-			box-shadow:inset 1px 1px 7px rgba(0, 0, 0, 8.7);
+			width: clac(100% - 80px); height: 115px; line-height: 115px; border-radius: 15px; 
+			display: flex; justify-content: center;
+			font-size: 36px; text-align:center; 
+			box-shadow:inset 1px 1px 7px rgba(0, 0, 0, .3);
 		}
+		.group-timer .colon{margin: 0 3px;}
+		.group-timer .timer-on{font-weight: bold; color: #649B60;}
 		
 		.group-timer .group-timer-btn-group{margin-top: 10px;}
 		.group-timer .group-timer-btn-group>*{border: none; font-weight: bold;}
@@ -83,7 +110,7 @@
 		.group-timer a::hover{text-decoration: none;}
 		.group-timer-btn-group .start-btn{background-color: #649B60; color: #243323;}
 		.group-timer-btn-group .pause-btn{background-color: #C9C9C9; color: #243323;}
-	
+		
 	/* group-dday 관련 style*/
 	
 		.group-dday{margin-top: 35px; height: calc(100% - 193px);}
@@ -91,13 +118,13 @@
 		
 		.dday-list li>*:first-child::before{
 			width: 5px; height: 5px; 
-			margin: calc(25% - 4px) 8px calc(25% - 4px) 0px; border-radius: 100%; 
+			margin: 10px 8px 10px 0px; border-radius: 100%; 
 			background-color: black; 
 			float: left; display: block; content: ''; 
 		}
-		.dday-list li *:first-child{float: left; width: 30%;}
+		.dday-list li *:first-child{float: left; width: 45%; height: 24px}
 		.dday-list li *:last-child{
-			float: right; width: 60%; text-align: right; 
+			float: right; width: 50%; text-align: right; 
 			text-overflow: ellipsis; overflow: hidden; white-space: nowrap;
 		}
 		.dday-list li::after{display: block; content: ''; clear: both;}
@@ -107,9 +134,9 @@
 		.dday-list li:first-child *:first-child::before{display: none !important;}
 	
 	/* group-board 관련 style*/
-		.group-board .group-board-list{width: 100%; display:flex; flex-direction: row; justify-content: flex-start;}
-		.group-board .group-board-list>*{width: calc(100% / 6); padding: 2px 2px 2px 10px;}
-		.group-board .group-board-list *:first-child{padding-left: 0px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}  
+		.group-board .group-board-list{width: calc(100% + 20px); margin-left: -10px; display:flex; flex-direction: row; justify-content: flex-start;}
+		.group-board .group-board-list>*{width: calc(100% / 6); padding: 2px 10px 2px 10px; border-right: .5px solid #C9C9C9;}
+		.group-board .group-board-list *:last-child{ border-right: none;}  
 		
 		.group-board .writer{font-size: 16px; font-weight: bold;}
 		.group-board .content{
@@ -117,3 +144,57 @@
 			text-overflow: ellipsis; overflow: hidden; word-break: break-word; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical;
 		}
 		.group-board .time{text-align: right; color: #649B60; font-weight: bold;}
+		
+	/* group-manage 관련 */
+		.modal{
+		   display: flex; align-items: center; flex-direction: column; justify-content: center;
+		   box-sizing: border-box;  margin:auto;
+		    position: fixed;
+		}
+		.modal, .dimmed{
+		   position: absolute; top:0; bottom:0; left:0; right:0;
+		   width:100%; height:100%; background-color: rgba(11, 19, 30, .37);}
+		.manage-group_container{
+			width: 300px; min-width:300px; 
+		   display: flex; flex-direction: column; position:relative; align-items: center;  
+		   background-color: white;  position: relative; bottom: 0;   margin:auto; margin-top: 160px;
+		   border-radius: 10px; padding: 40px;
+		}
+		
+		.manage-group_container .cancle-btn{position: absolute; top: 20px; right: 20px; background-color: transparent;}
+		.manage-group_container .cancle-btn::after{display:block; content: ''; clear: both;}
+		
+		.manage-group-list li{width: 100%; height: 33%; line-height: 40px; text-align: center; border-bottom: 1px solid #9C9C9C;}
+		.manage-group-list li:hover{background-color: #9C9C9C;}
+		.manage-group-list a{color: black;}
+		.manage-group-list a:hover{text-decoration: none;}
+		
+	/* ======================================= grouppost.jsp ======================================= */
+	
+	.post-list-bg{padding: 55px 70px;}
+	
+	/* 그룹 게시글 작성 form 관련 */
+		.group-post-input{margin: 0px auto; width: 90%;}
+		.group-post-input::after{display: block; content: ''; clear: both;}
+		
+		.group-post-input .input{width: 100%; height: 96px; border: 1px solid #4F4F4F}
+		.group-post-input .submit{width: 140px; height: 40px; line-height: 40px; border-radius: 3px; 
+			background-color: #649B60; color: white;}
+	
+	/* 그룹 게시글 관련 */
+		.post-list-bg>*{width: 100%; border-bottom: 1px solid #9C9C9C; padding: 20px 0;}
+		.post-list-bg>*:last-child{border-bottom: none;}
+		.post-list-bg>*:first-child{padding-top: 0px;}
+		
+		.post-info{height: 40px;}
+		.post-info>*{line-height: 40px; }
+		.post-info .writer{margin-right: 5px; font-size: 20px; font-weight: bold;}
+		.post-info .time{font-weight: normal; color: #9C9C9C;}
+		.post-info::after{display: block; content: ''; clear: both;}
+		
+		.post-content{margin-top: 10px; color: #4F4F4F;}
+		
+		.more-post{width: 90%; margin: 0px auto; text-align: center;}
+		.more-post-btn{width: 100%; height: 45px; line-height: 45px;
+			background-color: #649B60; border-radius: 5px; font-weight: bold; color: white}
+		

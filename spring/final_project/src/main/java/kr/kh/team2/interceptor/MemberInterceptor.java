@@ -3,16 +3,24 @@ package kr.kh.team2.interceptor;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.vo.member.MentorInfoVO;
+import kr.kh.team2.model.vo.member.MetoringVO;
+import kr.kh.team2.service.MentorService;
 
 public class MemberInterceptor extends HandlerInterceptorAdapter {
 
 	/* preHandle에서 return값이 true이면 가려던 컨트롤러로 가서 작업을 진행
 	 * return값이 false이면 가려던 컨트롤러로 가지 마세요. 리다이렉트할 경로가 있으면 해당 경로로 이동
+	 * 
 	 * */
+	
+	@Autowired
+	MentorService mentorService;
+	
 	@Override
 	public boolean preHandle(
 		HttpServletRequest request, 

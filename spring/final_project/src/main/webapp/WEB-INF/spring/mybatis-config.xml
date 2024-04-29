@@ -5,7 +5,9 @@
 <configuration>
 	<typeAliases>
 		<!-- Mapper에서 resultType을 간단히 줄여쓰기 위해 typeAlias를 활용 -->
-		<typeAlias type="kr.kh.team2.model.vo.member.MemberVO" alias="MemberVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.common.ProgrammingCategoryVO" alias="ProgrammingCategoryVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.common.ProgrammingLanguageVO" alias="ProgrammingLanguageVO"/>
+
 		<typeAlias type="kr.kh.team2.model.vo.common.TotalCategoryVO" alias="TotalCategoryVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.common.TotalLanguageVO" alias="TotalLanguageVO"/>
     
@@ -23,7 +25,7 @@
 		<typeAlias type="kr.kh.team2.model.vo.group.GroupVO" alias="GroupVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.group.GroupPostVO" alias="GroupPostVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.group.GroupCalendarVO" alias="GroupCalendarVO"/>
-    	
-    	
+		<typeAlias type="kr.kh.team2.model.vo.group.MutualReviewVO" alias="MutualReviewVO"/>
+
 	</typeAliases>
 </configuration>
