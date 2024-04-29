@@ -94,8 +94,10 @@ public class MentorServiceImp implements MentorService {
 
 	@Override
 	public boolean insertMentoringApply(MentoringApplyVO mentoApVO,  MemberVO user) {
-		if(	user == null	|| !methods.checkString(user.getMe_id()))
-			return false;
+		if(	user == null	|| !methods.checkString(user.getMe_id())) {
+			return false;}
+		//회원 아이디 
+		mentoApVO.setMentAp_me_id(user.getMe_id());
 		if(mentoApVO == null || !methods.checkString(mentoApVO.getMentAp_me_id()) 
 			|| !methods.checkString(mentoApVO.getMentAp_contact())
 			|| !methods.checkString(mentoApVO.getMentAp_content())
@@ -105,8 +107,6 @@ public class MentorServiceImp implements MentorService {
 		if(getMentoring(mentoApVO.getMentAp_ment_num()) == null) {
 			return false;
 		}
-		//회원 아이디 
-		mentoApVO.setMentAp_me_id(user.getMe_id());
 		return mentorDAO.insertMentoringApply(mentoApVO);
 	}
 	

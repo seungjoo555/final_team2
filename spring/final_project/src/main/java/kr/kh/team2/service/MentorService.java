@@ -28,6 +28,7 @@ public interface MentorService {
 	MentorInfoVO getMentor(String ment_me_id);
 
 	boolean insertMentoringApply(MentoringApplyVO mentoApVO, MemberVO user);
+	
 	ArrayList<MetoringVO> getMentoringList(String me_id);
 
 	ArrayList<TotalCategoryVO> getMentoCategory(int ment_num, String table2);
