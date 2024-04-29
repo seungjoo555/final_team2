@@ -14,6 +14,14 @@
 <div class="container">
 	<!-- 검색창 -->
 	<div class="menu-bar">
+		<div class="mentor mentor-insert">
+			<c:if test="${user.me_ma_auth == '일반'}">
+				<a class="btn-outline-success mentor-insert" href="<c:url value="/mentor/insert"/>">멘토 신청하기</a>
+			</c:if>
+			<c:if test="${user.me_ma_auth == '멘토'}">
+				<a class="btn-outline-success mentor-mentoring-insert" href="<c:url value="/mentor/mentoring/insert"/>">멘토링 열기</a>
+			</c:if>
+		</div>
 		<form action="<c:url value='/mentor/list'/>" method="get" id="searchForm" onsubmit="return false;">
 			<div class="input-group" id="input-group">
 				<input   class="form-control" type="text" placeholder="검색어를 입력하세요" name="mento-totalsearch" id="mento-totalsearch" onkeypress=""> 
@@ -449,6 +457,7 @@ $(document).on('click', '.btn-apply-prev', function(){
 	
 })
 /* 신청버튼 이벤트 */
+ //신청중일 때(추가필요)
 $(document).on('click', '.btn-apply-insert', function(){
 	//서버에 보낼 데이터 생성
 	let mentoApVO = {

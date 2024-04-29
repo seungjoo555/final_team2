@@ -91,6 +91,8 @@
 	
 	<select id="selectMentoring" resultType="MetoringVO">
 		select * from mentoring where ment_num = #{ment_num}
+	</select>
+		
   <select id="selectMentoringList" resultType="MetoringVO">
     SELECT mentoring.*, mentor_info.mentIf_ment_job as ment_mentIf_job, mentor_info.mentIf_exp as ment_mentIf_exp, mentoring_apply.mentAp_state as mentAp_state, me_nickname as ment_me_nickname
   FROM mentoring

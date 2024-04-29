@@ -108,6 +108,8 @@ public class MentorServiceImp implements MentorService {
 		//회원 아이디 
 		mentoApVO.setMentAp_me_id(user.getMe_id());
 		return mentorDAO.insertMentoringApply(mentoApVO);
+	}
+	
 	public ArrayList<MetoringVO> getMentoringList(String me_id) {
 
 		return mentorDAO.selectMentoringList(me_id);
