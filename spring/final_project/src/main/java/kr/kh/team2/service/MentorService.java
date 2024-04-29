@@ -2,6 +2,7 @@ package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
+import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MentoringApplyVO;
@@ -24,7 +25,7 @@ public interface MentorService {
 
 	MentorInfoVO getMentor(String ment_me_id);
 
-	boolean insertMentoringApply(MentoringApplyVO mentoApVO);
+	boolean insertMentoringApply(MentoringApplyVO mentoApVO, MemberVO user);
 
 
 }

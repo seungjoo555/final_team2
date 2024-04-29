@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.MentorDAO;
+import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MentoringApplyVO;
@@ -90,7 +91,9 @@ public class MentorServiceImp implements MentorService {
 	}
 
 	@Override
-	public boolean insertMentoringApply(MentoringApplyVO mentoApVO) {
+	public boolean insertMentoringApply(MentoringApplyVO mentoApVO,  MemberVO user) {
+		if(	user == null	|| !methods.checkString(user.getMe_id()))
+			return false;
 		if(mentoApVO == null || !methods.checkString(mentoApVO.getMentAp_me_id()) 
 			|| !methods.checkString(mentoApVO.getMentAp_contact())
 			|| !methods.checkString(mentoApVO.getMentAp_content())
@@ -100,7 +103,8 @@ public class MentorServiceImp implements MentorService {
 		if(getMentoring(mentoApVO.getMentAp_ment_num()) == null) {
 			return false;
 		}
-		
+		//회원 아이디 
+		mentoApVO.setMentAp_me_id(user.getMe_id());
 		return mentorDAO.insertMentoringApply(mentoApVO);
 	}
 

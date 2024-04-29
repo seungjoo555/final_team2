@@ -37,6 +37,7 @@ public class MentorController {
 		
 		ArrayList<MentorJobVO> jobList = mentorService.getJobList();
 		model.addAttribute("jobList",jobList);
+		
 		return "/mentor/list";
 	}
 	
@@ -86,15 +87,13 @@ public class MentorController {
 	
 	@ResponseBody
 	@PostMapping("/mentor/apply")
-	public Map<String, Object> mentorApplyPost(HttpSession session, MentoringApplyVO mentoApVO) {
+	public Map<String, Object> mentorApplyPost(HttpSession session,@RequestBody MentoringApplyVO mentoApVO) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		//로그인 정보 가져오기
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		//신청정보 가져오기
-		mentoApVO.setMentAp_me_id(user.getMe_id());
 		//신청하기
 		System.out.println("mentoApVO :: "+ mentoApVO);
-		boolean res = mentorService.insertMentoringApply(mentoApVO);
+		boolean res = mentorService.insertMentoringApply(mentoApVO, user);
 		//페이지 이동하기
 		map.put("result", res);
 		return map;

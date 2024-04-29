@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -216,8 +217,8 @@ $(document).on('click', '.mento-item', function(event){
    //스크롤 비활성화
    $("body").css('overflow','hidden');
    //출력
-	getMentoing(ment_num);
-	function getMentoing(ment_num){
+	getMentoring(ment_num);
+	function getMentoring(ment_num){
 		$.ajax({
 			async : true, //비동기 : true(비동기), false(동기)
 			url : "<c:url value="/mentor/detail"/>", 
@@ -232,7 +233,7 @@ $(document).on('click', '.mento-item', function(event){
 			error : function(jqXHR, textStatus, errorThrown){
 			}
 		});	//ajax end
-	}	//getMentoing(ment_num); end
+	}	//getMentoring(ment_num); end
 	
 	/* 멘토링 모집 글 상세 출력 */
 	function displayMentoringDetail(mentoring, mentor) {
@@ -254,9 +255,8 @@ $(document).on('click', '.mento-item', function(event){
 	      	<div class="apply-mentoring_body">
 	      		<div class="apply-mentoring_body_info_header">
       				<div class="memberInfo" >
-						<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
-						<div class="memberNickname">\${mentor.mentIf_me_nickname} </div>
-						<img class="more-Menu" style="width: 15px; height: 20px;" src="<c:url value="/resources/img/more.png"/>">
+						<img class="basic-profile" value="\${mentor.mentIf_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+						<div class="memberNickname" value="\${mentor.mentIf_me_id}">\${mentor.mentIf_me_nickname} </div>
 					</div>
 	      		</div>
 	      		<h1>\${mentoring.ment_title}</h1>
@@ -282,6 +282,14 @@ $(document).on('click', '.mento-item', function(event){
    
 })
 
+/* 프로필 클릭 이벤트 */
+$(document).on('click', '.basic-profile', function(){
+	location.href = '<c:url value=""/>';	//프로필 주소
+})
+$(document).on('click', '.memberNickname', function(){
+	location.href = '<c:url value=""/>';	//프로필 주소
+})
+
 /* dimmed 클릭 시 창 없애기 */
 $(document).on('click', '#dimmed', function(){
    $("#modal").css('display','none');
@@ -300,9 +308,16 @@ $(document).on('click', '.btn-cancel', function(){
 
 /* 신청 창 */
 $(document).on('click', '.btn-apply', function(){
+	if(${user == null}){
+		if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?") == true){
+			location.href = '<c:url value="/login"/>';			
+		}else{
+			return false;
+		}
+	}
 	let ment_num = $('.btn-apply').val();
-	getMentoingApply(ment_num);
-	function getMentoingApply(ment_num){
+	getMentoringApply(ment_num);
+	function getMentoringApply(ment_num){
 		$.ajax({
 			async : true, //비동기 : true(비동기), false(동기)
 			url : "<c:url value="/mentor/apply"/>", 
@@ -317,7 +332,7 @@ $(document).on('click', '.btn-apply', function(){
 			error : function(jqXHR, textStatus, errorThrown){
 			}
 		});	//ajax end
-	}	//getMentoingApply(ment_num); end
+	}	//getMentoringApply(ment_num); end
 })
 	
 function displayMentoringApply(mentoring){
@@ -365,47 +380,118 @@ function displayMentoringApply(mentoring){
 
 /* 이전버튼 이벤트 */
 $(document).on('click', '.btn-apply-prev', function(){
-  
+	ment_num = $("#mentAp_ment_num").val();
+	getMentoring(ment_num);
+	
+	function getMentoring(ment_num){
+		console.log("함수");
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/mentor/detail"/>", 
+			type : 'post', 
+			data : {
+				ment_num : ment_num
+			},
+			dataType :"json", 
+			success : function (data){
+				displayMentoringDetail(data.mentoring, data.mentor);
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+			}
+		});	//ajax end
+	}	//getMentoring(ment_num); end
+	
+	function displayMentoringDetail(mentoring, mentor) {
+		let str="";
+		
+		if(mentoring == null || mentor == null){
+			str += `<h1>등록되지 않은 멘토링 정보입니다.<h1>`;
+		}
+		
+		//직무, 경력, 포토폴리오가 없을 경우 출력 메세지 설정
+		
+		
+		str += 
+			`
+	      	<div class="apply-mentoring_header">
+	      		<div class="header-title"><h1>멘토링 소개</h1></div>
+	      		<div class="btn-cancel"> <button>X</button> </div>
+	      	</div>
+	      	<div class="apply-mentoring_body">
+	      		<div class="apply-mentoring_body_info_header">
+      				<div class="memberInfo" >
+						<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+						<div class="memberNickname">\${mentor.mentIf_me_nickname} </div>
+						<img class="more-Menu" style="width: 15px; height: 20px;" src="<c:url value="/resources/img/more.png"/>">
+					</div>
+	      		</div>
+	      		<h1>\${mentoring.ment_title}</h1>
+	      		<div class="apply-mentoring_body_info_list">
+	      			<ul>
+	      				<li>직무 : \${mentor.mentIf_ment_job}</li>
+	      				<li>경력 : \${mentor.mentIf_date}년</li>
+	      				<li>포토폴리오 : \${mentor.mentIf_portfolio}</li>
+	      			</ul>
+	      		</div>
+	      		<div class="apply-box-border-line"><div class="apply-border-line"></div></div>
+	      		<div class="apply-mentoring_body_content">
+	      			<div>\${mentoring.ment_content}</div>
+	      		</div>
+	      	</div>
+	      	<div class="apply-mentoring_footer">
+				<div class="apply-due">종료일 : \${mentoring.ment_duration}</div>
+				<div class="btn-apply-box"><button type="button" class="btn-apply" value="\${mentoring.ment_num}">신청하기</button></div>
+			</div>
+			`
+		$('.apply-mentoring_box').html(str);
+	}//displayMentoringDetail(); end
+   
+	
 })
 /* 신청버튼 이벤트 */
 $(document).on('click', '.btn-apply-insert', function(){
-   //$(".form-apply").submit();
-   //alert("신청하기");
-   
 	//서버에 보낼 데이터 생성
-	//빈 값 들어옴...
 	let mentoApVO = {
 		mentAp_ment_num : $("#mentAp_ment_num").val(),
 		mentAp_contact :  $("#mentAp_contact").val(),
 		mentAp_content :  $("#mentAp_content").val()
-			
 	}
-	console.log(mentoApVO);
-	/*
+	if(mentoApVO.mentAp_contact.length == 0 || mentoApVO.mentAp_content.length == 0){
+		alert("신청 내용을 입력하세요.");
+		return;
+	}
+	
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
 		url : '<c:url value="/mentor/apply"/>', 
 		type : 'post', 
-		data : JSON.stringify(comment), 
+		data : JSON.stringify(mentoApVO), 
 		contentType : "application/json; charset=utf-8",
 		dataType : "json", 
 		success : function (data){
 			if(data.result){
-				alert("댓글을 등록했습니다.");
-				$('.textarea-comment').val('');
-				cri.page = 1;
-				getCommentList(cri);
+				alert("멘토링을 신청했습니다.");
+				$("#modal").css('display','none');
+			   $("body").css('overflow','visible');
+				let cri = {
+						page : 1,
+						type : "",
+						search : "",
+						jobList :[]
+				}
+				getMentoList(cri);
 			}else{
-				alert("댓글을 등록하지 못했습니다.");
+				alert("멘토링을 신청하지 못했습니다.");
 			}
 		}, 
 		error : function(jqXHR, textStatus, errorThrown){	//errorThrown얘는 거의 비어있음(굳이 체크 안하기로)
 			console.log(jqXHR);
 			console.log(textStatus);
 		}
-	});*/
+	});
 })
 </script>
+
 
 
 </body>
