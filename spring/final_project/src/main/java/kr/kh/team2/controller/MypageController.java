@@ -112,7 +112,7 @@ public class MypageController {
 		model.addAttribute("totalLanguage2", totalLanguage2);
 		
 		// 그룹 회원 수 count
-		ArrayList<GroupVO> memberCount = groupService.getGroupListById(me_id);
+		ArrayList<GroupVO> memberCount = groupService.countGroupListById(me_id);
 		model.addAttribute("memberCount", memberCount);
 		
 		

@@ -68,4 +68,6 @@ public interface GroupDAO {
 
 	boolean updateGroupName(@Param("num")int num, @Param("name")String name);
 
+	ArrayList<GroupVO> countGroupListById(@Param("me_id") String me_id);
+
 }

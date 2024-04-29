@@ -168,6 +168,16 @@
 		SELECT * FROM group_post WHERE gopo_num = #{num} AND gopo_gome_me_id = #{id}
 	</select>
 	
+	<select id="countGroupListById" resultType="GroupVO">
+		SELECT go_num, go_name, go_time, go_update, COUNT(gome_me_id) as go_member_count 
+			FROM `group`
+				JOIN group_member ON go_num = gome_go_num
+			WHERE go_num in (
+				SELECT gome_go_num FROM group_member WHERE gome_me_id = #{id}
+            ) 
+	</select>
+	
+	
 	<!-- =============================== DELETE =============================== -->
 	
 	<delete id="deleteGroupPost">

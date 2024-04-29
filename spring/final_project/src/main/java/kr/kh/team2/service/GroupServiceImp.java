@@ -323,6 +323,14 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.updateGroupName(num, name);
 	}
+
+	@Override
+	public ArrayList<GroupVO> countGroupListById(String me_id) {
+		if(!checkString(me_id)) {
+			return null;
+		}		
+		return groupDao.countGroupListById(me_id);
+	}
 	
 	
 }
