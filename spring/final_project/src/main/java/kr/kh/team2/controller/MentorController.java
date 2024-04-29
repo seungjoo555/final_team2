@@ -81,7 +81,6 @@ public class MentorController {
 	public Map<String, Object> mentorApply(@RequestParam("ment_num")int ment_num) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		System.out.println("ment_num :: "+ment_num);
-		//멘토링 정보 받아오기
 		MetoringVO mentoring = mentorService.getMentoring(ment_num);
 		map.put("mentoring",mentoring);
 		return map;

@@ -470,6 +470,11 @@ $(document).on('click', '.btn-apply-insert', function(){
 		return;
 	}
 	
+	if(confirm("멘토링을 정말 신청하시겠습니까?") == true){
+				
+	}else{
+		return;
+	}
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
 		url : '<c:url value="/mentoring/apply"/>', 
