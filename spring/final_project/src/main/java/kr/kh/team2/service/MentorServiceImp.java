@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.MentorDAO;
+import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
@@ -89,6 +90,47 @@ public class MentorServiceImp implements MentorService {
 		}
 		
 		return mentorDAO.selectMentoCategory(ment_num, table2);
+  }
+  
+	public MentorInfoVO getMentorInfo(String me_id) {
+		
+		return mentorDAO.selectMentorInfo(me_id);
+		
+	}
+
+	@Override
+	public MetoringVO getMetoring(String me_id) {
+		
+		return mentorDAO.selectMetoring(me_id);
+	}
+
+	@Override
+	public ArrayList<ProgrammingCategoryVO> getProgrammingCategory() {
+		
+		return mentorDAO.selectProgrammingCategoryList();
+	}
+
+	@Override
+	public boolean insertMentoring(MetoringVO mentoring, TotalCategoryVO toCt) {
+		if(!methods.checkString(mentoring.getMent_title())||
+		   !methods.checkString(mentoring.getMent_content())||
+		   !methods.checkString(mentoring.getMent_duration()+"")||
+		   !methods.checkString(mentoring.getMent_me_id())) {
+			return false;
+		}
+		
+		
+		if(!mentorDAO.insertMentoring(mentoring)) {
+			return false;
+		}
+		
+		toCt.setToCt_table_pk(mentoring.getMent_num()+"");
+		
+		if(!mentorDAO.insertTotalCategory(toCt)) {
+			return false;
+		}
+		
+		return true;
 	}
 
 

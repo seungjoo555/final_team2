@@ -38,4 +38,8 @@ public class MemberVO {
 		this.me_phone = signupDto.getPhone();
 		this.me_address = signupDto.getAdd1() + " " + signupDto.getAdd2();
 	}
+
+	public MemberVO(String me_id) {
+		this.me_id = me_id;
+	}
 }

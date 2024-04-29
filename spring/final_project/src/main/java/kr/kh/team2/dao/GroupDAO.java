@@ -20,7 +20,7 @@ public interface GroupDAO {
 
 	int selectGroupTotalCount(@Param("cri")Criteria cri);
 	
-	ArrayList<GroupVO> getGroupListById(@Param("id")String me_id);
+	ArrayList<GroupVO> getGroupListById(@Param("id")String me_id, @Param("cri")Criteria cri);
 
 	GroupVO getGroupByGoNum(@Param("num")int groupNum);
 
@@ -50,5 +50,22 @@ public interface GroupDAO {
 
 	int selectGroupMemberCount(@Param("go_num")int go_num);
 
+	ArrayList<GroupPostVO> getGroupPostByGoNum(@Param("num")int groupNum, @Param("cri")Criteria cri);
+
+	boolean insertGroupPost(@Param("num")int goNum, @Param("writer")String writer, @Param("content")String content);
+
+	int getMyGroupTotalCount(@Param("id")String me_id);
+
+	int getGroupPostTotalCount(@Param("num")int goNum);
+
+	boolean deleteGroupPost(@Param("num")int gopoNum);
+
+	GroupPostVO getGroupPostByGopoNum(@Param("num")int gopoNum);
+
+	GroupPostVO checkWriter(@Param("num")int gopoNum, @Param("id")String me_id);
+
+	boolean updateGroupPost(@Param("num")int gopoNum, @Param("content")String content);
+
+	boolean updateGroupName(@Param("num")int num, @Param("name")String name);
 
 }

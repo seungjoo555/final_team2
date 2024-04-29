@@ -53,6 +53,7 @@
 			<mapping path="/mentor/check"/>
 			<mapping path="/mentor/insert"/>
 			<mapping path="/group/grouprecruit"/>
+			<mapping path="/mentor/mentoring/insert"/>
 			<beans:ref bean="memberInterceptor"/>
 		</interceptor>	
 	</interceptors>	
