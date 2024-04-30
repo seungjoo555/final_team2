@@ -76,12 +76,11 @@
 			LIMIT #{count};
 	</select>
  	
-	<select id="getDday" resultType="GroupCalendarVO">
-		SELECT * FROM group_calendar 
+ 	<select id="getCalendar" resultType="GroupCalendarVO">
+ 		SELECT * FROM group_calendar 
 			WHERE gocal_go_num = #{num} AND gocal_startdate >= date_format(Now(), '%Y-%m-%d')
 		    ORDER BY gocal_startdate 
-		    LIMIT #{count};
-	</select>
+ 	</select>
  	
  	<select id="selectRecruit" resultType="RecruitVO">
  		select * from recruit where recu_num = #{num}

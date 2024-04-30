@@ -82,17 +82,10 @@ public class GroupController {
 		
 		// 최근 게시글 불러오기
 		ArrayList<GroupPostVO> boardlist = groupService.getRecentGroupBoard(num, recentBoard);
-		// d-day 불러오기
-		ArrayList<GroupCalendarVO> ddaylist = groupService.getDday(num, dday);
+		// 전체 그룹 일정 불러오기
+		ArrayList<GroupCalendarVO> calendarlist = groupService.getCalendar(num);
 		
-		// 가장 마지막 일정을 dday 최상단에 표시되도록 하기(의미가 있나? 그룹 시작일로 하는게 낫지 않을지,)
-		/*
-		if(ddaylist.size() != 0 || ddaylist != null) {
-			
-		}
-		*/
-		
-		model.addAttribute("ddaylist", ddaylist);
+		model.addAttribute("calendarlist", calendarlist);
 		model.addAttribute("boardlist", boardlist);
 		
 		return "/group/mygroup/home";

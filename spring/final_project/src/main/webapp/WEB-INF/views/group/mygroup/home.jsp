@@ -71,7 +71,8 @@
 						</div>
 						<div>
 							<ul class="dday-list">
-								<c:forEach items= "${ddaylist}" var="dday">
+								<c:forEach items= "${calendarlist}" var="dday" begin="0" end="12" >
+								<!-- 가장 빠른 일정부터 12개만 dday로 표시함 -->
 									<li>
 										<div>D${dday.dday}</div>
 										<div>${dday.gocal_title}</div>
@@ -278,7 +279,23 @@ $(document).on('click', '.cancle-btn', function(){
 
 <!-- fullCalendar -->
 <script>
+let eventList = []
+convertList()
 
+// controller에서 불러온 일정들을 parsing하기
+function convertList(){
+	
+	<c:forEach var="item" items="${calendarlist}">
+		var tmp = {
+			id: ${item.gocal_num},
+			title: "${item.gocal_title}",
+			start: "${item.gocal_startdate_str}",
+			end: "${item.gocal_enddate_str}"
+		}
+		eventList.push(tmp)
+	</c:forEach>
+		
+}
 
 // 캘린더 생성하기
 document.addEventListener('DOMContentLoaded', function() {
@@ -290,7 +307,8 @@ document.addEventListener('DOMContentLoaded', function() {
           month = date.date.month + 1;
 
           return year + "년 " + month + "월";
-        }
+        },
+        events: eventList
         
     });
     

@@ -120,15 +120,6 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public ArrayList<GroupCalendarVO> getDday(int groupNum, int dday) {
-		if(groupNum == 0 || dday == 0) {
-			System.out.println("groupNum  or count is 0");
-			return null;
-		}
-		return groupDao.getDday(groupNum, dday);
-	}
-
-	@Override
 	public long getGroupTime(int groupNum) {
 		if(groupNum == 0 ) {
 			System.out.println("groupNum is 0");
@@ -286,6 +277,15 @@ public class GroupServiceImp implements GroupService{
 		}
 		
 		return groupDao.updateGroupName(num, name);
+	}
+
+	@Override
+	public ArrayList<GroupCalendarVO> getCalendar(int num) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return null;
+		}
+		return groupDao.getCalendar(num);
 	}
 	
 	

@@ -1,5 +1,6 @@
 package kr.kh.team2.model.vo.group;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -56,5 +57,17 @@ public class GroupCalendarVO {
 		
 	}
     
+	
+	// date를 string으로 변환하기
+	public String getGocal_startdate_str() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		return format.format(gocal_startdate);
+	}
     
+	public String getGocal_enddate_str() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		return format.format(gocal_startdate);
+	}
 }
