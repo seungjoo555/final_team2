@@ -146,7 +146,7 @@ public class MentorController {
 		
 		if(mentorInfo.getMentIf_state()==-1) {
 			model.addAttribute("msg","멘토 신청 거절 이력이 있습니다.");
-			model.addAttribute("url","/");
+			model.addAttribute("url","/mentor/insert");
 			return "message";
 		}
 		
