@@ -58,4 +58,6 @@ public interface GroupService {
 
 	ArrayList<GroupCalendarVO> getCalendar(int num);
 
+	boolean insertGroupCal(int num, GroupCalendarVO newSch, MemberVO user);
+
 }

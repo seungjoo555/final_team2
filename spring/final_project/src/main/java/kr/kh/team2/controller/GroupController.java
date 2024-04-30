@@ -1,6 +1,7 @@
 package kr.kh.team2.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -255,6 +256,37 @@ public class GroupController {
 		
 		return "/group/mygroup/manageapplicant";
 	}
+	
+	@ResponseBody
+	@PostMapping("/group/calendar/insert")
+	public Map<String, Object> groupCalendarInsert(HttpSession session, @RequestParam("num")int num, 
+			@RequestParam("title")String title, @RequestParam("startdt")Date startdt, @RequestParam("enddt")Date enddt, 
+			@RequestParam("memo")String memo){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		/*
+		 * num : ${group.go_num},
+			title : $('.'+modal+' #title').val(),
+	  		startdt : arg.startStr,
+	  		enddt : arg.endStr,
+	  		memo :  $('.'+modal+' #memo').val() 
+		 * 
+		 * */
+		
+		GroupCalendarVO newSch = new GroupCalendarVO(title, startdt, enddt, memo);
+		
+		boolean result = groupService.insertGroupCal(num, newSch, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
 	
 	// ================================ group ================================
 		

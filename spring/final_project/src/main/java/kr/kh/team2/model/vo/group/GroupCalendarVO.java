@@ -19,11 +19,24 @@ public class GroupCalendarVO {
     private int gocal_go_num;
     
     private String dday;
-
+    
+    // =========================== Setter ===========================
+    
 	public void setGocal_startdate(Date gocal_startdate) {
 		this.gocal_startdate = gocal_startdate;
 		calcDday();
 	}
+	
+	// =========================== Constructor ===========================
+	
+	public GroupCalendarVO(String title, Date startdt, Date enddt, String memo) {
+		gocal_title = title;
+		gocal_startdate = startdt;
+		gocal_enddate = enddt;
+		gocal_memo = memo;
+	}
+	
+	// =========================== Methods ===========================
 
 	private void calcDday() {
 		long todayMs, calMs; long result; String ddayResult = "";
@@ -57,7 +70,6 @@ public class GroupCalendarVO {
 		
 	}
     
-	
 	// date를 string으로 변환하기
 	public String getGocal_startdate_str() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -70,4 +82,5 @@ public class GroupCalendarVO {
 		
 		return format.format(gocal_startdate);
 	}
+
 }

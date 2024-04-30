@@ -14,8 +14,8 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
 
 <style>
-	
-
+	.insertModal{display:none;}
+	.insertBtn{background-color: #649B60;}
 		
 	
 </style>
@@ -71,8 +71,8 @@
 						</div>
 						<div>
 							<ul class="dday-list">
-								<c:forEach items= "${calendarlist}" var="dday" begin="0" end="12" >
-								<!-- 가장 빠른 일정부터 12개만 dday로 표시함 -->
+								<c:forEach items= "${calendarlist}" var="dday" begin="0" end="10" >
+								<!-- 가장 빠른 일정부터 10개만 dday로 표시함 -->
 									<li>
 										<div>D${dday.dday}</div>
 										<div>${dday.gocal_title}</div>
@@ -92,6 +92,50 @@
 						<div class="calendar" id="calendar">
 						
 						</div>
+						
+						 <!-- insertModal -->
+						  <div class="modal fade insertModal" id="myModal">
+						    <div class="modal-dialog">
+						      <div class="modal-content">
+						      
+						        <!-- Modal Header -->
+						        <div class="modal-header">
+						          <h4 class="modal-title">일정 등록</h4>
+						          <button type="button" class="close" onclick="initModal('insertModal', g_arg)">&times;</button>
+						        </div>
+						        
+						        <!-- Modal body -->
+						        <div class="modal-body">
+						          <div class="form-group empl_nm">
+									<label for="title">일정 제목:</label>
+									<input class="form-control" placeholder="" id="title">
+								  </div>
+								  <br>
+						          <div class="form-group">
+									<label for="memo">일정 내용:</label>
+									<input class="form-control" placeholder="" id="memo">
+								  </div>
+								  <!-- 일정 시간 지정 구현 필요 -->
+								  <!-- 
+								  <div class="form-group">
+									<label for="start">시작 날짜:</label>
+									<input type="date" class="form-control" placeholder="" id="start">
+								  </div>
+								  <div class="form-group">
+									<label for="end">종료 날짜:</label>
+									<input type="date" class="form-control" placeholder="" id="end">
+								  </div>
+								   -->
+						        </div>
+						        <!-- Modal footer -->
+						        <div class="modal-footer">
+								  <button type="button" class="btn btn-success float-right insertBtn" onclick="insertSch('insertModal', g_arg)">등록</button>
+						        </div>
+						        
+						      </div>
+						    </div>
+						  </div>
+												
 					</div>
 				</div>
 			</div>
@@ -278,6 +322,7 @@ $(document).on('click', '.cancle-btn', function(){
 </script>
 
 <!-- fullCalendar -->
+<!--  캘린더 생성하기 -->
 <script>
 let eventList = []
 convertList()
@@ -290,7 +335,17 @@ function convertList(){
 			id: ${item.gocal_num},
 			title: "${item.gocal_title}",
 			start: "${item.gocal_startdate_str}",
-			end: "${item.gocal_enddate_str}"
+			end: "${item.gocal_enddate_str}",
+		 	extendedProps: {
+				writer: "${item.gocal_me_id}",
+				memo: "${item.gocal_memo}"
+	        },
+	        
+	        // 일정 별 style 지정
+	        backgroundColor: "#E6F5E5",
+	        textColor : "#000000",
+	        borderColor: "transparent"
+			
 		}
 		eventList.push(tmp)
 	</c:forEach>
@@ -301,21 +356,163 @@ function convertList(){
 document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      initialView: 'dayGridMonth',
-      titleFormat: function (date) {
-          year = date.date.year;
-          month = date.date.month + 1;
-
-          return year + "년 " + month + "월";
+      	// 월별로 캘린더 출력
+      	initialView: 'dayGridMonth',
+      
+      	// 캘린더 날짜 제목 형식 변경
+      	titleFormat: function (date) {
+	        year = date.date.year;
+	        month = date.date.month + 1;
+	
+	        return year + "년 " + month + "월";
         },
-        events: eventList
+        
+        // 일정이 너무 많으면 'more' 버튼 활성화
+        dayMaxEvents: true, 
+        
+        // 일정 클릭 이벤트 활성화
+        selectable: true,
+        selectMirror: true,
+        select: function(arg) {
+  			insertModalOpen(arg);	//일자 클릭 시 모달 호출
+        },
+        eventClick: function(arg) {
+  			insertModalOpen(arg);	//이벤트 클릭 시 모달 호출
+        },
+        
+        // 일정 데이터 넣기
+        events: eventList,
         
     });
     
+    // 캘린더 생성하기
     calendar.render();
 });
 
+//모달 초기화
+function initModal(modal, arg){
+	$('.modal-title').text('일정 등록')
+	
+	$('.'+modal+' #title').val('');
+	$('.'+modal+' #memo').val('');
+	// $('.'+modal+' #start').val('');
+	// $('.'+modal+' #end').val('');
+	
+	$('.'+modal).modal('hide');
+	g_arg = null;
+}
+
+// 모달 show
+function insertModalOpen(arg){
+	
+	g_arg = arg;
+	// 값이 있는 경우(기존 일정을 클릭했을 경우) 세팅
+	if(g_arg.event != undefined){
+		let tmp = new Date();
+		
+		$('.modal-title').val('일정 수정')
+		
+		$('.insertModal .deleteBtn').css('display', 'inline');
+		$('.insertModal .memo').css('display', 'inline');
+		$('.insertModal #memo').val(g_arg.event.extendedProps.memo);
+		$('.insertModal #title').val(g_arg.event.title);
+		// 시작 종료날짜 (작동안됨 수정 필요)
+		// $('.insertModal #start').val(g_arg.event.start);
+		// $('.insertModal #end').val(g_arg.event.end);
+	}
+	
+	//모달창 show
+	$('.insertModal').modal({backdrop: 'static'});
+	console.log(arg);
+	$('.insertModal #title').focus();
+}
+
+//stringFormat date.getMonth() 또는 getDate()가 한자리수 일때 0 추가
+function parse(str) {    
+	var y = str.substr(0, 4); 
+	var m = str.substr(4, 2);
+	var d = str.substr(6, 2);
+	
+	return new Date(y,m-1,d);}
+
+//캘린더 새로고침
+function fCalUpdate() {
+    calendar.refetchEvents();
+}
+
 </script>
 
+<!-- 그룹 일정 등록 -->
+<script type="text/javascript">
+
+//일정등록
+function insertSch(modal, arg){
+	
+	if($('.'+modal+' #title').val() == ''){
+		alert('제목을 입력해주세요');
+		return;
+	}
+	
+	if($('.'+modal+' #title').val().length > 30){
+		alert('제목은 30자를 넘을 수 없습니다 현재 ' + $('.'+modal+' #title').val().length + '자');
+		return;
+	}
+	
+	// 시작일-종료일 유효성 검사
+	/*
+	if($('.insertModal input[name="allDay"]:checked').val()!='true'){
+		  if(arg.startStr.substring(0, 10) == arg.endStr.substring(0, 10)){
+			  if($('.insertModal #end').val() <= $('.insertModal #start').val()){
+				  alert('종료시간을 시작시간보다 크게 선택해주세요');
+				  $('.insertModal #end').focus();
+				  return;
+			  }
+			}
+		}
+	*/
+	
+	var data;
+	
+	if(arg.startStr.length > 10){
+		//일자만 추출
+		arg.startStr = arg.startStr.substr(0, 10);
+	}
+	
+	if(arg.endStr.length > 10){
+		var m_end = new Date(arg.endStr.substr(0, 4), arg.endStr.substr(5, 2)-1, arg.endStr.substr(8, 2));
+		//종일이기에 일+1 (시간은 어차피 00:00)
+		m_end.setDate(m_end.getDate()+1);
+		arg.endStr = m_end.getFullYear()+'-'+ stringFormat(m_end.getMonth()+1)+'-'+ stringFormat(m_end.getDate());
+	}
+	
+	//DB 삽입	
+	$.ajax({
+		async : true, //비동기 : true(비동기), false(동기)
+		url : '<c:url value="/group/calendar/insert"/>', 
+		type : 'post', 
+		data : {
+			num : ${group.go_num},
+			title : $('.'+modal+' #title').val(),
+	  		startdt : new Date(arg.startStr),
+	  		enddt : new Date(arg.endStr),
+	  		memo :  $('.'+modal+' #memo').val() 
+		}, 
+		dataType : "json", 
+		success : function (data){
+			if(data.data = "ok"){
+				alert("일정이 등록되었습니다.")
+				fCalUpdate()
+			}
+		}, 
+		error : function(jqXHR, textStatus, errorThrown){
+	
+		}
+	});
+				 
+	
+
+}
+
+</script>
 </body>
 </html>

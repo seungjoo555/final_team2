@@ -287,6 +287,33 @@ public class GroupServiceImp implements GroupService{
 		}
 		return groupDao.getCalendar(num);
 	}
+
+	@Override
+	public boolean insertGroupCal(int num, GroupCalendarVO newSch, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(newSch == null) {
+			System.out.println("null schedule");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		// 로그인 한 유저가 멤버인지 확인함(후에 writer로 변경)
+		MemberVO tmp = new MemberVO(user.getMe_id());
+		
+		if(!isGroupMember(tmp, num)) {
+			System.out.println("not group member");
+			return false;
+		}
+		
+		return groupDao.insertGroupCal(num, newSch, user);
+		
+	}
 	
 	
 }

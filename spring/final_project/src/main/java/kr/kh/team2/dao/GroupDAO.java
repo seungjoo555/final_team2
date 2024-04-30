@@ -59,4 +59,6 @@ public interface GroupDAO {
 
 	ArrayList<GroupCalendarVO> getCalendar(@Param("num")int num);
 
+	boolean insertGroupCal(@Param("num")int num, @Param("newSche")GroupCalendarVO newSch, @Param("user")MemberVO user);
+
 }
