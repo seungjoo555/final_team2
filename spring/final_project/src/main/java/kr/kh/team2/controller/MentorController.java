@@ -93,7 +93,6 @@ public class MentorController {
 		//로그인 정보 가져오기
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		//신청하기
-		System.out.println("mentoApVO :: "+ mentoApVO);
 		boolean res = mentorService.insertMentoringApply(mentoApVO, user);
 		//페이지 이동하기
 		map.put("result", res);
