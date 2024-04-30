@@ -62,8 +62,10 @@ public class GroupCalendarVO {
 			ddayResult = "+999+";
 		}else if(result <= -999) {
 			ddayResult = "-999+";
-		}else {
+		}else if(result < 0){
 			ddayResult = "" + (result - 1);
+		}else {
+			ddayResult = "+" + result;
 		}
 		
 		setDday(ddayResult);

@@ -71,7 +71,7 @@
 						</div>
 						<div>
 							<ul class="dday-list">
-								<c:forEach items= "${calendarlist}" var="dday" begin="0" end="10" >
+								<c:forEach items= "${ddaylist}" var="dday" begin="0" end="10" >
 								<!-- 가장 빠른 일정부터 10개만 dday로 표시함 -->
 									<li>
 										<div>D${dday.dday}</div>

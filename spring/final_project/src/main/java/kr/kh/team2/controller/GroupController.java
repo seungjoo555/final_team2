@@ -1,6 +1,7 @@
 package kr.kh.team2.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -67,8 +68,8 @@ public class GroupController {
 	@GetMapping("/group/home")
 	public String grouphome(Model model, HttpSession session, int num){
 		int recentBoard = 6;
-		int dday = 7;
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		ArrayList<GroupCalendarVO> ddaylist = new ArrayList<GroupCalendarVO>();
 		
 		// 해당 그룹 가입 유저가 아니라면
 		if(!groupService.isGroupMember(user, num)) {
@@ -86,7 +87,25 @@ public class GroupController {
 		// 전체 그룹 일정 불러오기
 		ArrayList<GroupCalendarVO> calendarlist = groupService.getCalendar(num);
 		
+
+		
+		if(calendarlist != null || calendarlist.size() != 0) {
+			Calendar today = Calendar.getInstance();
+			Calendar calDate = Calendar.getInstance();
+			
+			for(GroupCalendarVO tmp : calendarlist) {
+				 calDate.setTime(tmp.getGocal_startdate()); 
+				 
+				 long calMs = calDate.getTimeInMillis();
+				 
+				if(calMs > today.getTimeInMillis()) {
+					ddaylist.add(tmp);
+				}
+			}
+		}
+		
 		model.addAttribute("calendarlist", calendarlist);
+		model.addAttribute("ddaylist", ddaylist);
 		model.addAttribute("boardlist", boardlist);
 		
 		return "/group/mygroup/home";
