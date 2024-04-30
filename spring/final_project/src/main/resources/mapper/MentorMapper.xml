@@ -31,6 +31,31 @@
 	
 	<!-- =============================== UPDATE =============================== -->	
 	
+	<update id="mentorInfoMultiAccept">
+		update mentor_info
+		set
+		mentIf_state = 1
+		where
+		mentIf_me_id = #{me_id}
+	</update>
+	
+	<update id="updateMemberMentorInfo">
+		update member
+		set
+		me_ma_auth = "멘토"
+		where
+		me_id = #{me_id}
+	</update>
+	
+	<update id="mentorInfoMultiDeny">
+		update mentor_info
+		set
+		mentIf_state = -1
+		where
+		mentIf_me_id = #{me_id}
+	
+	</update>
+	
 	<!-- =============================== SELECT =============================== -->	
 	<select id="selectMentorList" resultType="MetoringVO">
         select mentoring.*, me_nickname as ment_me_nickname, mentIf_exp as ment_mentIf_exp, mentIf_ment_job as ment_mentIf_job
@@ -94,6 +119,7 @@
 		from mentor_info
 		where
 			mentIf_ment_job like concat("%",#{cri.search},"%")
+			and mentIf_state = 0
 		order by mentIf_date DESC
 		limit #{cri.pageStart}, #{cri.perPageNum}
 	</select>

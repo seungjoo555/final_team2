@@ -3,6 +3,7 @@ package kr.kh.team2.service;
 import java.util.ArrayList;
 
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.dto.MentorInfoDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
@@ -45,6 +46,9 @@ public interface MentorService {
 	ArrayList<MentorInfoVO> getMentorInfoList(Criteria cri);
 
 	int getMentorInfoTotalCount(Criteria cri);
+
+	boolean mentorMultiRequest(MentorInfoDTO mentorInfoDTO);
+
 
 
 }

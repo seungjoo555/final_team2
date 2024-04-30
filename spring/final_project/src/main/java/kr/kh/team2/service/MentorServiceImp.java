@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.MentorDAO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.dto.MentorInfoDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
@@ -168,7 +169,7 @@ public class MentorServiceImp implements MentorService {
 	@Override
 	public ArrayList<MentorInfoVO> getMentorInfoList(Criteria cri) {
 		if(cri == null) {
-			cri = new Criteria(1, 20);
+			cri = new Criteria(1, 10);
 		}
 
 		return mentorDAO.selectMentorInfoList(cri);
@@ -181,6 +182,29 @@ public class MentorServiceImp implements MentorService {
 		}
 		return mentorDAO.selectMentorInfoTotalCount(cri);
 	}
+
+	@Override
+	public boolean mentorMultiRequest(MentorInfoDTO mentorInfoDTO) {
+		boolean resMentorInfo = false;
+		boolean resMentorInfoMember = false;
+		if(mentorInfoDTO.getBtnType().equals("accept")) {
+			for(String me_id : mentorInfoDTO.getCheckedIds()) {
+				resMentorInfo = mentorDAO.mentorInfoMultiAccept(me_id);
+				resMentorInfoMember = mentorDAO.updateMemberMentorInfo(me_id);
+			}
+			return resMentorInfo&&resMentorInfoMember;
+		}
+		else if(mentorInfoDTO.getBtnType().equals("deny")) {
+			for(String me_id : mentorInfoDTO.getCheckedIds()) {
+				resMentorInfo = mentorDAO.mentorInfoMultiDeny(me_id);
+			}
+			return resMentorInfo;
+		}
+		return false;
+		
+	}
+
+
 
 
 }
