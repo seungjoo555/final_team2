@@ -9,11 +9,14 @@
 
 <!-- mygroup.css -->
 <link rel="stylesheet" href="<c:url value="/resources/css/mygroup.css"/>">
+
+<!-- fullCalendar -->
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+
 <style>
 	
-	/* group-calendar 관련 */
-		.group-calendar{height: 100%; padding: 67px 30px 30px 30px;}
-		.group-calendar .calendar{width: 100%; height:100%; border: 1px solid black;}
+
+		
 	
 </style>
 </head>
@@ -85,7 +88,7 @@
 						<div class="box-info-bar">
 							일정
 						</div>
-						<div class="calendar">
+						<div class="calendar" id="calendar">
 						
 						</div>
 					</div>
@@ -270,6 +273,29 @@ $(document).on('click', '.cancle-btn', function(){
    $("body").css('overflow','visible');
 })
 
+
+</script>
+
+<!-- fullCalendar -->
+<script>
+
+
+// 캘린더 생성하기
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      titleFormat: function (date) {
+          year = date.date.year;
+          month = date.date.month + 1;
+
+          return year + "년 " + month + "월";
+        }
+        
+    });
+    
+    calendar.render();
+});
 
 </script>
 
