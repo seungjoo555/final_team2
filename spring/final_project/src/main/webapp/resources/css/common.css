@@ -26,27 +26,27 @@
 header{
 	width: 100%; min-width: 1200px;
 }
-header h1{ width: 110px; }
-header img{ width: 110px; }
+header h1{ width: 150px; }
+header img{ width: 150px; }
 header .navbar { background-color: #E6F5E5; margin: 0; padding: 0; height: 80px;}
 header .navbar>.container-fluid {
 	width: 1200px; margin: 0 auto; padding: 0; height: 80px;
 }
 
 
-header .navbar-left{ width: 300px; display: flex; justify-content: space-around; margin:0;}
+header .navbar-left{ width: 400px; display: flex; justify-content: space-around; margin:0;}
 header .navbar-left a{ font-size: 16px; color: #000000; padding: 0;}
 
 header .navbar-right{ width: 150px; display: flex; justify-content: space-around; margin:0;}
 header .navbar-right a{ font-size: 14px; color: #000000; padding: 0; }
 
 header .d-flex {
-	width: calc(100% - 560px); justify-content: flex-end;
+	width: calc(100% - 700px); justify-content: flex-end;
 }
 
 /* header 검색구역 */
 #totalsearch{ 
-	width: 550px; border-radius: 5px 0 0 5px;
+	width: 450px; border-radius: 5px 0 0 5px;
 	border: none;
 }
 #totalsearch::placeholder{ color: #999; }
