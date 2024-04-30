@@ -44,10 +44,10 @@ public interface MentorDAO {
 
 	int selectMentorInfoTotalCount(@Param("cri")Criteria cri);
 
-	boolean mentorInfoMultiAccept(@Param("me_id")String me_id);
+	boolean mentorInfoAccept(@Param("me_id")String me_id);
 
 	boolean updateMemberMentorInfo(@Param("me_id")String me_id);
 
-	boolean mentorInfoMultiDeny(@Param("me_id")String me_id);
+	boolean mentorInfoDeny(@Param("me_id")String me_id);
 
 }

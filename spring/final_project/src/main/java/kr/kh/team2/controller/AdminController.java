@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.dto.MentorInfoDTO;
@@ -58,6 +59,33 @@ public class AdminController {
 		
 		if(res) {
 			map.put("res","true");
+		}else {
+			map.put("res", "false");
+		}
+		return map;
+	}
+	
+	@ResponseBody
+	@GetMapping("/admin/managementor/detail")
+	public Map<String, Object> mentorInfoDetail(@RequestParam String mentIf_me_id){
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		MentorInfoVO mentorInfo = mentorService.getMentorInfo(mentIf_me_id);
+		
+		map.put("mentorInfo", mentorInfo);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/admin/managementor/request")
+	public Map<String, Object> mentorRequestPost(@RequestParam String mentIf_me_id,
+					@RequestParam String btnType){
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		boolean res = mentorService.mentorRequest(mentIf_me_id,btnType);
+		
+		if(res) {
+			map.put("res", "true");
 		}else {
 			map.put("res", "false");
 		}

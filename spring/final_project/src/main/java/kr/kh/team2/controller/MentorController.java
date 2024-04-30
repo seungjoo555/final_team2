@@ -112,11 +112,16 @@ public class MentorController {
 	public String mentorCheck(HttpSession session) {
 
 		MemberVO user = (MemberVO)session.getAttribute("user");
-		boolean res = mentorService.checkMentor(user.getMe_id());
-		if(res) {
+		MentorInfoVO mentorInfo = mentorService.checkMentor(user.getMe_id());
+		if(mentorInfo == null) {
 			return "true";
 		}
-
+		if(mentorInfo.getMentIf_state()==0 || mentorInfo.getMentIf_state() ==1) {
+			return "duplicate";
+		}
+		if(mentorInfo.getMentIf_state()==-1) {
+			return "denied";
+		}
 		return "false";
 	}
 	
@@ -131,8 +136,16 @@ public class MentorController {
 			return "message";
 		}
 		
-		if(mentorService.getMentorInfo(user.getMe_id())!=null) {
+		MentorInfoVO mentorInfo = mentorService.getMentorInfo(user.getMe_id());
+		
+		if(mentorInfo.getMentIf_state()==0 || mentorInfo.getMentIf_state() == 1) {
 			model.addAttribute("msg","이미 멘토 신청을 완료한 계정입니다.");
+			model.addAttribute("url","/");
+			return "message";
+		}
+		
+		if(mentorInfo.getMentIf_state()==-1) {
+			model.addAttribute("msg","멘토 신청 거절 이력이 있습니다.");
 			model.addAttribute("url","/");
 			return "message";
 		}

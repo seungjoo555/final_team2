@@ -23,7 +23,7 @@ public interface MentorService {
 
 	boolean insertMentorInfo(MentorInfoVO mentorInfoVO);
 
-	boolean checkMentor(String me_id);
+	MentorInfoVO checkMentor(String me_id);
 
 	MetoringVO getMentoring(int ment_num);
 
@@ -48,6 +48,8 @@ public interface MentorService {
 	int getMentorInfoTotalCount(Criteria cri);
 
 	boolean mentorMultiRequest(MentorInfoDTO mentorInfoDTO);
+
+	boolean mentorRequest(String mentIf_me_id, String btnType);
 
 
 

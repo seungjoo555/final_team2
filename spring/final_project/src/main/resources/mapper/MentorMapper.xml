@@ -31,7 +31,7 @@
 	
 	<!-- =============================== UPDATE =============================== -->	
 	
-	<update id="mentorInfoMultiAccept">
+	<update id="mentorInfoAccept">
 		update mentor_info
 		set
 		mentIf_state = 1
@@ -47,7 +47,7 @@
 		me_id = #{me_id}
 	</update>
 	
-	<update id="mentorInfoMultiDeny">
+	<update id="mentorInfoDeny">
 		update mentor_info
 		set
 		mentIf_state = -1

@@ -70,13 +70,11 @@ public class MentorServiceImp implements MentorService {
 	}
 
 	@Override
-	public boolean checkMentor(String me_id) {
+	public MentorInfoVO checkMentor(String me_id) {
 		
 		MentorInfoVO dbMentor = mentorDAO.selectMentorInfo(me_id);
-		if(dbMentor==null) {
-			return true;
-		}
-		return false;
+		
+		return dbMentor;
 		
 	}
 
@@ -189,18 +187,35 @@ public class MentorServiceImp implements MentorService {
 		boolean resMentorInfoMember = false;
 		if(mentorInfoDTO.getBtnType().equals("accept")) {
 			for(String me_id : mentorInfoDTO.getCheckedIds()) {
-				resMentorInfo = mentorDAO.mentorInfoMultiAccept(me_id);
+				resMentorInfo = mentorDAO.mentorInfoAccept(me_id);
 				resMentorInfoMember = mentorDAO.updateMemberMentorInfo(me_id);
 			}
 			return resMentorInfo&&resMentorInfoMember;
 		}
 		else if(mentorInfoDTO.getBtnType().equals("deny")) {
 			for(String me_id : mentorInfoDTO.getCheckedIds()) {
-				resMentorInfo = mentorDAO.mentorInfoMultiDeny(me_id);
+				resMentorInfo = mentorDAO.mentorInfoDeny(me_id);
 			}
 			return resMentorInfo;
 		}
 		return false;
+		
+	}
+
+	@Override
+	public boolean mentorRequest(String mentIf_me_id, String btnType) {
+		boolean resMentorInfo = false;
+		boolean resMentorInfoMember = false;
+		if(btnType.equals("accept")) {
+			resMentorInfo = mentorDAO.mentorInfoAccept(mentIf_me_id);
+			resMentorInfoMember = mentorDAO.updateMemberMentorInfo(mentIf_me_id);
+			return resMentorInfo&&resMentorInfoMember;
+		}else if(btnType.equals("deny")) {
+			resMentorInfo = mentorDAO.mentorInfoDeny(mentIf_me_id);
+			return resMentorInfo;
+		}
+		return false;
+		
 		
 	}
 

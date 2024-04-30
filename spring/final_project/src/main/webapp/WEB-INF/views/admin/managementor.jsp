@@ -80,6 +80,92 @@
 		color : black
 	}
 	
+	#modalWrap {
+	  position: fixed; /* 화면에 고정 */
+	  z-index: 1; /* 상위에 위치 */
+	  padding-top: 100px;
+	  left: 0;
+	  top: 0;
+	  width: 100%;
+	  height: 100%;
+	  overflow: auto;
+	  background-color: rgba(0, 0, 0, 0.7); /* 반투명한 배경색 */
+	  display: none; /* 초기에는 숨김 */
+	}
+	
+	#modalBody {
+	  width: 1000px;
+	  height: 750px;
+	  padding: 30px 30px;
+	  margin: 0 auto;
+	  border: 1px solid #777;
+	  background-color: #fff;
+	}
+	
+	#closeBtn {
+	  float: right;
+	  font-weight: bold;
+	  color: #777;
+	  font-size: 25px;
+	  cursor: pointer;
+	}
+	
+	.mentorInfo-detail-input-wrap{
+		display : flex;
+		justify-content : space-between;
+		margin-top : 35px;
+	}
+	
+	.mentorInfo-detail-input-wrap input{
+		width : 450px;
+		height : 50px;
+		border-radius : 5px;
+		background-color: #EBEBEB;
+		padding : 10px;
+	}
+	
+	.bank-wrap{
+		display:flex;
+	}
+	.bank-wrap .mentorInfo-account{
+		width : 330px;
+	}
+	.bank-wrap .mentorInfo-bank{
+		margin-right : 20px;
+		width : 100px;
+	}
+	
+	.mentorInfo-intro{
+		width : 938px;
+		height : 200px;
+		border-radius : 5px;
+		background-color : #EBEBEB;
+	}
+	
+	.mentorInfo-detail-button-group{
+		display : block;
+		text-align: center;
+		margin-top : 35px;
+	}
+	
+	.mentorInfo-detail-button-group button{
+		height : 50px;
+		border-radius : 5px;
+	}
+	
+	.button-accept{
+		width : 110px;
+		background-color : #649B60;
+		color : white;
+	}
+	
+	.button-deny{
+		width : 110px;
+		background-color : #D9D9D9;
+	
+	}
+	
+	
 </style>
 </head>
 <body>
@@ -123,6 +209,19 @@
 	<div class="mentor-pagination">
 			<ul class="box-pagination justify-content-center">
 			</ul>
+	</div>
+	<div id="modalWrap" class="modalWrap"> <!-- 모달 창을 감싸는 div -->
+      <div id="modalBody" class="modalBody">
+        <span id="closeBtn" class="modalCloseBtn">&times;</span> <!-- 모달을 닫는 X 버튼 -->
+        <div class="mentorInfo-detail-wrap">
+	        <h2>dddd</h2>
+	        <div class="mentorInfo-detail-input-wrap">
+	        	<div class="mentorInfo-print-group">
+	        		<label for="mentorInfo-job">멘토직무</label>
+	        	</div>
+	        </div>
+      	</div>
+    </div>
 	</div>
 </div>
 
@@ -172,8 +271,11 @@
 		for(mentorInfo of mentorInfoList){
 			str += `<ul class="mentor-info-instance">
 						<input type="checkbox" class="mentor-info-checkbox" value="\${mentorInfo.mentIf_me_id}">
-						<li><a href="<c:url value='/mypage/profile?me_id=\${mentorInfo.mentIf_me_id}'/>" class="mentor-info mentor-id">\${mentorInfo.mentIf_me_id}</a></li>
+						<li>
+							<a href="<c:url value='/mypage/profile?me_id=\${mentorInfo.mentIf_me_id}'/>" class="mentor-info mentor-id" >\${mentorInfo.mentIf_me_id}</a>
+						</li>
 						<div class="mentor-info-click-box">
+							<input type="hidden" class="hiddenId" value="\${mentorInfo.mentIf_me_id}">
 							<li class="mentor-info mentor-work">\${mentorInfo.mentIf_ment_job}</li>
 					        <li class="mentor-info mentor-content">\${mentorInfo.mentIf_intro}</li>
 					    <div>
@@ -186,8 +288,109 @@
 	
 	<!--신청정보 클릭 이벤트-->
 	$(document).on('click','.mentor-info-click-box',function(){
-		alert("ㅇㅇ")
+		$('.modalWrap').css('display','block')
+		let mentIf_me_id = $(this).find('.hiddenId').val();
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/admin/managementor/detail"/>", 
+			type : 'get', 
+			data : { mentIf_me_id: mentIf_me_id },
+			dataType :"json", 
+			success : function (data){
+				displayMentorInfo(data.mentorInfo)
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+			}
+		});
+	});
+	
+	<!--mentorInfo detail 출력-->
+	function displayMentorInfo(mentorInfo){
+		
+		let str = `
+			<h2>\${mentorInfo.mentIf_me_id}</h2>
+	        <div class="mentorInfo-detail-input-wrap">
+	        	<div class="mentorInfo-print-group">
+	        		<label for="mentorInfo-job">멘토직무</label>
+	        		<br>
+	        		<input type="text" value="\${mentorInfo.mentIf_ment_job}" readonly>
+	        	</div>
+	        	<div class="mentorInfo-print-group">
+	        		<label for="mentorInfo-exp">경력</label>
+	        		<br>
+	        		<input type="text" value="\${mentorInfo.mentIf_exp}" readonly>
+        		</div>
+	        </div>
+	        <div class="mentorInfo-detail-input-wrap">
+	        	<div class="mentorInfo-print-group">
+			        <label for="mentorInfo-account">계좌 정보</label>
+					<br>
+					<div class="bank-wrap">
+						<input type="text" value ="\${mentorInfo.mentIf_bank}" class="mentorInfo-bank" readonly>
+						<input type="text" value ="\${mentorInfo.mentIf_account}" class="mentorInfo-account" readonly>
+					</div>
+				</div>
+				<div class="mentorInfo-print-group">
+					<label for="mentorInfo-portfolio">포트폴리오</label>
+					<br>
+					<input type="button" value="\${mentorInfo.mentIf_portfolio}" onClick="window.open('\${mentorInfo.mentIf_portfolio}')" class="mentIf_portfolio" readonly>
+				</div>
+       		</div>
+       		<div class="mentorInfo-detail-input-wrap">
+	       		<div class="mentorInfo-print-group">
+					<label for="mentorInfo-intro">자기소개</label>
+					<br>
+					<textarea readonly class="mentorInfo-intro">\${mentorInfo.mentIf_intro}</textarea>
+				</div>
+			</div>
+			<div class="mentorInfo-detail-button-group">
+				<button type="button" class="request-button button-accept" data-me_id="\${mentorInfo.mentIf_me_id}" value="accept">허가</button>
+				<button type="button" class="request-button button-deny" data-me_id="\${mentorInfo.mentIf_me_id}"  value="deny">거절</button>
+			</div>
+      	`
+      	$('.mentorInfo-detail-wrap').html(str);
+		
+	}
+	
+	<!--디테일 - 허가/거절 버튼 클릭 이벤트-->
+	$(document).on('click','.request-button',function(){
+		let btnType ="";
+		let mentIf_me_id = $(this).data('me_id');
+		if($(this).val()=="accept"){
+			btnType = $(this).val();
+		}else{
+			btnType = $(this).val();
+		}
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/admin/managementor/request"/>", 
+			type : 'post', 
+			data : { mentIf_me_id: mentIf_me_id,
+					 btnType: btnType},
+			dataType :"json", 
+			success : function (data){
+				if(data.res==="true"){
+	          		alert("정상적으로 처리 되었습니다.")
+	          		location.reload();
+	          	}else if(data.res==="false"){
+	          		alert("정상적으로 처리하지 못하였습니다.")
+	          		location.reload();
+	          	}
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+			}
+		});
 	})
+	
+	$('.modalCloseBtn').click(function(){
+		$('.modalWrap').css('display','none')
+	})
+	window.onclick = function(event) {
+	  var modalWrap = document.getElementById('modalWrap');
+	  if (event.target == modalWrap) {
+	    modalWrap.style.display = "none"; // 모달 외부를 클릭하면 모달을 숨김
+	  }
+	};
 	
 	<!--페이지네이션 생성-->
 	function displayMentorInfoPagination(pm){
@@ -240,10 +443,17 @@
 	$('.mentor-button-group>button').click(function(){
 		let checkedIds = [];
 		let btnType = "";
+		let count =0;
 		
 		 $('.mentor-info-checkbox:checked').each(function(){
 		        checkedIds.push($(this).val()); // 체크된 체크박스의 값(멘토의 ID)을 배열에 추가
+		        count ++;
 		    });
+		 
+		 if (count ===0){
+			 alert("승인/거절 처리할 유저를 먼저 선택해주세요.")
+			 return false;
+		 }
 
 		if($(this).val()=="accept"){
 			btnType ="accept";
@@ -270,7 +480,6 @@
 	          	}
 	        },
 	        error: function(xhr, status, error){
-	            // 요청이 실패한 경우의 동작
 	            console.error('요청을 처리하는 중 에러가 발생했습니다:', error);
 	        }
 	    });
