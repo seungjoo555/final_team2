@@ -12,6 +12,7 @@ import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
@@ -145,8 +146,12 @@ public class RecruitServiceImp implements RecruitService {
 		return recruitDao.selectProgrammingLanguageList();
 	}
 
-
-
-	
+	@Override
+	public RecruitVO getRecruit(int recu_num) {
+		if(recu_num <= 0) {
+			return null;
+		}
+		return recruitDao.selectRecruit(recu_num);
+	}
 
 }

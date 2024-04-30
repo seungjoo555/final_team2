@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
@@ -64,5 +65,7 @@ public interface GroupService {
 	boolean updateGroupName(int num, String name, MemberVO user);
 
 	ArrayList<GroupVO> countGroupListById(String me_id);
+
+	ArrayList<GroupApplyVO> getGroupApply(int recu_num);
 
 }

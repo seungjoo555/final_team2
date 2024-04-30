@@ -33,7 +33,7 @@ public interface MentorService {
 
 	ArrayList<TotalCategoryVO> getMentoCategory(int ment_num, String table2);
 
-  MentorInfoVO getMentorInfo(String me_id);
+	MentorInfoVO getMentorInfo(String me_id);
 
 	MetoringVO getMetoring(String me_id);
 
