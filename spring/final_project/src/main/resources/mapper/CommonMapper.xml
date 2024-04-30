@@ -3,5 +3,20 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team2.dao.CommonDAO">
-  
+	
+	<select id="getMenuList" resultType="SearchMenuVO">
+		SELECT 
+		    *
+		FROM
+		    search_menu
+				join
+			programming_category on sear_progCt_num = progCt_num
+				join
+			programming_language on sear_lang_num = lang_num;
+	</select>
+	
+	<select id="getCateList" resultType="ProgrammingCategoryVO">
+		select * from programming_category
+	</select>
+	
 </mapper>
