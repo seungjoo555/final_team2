@@ -295,8 +295,6 @@ public class GroupController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		System.out.println(num +", "+calNum);
-		
 		boolean result = groupService.deleteGroupCal(num, calNum, user);
 		
 		if(result) {
@@ -307,6 +305,18 @@ public class GroupController {
 		
 		return map;
 	}
+	
+	@ResponseBody
+	@PostMapping("/group/quit")
+	public Map<String, Object> groupQuit(HttpSession session, @RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		map.put("data", "ok");
+		
+		return map;
+	}
+	
 	
 	// ================================ group ================================
 		

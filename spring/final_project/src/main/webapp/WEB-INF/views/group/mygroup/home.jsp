@@ -35,11 +35,9 @@
 				<div class="float-left group-title">${group.go_name}</div>
 				<div class="float-left">그룹 페이지</div>
 				<div class="setting-btn float-right">
-					<c:if test="${group.leader == user.me_id}">
-						<a class="group-manage-btn">
-							<img class="hamburger-btn" src="<c:url value="/resources/img/hamburger-btn.png"/>">
-						</a>
-					</c:if>
+					<a class="group-manage-btn">
+						<img class="hamburger-btn" src="<c:url value="/resources/img/hamburger-btn.png"/>">
+					</a>
 				</div>
 				<div class="user-info float-right">
 					${user.me_nickname} 님
@@ -175,17 +173,23 @@
 		      <div class="manage-group_container">
 		      	<button class="cancle-btn">X</button>	
 	      		<ul class="manage-group-list">
+	      			<!-- 그룹 리더 전용 메뉴 -->
+	      			<c:if test="${group.leader == user.me_id}">
+		      			<li>
+		      				<c:url var = 'url1' value = '/group/manage/info'>
+		      					<c:param name = 'num' value = "${group.go_num }"/>
+		      				</c:url>
+		      				<a href="${url1}">그룹 정보 변경</a>
+		      			</li>
+		      			<li>
+		      				<c:url var = 'url2' value = '/group/manage/member'>
+		      					<c:param name = 'num' value = "${group.go_num }"/>
+		      				</c:url>
+		      				<a href="${url2}">멤버 관리</a>
+		      			</li>
+	      			</c:if>
 	      			<li>
-	      				<c:url var = 'url1' value = '/group/manage/info'>
-	      					<c:param name = 'num' value = "${group.go_num }"/>
-	      				</c:url>
-	      				<a href="${url1}">그룹 정보 변경</a>
-	      			</li>
-	      			<li>
-	      				<c:url var = 'url2' value = '/group/manage/member'>
-	      					<c:param name = 'num' value = "${group.go_num }"/>
-	      				</c:url>
-	      				<a href="${url2}">멤버 관리</a>
+	      				<a onclick="quitGroup()" style="color: red">그룹 탈퇴</a>
 	      			</li>
 	      		</ul>
 		      </div>
@@ -391,6 +395,10 @@ document.addEventListener('DOMContentLoaded', function() {
     calendar.render();
 });
 
+</script>
+
+<!-- 그룹 일정 modal 관련 -->
+<script type="text/javascript">
 //모달 초기화
 function initModal(modal, arg){
 	$('.modal-title').text('')
@@ -440,11 +448,6 @@ function parse(str) {    
 	var d = str.substr(6, 2);
 	
 	return new Date(y,m-1,d);}
-
-//캘린더 새로고침
-function fCalUpdate() {
-    calendar.refetchEvents();
-}
 
 </script>
 
@@ -551,6 +554,35 @@ function deleteSch(modal, arg){
 	
 }
 
+</script>
+
+<!-- 그룹 탈퇴하기 -->
+<script type="text/javascript">
+function quitGroup(){
+	if(confirm('그룹을 탈퇴하시겠습니까? 그룹 탈퇴 시 작성하였던 모든 내역이 삭제됩니다.')){
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : '<c:url value="/group/quit"/>', 
+			type : 'post', 
+			data : {
+				num : ${group.go_num}
+			}, 
+			dataType : "json", 
+			success : function (data){
+				if(data.data = "ok"){
+					alert("그룹을 탈퇴하였습니다.")
+					location.href = '<c:url value="/mygroup/list"/>';
+				}
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+				alert("그룹 탈퇴를 하지 못했습니다. 다시 시도 하십시오.")
+			}
+		});
+		
+	}else{
+		return;
+	}
+}
 </script>
 </body>
 </html>
