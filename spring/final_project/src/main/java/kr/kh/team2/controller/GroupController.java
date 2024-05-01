@@ -1,6 +1,8 @@
 package kr.kh.team2.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.team2.model.vo.common.ReportContentVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
@@ -25,6 +28,7 @@ import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.GroupService;
+import kr.kh.team2.service.ReportService;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -33,6 +37,8 @@ public class GroupController {
 	
 	@Autowired
 	GroupService groupService;
+	@Autowired
+	ReportService reportService;
 	
 	// ================================ mygroup ================================
 
@@ -66,8 +72,8 @@ public class GroupController {
 	@GetMapping("/group/home")
 	public String grouphome(Model model, HttpSession session, int num){
 		int recentBoard = 6;
-		int dday = 7;
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		ArrayList<GroupCalendarVO> ddaylist = new ArrayList<GroupCalendarVO>();
 		
 		// 해당 그룹 가입 유저가 아니라면
 		if(!groupService.isGroupMember(user, num)) {
@@ -82,16 +88,27 @@ public class GroupController {
 		
 		// 최근 게시글 불러오기
 		ArrayList<GroupPostVO> boardlist = groupService.getRecentGroupBoard(num, recentBoard);
-		// d-day 불러오기
-		ArrayList<GroupCalendarVO> ddaylist = groupService.getDday(num, dday);
+		// 전체 그룹 일정 불러오기
+		ArrayList<GroupCalendarVO> calendarlist = groupService.getCalendar(num);
 		
-		// 가장 마지막 일정을 dday 최상단에 표시되도록 하기(의미가 있나? 그룹 시작일로 하는게 낫지 않을지,)
-		/*
-		if(ddaylist.size() != 0 || ddaylist != null) {
+		if(calendarlist != null || calendarlist.size() != 0) {
+			Calendar today = Calendar.getInstance();
+			Calendar calDate = Calendar.getInstance();
 			
+			for(GroupCalendarVO tmp : calendarlist) {
+				 calDate.setTime(tmp.getGocal_startdate()); 
+				 
+				 long calMs = calDate.getTimeInMillis();
+				 long todayMs = today.getTimeInMillis();
+				 long res = (calMs - todayMs)/(60*60*1000*24);
+				 
+				if(res >= 0) {
+					ddaylist.add(tmp);
+				}
+			}
 		}
-		*/
 		
+		model.addAttribute("calendarlist", calendarlist);
 		model.addAttribute("ddaylist", ddaylist);
 		model.addAttribute("boardlist", boardlist);
 		
@@ -263,6 +280,46 @@ public class GroupController {
 		return "/group/mygroup/manageapplicant";
 	}
 	
+	@ResponseBody
+	@PostMapping("/group/calendar/insert")
+	public Map<String, Object> groupCalendarInsert(HttpSession session, @RequestParam("num")int num, 
+			@RequestParam("title")String title, @RequestParam("startdt")Date startdt, @RequestParam("enddt")Date enddt, 
+			@RequestParam("memo")String memo){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		GroupCalendarVO newSch = new GroupCalendarVO(title, startdt, enddt, memo);
+		
+		boolean result = groupService.insertGroupCal(num, newSch, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/calendar/delete")
+	public Map<String, Object> groupCalendarDelete(HttpSession session, @RequestParam("num")int num, @RequestParam("calNum")int calNum){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		System.out.println(num +", "+calNum);
+		
+		boolean result = groupService.deleteGroupCal(num, calNum, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
 	// ================================ group ================================
 		
 
@@ -301,12 +358,17 @@ public class GroupController {
 		String table = "recruit";
 		ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(num, table);
 		ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(num, table);
+		//신고 유형 정보 가져오기
+		ArrayList<ReportContentVO> contentList = reportService.getReportContentList();
 		//화면에 전송
 		model.addAttribute("recruit", recruit);
 		model.addAttribute("groupKing", groupKing.getMe_nickname());
+		model.addAttribute("groupKing_me_id", groupKing.getMe_id());
 		model.addAttribute("totalCategory", totalCategory);
 		model.addAttribute("totalLanguage", totalLanguage);
+		model.addAttribute("contentList", contentList);
 		return "/group/detail";
 	}
 	
+ 
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team2.dao.ReportDAO">
+<select id="selectReportContentList" resultType="ReportContentVO">
+	select * from report_content
+</select>
+<insert id="insertReport">
+	insert into 
+	report(repo_repo_content, repo_repo_state, repo_me_id, repo_detail, repo_date, repo_table, repo_target) 
+	values(#{report.repo_repo_content}, "대기중", #{report.repo_me_id}, #{report.repo_detail}, #{report.repo_date}, #{report.repo_table}, #{report.repo_target})
+</insert>
+</mapper>

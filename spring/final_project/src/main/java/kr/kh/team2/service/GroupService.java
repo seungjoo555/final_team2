@@ -35,8 +35,6 @@ public interface GroupService {
 
 	ArrayList<GroupPostVO> getRecentGroupBoard(int groupNum, int recentBoard);
 
-	ArrayList<GroupCalendarVO> getDday(int groupNum, int dday);
-
 	long getGroupTime(int groupNum);
 
 	boolean updateGoTime(int goNum);
@@ -63,6 +61,14 @@ public interface GroupService {
 
 	boolean updateGroupName(int num, String name, MemberVO user);
 
+
 	ArrayList<GroupVO> countGroupListById(String me_id);
+
+	ArrayList<GroupCalendarVO> getCalendar(int num);
+
+	boolean insertGroupCal(int num, GroupCalendarVO newSch, MemberVO user);
+
+	boolean deleteGroupCal(int num, int calNum, MemberVO user);
+
 
 }

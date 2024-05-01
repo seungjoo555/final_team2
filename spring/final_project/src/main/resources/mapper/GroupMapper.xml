@@ -76,12 +76,11 @@
 			LIMIT #{count};
 	</select>
  	
-	<select id="getDday" resultType="GroupCalendarVO">
-		SELECT * FROM group_calendar 
-			WHERE gocal_go_num = #{num} AND gocal_startdate >= date_format(Now(), '%Y-%m-%d')
+ 	<select id="getCalendar" resultType="GroupCalendarVO">
+ 		SELECT * FROM group_calendar 
+			WHERE gocal_go_num = #{num}
 		    ORDER BY gocal_startdate 
-		    LIMIT #{count};
-	</select>
+ 	</select>
  	
  	<select id="selectRecruit" resultType="RecruitVO">
  		select * from recruit where recu_num = #{num}
@@ -185,6 +184,9 @@
 		DELETE FROM group_post WHERE gopo_num = #{num}
 	</delete>
 	
+	<delete id="deleteGroupCal">
+		DELETE FROM group_calendar WHERE gocal_num = #{num}
+	</delete>
 	
 	<!-- =============================== UPDATE =============================== -->	
 	
@@ -209,8 +211,13 @@
 	<!-- =============================== INSERT =============================== -->	
 	
 	<insert id="insertGroupPost">
-		INSERT INTO group_post(gopo_gome_go_num, gopo_gome_me_id, gopo_content, gopo_date) VALUES(#{num}, #{writer}, #{content}, NOW());
+		INSERT INTO group_post(gopo_gome_go_num, gopo_gome_me_id, gopo_content, gopo_date) 
+			VALUES(#{num}, #{writer}, #{content}, NOW());
 	</insert>
-
+	
+	<insert id="insertGroupCal">
+		INSERT INTO group_calendar(gocal_title, gocal_startdate, gocal_enddate, gocal_memo, gocal_me_id, gocal_go_num)
+			VALUES(#{newSche.gocal_title},#{newSche.gocal_startdate}, #{newSche.gocal_enddate}, #{newSche.gocal_memo}, #{user.me_id}, #{num})
+	</insert>
  	
 </mapper>

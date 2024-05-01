@@ -32,5 +32,8 @@
 
 
 
+		<!-- ========================== report ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.common.ReportContentVO" alias="ReportContentVO"/>
+		
 	</typeAliases>
 </configuration>
