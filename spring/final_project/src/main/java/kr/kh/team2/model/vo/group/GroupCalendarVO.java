@@ -1,5 +1,6 @@
 package kr.kh.team2.model.vo.group;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -18,11 +19,24 @@ public class GroupCalendarVO {
     private int gocal_go_num;
     
     private String dday;
-
+    
+    // =========================== Setter ===========================
+    
 	public void setGocal_startdate(Date gocal_startdate) {
 		this.gocal_startdate = gocal_startdate;
 		calcDday();
 	}
+	
+	// =========================== Constructor ===========================
+	
+	public GroupCalendarVO(String title, Date startdt, Date enddt, String memo) {
+		gocal_title = title;
+		gocal_startdate = startdt;
+		gocal_enddate = enddt;
+		gocal_memo = memo;
+	}
+	
+	// =========================== Methods ===========================
 
 	private void calcDday() {
 		long todayMs, calMs; long result; String ddayResult = "";
@@ -42,19 +56,37 @@ public class GroupCalendarVO {
 		result = (todayMs-calMs)/(60*60*1000*24);
 		
 		if(result == 0) {
-			ddayResult = "-day";
+			if(calDate.get(Calendar.DATE) == today.get(Calendar.DATE))
+				ddayResult = "-day";
+			else{
+				ddayResult = "" + (result - 1);
+			}
 		}
 		else if(result >= 999) {
 			ddayResult = "+999+";
 		}else if(result <= -999) {
 			ddayResult = "-999+";
-		}else {
+		}else if(result < 0){
 			ddayResult = "" + (result - 1);
+		}else {
+			ddayResult = "+" + result;
 		}
 		
 		setDday(ddayResult);
 		
 	}
     
+	// date를 string으로 변환하기
+	public String getGocal_startdate_str() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		return format.format(gocal_startdate);
+	}
     
+	public String getGocal_enddate_str() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		return format.format(gocal_startdate);
+	}
+
 }

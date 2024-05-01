@@ -259,7 +259,7 @@ CREATE TABLE `member_auth` (
 DROP TABLE IF EXISTS `group_calendar`;
 
 CREATE TABLE `group_calendar` (
-	`gocal_ num`	int primary key auto_increment	NOT NULL,
+	`gocal_num`	int primary key auto_increment	NOT NULL,
 	`gocal_title`	varchar(30)	NOT NULL,
 	`gocal_startdate`	date	NOT NULL,
 	`gocal_enddate`	date	NULL,
