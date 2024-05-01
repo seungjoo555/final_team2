@@ -262,6 +262,10 @@
 	<!-- 멘토신청 출력 -->
 	function displayMentorInfoList(mentorInfoList){
 		let str ='';
+		let mentIf_intro = '';
+		let changeNull ='';
+		let subId ='';
+		let subContent ='';
 		if(mentorInfoList == null || mentorInfoList.length ==0){
 			str += "<h2>조회된 유저가 없습니다.</h2>"
 			$('.accept-member').html(str);
@@ -269,17 +273,35 @@
 		}
 
 		for(mentorInfo of mentorInfoList){
+			mentIf_intro = mentorInfo.mentIf_intro;
+			//아이디가 7글자를 넘어갈 때 처리
+			if(mentorInfo.mentIf_me_id.length>7){
+				subId = mentorInfo.mentIf_me_id.substr(0,7) +"...";
+			}else{
+				subId = mentorInfo.mentIf_me_id;
+			}
+			//자기소개가 null일 때 처리
+			if(mentIf_intro == null || mentIf_intro.length==0){
+				mentIf_intro = "등록된 자기소개가 없습니다.";
+			}
+			//자기소개가 35글자를 넘어갈 때 처리
+			if(mentIf_intro.length>35){
+				subContent = mentIf_intro.substr(0,35) + "...";
+			}else{
+				subContent = mentIf_intro;
+			}
 			str += `<ul class="mentor-info-instance">
 						<input type="checkbox" class="mentor-info-checkbox" value="\${mentorInfo.mentIf_me_id}">
 						<li>
-							<a href="<c:url value='/mypage/profile?me_id=\${mentorInfo.mentIf_me_id}'/>" class="mentor-info mentor-id" >\${mentorInfo.mentIf_me_id}</a>
+							<a href="<c:url value='/mypage/profile?me_id=\${mentorInfo.mentIf_me_id}'/>" class="mentor-info mentor-id" >`+subId+`</a>
 						</li>
 						<div class="mentor-info-click-box">
 							<input type="hidden" class="hiddenId" value="\${mentorInfo.mentIf_me_id}">
 							<li class="mentor-info mentor-work">\${mentorInfo.mentIf_ment_job}</li>
-					        <li class="mentor-info mentor-content">\${mentorInfo.mentIf_intro}</li>
+					        <li class="mentor-info mentor-content">`+subContent+`</li>
 					    <div>
-			        </ul>`;
+			        </ul>
+			        `;
 		}
 		$('.accept-member').html(str);
 		
@@ -306,7 +328,10 @@
 	
 	<!--mentorInfo detail 출력-->
 	function displayMentorInfo(mentorInfo){
-		
+		//자기소개가 null일 때 처리
+		if(mentorInfo.mentIf_intro==null){
+			mentorInfo.mentIf_intro = "등록된 자기소개가 없습니다.";
+		}
 		let str = `
 			<h2>\${mentorInfo.mentIf_me_id}</h2>
 	        <div class="mentorInfo-detail-input-wrap">
