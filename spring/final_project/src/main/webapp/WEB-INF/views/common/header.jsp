@@ -39,6 +39,7 @@
 						href="<c:url value="/login" />">로그인</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="<c:url value="/signup" />">회원가입</a></li>
+									<a href="<c:url value="/admin/report"/>">신고 관리</a>
 				</c:if>
 				<c:if test="${user != null}">
 					<li class="nav-item">
@@ -50,6 +51,8 @@
 								<a href="#">내 정보</a>
 								<a href="<c:url value="/mygroup/list"/>">나의 그룹</a>
 								<a href="#">그리고 뭐?</a>
+								<c:if test="${user.me_ma_auth.equals('관리자') == true}">
+								</c:if>
 							</div>
 						</div>
 					</li>
