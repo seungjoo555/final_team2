@@ -304,15 +304,33 @@ public class GroupServiceImp implements GroupService{
 		}
 		
 		// 로그인 한 유저가 멤버인지 확인함(후에 writer로 변경)
-		MemberVO tmp = new MemberVO(user.getMe_id());
-		
-		if(!isGroupMember(tmp, num)) {
+		if(!isGroupMember(user, num)) {
 			System.out.println("not group member");
 			return false;
 		}
 		
 		return groupDao.insertGroupCal(num, newSch, user);
 		
+	}
+
+	@Override
+	public boolean deleteGroupCal(int num, int calNum, MemberVO user) {
+		if(calNum == 0) {
+			System.out.println("calNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		// 로그인 한 유저가 멤버인지 확인함
+		if(!isGroupMember(user, num)) {
+			System.out.println("not group member");
+			return false;
+		}
+		
+		return groupDao.deleteGroupCal(calNum);
 	}
 	
 	

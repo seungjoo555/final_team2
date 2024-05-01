@@ -60,4 +60,6 @@ public interface GroupService {
 
 	boolean insertGroupCal(int num, GroupCalendarVO newSch, MemberVO user);
 
+	boolean deleteGroupCal(int num, int calNum, MemberVO user);
+
 }

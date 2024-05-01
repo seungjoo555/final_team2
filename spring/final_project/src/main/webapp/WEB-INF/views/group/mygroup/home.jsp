@@ -15,8 +15,8 @@
 
 <style>
 	.insertModal{display:none;}
-	.insertBtn{background-color: #649B60;}
-		
+	.insertBtn{;}
+	.deleteBtn{display:none;}
 	
 </style>
 </head>
@@ -100,7 +100,7 @@
 						      
 						        <!-- Modal Header -->
 						        <div class="modal-header">
-						          <h4 class="modal-title">일정 등록</h4>
+						          <h4 class="modal-title"></h4>
 						          <button type="button" class="close" onclick="initModal('insertModal', g_arg)">&times;</button>
 						        </div>
 						        
@@ -129,7 +129,8 @@
 						        </div>
 						        <!-- Modal footer -->
 						        <div class="modal-footer">
-								  <button type="button" class="btn btn-success float-right insertBtn" onclick="insertSch('insertModal', g_arg)">등록</button>
+								  <button type="button" class="btn btn-outline-danger float-right deleteBtn" onclick="deleteSch('insertModal', g_arg)">삭제</button>
+								  <button type="button" class="btn btn-outline-success float-right insertBtn" onclick="insertSch('insertModal', g_arg)">등록</button>
 						        </div>
 						        
 						      </div>
@@ -161,6 +162,7 @@
 						
 					</div>
 				</div>
+				${calendarlist }
 			</div>
 			
 		   <!-- 그룹 관리 화면 -->
@@ -393,12 +395,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 //모달 초기화
 function initModal(modal, arg){
-	$('.modal-title').text('일정 등록')
+	$('.modal-title').text('')
 	
 	$('.'+modal+' #title').val('');
 	$('.'+modal+' #memo').val('');
 	// $('.'+modal+' #start').val('');
 	// $('.'+modal+' #end').val('');
+	$('.insertModal .deleteBtn').hide()
 	
 	$('.'+modal).modal('hide');
 	g_arg = null;
@@ -406,18 +409,21 @@ function initModal(modal, arg){
 
 // 모달 show
 function insertModalOpen(arg){
+	$('.modal-title').text(arg.startStr+' 일정 등록')
 	
 	g_arg = arg;
+	
 	// 값이 있는 경우(기존 일정을 클릭했을 경우) 세팅
 	if(g_arg.event != undefined){
 		let tmp = new Date();
 		
-		$('.modal-title').val('일정 수정')
+		$('.modal-title').text('\"' + g_arg.event.title + '\" 일정 수정')
 		
 		$('.insertModal .deleteBtn').css('display', 'inline');
 		$('.insertModal .memo').css('display', 'inline');
 		$('.insertModal #memo').val(g_arg.event.extendedProps.memo);
 		$('.insertModal #title').val(g_arg.event.title);
+		$('.insertModal .deleteBtn').show()
 		// 시작 종료날짜 (작동안됨 수정 필요)
 		// $('.insertModal #start').val(g_arg.event.start);
 		// $('.insertModal #end').val(g_arg.event.end);
@@ -446,8 +452,6 @@ function fCalUpdate() {
 
 <!-- 그룹 일정 등록 -->
 <script type="text/javascript">
-
-//일정등록
 function insertSch(modal, arg){
 	
 	if($('.'+modal+' #title').val() == ''){
@@ -503,7 +507,7 @@ function insertSch(modal, arg){
 		success : function (data){
 			if(data.data = "ok"){
 				alert("일정이 등록되었습니다.")
-				initModal(modal, arg);
+				location.reload();
 			}
 		}, 
 		error : function(jqXHR, textStatus, errorThrown){
@@ -513,6 +517,40 @@ function insertSch(modal, arg){
 				 
 	
 
+}
+
+</script>
+
+<!-- 그룹 일정 삭제 -->
+<script type="text/javascript">
+function deleteSch(modal, arg){
+	if(confirm('일정을 삭제하시겠습니까?')){
+		console.log(arg)
+		//DB 삭제
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : '<c:url value="/group/calendar/delete"/>', 
+			type : 'post', 
+			data : {
+				num : ${group.go_num},
+				calNum : Number(arg.event.id)
+			}, 
+			dataType : "json", 
+			success : function (data){
+				if(data.data = "ok"){
+					alert("일정이 삭제되었습니다.")
+					location.reload();
+				}
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+				alert("일정이 삭제를 하지 못했습니다. 다시 시도 하십시오.")
+			}
+		});
+		
+	}else{
+		return;
+	}
+	
 }
 
 </script>

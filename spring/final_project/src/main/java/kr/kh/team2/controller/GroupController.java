@@ -87,8 +87,6 @@ public class GroupController {
 		// 전체 그룹 일정 불러오기
 		ArrayList<GroupCalendarVO> calendarlist = groupService.getCalendar(num);
 		
-
-		
 		if(calendarlist != null || calendarlist.size() != 0) {
 			Calendar today = Calendar.getInstance();
 			Calendar calDate = Calendar.getInstance();
@@ -286,15 +284,6 @@ public class GroupController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		/*
-		 * num : ${group.go_num},
-			title : $('.'+modal+' #title').val(),
-	  		startdt : arg.startStr,
-	  		enddt : arg.endStr,
-	  		memo :  $('.'+modal+' #memo').val() 
-		 * 
-		 * */
-		
 		GroupCalendarVO newSch = new GroupCalendarVO(title, startdt, enddt, memo);
 		
 		boolean result = groupService.insertGroupCal(num, newSch, user);
@@ -308,6 +297,24 @@ public class GroupController {
 		return map;
 	}
 	
+	@ResponseBody
+	@PostMapping("/group/calendar/delete")
+	public Map<String, Object> groupCalendarDelete(HttpSession session, @RequestParam("num")int num, @RequestParam("calNum")int calNum){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		System.out.println(num +", "+calNum);
+		
+		boolean result = groupService.deleteGroupCal(num, calNum, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
 	
 	// ================================ group ================================
 		

@@ -150,6 +150,9 @@
 		DELETE FROM group_post WHERE gopo_num = #{num}
 	</delete>
 	
+	<delete id="deleteGroupCal">
+		DELETE FROM group_calendar WHERE gocal_num = #{num}
+	</delete>
 	
 	<!-- =============================== UPDATE =============================== -->	
 	
