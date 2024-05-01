@@ -15,7 +15,7 @@
 
 <style>
 	.insertModal{display:none;}
-	.insertBtn{;}
+	.insertBtn{display:none;}
 	.deleteBtn{display:none;}
 	
 	
@@ -405,9 +405,14 @@ function initModal(modal, arg){
 	
 	$('.'+modal+' #title').val('');
 	$('.'+modal+' #memo').val('');
+
+	document.getElementById('title').readOnly = false; 
+	document.getElementById('memo').readOnly = false; 
+	
 	// $('.'+modal+' #start').val('');
 	// $('.'+modal+' #end').val('');
 	$('.insertModal .deleteBtn').hide()
+	$('.insertModal .insertBtn').hide()
 	
 	$('.'+modal).modal('hide');
 	g_arg = null;
@@ -429,10 +434,16 @@ function insertModalOpen(arg){
 		$('.insertModal .memo').css('display', 'inline');
 		$('.insertModal #memo').val(g_arg.event.extendedProps.memo);
 		$('.insertModal #title').val(g_arg.event.title);
+		
+		document.getElementById('memo').readOnly = true; 
+		document.getElementById('title').readOnly = true; 
+		
 		$('.insertModal .deleteBtn').show()
 		// 시작 종료날짜 (작동안됨 수정 필요)
 		// $('.insertModal #start').val(g_arg.event.start);
 		// $('.insertModal #end').val(g_arg.event.end);
+	}else{
+		$('.insertModal .insertBtn').show()
 	}
 	
 	//모달창 show
