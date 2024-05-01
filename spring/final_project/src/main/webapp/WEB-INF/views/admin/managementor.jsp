@@ -281,11 +281,11 @@
 				subId = mentorInfo.mentIf_me_id;
 			}
 			//자기소개가 null일 때 처리
-			if(mentIf_intro == null || mentIf_intro.length==0){
+			if(mentIf_intro == null || mentIf_intro.trim().length==0){
 				mentIf_intro = "등록된 자기소개가 없습니다.";
 			}
 			//자기소개가 35글자를 넘어갈 때 처리
-			if(mentIf_intro.length>35){
+			if(mentIf_intro.trim().length>35){
 				subContent = mentIf_intro.substr(0,35) + "...";
 			}else{
 				subContent = mentIf_intro;
