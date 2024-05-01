@@ -256,6 +256,18 @@ public class GroupController {
 		return map;
 	}
 	
+	@GetMapping("/group/manage/applicant")
+	public String groupmanageapplicant(Model model, HttpSession session, int num){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		GroupVO group = groupService.getGroupByGoNum(num);
+		
+		if(group.getLeader().equals(user.getMe_id())) {
+			model.addAttribute("group", group);
+		}
+		
+		return "/group/mygroup/manageapplicant";
+	}
+	
 	@GetMapping("/group/manage/member")
 	public String groupmanagemember(Model model, HttpSession session, int num){
 		MemberVO user = (MemberVO)session.getAttribute("user");

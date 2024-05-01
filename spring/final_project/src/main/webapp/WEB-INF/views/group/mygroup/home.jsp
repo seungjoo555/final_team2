@@ -187,6 +187,12 @@
 		      				</c:url>
 		      				<a href="${url2}">멤버 관리</a>
 		      			</li>
+		      			<li>
+	      					<c:url var = 'url3' value = '/group/manage/applicant'>
+		      					<c:param name = 'num' value = "${group.go_num }"/>
+		      				</c:url>
+		      				<a href="${url3}">지원자 관리</a>
+		      			</li>
 	      			</c:if>
 	      			<li>
 	      				<a onclick="quitGroup()" style="color: red">그룹 탈퇴</a>
