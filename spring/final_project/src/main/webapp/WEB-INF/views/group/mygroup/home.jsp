@@ -374,9 +374,11 @@ document.addEventListener('DOMContentLoaded', function() {
         selectable: true,
         selectMirror: true,
         select: function(arg) {
+        	window.scrollTo(0,0);
   			insertModalOpen(arg);	//일자 클릭 시 모달 호출
         },
         eventClick: function(arg) {
+        	window.scrollTo(0,0);
   			insertModalOpen(arg);	//이벤트 클릭 시 모달 호출
         },
         
@@ -501,7 +503,7 @@ function insertSch(modal, arg){
 		success : function (data){
 			if(data.data = "ok"){
 				alert("일정이 등록되었습니다.")
-				fCalUpdate()
+				initModal(modal, arg);
 			}
 		}, 
 		error : function(jqXHR, textStatus, errorThrown){
