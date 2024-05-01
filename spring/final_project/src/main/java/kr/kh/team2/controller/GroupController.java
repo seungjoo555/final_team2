@@ -97,8 +97,10 @@ public class GroupController {
 				 calDate.setTime(tmp.getGocal_startdate()); 
 				 
 				 long calMs = calDate.getTimeInMillis();
+				 long todayMs = today.getTimeInMillis();
+				 long res = (calMs - todayMs)/(60*60*1000*24);
 				 
-				if(calMs > today.getTimeInMillis()) {
+				if(res >= 0) {
 					ddaylist.add(tmp);
 				}
 			}

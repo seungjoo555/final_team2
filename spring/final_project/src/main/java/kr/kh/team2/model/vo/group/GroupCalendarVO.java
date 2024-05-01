@@ -56,7 +56,11 @@ public class GroupCalendarVO {
 		result = (todayMs-calMs)/(60*60*1000*24);
 		
 		if(result == 0) {
-			ddayResult = "-day";
+			if(calDate.get(Calendar.DATE) == today.get(Calendar.DATE))
+				ddayResult = "-day";
+			else{
+				ddayResult = "" + (result - 1);
+			}
 		}
 		else if(result >= 999) {
 			ddayResult = "+999+";
