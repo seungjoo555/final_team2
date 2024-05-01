@@ -10,6 +10,7 @@
 </head>
 <link rel="stylesheet" href="<c:url value="/resources/css/mentorlist.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/css/mentoringdetail.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/report.css"/>">
 <body>
 <div class="container">
 	<!-- 검색창 -->
@@ -54,10 +55,10 @@
 	
 	
    <!-- 신고화면 -->
-   <div id="modal-report" class="modal-report report-mentoring-modal" style="display:none;">
-		<div id="dimmed-report" class="dimmed-report report-mentoring-dimmend"></div>
-		<div class="report-mentoring-container">
-			<div class="report-mentoring_box">
+   <div id="modal-report" class="modal-report" style="display:none;">
+		<div id="dimmed-report" class="dimmed-report"></div>
+		<div class="report-container">
+			<div class="report-box">
 			</div>
 		</div>
    </div>
@@ -280,7 +281,7 @@ $(document).on('click', '.mento-item', function(event){
       				<div class="memberInfo" >
 						<img class="basic-profile" value="\${mentor.mentIf_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
 						<a href="<c:url value="/mypage/profile?me_id=\${mentor.mentIf_me_id}"/>" class="memberNickname" value="\${mentor.mentIf_me_id}">\${mentor.mentIf_me_nickname} </a>
-						<div class="report-box"><button class="report-btn">신고</button></div>
+						<div class="report-btn-box"><button class="report-btn">신고</button></div>
 					</div>
 	      		</div>
 	      		<h1>\${mentoring.ment_title}</h1>
@@ -320,17 +321,6 @@ $(document).on('click', '.mento-item', function(event){
    
 })
 
-/* 프로필 클릭 이벤트 */
- 
-/*
-$(document).on('click', '.basic-profile', function(){
-	location.href = '<c:url value=""/>';	//프로필 주소
-})
-$(document).on('click', '.memberNickname', function(){
-	location.href = '<c:url value=""/>';	//프로필 주소
-})
- */
-
 /* dimmed 클릭 시 창 없애기 */
 $(document).on('click', '#dimmed', function(){
    $("#modal").css('display','none');
@@ -360,7 +350,7 @@ $(document).on('click', '.report-btn', function(){
 		}
 	}
 	
-   $(".report-mentoring-modal").css('display','block');
+   $(".modal-report").css('display','block');
 	let ment_num = $('.btn-apply').val();
    //출력
 	insertReport(ment_num);
@@ -395,13 +385,13 @@ $(document).on('click', '.report-btn', function(){
 		
 		str = 
 			`
-			<div class="report-mentoring_header">
+			<div class="report-header">
 		     		<div class="header-title"><h1>신고하기</h1></div>
 		     	</div>
-			<div class="report-mentoring_body">
+			<div class="report-body">
 				<form action="<c:url value="/report/mentor"/>"  method="post" class="form-report">
 					<input type="hidden" id="ment_num" value="\${mentoring.ment_num}">
-					<div class="mentor-report-form-group">
+					<div class="report-form-group">
 						<label for="report-content">신고유형</label>
 						<select class="input-box-input report-content" id="report-content" name="report-content">
 			`
@@ -409,19 +399,19 @@ $(document).on('click', '.report-btn', function(){
 			`
 						</select>
 					</div>
-					<div class="mentor-report-form-group">
+					<div class="report-form-group">
 						<label for="report-detail">신고내용</label>
 						<textarea class="form-control report-detail" id="report-detail" name="report-detail"></textarea>
 					</div>
 				</form>
 			</div>
-			<div class="report-mentoring_footer">
+			<div class="report-footer">
 				<div class="btn-report-box">
 					<button type="button" class="btn-report-insert"class="btn-report-insert">신고하기</button>
 				</div>
 			</div>
 			`
-		$('.report-mentoring_box').html(str);
+		$('.report-box').html(str);
 	}
 
 })
@@ -449,7 +439,7 @@ $(document).on('click', '.btn-report-insert', function(){
 	
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
-		url : '<c:url value="/report/mentor"/>', 
+		url : '<c:url value="/reportr"/>', 
 		type : 'post', 
 		data : JSON.stringify(ReportVO), 
 		contentType : "application/json; charset=utf-8",
@@ -457,7 +447,7 @@ $(document).on('click', '.btn-report-insert', function(){
 		success : function (data){
 			if(data.result){
 				alert("해당 멘토링을 신고했습니다.");
-			    $(".report-mentoring-modal").css('display','none');
+			    $(".modal-report").css('display','none');
 				$("#modal").css('display','none');
 			   	$("body").css('overflow','visible');
 				let cri = {
