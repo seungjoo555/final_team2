@@ -263,11 +263,11 @@
 			str += 
 				`
 				<div class="apply-study_header">
-		      		<div class="header-title"><h1>지원자 리스트</h1></div>
+		      		<div class="header-title"><h3>지원자 리스트</h3></div>
 		      		<div class="btn-cancel"><button>X</button></div>
 		      	</div>
-		      	<div class="apply-study_body">
-					<div>지원자가 없습니다.</div>
+		      	<div class="apply-study_body-no">
+					<div class="no-apply">지원자가 없습니다.</div>
 				<div>
 				`
 			$('.apply-study_box').html(str);
@@ -292,15 +292,24 @@
 					</div>
 				</div>
 				<div class="apply-study_footer">
-				<div class="btn-apply-box">
-					<div class="btn-accept-box"><button type="button" class="btn-accept" value="\${recruit.recu_num}">수락</button></div>
-					<div class="btn-refuse-box"><button type="button" class="btn-refuse" value="\${recruit.recu_num}">거절</button></div>
+				`;
+			
+			if(item.goap_state == 0) {
+				str += 
+					`
+					<div class="btn-apply-box">
+						<div class="btn-accept-box"><button type="button" class="btn-accept" value="\${recruit.recu_num}">수락</button></div>
+						<div class="btn-refuse-box"><button type="button" class="btn-refuse" value="\${recruit.recu_num}">거절</button></div>
+					</div>
+					`;
+			}
+			
+			str += 
+				`
+					<div class="apply-box-border-line"><div class="apply-border-line"></div></div>
 				</div>
-				<div class="apply-box-border-line"><div class="apply-border-line"></div></div>
-			</div>
 				
-		   `
-		   ;
+		   `;
 		});
 		
 		$('.apply-study_box').html(str);
@@ -318,6 +327,43 @@
 	   $("body").css('overflow','visible');
 	});
 	
+	/* 수락 버튼 클릭 이벤트*/
+	$(document).on('click', '.btn-accept', function() {
+		// confirm('수락하면 같은 그룹이 됩니다. 정말 수락하시겠습니까?')
+		if (confirm("수락하면 같은 그룹이 됩니다. 정말 수락하시겠습니까?") == true) {
+			$.ajax({
+				async : true, //비동기 : true(비동기), false(동기)
+				url : "<c:url value="/group/apply"/>", 
+				type : 'post', 
+				data : JSON.stringify(groupApVo), 
+				contentType : "application/json; charset=utf-8",
+				dataType : "json", 
+				success : function (data){
+					if(data.result){
+						alert("수락했습니다.");
+						$("#modal").css('display','none');
+					   $("body").css('overflow','visible');
+					}else{
+						alert("멘토링을 신청하지 못했습니다.");
+					}
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){	//errorThrown얘는 거의 비어있음(굳이 체크 안하기로)
+					console.log(jqXHR);
+					console.log(textStatus);
+				}
+			});
+		} else {
+			return;
+		}
+		
+		// 공고번호에 맞는 지원자 아이디 찾아서 goap_state를 1로 수정
+	});
+	
+	/* 거절 버튼 클릭 이벤트*/
+	$(document).on('click', '.btn-refuse', function(event) {
+		
+	
+	})
 </script>
 </body>
 </html>

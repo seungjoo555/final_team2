@@ -156,11 +156,7 @@ public class MypageController {
 	Map<String, Object> map = new HashMap<String, Object>();
 		// 공고 정보 받아오기
 		RecruitVO recruit = recruitService.getRecruit(recu_num);
-		System.out.println(recruit);
-		System.out.println("마페컨트롤러 레큐넘 : " + recruit.getRecu_num());
-		// 공고 번호에 맞는 지원자 정보 받아오기
 		ArrayList<GroupApplyVO> groupApply = groupService.getGroupApply(recruit.getRecu_num());
-		System.out.println(groupApply);
 		
 		map.put("recruit", recruit);
         map.put("groupApply", groupApply);
