@@ -82,6 +82,7 @@ function getGroupPostList(cri){
 						<div class="post-info">
 							<div class="writer float-left">\${post.nickname}</div>
 							<div class="time float-left">\${post.time_ago}</div>
+							<div class="float-right">\${post.gopo_date}</div>
 						</div>
 						<div class="post-content">
 							\${post.gopo_content }
