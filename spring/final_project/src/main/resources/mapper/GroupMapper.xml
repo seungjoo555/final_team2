@@ -164,7 +164,7 @@
 	</select>
 	
 	<select id="checkWriter" resultType="GroupPostVO">
-		SELECT * FROM group_post WHERE gopo_num = #{num} AND gopo_gome_me_id = #{me_id}
+		SELECT * FROM group_post WHERE gopo_num = #{num} AND gopo_gome_me_id = #{id}
 	</select>
 	
 	<select id="countGroupListById" resultType="GroupVO">

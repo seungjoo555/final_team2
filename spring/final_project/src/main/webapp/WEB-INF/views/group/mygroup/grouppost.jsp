@@ -219,7 +219,7 @@ let num
 				
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
-				alert("게시글을 등록하지 못했습니다. (에러발생)")
+				alert("게시글을 수정하지 못했습니다. (에러발생)")
 			}
 		});
 	})
