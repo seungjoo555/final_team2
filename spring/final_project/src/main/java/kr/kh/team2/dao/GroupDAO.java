@@ -11,6 +11,7 @@ import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.vo.member.MetoringVO;
 
 @Service
 public interface GroupDAO {
@@ -39,6 +40,14 @@ public interface GroupDAO {
 
 	boolean updateGoTime(@Param("num")int groupNum);
 
+	ArrayList<GroupVO> selectStudyGroupList(@Param("me_id") String me_id);
+
+	ArrayList<TotalCategoryVO> selectStudyCategoryList(@Param("recu_num")int recu_num);
+
+	ArrayList<GroupVO> getStudyApplyList(@Param("me_id") String me_id);
+
+	int selectGroupMemberCount(@Param("go_num")int go_num);
+
 	ArrayList<GroupPostVO> getGroupPostByGoNum(@Param("num")int groupNum, @Param("cri")Criteria cri);
 
 	boolean insertGroupPost(@Param("num")int goNum, @Param("writer")String writer, @Param("content")String content);
@@ -56,6 +65,8 @@ public interface GroupDAO {
 	boolean updateGroupPost(@Param("num")int gopoNum, @Param("content")String content);
 
 	boolean updateGroupName(@Param("num")int num, @Param("name")String name);
+
+	ArrayList<GroupVO> countGroupListById(@Param("me_id") String me_id);
 
 	ArrayList<GroupCalendarVO> getCalendar(@Param("num")int num);
 

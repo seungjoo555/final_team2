@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.team2.model.vo.common.ReportContentVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
@@ -27,6 +28,7 @@ import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.GroupService;
+import kr.kh.team2.service.ReportService;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -35,6 +37,8 @@ public class GroupController {
 	
 	@Autowired
 	GroupService groupService;
+	@Autowired
+	ReportService reportService;
 	
 	// ================================ mygroup ================================
 
@@ -354,12 +358,17 @@ public class GroupController {
 		String table = "recruit";
 		ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(num, table);
 		ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(num, table);
+		//신고 유형 정보 가져오기
+		ArrayList<ReportContentVO> contentList = reportService.getReportContentList();
 		//화면에 전송
 		model.addAttribute("recruit", recruit);
 		model.addAttribute("groupKing", groupKing.getMe_nickname());
+		model.addAttribute("groupKing_me_id", groupKing.getMe_id());
 		model.addAttribute("totalCategory", totalCategory);
 		model.addAttribute("totalLanguage", totalLanguage);
+		model.addAttribute("contentList", contentList);
 		return "/group/detail";
 	}
 	
+ 
 }

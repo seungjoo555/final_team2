@@ -156,21 +156,22 @@ INSERT INTO mentor_info VALUES
 ("admin", 				0, 	"admin test", 	"admin test", 	"0000-000-0000", NOW(), 0, "SW 엔지니어"),
 ("asdfg@final.com", 	3, 	"", 			"개발자 임꺽정입니다.", 	"0000-000-0000", NOW(), 1, "백엔드 / 서버 개발자"),
 ("qwert@final.com", 	0, 	"", 			"멘토 신청 테스트.", 	"0000-000-0000", NOW(), -1, "프론트엔드 / 웹 퍼블리셔");
+
  
 SELECT * FROM final_team2.mentor_info;
 
 INSERT INTO mentoring(ment_title, ment_duration, ment_content, ment_me_id, ment_state) VALUES
 ("웹개발 기초반", 				"2024-10-11",	"css, html, js 기초부터 알려드립니다. 줌 아이디가 필요합니다.", 						"asdfg@final.com", 1), 
 ("2024 웹개발자 자소서 쓰기", 	"2024-03-11",	"웹개발자 자소서 첨삭해드립니다. 작성해놓은 자소서가 있다면 신청서에 외부 링크 첨부 부탁드립니다.", "asdfg@final.com", 0), 
-("2025 웹개발자 면접 준비", 		"2025-03-11",	"웹개발자 면접 준비해드립니다. 자소서가 필요합니다. 첨부 안하신 분은 신청 거절합니다.", 			"asdfg@final.com", 0);
+("2025 웹개발자 면접 준비", 		"2025-03-11",	"웹개발자 면접 준비해드립니다. 자소서가 필요합니다. 첨부 안하신 분은 신청 거절합니다.", 			"qwert@final.com", 0);
 
 SELECT * FROM final_team2.mentoring;
 
 
-INSERT INTO mentoring_apply(mentAp_ment_num, mentAp_me_id, mentAp_content, mentAp_state) VALUES
-(1, "admin", 			"admin test", 															0),
-(2, "qwert@final.com", 	"자소서 첨삭 부탁드립니다. 썼던 자소서를 첨부하라고 하셔서 첨부합니다: www.xxx.xxx.com", 1),
-(3, "qwert@final.com", 	"면접 꿀팁 많이 주셨으면 좋겠습니다.", 											-1);
+INSERT INTO mentoring_apply(mentAp_ment_num, mentAp_me_id, mentAp_content, mentAp_contact, mentAp_state) VALUES
+(1, "admin", 			"admin test", 													010-1111-1111	,0),
+(2, "qwert@final.com", 	"자소서 첨삭 부탁드립니다. 썼던 자소서를 첨부하라고 하셔서 첨부합니다: www.xxx.xxx.com",'qwert@final.com' ,1),
+(3, "qwert@final.com", 	"면접 꿀팁 많이 주셨으면 좋겠습니다.", 										010-0000-1111	,-1);
 
 SELECT * FROM final_team2.mentoring_apply;
 
