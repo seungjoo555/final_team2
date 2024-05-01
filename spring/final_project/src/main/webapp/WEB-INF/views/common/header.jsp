@@ -11,13 +11,23 @@
 			</h1>
 			<ul class="navbar-left">
 				<li class="nav-item">
-					<a class="nav-link" href="<c:url value="/group/list" />">강의</a>
-				</li>
-				<li class="nav-item">
 					<a class="nav-link" href="<c:url value="/group/list" />">스터디/프로젝트</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value="/mentor/list" />">멘토링</a>
+				</li>
+				<li class="nav-item">
+					<div class="dropdown">
+						<a class="nav-link" href="<c:url value="/lecture/list" />">강의</a>
+						<div class="dropdown-content">
+							<c:forEach items="${menuCateList}" var="cate">
+								<a class="dropdown-a" href="<c:url value="#"/>">${cate.progCt_name}</a>
+								<ul class="dropdown-second">
+									<li><a href="<c:url value="#"/>">분야밑에언어</a></li>
+								</ul>
+							</c:forEach>
+						</div>
+					</div>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="<c:url value="#" />">커뮤니티</a>

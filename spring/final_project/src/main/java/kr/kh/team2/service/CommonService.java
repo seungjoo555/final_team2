@@ -1,11 +1,11 @@
-package kr.kh.team2.dao;
+package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.SearchMenuVO;
 
-public interface CommonDAO {
+public interface CommonService {
 
 	ArrayList<SearchMenuVO> getMenuList();
 
