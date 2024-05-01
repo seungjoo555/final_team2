@@ -268,18 +268,6 @@ public class GroupController {
 		return "/group/mygroup/managemember";
 	}
 	
-	@GetMapping("/group/manage/applicant")
-	public String groupmanageapplicant(Model model, HttpSession session, int num){
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		GroupVO group = groupService.getGroupByGoNum(num);
-		
-		if(group.getLeader().equals(user.getMe_id())) {
-			model.addAttribute("group", group);
-		}
-		
-		return "/group/mygroup/manageapplicant";
-	}
-	
 	@ResponseBody
 	@PostMapping("/group/calendar/insert")
 	public Map<String, Object> groupCalendarInsert(HttpSession session, @RequestParam("num")int num, 
