@@ -59,6 +59,10 @@ function getGroupPostList(cri){
 		contentType : "application/json; charset=utf-8",
 		dataType : "json", 
 		success : function(data){
+			if(data.list.length == 0){
+				$(".post-list-bg").append(`<div style="text-align: center">등록된 그룹 게시글이 없습니다.</div>`)
+			}
+			
 			for(post of data.list){
 				let btns = '';
 				//현재 로그인한 유저와 댓글을 쓰기 위한 유저의 아이디가 동일하거나 댓글 관리 권한이 있다면 수정,삭제 버튼이 나타나고 아니라면 나타나지 않음

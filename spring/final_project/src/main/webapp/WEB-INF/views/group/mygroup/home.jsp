@@ -18,6 +18,7 @@
 	.insertBtn{;}
 	.deleteBtn{display:none;}
 	
+	
 </style>
 </head>
 <body>
@@ -151,18 +152,21 @@
 						<a href="${url}" class="to-post float-right">게시글 목록으로</a>
 					</div>
 					<div class="group-board-list">
-						<c:forEach items="${boardlist}" var="board">
-							<div>
-								<label class="writer">${board.nickname}</label>
-								<div class="content">${board.gopo_content}</div>
-								<div class="time">${board.time_ago}</div>
-							</div>
-						</c:forEach>
-						
+						<c:if test="${boardlist.size() != 0 }">
+							<c:forEach items="${boardlist}" var="board">
+								<div>
+									<label class="writer">${board.nickname}</label>
+									<div class="content">${board.gopo_content}</div>
+									<div class="time">${board.time_ago}</div>
+								</div>
+							</c:forEach>
+						</c:if>
+						<c:if test="${boardlist .size() == 0 }">
+							<div class="no-board">게시글이 없습니다.</div>
+						</c:if>
 						
 					</div>
 				</div>
-				${calendarlist }
 			</div>
 			
 		   <!-- 그룹 관리 화면 -->
@@ -182,12 +186,6 @@
 	      					<c:param name = 'num' value = "${group.go_num }"/>
 	      				</c:url>
 	      				<a href="${url2}">멤버 관리</a>
-	      			</li>
-	      			<li>
-	      				<c:url var = 'url3' value = '/group/manage/applicant'>
-	      					<c:param name = 'num' value = "${group.go_num }"/>
-	      				</c:url>
-	      				<a href="${url3}">지원자 관리</a>
 	      			</li>
 	      		</ul>
 		      </div>

@@ -147,6 +147,8 @@
 		}
 		.group-board .time{text-align: right; color: #649B60; font-weight: bold;}
 		
+		.no-board{margin: 0px auto; width: 400px; font-size: 14px;}
+		
 	/* group-manage 관련 */
 		.modal{
 		   display: flex; align-items: center; flex-direction: column; justify-content: center;
