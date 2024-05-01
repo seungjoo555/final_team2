@@ -11,9 +11,9 @@
 
 	.container{width:960px; background-color: #F9F9F9; margin: 100px auto 200px auto; padding: 0 0 60px 0; box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);}
 	
-	.container-row{height: 580px; display: flex;}
-	.container-row .container-left{height: 100%; width: 33%; padding: 70px 40px 0 40px;}
-	.container-row .container-right{height: 100%; width: 67%;  padding: 70px 40px 0 40px;}
+	.container-row{height: 780px; display: flex;}
+	.container-row .container-left{height: 100%; width: 33%; padding: 70px 30px 0 30px;}
+	.container-row .container-right{height: 100%; width: 67%;  padding: 70px 30px 0 30px;}
 	
 	.container-bottom{height: 25%; width: 100%; padding: 40px 40px 0 40px;}
 	
@@ -104,7 +104,7 @@
 		.group-timer .colon{margin: 0 3px;}
 		.group-timer .timer-on{font-weight: bold; color: #649B60;}
 		
-		.group-timer .group-timer-btn-group{margin-top: 10px;}
+		.group-timer .group-timer-btn-group{margin-top: 10px; justify-content: space-between;}
 		.group-timer .group-timer-btn-group>*{border: none; font-weight: bold;}
 		.group-timer a{width: 45%; height: 35px; line-height: 35px;  text-align: center; border-radius: 100px; border: 1px solid black;}
 		.group-timer a::hover{text-decoration: none;}
@@ -113,7 +113,7 @@
 		
 	/* group-dday 관련 style*/
 	
-		.group-dday{margin-top: 35px; height: calc(100% - 193px);}
+		.group-dday{margin-top: 35px; height: calc(100% - 213px);}
 		.group-dday .dday-list{width: 100%; display:flex; flex-direction: column; justify-content: space-between;}
 		
 		.dday-list li>*:first-child::before{
@@ -122,6 +122,8 @@
 			background-color: black; 
 			float: left; display: block; content: ''; 
 		}
+		.dday-list li{margin: 5px 0px;}
+		
 		.dday-list li *:first-child{float: left; width: 45%; height: 24px}
 		.dday-list li *:last-child{
 			float: right; width: 50%; text-align: right; 
@@ -168,6 +170,23 @@
 		.manage-group-list li:hover{background-color: #9C9C9C;}
 		.manage-group-list a{color: black;}
 		.manage-group-list a:hover{text-decoration: none;}
+		
+	/* group-calendar 관련 */
+		.group-calendar{height: 100%; padding: 47px 10px 10px 10px;}
+		.group-calendar .calendar{width: 100%; height:100%;} /* border 임시 설정 */
+	
+		/* 달력 크기 조절 */
+		.fc-view-harness{height: calc(100% - 65px);}
+		
+		/* 툴바 설정 */
+		[class$=toolbar]{height: 36px; margin-bottom: 10px;}
+		
+		/* 마지막 행(다음달) 안 보임*/
+		.fc-scrollgrid-sync-table tr:last-child{display:none; }		
+		
+		/* '일' 단위 */
+		.fc-daygrid-day-frame{height: calc(100% / 6); min-height: 0px;}
+		.fc-daygrid-day-bg{margin: 0px; padding: 0px;}
 		
 	/* ======================================= grouppost.jsp ======================================= */
 	

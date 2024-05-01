@@ -121,15 +121,6 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public ArrayList<GroupCalendarVO> getDday(int groupNum, int dday) {
-		if(groupNum == 0 || dday == 0) {
-			System.out.println("groupNum  or count is 0");
-			return null;
-		}
-		return groupDao.getDday(groupNum, dday);
-	}
-
-	@Override
 	public long getGroupTime(int groupNum) {
 		if(groupNum == 0 ) {
 			System.out.println("groupNum is 0");
@@ -330,6 +321,59 @@ public class GroupServiceImp implements GroupService{
 			return null;
 		}		
 		return groupDao.countGroupListById(me_id);
+}
+  @Override
+	public ArrayList<GroupCalendarVO> getCalendar(int num) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return null;
+		}
+		return groupDao.getCalendar(num);
+	}
+
+	@Override
+	public boolean insertGroupCal(int num, GroupCalendarVO newSch, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(newSch == null) {
+			System.out.println("null schedule");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		// 로그인 한 유저가 멤버인지 확인함(후에 writer로 변경)
+		if(!isGroupMember(user, num)) {
+			System.out.println("not group member");
+			return false;
+		}
+		
+		return groupDao.insertGroupCal(num, newSch, user);
+		
+	}
+
+	@Override
+	public boolean deleteGroupCal(int num, int calNum, MemberVO user) {
+		if(calNum == 0) {
+			System.out.println("calNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		// 로그인 한 유저가 멤버인지 확인함
+		if(!isGroupMember(user, num)) {
+			System.out.println("not group member");
+			return false;
+		}
+		
+		return groupDao.deleteGroupCal(calNum);
 	}
 	
 	

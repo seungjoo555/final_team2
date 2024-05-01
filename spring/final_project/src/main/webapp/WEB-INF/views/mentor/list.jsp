@@ -10,6 +10,7 @@
 </head>
 <link rel="stylesheet" href="<c:url value="/resources/css/mentorlist.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/css/mentoringdetail.css"/>">
+<link rel="stylesheet" href="<c:url value="/resources/css/report.css"/>">
 <body>
 <div class="container">
 	<!-- 검색창 -->
@@ -47,20 +48,28 @@
 	<div class="box-mento-list">
 		<ul class="mento-list"></ul>
 	</div>
-	
 	<!-- 페이지네이션 -->
 	<div class="box-pagination">
 		<ul class="pagination justify-content-center"></ul>
 	</div>
 	
+	
+   <!-- 신고화면 -->
+   <div id="modal-report" class="modal-report" style="display:none;">
+		<div id="dimmed-report" class="dimmed-report"></div>
+		<div class="report-container">
+			<div class="report-box">
+			</div>
+		</div>
+   </div>
    <!-- 상세화면 -->
    <div id="modal" class="modal apply-mentoring-modal" style="display:none;">
       <div id="dimmed" class="dimmed apply-mentoring-dimmend"></div>
       <div class="apply-mentoring_container">
-      	<div class="apply-mentoring_box">
-      	</div>
+      	<div class="apply-mentoring_box"></div>
       </div>
    </div>
+   
    
 	
 </div>
@@ -102,7 +111,9 @@
 			return;	
 		}
 		
+		
 		for(mentoing of list){
+			
 			str +=
 				`
 				<!-- 게시글 정보 링크 -->
@@ -211,6 +222,9 @@ function search() {
 	cri.search = $("#mento-totalsearch").val();
 	getMentoList(cri);
 }
+
+
+
 </script>
 
 
@@ -251,8 +265,10 @@ $(document).on('click', '.mento-item', function(event){
 			str += `<h1>등록되지 않은 멘토링 정보입니다.<h1>`;
 		}
 		
-		//직무, 경력, 포토폴리오가 없을 경우 출력 메세지 설정
+		//마감일 데이터포맷
+		let dateString = convertDate(mentoring.ment_duration);
 		
+		//직무, 경력, 포토폴리오가 없을 경우 출력 메세지 설정
 		
 		str += 
 			`
@@ -264,7 +280,8 @@ $(document).on('click', '.mento-item', function(event){
 	      		<div class="apply-mentoring_body_info_header">
       				<div class="memberInfo" >
 						<img class="basic-profile" value="\${mentor.mentIf_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
-						<div class="memberNickname" value="\${mentor.mentIf_me_id}">\${mentor.mentIf_me_nickname} </div>
+						<a href="<c:url value="/mypage/profile?me_id=\${mentor.mentIf_me_id}"/>" class="memberNickname" value="\${mentor.mentIf_me_id}">\${mentor.mentIf_me_nickname} </a>
+						<div class="report-btn-box"><button class="report-btn">신고</button></div>
 					</div>
 	      		</div>
 	      		<h1>\${mentoring.ment_title}</h1>
@@ -281,27 +298,36 @@ $(document).on('click', '.mento-item', function(event){
 	      		</div>
 	      	</div>
 	      	<div class="apply-mentoring_footer">
-				<div class="apply-due">종료일 : \${mentoring.ment_duration}</div>
+				<div class="apply-due">종료일 : \${dateString}</div>
 				<div class="btn-apply-box"><button type="button" class="btn-apply" value="\${mentoring.ment_num}">신청하기</button></div>
 			</div>
 			`
 		$('.apply-mentoring_box').html(str);
 	}//displayMentoringDetail(); end
-   
-})
+	
+	//날짜 변경 함수
+	function convertDate(milliSecond) {
+	  const days = ['일', '월', '화', '수', '목', '금', '토'];
+	  const data = new Date(milliSecond);  //Date객체 생성
 
-/* 프로필 클릭 이벤트 */
-$(document).on('click', '.basic-profile', function(){
-	location.href = '<c:url value=""/>';	//프로필 주소
-})
-$(document).on('click', '.memberNickname', function(){
-	location.href = '<c:url value=""/>';	//프로필 주소
+	  const year = data.getFullYear();    //0000년 가져오기
+	  const month = data.getMonth() + 1;  //월은 0부터 시작하니 +1하기
+	  const date = data.getDate();        //일자 가져오기
+	  const day = days[data.getDay()];    //요일 가져오기
+
+	//  return `${year}.${month}.${date}. (${day})`;
+	  return `\${year}.\${month}.\${date}`;
+	}
+   
 })
 
 /* dimmed 클릭 시 창 없애기 */
 $(document).on('click', '#dimmed', function(){
    $("#modal").css('display','none');
    $("body").css('overflow','visible');
+})
+$(document).on('click', '#dimmed-report', function(){
+   $("#modal-report").css('display','none');
 })
 /* X 클릭 시 창 없애기 */
 $(document).on('click', '.btn-cancel', function(){
@@ -311,7 +337,143 @@ $(document).on('click', '.btn-cancel', function(){
 
 
 </script>
+<!--========================================== 신고 기능 구현 ==========================================-->
+<script type="text/javascript">
+/* 신고 버튼 이벤트 */
+$(document).on('click', '.report-btn', function(){
+	
+	if(${user == null}){
+		if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?") == true){
+			location.href = '<c:url value="/login"/>';			
+		}else{
+			return false;
+		}
+	}
+	
+   $(".modal-report").css('display','block');
+	let ment_num = $('.btn-apply').val();
+   //출력
+	insertReport(ment_num);
+	function insertReport(ment_num){
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/report/mentor"/>", 
+			type : 'get', 
+			data : {
+				ment_num : ment_num
+			},
+			dataType :"json", 
+			success : function (data){
+				displayReport(data.mentoring, data.contentList);
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+			}
+		});	//ajax end
+	}	//insertReport(ment_num); end
+		
+	
+	function displayReport(mentoring, contentList){
+		let str='', cList = '';
+		let content = '';
+		for(var i=0; i<contentList.length; i++){
+			content = contentList[i];
+			cList += 
+				`
+				<option value="\${content.repo_content}">\${content.repo_content}</option>
+				`
+		}
+		
+		str = 
+			`
+			<div class="report-header">
+		     		<div class="header-title"><h1>신고하기</h1></div>
+		     	</div>
+			<div class="report-body">
+				<form action="<c:url value="/report/mentor"/>"  method="post" class="form-report">
+					<input type="hidden" id="ment_num" value="\${mentoring.ment_num}">
+					<div class="report-form-group">
+						<label for="report-content">신고유형</label>
+						<select class="input-box-input report-content" id="report-content" name="report-content">
+			`
+			+ cList +
+			`
+						</select>
+					</div>
+					<div class="report-form-group">
+						<label for="report-detail">신고내용</label>
+						<textarea class="form-control report-detail" id="report-detail" name="report-detail"></textarea>
+					</div>
+				</form>
+			</div>
+			<div class="report-footer">
+				<div class="btn-report-box">
+					<button type="button" class="btn-report-insert"class="btn-report-insert">신고하기</button>
+				</div>
+			</div>
+			`
+		$('.report-box').html(str);
+	}
 
+})
+
+/* 멘토링 신고하기 */
+
+$(document).on('click', '.btn-report-insert', function(){
+	
+	//서버에 보낼 데이터 생성
+	let ReportVO = {
+		repo_repo_content : $("select[name=report-content] option:selected").val(),
+		repo_detail :  $("#report-detail").val(),
+		repo_table : "mentoring",
+		repo_target : $("#ment_num").val()
+	}
+	console.log(ReportVO);
+	//null 체크
+	if(ReportVO.repo_repo_content.length == 0 || ReportVO.repo_detail.length == 0){
+		alert("신고 사유를 입력하세요.");
+		return;
+	}
+	
+	if(confirm("정말 신고하시겠습니까?") == false)
+		return;
+	
+	$.ajax({
+		async : true, //비동기 : true(비동기), false(동기)
+		url : '<c:url value="/reportr"/>', 
+		type : 'post', 
+		data : JSON.stringify(ReportVO), 
+		contentType : "application/json; charset=utf-8",
+		dataType : "json", 
+		success : function (data){
+			if(data.result){
+				alert("해당 멘토링을 신고했습니다.");
+			    $(".modal-report").css('display','none');
+				$("#modal").css('display','none');
+			   	$("body").css('overflow','visible');
+				let cri = {
+						page : 1,
+						type : "",
+						search : "",
+						jobList :[]
+				}
+				getMentoList(cri);
+			}else{
+				alert("멘토링을 신고하지 못했습니다.");
+			}
+			
+		}, 
+		error : function(jqXHR, textStatus, errorThrown){	//errorThrown얘는 거의 비어있음(굳이 체크 안하기로)
+			console.log(jqXHR);
+			console.log(textStatus);
+		}
+	});
+	
+})
+
+</script>
+
+
+<!-- ======================================= 멘토링 신청 ============================================ -->
 <script type="text/javascript">
 
 /* 신청 창 */
@@ -416,9 +578,6 @@ $(document).on('click', '.btn-apply-prev', function(){
 			str += `<h1>등록되지 않은 멘토링 정보입니다.<h1>`;
 		}
 		
-		//직무, 경력, 포토폴리오가 없을 경우 출력 메세지 설정
-		
-		
 		str += 
 			`
 	      	<div class="apply-mentoring_header">
@@ -430,7 +589,7 @@ $(document).on('click', '.btn-apply-prev', function(){
       				<div class="memberInfo" >
 						<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
 						<div class="memberNickname">\${mentor.mentIf_me_nickname} </div>
-						<img class="more-Menu" style="width: 15px; height: 20px;" src="<c:url value="/resources/img/more.png"/>">
+						<div class="report-box"><button class="report-btn">신고</button></div>
 					</div>
 	      		</div>
 	      		<h1>\${mentoring.ment_title}</h1>
@@ -465,16 +624,15 @@ $(document).on('click', '.btn-apply-insert', function(){
 		mentAp_contact :  $("#mentAp_contact").val(),
 		mentAp_content :  $("#mentAp_content").val()
 	}
+	//null 체크
 	if(mentoApVO.mentAp_contact.length == 0 || mentoApVO.mentAp_content.length == 0){
 		alert("신청 내용을 입력하세요.");
 		return;
 	}
 	
-	if(confirm("멘토링을 정말 신청하시겠습니까?") == true){
-				
-	}else{
+	if(confirm("멘토링을 정말 신청하시겠습니까?") == false)
 		return;
-	}
+	
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
 		url : '<c:url value="/mentoring/apply"/>', 

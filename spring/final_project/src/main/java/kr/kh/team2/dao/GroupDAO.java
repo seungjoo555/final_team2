@@ -36,8 +36,6 @@ public interface GroupDAO {
 
 	ArrayList<GroupPostVO> getRecentGroupBoard(@Param("num")int groupNum, @Param("count")int recentBoard);
 
-	ArrayList<GroupCalendarVO> getDday(@Param("num")int groupNum, @Param("count")int dday);
-
 	long getGroupTime(@Param("num")int groupNum);
 
 	boolean updateGoTime(@Param("num")int groupNum);
@@ -69,5 +67,11 @@ public interface GroupDAO {
 	boolean updateGroupName(@Param("num")int num, @Param("name")String name);
 
 	ArrayList<GroupVO> countGroupListById(@Param("me_id") String me_id);
+
+	ArrayList<GroupCalendarVO> getCalendar(@Param("num")int num);
+
+	boolean insertGroupCal(@Param("num")int num, @Param("newSche")GroupCalendarVO newSch, @Param("user")MemberVO user);
+
+	boolean deleteGroupCal(@Param("num")int calNum);
 
 }
