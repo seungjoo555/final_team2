@@ -66,6 +66,4 @@ public interface GroupService {
 
 	ArrayList<GroupVO> countGroupListById(String me_id);
 
-	ArrayList<GroupApplyVO> getGroupApply(int recu_num);
-
 }

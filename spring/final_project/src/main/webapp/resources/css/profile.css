@@ -169,10 +169,32 @@
     font-style: italic;
 }
 
+.mutual-list {
+	margin: 30px 0 100px 0;
+}
+
 /* 스터디 / 프로젝트 목록 관련 스타일 */
 .study-list-item-content,
 .apply-list-item-content {
     margin-bottom: 10px;
+}
+
+.study-list {
+	margin: 30px 0 100px 0;
+}
+
+.apply-item {
+	margin-top: 50px;
+}
+
+.study-list-content {
+	font-style: italic;
+	margin-top: 20px;
+}
+
+.apply-list-content {
+	font-style: italic;
+	margin-top: 20px;
 }
 
 .recruit-position {
@@ -197,7 +219,9 @@
     margin-bottom: 10px;
 }
 
+
 /* 스터디 지원자 리스트 모달 */
+
 body{width:100%; overflow : visible; 
   height: 100%;}
 *{box-sizing: border-box;}

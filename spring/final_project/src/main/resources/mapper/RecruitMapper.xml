@@ -34,8 +34,4 @@
 		select * from programming_language
 	</select>
 	
-	<select id="selectRecruit" resultType="RecruitVO">
-		select * from recruit where recu_num = #{recu_num}
-	</select>
-	
 </mapper>

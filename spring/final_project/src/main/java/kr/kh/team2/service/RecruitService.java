@@ -27,6 +27,4 @@ public interface RecruitService {
 
 	boolean insertTotalLang(int recu_num);
 
-	RecruitVO getRecruit(int recu_num);
-
 }

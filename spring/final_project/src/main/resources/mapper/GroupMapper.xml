@@ -178,13 +178,6 @@
            GROUP BY gome_go_num;
 	</select>
 	
-	<select id="selectGroupApply" resultType="GroupApplyVO">
-	select group_apply.*, member.me_nickname as goap_me_nickname
-	from group_apply 
-		join member on goap_me_id = me_id
-	where goap_recu_num = #{recu_num}
-	</select>
-	
 	
 	<!-- =============================== DELETE =============================== -->
 	

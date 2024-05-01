@@ -150,17 +150,4 @@ public class MypageController {
 		return "message";
 	}
 
-	@ResponseBody
-	@GetMapping("/applyList/detail")
-	public Map<String, Object> applyListDetail(@RequestParam("recu_num")int recu_num) {
-	Map<String, Object> map = new HashMap<String, Object>();
-		// 공고 정보 받아오기
-		RecruitVO recruit = recruitService.getRecruit(recu_num);
-		ArrayList<GroupApplyVO> groupApply = groupService.getGroupApply(recruit.getRecu_num());
-		
-		map.put("recruit", recruit);
-        map.put("groupApply", groupApply);
-		
-		return map;
-	}
 }

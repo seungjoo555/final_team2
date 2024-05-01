@@ -146,12 +146,4 @@ public class RecruitServiceImp implements RecruitService {
 		return recruitDao.selectProgrammingLanguageList();
 	}
 
-	@Override
-	public RecruitVO getRecruit(int recu_num) {
-		if(recu_num <= 0) {
-			return null;
-		}
-		return recruitDao.selectRecruit(recu_num);
-	}
-
 }

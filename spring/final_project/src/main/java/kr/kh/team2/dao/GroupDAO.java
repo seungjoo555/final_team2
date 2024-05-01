@@ -71,6 +71,4 @@ public interface GroupDAO {
 
 	ArrayList<GroupVO> countGroupListById(@Param("me_id") String me_id);
 
-	ArrayList<GroupApplyVO> selectGroupApply(@Param("recu_num") int recu_num);
-
 }
