@@ -51,6 +51,8 @@ public interface MentorService {
 
 	boolean mentorRequest(String mentIf_me_id, String btnType);
 
+	boolean updateMentorInfoForDenied(MentorInfoVO mentorInfoVO, String me_id);
+
 
 
 }

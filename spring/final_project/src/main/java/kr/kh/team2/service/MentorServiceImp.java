@@ -219,6 +219,20 @@ public class MentorServiceImp implements MentorService {
 		
 	}
 
+	@Override
+	public boolean updateMentorInfoForDenied(MentorInfoVO mentorInfoVO, String me_id) {
+		if(!methods.checkString(mentorInfoVO.getMentIf_me_id())||
+				   !methods.checkString(mentorInfoVO.getMentIf_bank())||
+				   !methods.checkString(mentorInfoVO.getMentIf_account())||
+				   !methods.checkString(mentorInfoVO.getMentIf_ment_job())||
+				   !methods.checkString(mentorInfoVO.getMentIf_portfolio())) {
+					return false;
+			}
+		
+		return mentorDAO.updateMentorInfoForDenied(mentorInfoVO,me_id);
+		
+	}
+
 
 
 

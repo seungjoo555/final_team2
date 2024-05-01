@@ -56,6 +56,22 @@
 	
 	</update>
 	
+	<update id ="updateMentorInfoForDenied">
+		update mentor_info
+		set
+		mentIf_exp = #{mt_info.mentIf_exp},
+		mentIf_portfolio = #{mt_info.mentIf_portfolio},
+		mentIf_intro = #{mt_info.mentIf_intro},
+		mentIf_account = #{mt_info.mentIf_account},
+		mentIf_date = now(),
+		mentIf_ment_job = #{mt_info.mentIf_ment_job},
+		mentif_bank = #{mt_info.mentIf_bank},
+		mentIf_state = 0
+		where
+		mentIf_me_id = #{me_id}
+	
+	</update>
+	
 	<!-- =============================== SELECT =============================== -->	
 	<select id="selectMentorList" resultType="MetoringVO">
         select mentoring.*, me_nickname as ment_me_nickname, mentIf_exp as ment_mentIf_exp, mentIf_ment_job as ment_mentIf_job

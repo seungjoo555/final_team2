@@ -147,6 +147,9 @@ public class MentorController {
 		if(mentorInfo.getMentIf_state()==-1) {
 			model.addAttribute("msg","멘토 신청 거절 이력이 있습니다.");
 			model.addAttribute("url","/mentor/insert");
+			model.addAttribute("confirm", true);
+			model.addAttribute("confirmMsg","멘토신청을 다시 하시겠습니까?");
+			model.addAttribute("confirmUrl","/mentor/update");
 			return "message";
 		}
 		
@@ -157,14 +160,66 @@ public class MentorController {
 	}
 	
 	@PostMapping("/mentor/insert")
-	public String mentorInsertPost(MentorInfoVO mentorInfoVO) {
+	public String mentorInsertPost(Model model, HttpSession session, MentorInfoVO mentorInfoVO) {
 		
-		boolean res = mentorService.insertMentorInfo(mentorInfoVO);
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		MentorInfoVO dbMentor = mentorService.getMentorInfo(user.getMe_id());
+		
+		boolean res = false;
+		
+		if(dbMentor == null) {
+			res = mentorService.insertMentorInfo(mentorInfoVO);
+		}else {
+			res = false;
+		}
+		if(res) {
+			model.addAttribute("msg","멘토 신청을 완료하였습니다.");
+			model.addAttribute("url","/mentor/mentorcom");
+		}else {
+			model.addAttribute("msg","멘토 신청을 완료하지 못했습니다.");
+			model.addAttribute("url","/");
+		}
+		return "message";
+	}
+	
+	@GetMapping("/mentor/update")
+	public String mentorUpdate(HttpSession session, Model model) {
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		MentorInfoVO dbMentor = mentorService.getMentorInfo(user.getMe_id());
+		if(!user.getMe_id().equals(dbMentor.getMentIf_me_id())) {
+		
+			return "message";
+		}
+		ArrayList<MentorJobVO> jobList = mentorService.getJobList();
+		model.addAttribute("dbMentor",dbMentor);
+		model.addAttribute("jobList",jobList);
+		
+		
+		return "/mentor/mentorupdate";
+	}
+	
+	@PostMapping("/mentor/update")
+	public String mentorUpdatePost(HttpSession session, Model model,MentorInfoVO mentorInfoVO) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		String me_id = user.getMe_id();
+		MentorInfoVO dbMentor = mentorService.getMentorInfo(me_id);
+		if(!user.getMe_id().equals(dbMentor.getMentIf_me_id())) {
+			
+			return "message";
+		}
+		
+		boolean res = mentorService.updateMentorInfoForDenied(mentorInfoVO,me_id);
 		
 		if(res) {
-			return "/mentor/mentorcom";
+			model.addAttribute("msg","멘토 신청을 완료하였습니다.");
+			model.addAttribute("url","/mentor/complete");
+		}else {
+			model.addAttribute("msg","멘토 신청을 완료하지 못했습니다.");
+			model.addAttribute("url","/");
 		}
-		return "";
+		return "message";
+		
 	}
 	
 	@GetMapping("/mentor/complete")

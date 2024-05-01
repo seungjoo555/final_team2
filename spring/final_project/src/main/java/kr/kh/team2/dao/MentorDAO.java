@@ -50,4 +50,6 @@ public interface MentorDAO {
 
 	boolean mentorInfoDeny(@Param("me_id")String me_id);
 
+	boolean updateMentorInfoForDenied(@Param("mt_info")MentorInfoVO mentorInfoVO,@Param("me_id") String me_id);
+
 }
