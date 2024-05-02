@@ -3,12 +3,14 @@ package kr.kh.team2.service;
 import java.util.ArrayList;
 
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.dto.MentorInfoDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MentoringApplyVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
+import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.CriteriaMentor;
 
 public interface MentorService {
@@ -21,7 +23,7 @@ public interface MentorService {
 
 	boolean insertMentorInfo(MentorInfoVO mentorInfoVO);
 
-	boolean checkMentor(String me_id);
+	MentorInfoVO checkMentor(String me_id);
 
 	MetoringVO getMentoring(int ment_num);
 
@@ -40,6 +42,17 @@ public interface MentorService {
 	ArrayList<ProgrammingCategoryVO> getProgrammingCategory();
 
 	boolean insertMentoring(MetoringVO mentoring, TotalCategoryVO toCt);
+
+	ArrayList<MentorInfoVO> getMentorInfoList(Criteria cri);
+
+	int getMentorInfoTotalCount(Criteria cri);
+
+	boolean mentorMultiRequest(MentorInfoDTO mentorInfoDTO);
+
+	boolean mentorRequest(String mentIf_me_id, String btnType);
+
+	boolean updateMentorInfoForDenied(MentorInfoVO mentorInfoVO, String me_id);
+
 
 
 }
