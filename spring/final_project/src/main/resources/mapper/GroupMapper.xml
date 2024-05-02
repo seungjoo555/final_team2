@@ -177,6 +177,12 @@
            GROUP BY gome_go_num;
 	</select>
 	
+	<select id="getApplyListByGoNum" resultType="GroupApplyVO">
+		SELECT group_apply.*, me_nickname AS nickname 
+			FROM group_apply 
+				JOIN member ON me_id = goap_me_id
+			WHERE goap_go_num = #{num} AND goap_state = 0
+	</select>
 	
 	<!-- =============================== DELETE =============================== -->
 	
