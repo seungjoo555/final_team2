@@ -576,7 +576,15 @@ function deleteSch(modal, arg){
 <!-- 그룹 탈퇴하기 -->
 <script type="text/javascript">
 function quitGroup(){
+	if(${group.leader == user.me_id}){
+		alert("그룹 리더는 그룹을 탈퇴할 수 없습니다. 관리자 메뉴에서 그룹을 삭제하거나 리더 권한을 위임해주세요.")
+		return;
+	}
+	
 	if(confirm('그룹을 탈퇴하시겠습니까? 그룹 탈퇴 시 작성하였던 모든 내역이 삭제됩니다.')){
+		
+		
+		
 		$.ajax({
 			async : true, //비동기 : true(비동기), false(동기)
 			url : '<c:url value="/group/quit"/>', 
