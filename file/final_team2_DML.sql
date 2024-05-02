@@ -282,6 +282,14 @@ INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap
 			VALUES(2,2,"스프링스터디에 지원합니다.",0,"asdfg@final.com");
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
 			VALUES(3,3,"KH 방과후 스터디에 지원합니다.",1,"abcde@final.com");
+INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
+			VALUES(1,1,"그룹 지원 2",0,"user@naver.com");
+INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
+			VALUES(1,1,"그룹 지원 3",0,"dkdlel@final.com");
+INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
+			VALUES(1,1,"그룹 지원 4",0,"abcde@final.com");
+INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
+			VALUES(1,1,"그룹 지원 5",0,"asdfg@final.com");
 
 INSERT INTO `group_member`(gome_me_id,gome_go_num,gome_type)
 			VALUES("qwert@final.com",1,0);
