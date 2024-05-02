@@ -29,6 +29,7 @@
 		<typeAlias type="kr.kh.team2.model.vo.group.MutualReviewVO" alias="MutualReviewVO"/>
 
 		<!-- ========================== lecture ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.lecture.LectureVO" alias="LectureVO"/>
 
 
 
