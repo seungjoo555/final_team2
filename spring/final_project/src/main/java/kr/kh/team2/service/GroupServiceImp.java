@@ -375,6 +375,20 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.deleteGroupCal(calNum);
 	}
+
+	@Override
+	public boolean quitGroup(int num, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		return groupDao.quitGroup(num, user);
+	}
 	
 	
 }

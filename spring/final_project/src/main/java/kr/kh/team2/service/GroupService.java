@@ -70,5 +70,7 @@ public interface GroupService {
 
 	boolean deleteGroupCal(int num, int calNum, MemberVO user);
 
+	boolean quitGroup(int num, MemberVO user);
+
 
 }

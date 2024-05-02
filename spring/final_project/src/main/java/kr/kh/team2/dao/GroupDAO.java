@@ -74,4 +74,6 @@ public interface GroupDAO {
 
 	boolean deleteGroupCal(@Param("num")int calNum);
 
+	boolean quitGroup(@Param("num")int num, @Param("user")MemberVO user);
+
 }

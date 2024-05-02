@@ -324,7 +324,14 @@ public class GroupController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		map.put("data", "ok");
+		
+		boolean res = groupService.quitGroup(num, user);
+		
+		if (res) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", null);
+		}
 		
 		return map;
 	}

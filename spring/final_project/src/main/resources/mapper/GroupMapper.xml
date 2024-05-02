@@ -188,6 +188,10 @@
 		DELETE FROM group_calendar WHERE gocal_num = #{num}
 	</delete>
 	
+	<delete id="quitGroup">
+		DELETE FROM group_member WHERE gome_me_id = #{user.me_id} AND gome_go_num = #{num}
+	</delete>
+	
 	<!-- =============================== UPDATE =============================== -->	
 	
 	<update id="updateGoTime">
