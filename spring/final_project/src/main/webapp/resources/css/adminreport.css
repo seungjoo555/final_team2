@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-.select-box{width: 100px;}
+.select-box{width: 150px;}
 .count-report{margin: 0 10px;}
 .input-group{display: flex; align-items:center;flex-direction: row }
 .check-view-box{display: flex; align-items: center;}

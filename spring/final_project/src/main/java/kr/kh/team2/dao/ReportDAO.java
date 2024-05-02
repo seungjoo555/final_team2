@@ -4,13 +4,19 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.team2.model.dto.ReportSimpleDTO;
 import kr.kh.team2.model.vo.common.ReportContentVO;
 import kr.kh.team2.model.vo.common.ReportVO;
+import kr.kh.team2.pagination.Criteria;
 
 public interface ReportDAO {
 
 	ArrayList<ReportContentVO> selectReportContentList();
 
 	boolean insertReport(@Param("report") ReportVO reportVO);
+
+	ArrayList<ReportSimpleDTO> selectReportSimpleList(@Param("cri")Criteria cri);
+
+	int selectReportSimpleTotalCount(@Param("cri")Criteria cri);
 
 }

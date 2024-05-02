@@ -29,6 +29,7 @@
 
 		<!-- ========================== report ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.common.ReportContentVO" alias="ReportContentVO"/>
+		<typeAlias type="kr.kh.team2.model.dto.ReportSimpleDTO" alias="ReportSimpleDTO"/>
 		
 	</typeAliases>
 </configuration>
