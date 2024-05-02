@@ -329,7 +329,7 @@
 	<!--mentorInfo detail 출력-->
 	function displayMentorInfo(mentorInfo){
 		//자기소개가 null일 때 처리
-		if(mentorInfo.mentIf_intro==null){
+		if(mentorInfo.mentIf_intro===null || mentorInfo.mentIf_intro.trim().length===0){
 			mentorInfo.mentIf_intro = "등록된 자기소개가 없습니다.";
 		}
 		let str = `
