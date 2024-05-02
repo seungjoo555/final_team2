@@ -40,7 +40,7 @@
 	}
 	.accept-list-wrap ul {
 		display: flex;
-		font-size: 18px;
+		font-size: 16px;
 		margin-left : 35px;
 		margin-top : 30px;
 	}
