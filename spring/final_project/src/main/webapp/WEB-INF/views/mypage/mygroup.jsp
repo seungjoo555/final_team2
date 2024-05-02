@@ -66,7 +66,7 @@
 											<div class="study-list-item-title">
 												${grouplist.recu_topic} 
 											</div>
-											<div>
+											<div class="cate-container" onmousedown="startDragging(event)" onmouseup="stopDragging(event)" onmousemove="dragging(event)">
 												<c:forEach items="${totalCategory1}" var="cate">
 													<c:if test="${grouplist.recu_num == cate.toCt_table_pk}">
 														<ul class="cate-list">
@@ -75,7 +75,7 @@
 													</c:if>
 												</c:forEach>
 											</div>
-											<div>
+											<div class="lang-container" onmousedown="startDragging(event)" onmouseup="stopDragging(event)" onmousemove="dragging(event)">
 												<c:forEach items="${totalLanguage1}" var="lang">
 													<c:if test="${grouplist.recu_num == lang.toLg_table_pk}">
 														<ul class="lang-list">
@@ -109,49 +109,51 @@
 					<c:otherwise>
 						<ul class="apply-list">
 							<li class="apply-list-title" style="font-weight: 700">내가 지원한 그룹</li>
-							<c:forEach items="${groupApplyList}" var="applylist">
-								<li class="apply-item">
-									<div class="apply-list-item-category">
-										<c:if test="${applylist.goap_state == 0}">
-											<div class="item-category">수락 대기</div>
-										</c:if>
-										<c:if test="${applylist.goap_state == 1}">
-											<div class="item-category">진행 중</div>
-										</c:if>
-										<c:if test="${applylist.goap_state == 2}">
-											<div class="item-category">반려</div>
-										</c:if>
-									</div>
-									<div class="apply-list-item-title">
-										${applylist.recu_topic}
-									</div>
-									<div>
-										<c:forEach items="${totalCategory2}" var="cate">
-											<c:if test="${applylist.recu_num == cate.toCt_table_pk}">
-												<ul class="cate-list">
-													<li class="cate-list-item">${cate.toCt_progCt_name}</li>
-												</ul>
-											</c:if>
-										</c:forEach>
-									</div>
-									<div>
-										<c:forEach items="${totalLanguage2}" var="lang">
-											<c:if test="${applylist.recu_num == lang.toLg_table_pk}">
-												<ul class="lang-list">
-													<li class="lang-list-item">${lang.toLg_lang_name}</li>
-												</ul>
-											</c:if>
-										</c:forEach>
-									</div>
-									<div class="box-border-line">
-										<div class="border-line"></div>
-									</div>
-									<div class="apply-list-item-memberInfo">
-										<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
-										<div class="member-nickname">${groupKing}</div>
-										<div class="member-count">${applylist.go_member_count} / ${applylist.recu_count}</div>
-									</div>
-								</li>
+								<c:forEach items="${groupApplyList}" var="applylist">
+									<div class="apply-item-container">
+										<li class="apply-item">
+											<div class="apply-list-item-category">
+												<c:if test="${applylist.goap_state == 0}">
+													<div class="item-category">수락 대기</div>
+												</c:if>
+												<c:if test="${applylist.goap_state == 1}">
+													<div class="item-category">진행 중</div>
+												</c:if>
+												<c:if test="${applylist.goap_state == 2}">
+													<div class="item-category">반려</div>
+												</c:if>
+											</div>
+											<div class="apply-list-item-title">
+												${applylist.recu_topic}
+											</div>
+											<div class="cate-container">
+												<c:forEach items="${totalCategory2}" var="cate">
+													<c:if test="${applylist.recu_num == cate.toCt_table_pk}">
+														<ul class="cate-list">
+															<li class="cate-list-item">${cate.toCt_progCt_name}</li>
+														</ul>
+													</c:if>
+												</c:forEach>
+											</div>
+											<div class="lang-container">
+												<c:forEach items="${totalLanguage2}" var="lang">
+													<c:if test="${applylist.recu_num == lang.toLg_table_pk}">
+														<ul class="lang-list">
+															<li class="lang-list-item">${lang.toLg_lang_name}</li>
+														</ul>
+													</c:if>
+												</c:forEach>
+											</div>
+											<div class="box-border-line">
+												<div class="border-line"></div>
+											</div>
+											<div class="apply-list-item-memberInfo">
+												<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+												<div class="member-nickname">${groupKing}</div>
+												<div class="member-count">${applylist.go_member_count} / ${applylist.recu_count}</div>
+											</div>
+										</li>
+								</div>
 							</c:forEach>
 						</ul>
 					</c:otherwise>
@@ -209,5 +211,44 @@
 		</div>
 	</c:if>
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.cate-container').on('click', function(event) {
+			event.preventDefault();
+		});
+	});
+	
+	let isDragging = false;
+    let startPosition = 0;
+    let startScrollPosition = 0;
+
+    function startDragging(event) {
+        isDragging = true;
+        startPosition = event.clientX;
+        startScrollPosition = event.currentTarget.scrollLeft;
+        event.currentTarget.style.cursor = 'grabbing'; /* 드래그 중일 때의 커서 모양 설정 */
+    }
+
+    function stopDragging(event) {
+        isDragging = false;
+        event.currentTarget.style.cursor = 'grab'; /* 드래그 종료 후 커서 모양 설정 */
+    }
+
+    function dragging(event) {
+        if (isDragging) {
+            const deltaX = event.clientX - startPosition;
+            event.currentTarget.scrollLeft = startScrollPosition - deltaX;
+        }
+    }
+	
+	$(document).ready(function() {
+		$('.lang-container').on('click', function(event) {
+			event.preventDefault();
+		});
+	});
+	
+	
+</script>
 </body>
 </html>
