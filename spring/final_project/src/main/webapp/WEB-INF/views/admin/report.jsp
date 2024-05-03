@@ -38,7 +38,7 @@
 		<table class="table table-hover">
 			<thead>
 				<tr>
-			        <th></th>
+			        <th><input class="total-check-report" type="checkbox"></th>
 			        <th>신고횟수</th>
 			        <th>신고 대상 타입</th>
 			        <th>신고 대상</th>
@@ -55,9 +55,7 @@
 				<c:if test="${fn:length(rsList) != 0}">
 					<c:forEach items="${rsList}" var="report">
 						<tr>
-							<td>
-								<input type="checkbox">
-							</td>
+							<td><input class="check-report" type="checkbox"></td>
 							<td>${report.repo_count}</td>
 							<td>${report.repo_table_str}</td>
 							<td>${report.repo_target_str}</td>
@@ -70,6 +68,39 @@
 		</table>
 		
 	<!-- 페이지네이션 -->
+	 <ul class="pagination justify-content-center">
+ 	<c:if test="${pm.prev}">
+ 		<c:url value="/admin/report" var="url">
+ 			<c:param name="page" value="${pm.startPage - 1 }"></c:param>
+ 			<c:param name="type" value="${pm.cri.type}"></c:param>
+ 			<c:param name="search" value="${pm.cri.search}"></c:param>
+ 		</c:url>
+	    <li class="page-item">
+	    	<a class="page-link" href="${url}">이전</a>
+	    </li>
+ 	</c:if>
+ 	<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+ 		<c:url value="/admin/report" var="url">
+ 			<c:param name="page" value="${i}"></c:param>
+ 			<c:param name="type" value="${pm.cri.type}"></c:param>
+ 			<c:param name="search" value="${pm.cri.search}"></c:param>
+ 		</c:url>
+	    <li class="page-item <c:if test="${pm.cri.page == i }">active</c:if>">	
+	    	<a class="page-link" href="${url}">${i}</a>
+	    </li>
+ 	</c:forEach>
+    <c:if test="${pm.next}">
+    	<c:url value="/admin/report" var="url">
+ 			<c:param name="page" value="${pm.endPage + 1 }"></c:param>
+ 			<c:param name="type" value="${pm.cri.type}"></c:param>
+ 			<c:param name="search" value="${pm.cri.search}"></c:param>
+ 		</c:url>
+	    <li class="page-item">
+	    	<a class="page-link" href="${url}">다음</a>
+	    </li>
+    </c:if>
+  </ul>
+  
 
 
 </div>
@@ -85,6 +116,15 @@ $("#check-view").change(function(){
 	}else{
 		${pm.cri.search == ''}
 		$("#typeForm").submit();
+	}
+})
+//웨 안될까...
+$(document).on('click', '.total-check-report', function(){
+	if($(".total-check-report").prop("checked")){
+		$('check-report').prop('checked',true);
+	}else{
+		$('check-report').prop('checked',false);
+		
 	}
 })
 </script>

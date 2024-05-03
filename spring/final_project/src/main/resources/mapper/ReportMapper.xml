@@ -48,17 +48,17 @@
 				<choose>
 					<when test='cri.type != "all" and cri.search != "대기중"'>
 						where
-							repo_table = #{cri.type}
+						repo_table = #{cri.type}
 					</when>
 					<when test='cri.type == "all" and cri.search == "대기중"'>
 						where
-							repo_repo_state = #{cri.search}
+						repo_repo_state = #{cri.search}
 					</when>
-					<when test='cri.type == "all" and cri.search != "대기중"'>
+					<when test='cri.type != "all" and cri.search == "대기중"'>
 						where
-							repo_repo_state = #{cri.search}
-							and
-							repo_table = #{cri.type}
+						repo_repo_state = #{cri.search}
+						and
+						repo_table = #{cri.type}
 					</when>
 				</choose>
 				group by repo_table, repo_target, repo_repo_state

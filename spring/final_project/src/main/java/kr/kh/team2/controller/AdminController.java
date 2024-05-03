@@ -23,10 +23,6 @@ public class AdminController {
 	public String adminReport(Model model, Criteria cri){
 		
 		cri.setPerPageNum(10);
-		/*
-		if(cri.getSearch().equals("")) {
-			cri.setSearch("all");
-		}*/
 		//신고테이블과 타켓이 동일한 신고 리스트
 		ArrayList<ReportSimpleDTO> rsList = reportService.gerRepoertSimple(cri);
 		for(int i=0; i<rsList.size(); i++) {
@@ -36,7 +32,7 @@ public class AdminController {
 			rsList.get(i).setRepo_target_str(reportService.setTargetStr(rsList.get(i)));
 		}
 		int totalCount = reportService.gerRepoertSimpleCount(cri);
-		PageMaker pm = new PageMaker(3, cri, totalCount);
+		PageMaker pm = new PageMaker(10, cri, totalCount);
 		model.addAttribute("pm", pm);
 		model.addAttribute("rsList", rsList);
 		return "/admin/report";
