@@ -55,7 +55,7 @@
 				<c:if test="${fn:length(rsList) != 0}">
 					<c:forEach items="${rsList}" var="report">
 						<tr>
-							<td><input class="check-report" type="checkbox"></td>
+							<td><input id="check-report" class="check-report" type="checkbox"></td>
 							<td>${report.repo_count}</td>
 							<td>${report.repo_table_str}</td>
 							<td>${report.repo_target_str}</td>
@@ -121,10 +121,9 @@ $("#check-view").change(function(){
 //웨 안될까...
 $(document).on('click', '.total-check-report', function(){
 	if($(".total-check-report").prop("checked")){
-		$('check-report').prop('checked',true);
+		$("input:checkbox[id='check-report']").prop('checked',true);
 	}else{
-		$('check-report').prop('checked',false);
-		
+		$("input:checkbox[id='check-report']").prop('checked',false);
 	}
 })
 </script>
