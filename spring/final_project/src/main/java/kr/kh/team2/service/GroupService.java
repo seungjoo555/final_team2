@@ -77,9 +77,9 @@ public interface GroupService {
 
 	int getApplicantTotalCount(int num);
 
-	boolean insertGroupMember(int num);
+	boolean insertGroupMember(MemberVO user, int num);
 
-	boolean cancelApply(int num);
+	boolean cancelApply(MemberVO user, int num);
 
 	ArrayList<GroupApplyVO> getGroupMember(int num, Criteria cri);
 

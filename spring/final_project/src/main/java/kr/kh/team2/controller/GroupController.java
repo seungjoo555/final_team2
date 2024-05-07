@@ -333,10 +333,11 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/manage/applicant/insert")
-	public Map<String, Object> groupmanageapplicantinsert(@RequestParam("num")int num){
+	public Map<String, Object> groupmanageapplicantinsert(HttpSession session, @RequestParam("num")int num){
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		boolean result = groupService.insertGroupMember(num);
+		boolean result = groupService.insertGroupMember(user, num);
 		
 		if(result) {
 			map.put("data", "ok");
@@ -349,10 +350,11 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/manage/applicant/cancel")
-	public Map<String, Object> groupmanageapplicantcancel(@RequestParam("num")int num){
+	public Map<String, Object> groupmanageapplicantcancel(HttpSession session, @RequestParam("num")int num){
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		boolean result = groupService.cancelApply(num);
+		boolean result = groupService.cancelApply(user, num);
 		
 		if(result) {
 			map.put("data", "ok");

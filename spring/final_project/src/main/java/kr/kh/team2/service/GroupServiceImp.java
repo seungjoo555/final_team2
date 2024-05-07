@@ -417,9 +417,16 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public boolean insertGroupMember(int num) {
+	public boolean insertGroupMember(MemberVO user, int num) {
 		if(num == 0) {
 			System.out.println("num is 0");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
 			return false;
 		}
 		
@@ -435,9 +442,16 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public boolean cancelApply(int num) {
+	public boolean cancelApply(MemberVO user, int num) {
 		if(num == 0) {
 			System.out.println("num is 0");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
 			return false;
 		}
 		
