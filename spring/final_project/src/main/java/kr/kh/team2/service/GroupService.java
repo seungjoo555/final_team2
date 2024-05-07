@@ -97,4 +97,6 @@ public interface GroupService {
 
 	boolean insertGroupApply(GroupVO group, int num, GroupApplyVO goapVo, MemberVO user);
 
+	GroupApplyVO getGroupApply(Integer num);
+
 }

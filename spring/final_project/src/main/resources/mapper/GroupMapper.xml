@@ -232,6 +232,11 @@
 		where go_num = recu_go_num
 	</select>
 	
+	<select id="selectGroupApply" resultType="GroupApplyVo">
+		SELECT * 
+		FROM group_apply
+		WHERE goap_recu_num = #{num};
+	</select>
 	<!-- =============================== DELETE =============================== -->
 	
 	<delete id="deleteGroupPost">

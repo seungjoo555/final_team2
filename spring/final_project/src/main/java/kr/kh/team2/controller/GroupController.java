@@ -580,7 +580,6 @@ public class GroupController {
 		  }
 	  }
 	  
-	  
 	  if(apply) {
 	  	model.addAttribute("msg", "지원서를 제출했습니다.");
 	  	model.addAttribute("url", "/group/applydetail?num=" + num);
@@ -595,6 +594,18 @@ public class GroupController {
   
   @GetMapping("group/applydetail")
   public String grouopApplyDetail(Model model, Integer num) {
+	  RecruitVO recruit = groupService.getRecruit(num);
+	  if(recruit == null) {
+		  return "redirect:/";
+	  }
+	  
+	  GroupApplyVO goapVo = groupService.getGroupApply(num);
+	  if(goapVo == null) {
+		  return "redirect:/";
+	  }
+	  
+	  model.addAttribute("recruit", recruit);
+	  model.addAttribute("goap", goapVo);
 	  
 	  return "/group/applydetail";
   }

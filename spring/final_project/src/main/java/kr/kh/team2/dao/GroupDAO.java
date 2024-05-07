@@ -103,4 +103,6 @@ public interface GroupDAO {
 
 	ArrayList<GroupVO> selectGroupListByGoNum(@Param("num")int num);
 
+	GroupApplyVO selectGroupApply(@Param("num")Integer num);
+
 }

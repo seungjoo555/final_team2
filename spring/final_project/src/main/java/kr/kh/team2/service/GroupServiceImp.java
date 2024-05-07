@@ -593,5 +593,13 @@ public class GroupServiceImp implements GroupService{
 		return groupDao.deleteGroupByGoNum(num);
 	}
 
+	@Override
+	public GroupApplyVO getGroupApply(Integer num) {
+		if(num == 0) {
+			return null;
+		}	
+		return groupDao.selectGroupApply(num);
+	}
+
 	
 }
