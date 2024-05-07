@@ -164,7 +164,7 @@
 	</select>
 	
 	<select id="checkWriter" resultType="GroupPostVO">
-		SELECT * FROM group_post WHERE gopo_num = #{num} AND gopo_gome_me_id = #{me_id}
+		SELECT * FROM group_post WHERE gopo_num = #{num} AND gopo_gome_me_id = #{id}
 	</select>
 	
 	<select id="countGroupListById" resultType="GroupVO">
@@ -177,6 +177,12 @@
            GROUP BY gome_go_num;
 	</select>
 	
+	<select id="getApplyListByGoNum" resultType="GroupApplyVO">
+		SELECT group_apply.*, me_nickname AS nickname 
+			FROM group_apply 
+				JOIN member ON me_id = goap_me_id
+			WHERE goap_go_num = #{num} AND goap_state = 0
+	</select>
 	
 	<!-- =============================== DELETE =============================== -->
 	
@@ -186,6 +192,10 @@
 	
 	<delete id="deleteGroupCal">
 		DELETE FROM group_calendar WHERE gocal_num = #{num}
+	</delete>
+	
+	<delete id="quitGroup">
+		DELETE FROM group_member WHERE gome_me_id = #{user.me_id} AND gome_go_num = #{num}
 	</delete>
 	
 	<!-- =============================== UPDATE =============================== -->	

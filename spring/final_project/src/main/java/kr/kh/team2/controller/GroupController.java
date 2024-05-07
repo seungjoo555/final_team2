@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.kh.team2.model.vo.common.ReportContentVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
@@ -256,6 +257,32 @@ public class GroupController {
 		return map;
 	}
 	
+	@GetMapping("/group/manage/applicant")
+	public String groupmanageapplicant(Model model, HttpSession session, int num){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		GroupVO group = groupService.getGroupByGoNum(num);
+		
+		if(group.getLeader().equals(user.getMe_id())) {
+			
+			
+			model.addAttribute("group", group);		// 그룹 정보
+		}
+		
+		return "/group/mygroup/manageapplicant";
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/applicant/list")
+	public Map<String, Object> groupmanageapplicantlist(@RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<GroupApplyVO> applyList = groupService.getApplyListByGoNum(num);
+		
+			map.put("list", applyList);
+		
+		return map;
+	}
+	
 	@GetMapping("/group/manage/member")
 	public String groupmanagemember(Model model, HttpSession session, int num){
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -295,8 +322,6 @@ public class GroupController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
-		System.out.println(num +", "+calNum);
-		
 		boolean result = groupService.deleteGroupCal(num, calNum, user);
 		
 		if(result) {
@@ -307,6 +332,25 @@ public class GroupController {
 		
 		return map;
 	}
+	
+	@ResponseBody
+	@PostMapping("/group/quit")
+	public Map<String, Object> groupQuit(HttpSession session, @RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		
+		boolean res = groupService.quitGroup(num, user);
+		
+		if (res) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", null);
+		}
+		
+		return map;
+	}
+	
 	
 	// ================================ group ================================
 		

@@ -82,6 +82,7 @@ function getGroupPostList(cri){
 						<div class="post-info">
 							<div class="writer float-left">\${post.nickname}</div>
 							<div class="time float-left">\${post.time_ago}</div>
+							<div class="float-right">\${post.gopo_date}</div>
 						</div>
 						<div class="post-content">
 							\${post.gopo_content }
@@ -218,7 +219,7 @@ let num
 				
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
-				alert("게시글을 등록하지 못했습니다. (에러발생)")
+				alert("게시글을 수정하지 못했습니다. (에러발생)")
 			}
 		});
 	})

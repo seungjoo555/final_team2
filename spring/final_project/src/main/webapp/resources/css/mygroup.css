@@ -190,6 +190,11 @@
 		.fc-daygrid-day-frame{height: calc(100% / 6); min-height: 0px;}
 		.fc-daygrid-day-bg{margin: 0px; padding: 0px;}
 		
+		/* model */
+		.insertModal{display:none;}
+		.insertBtn{display:none;}
+		.deleteBtn{display:none;}
+		
 	/* ======================================= grouppost.jsp ======================================= */
 	
 	.post-list-bg{padding: 55px 70px;}

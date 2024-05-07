@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
@@ -73,5 +74,9 @@ public interface GroupDAO {
 	boolean insertGroupCal(@Param("num")int num, @Param("newSche")GroupCalendarVO newSch, @Param("user")MemberVO user);
 
 	boolean deleteGroupCal(@Param("num")int calNum);
+
+	boolean quitGroup(@Param("num")int num, @Param("user")MemberVO user);
+
+	ArrayList<GroupApplyVO> getApplyListByGoNum(@Param("num")int num);
 
 }
