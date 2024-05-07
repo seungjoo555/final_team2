@@ -573,6 +573,6 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.deleteGroupByGoNum(num);
 	}
-	
+
 	
 }
