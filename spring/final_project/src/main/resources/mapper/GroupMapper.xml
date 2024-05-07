@@ -277,6 +277,12 @@
 		WHERE gome_go_num = #{num} AND gome_me_id = #{id}
 	</update>
 	
+	<update id="updateGroupTimer">
+		UPDATE `group`
+			SET go_time = 0
+		WHERE go_num = #{num}
+	</update>
+	
 	<!-- =============================== INSERT =============================== -->	
 	
 	<insert id="insertGroupPost">

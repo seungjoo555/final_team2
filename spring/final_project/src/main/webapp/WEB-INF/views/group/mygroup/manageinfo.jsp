@@ -61,7 +61,7 @@
 						<div class="option-sub float-right">그룹타이머를 관리합니다.</div>
 					</div>
 					<div class="info-option-content">
-						<a onclick="" class="btn btn-outline-danger">초기화</a>
+						<a onclick="resetTimer()" class="btn btn-outline-danger">초기화</a>
 					</div>
 				</div>
 				<div class="manage-info-option">
@@ -125,7 +125,32 @@ $(".change-group-name-btn").click(function(){
 
 <!-- 타이머 초기화 script -->
 <script type="text/javascript">
-
+function resetTimer(){
+	if(confirm('타이머를 초기화 하시겠습니까? 복구할 수 없습니다.')){
+		$.ajax({
+			async : false, 
+			url : '<c:url value="/group/manage/info/timereset"/>', 
+			type : 'post', 
+			data : {
+				num : ${group.go_num}
+			}, 
+			dataType : "json", 
+			success : function (data){
+				if(data.data == "ok"){
+					alert("타이머가 초기화되었습니다.")
+				}else{
+					alert("권한이 없습니다.")
+				}
+				
+				
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+				alert("타이머를 초기화하지 못했습니다. (에러발생)")
+			}
+		});
+	}
+	return;
+}
 </script>
 
 <!-- 그룹 얼리기 script -->

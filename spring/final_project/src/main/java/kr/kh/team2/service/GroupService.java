@@ -89,5 +89,7 @@ public interface GroupService {
 
 	boolean deleteGroupMember(int num, String id);
 
+	boolean updateGroupTimer(int num, MemberVO user);
+
 
 }
