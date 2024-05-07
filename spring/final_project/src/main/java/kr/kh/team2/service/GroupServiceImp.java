@@ -2,6 +2,7 @@ package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -119,15 +120,6 @@ public class GroupServiceImp implements GroupService{
 		}
 		
 		return groupDao.getRecentGroupBoard(groupNum, recentBoard);
-	}
-
-	@Override
-	public ArrayList<GroupCalendarVO> getDday(int groupNum, int dday) {
-		if(groupNum == 0 || dday == 0) {
-			System.out.println("groupNum  or count is 0");
-			return null;
-		}
-		return groupDao.getDday(groupNum, dday);
 	}
 
 	@Override
@@ -331,6 +323,255 @@ public class GroupServiceImp implements GroupService{
 			return null;
 		}		
 		return groupDao.countGroupListById(me_id);
+}
+  @Override
+	public ArrayList<GroupCalendarVO> getCalendar(int num) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return null;
+		}
+		return groupDao.getCalendar(num);
+	}
+
+	@Override
+	public boolean insertGroupCal(int num, GroupCalendarVO newSch, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(newSch == null) {
+			System.out.println("null schedule");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		// 로그인 한 유저가 멤버인지 확인함(후에 writer로 변경)
+		if(!isGroupMember(user, num)) {
+			System.out.println("not group member");
+			return false;
+		}
+		
+		return groupDao.insertGroupCal(num, newSch, user);
+		
+	}
+
+	@Override
+	public boolean deleteGroupCal(int num, int calNum, MemberVO user) {
+		if(calNum == 0) {
+			System.out.println("calNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		// 로그인 한 유저가 멤버인지 확인함
+		if(!isGroupMember(user, num)) {
+			System.out.println("not group member");
+			return false;
+		}
+		
+		return groupDao.deleteGroupCal(calNum);
+	}
+
+	@Override
+	public boolean quitGroup(int num, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		return groupDao.quitGroup(num, user);
+	}
+
+	@Override
+	public ArrayList<GroupApplyVO> getApplyListByGoNum(int num, Criteria cri) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return null;
+		}
+		if(cri == null) {
+			System.out.println("null cri");
+			return null;
+		}
+		
+		return groupDao.getApplyListByGoNum(num, cri);
+	}
+
+	@Override
+	public int getApplicantTotalCount(int num) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return -1;
+		}
+		
+		return groupDao.getApplicantTotalCount(num);
+	}
+
+	@Override
+	public boolean insertGroupMember(MemberVO user, int num) {
+		if(num == 0) {
+			System.out.println("num is 0");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		GroupApplyVO application = groupDao.getApplicationByGoap_num(num);
+		
+		if(application == null) {
+			System.out.println("no application");
+			return false;
+		}
+		
+		return groupDao.updateGoap_stateSigned(num) 
+				&& groupDao.insertGroupMember(application.getGoap_go_num(), application.getGoap_me_id());
+	}
+
+	@Override
+	public boolean cancelApply(MemberVO user, int num) {
+		if(num == 0) {
+			System.out.println("num is 0");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		GroupApplyVO application = groupDao.getApplicationByGoap_num(num);
+		
+		if(application == null) {
+			System.out.println("no application");
+			return false;
+		}
+		
+		return groupDao.updateGoap_stateCanceled(num);
+	}
+
+	@Override
+	public ArrayList<GroupApplyVO> getGroupMember(int num, Criteria cri) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return null;
+		}
+		if(cri == null) {
+			System.out.println("null cri");
+			return null;
+		}
+		
+		return groupDao.getGroupMember(num, cri);
+	}
+
+	@Override
+	public int getGroupMemberTotalCount(int num) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return -1;
+		}
+		
+		return groupDao.getGroupMemberTotalCount(num);
+	}
+
+	@Override
+	public boolean updateGroupMemberGome_warn(int num, String id) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(!methods.checkString(id)) {
+			System.out.println("invalid id");
+			return false;
+		}
+		
+		MemberVO user = new MemberVO(id);
+		
+		if(!isGroupMember(user, num)){
+			System.out.println("not group member");
+			return false;
+		}
+		
+		return groupDao.updateGroupMemberGome_warn(num, id);
+	}
+
+	@Override
+	public boolean deleteGroupMember(int num, String id) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(!methods.checkString(id)) {
+			System.out.println("invalid id");
+			return false;
+		}
+		
+		MemberVO user = new MemberVO(id);
+		
+		if(!isGroupMember(user, num)){
+			System.out.println("not group member");
+			return false;
+		}
+		
+		return groupDao.quitGroup(num, user);
+	}
+
+	@Override
+	public boolean updateGroupTimer(int num, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		return groupDao.updateGroupTimer(num);
+	}
+
+	@Override
+	public boolean deleteGroupByGoNum(int num, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		
+		return groupDao.deleteGroupByGoNum(num);
 	}
 
 	

@@ -59,6 +59,10 @@ function getGroupPostList(cri){
 		contentType : "application/json; charset=utf-8",
 		dataType : "json", 
 		success : function(data){
+			if(data.list.length == 0){
+				$(".post-list-bg").append(`<div style="text-align: center">등록된 그룹 게시글이 없습니다.</div>`)
+			}
+			
 			for(post of data.list){
 				let btns = '';
 				//현재 로그인한 유저와 댓글을 쓰기 위한 유저의 아이디가 동일하거나 댓글 관리 권한이 있다면 수정,삭제 버튼이 나타나고 아니라면 나타나지 않음
@@ -78,6 +82,7 @@ function getGroupPostList(cri){
 						<div class="post-info">
 							<div class="writer float-left">\${post.nickname}</div>
 							<div class="time float-left">\${post.time_ago}</div>
+							<div class="float-right">\${post.gopo_date}</div>
 						</div>
 						<div class="post-content">
 							\${post.gopo_content }
@@ -214,7 +219,7 @@ let num
 				
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
-				alert("게시글을 등록하지 못했습니다. (에러발생)")
+				alert("게시글을 수정하지 못했습니다. (에러발생)")
 			}
 		});
 	})

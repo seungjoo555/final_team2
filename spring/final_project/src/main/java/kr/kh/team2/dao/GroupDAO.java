@@ -37,8 +37,6 @@ public interface GroupDAO {
 
 	ArrayList<GroupPostVO> getRecentGroupBoard(@Param("num")int groupNum, @Param("count")int recentBoard);
 
-	ArrayList<GroupCalendarVO> getDday(@Param("num")int groupNum, @Param("count")int dday);
-
 	long getGroupTime(@Param("num")int groupNum);
 
 	boolean updateGoTime(@Param("num")int groupNum);
@@ -70,5 +68,35 @@ public interface GroupDAO {
 	boolean updateGroupName(@Param("num")int num, @Param("name")String name);
 
 	ArrayList<GroupVO> countGroupListById(@Param("me_id") String me_id);
+
+	ArrayList<GroupCalendarVO> getCalendar(@Param("num")int num);
+
+	boolean insertGroupCal(@Param("num")int num, @Param("newSche")GroupCalendarVO newSch, @Param("user")MemberVO user);
+
+	boolean deleteGroupCal(@Param("num")int calNum);
+
+	boolean quitGroup(@Param("num")int num, @Param("user")MemberVO user);
+
+	ArrayList<GroupApplyVO> getApplyListByGoNum(@Param("num")int num, @Param("cri")Criteria cri);
+
+	int getApplicantTotalCount(@Param("num")int num);
+
+	GroupApplyVO getApplicationByGoap_num(@Param("num")int num);
+
+	boolean insertGroupMember(@Param("num")int goap_go_num, @Param("id")String goap_me_id);
+
+	boolean updateGoap_stateSigned(@Param("num")int num);
+	
+	boolean updateGoap_stateCanceled(@Param("num")int num);
+
+	ArrayList<GroupApplyVO> getGroupMember(@Param("num")int num, @Param("cri")Criteria cri);
+	
+	int getGroupMemberTotalCount(@Param("num")int num);
+
+	boolean updateGroupMemberGome_warn(@Param("num")int num, @Param("id")String id);
+
+	boolean updateGroupTimer(@Param("num")int num);
+
+	boolean deleteGroupByGoNum(@Param("num")int num);
 
 }

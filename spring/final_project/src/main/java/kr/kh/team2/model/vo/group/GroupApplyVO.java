@@ -13,4 +13,5 @@ public class GroupApplyVO {
     private int goap_state;
     private String goap_me_id;
     private String goap_me_nickname;
+    private String nickname;
 }
