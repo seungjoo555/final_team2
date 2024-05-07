@@ -19,7 +19,7 @@
 	select * from report_content
 </select>
 <select id="selectReportSimpleList" resultType="ReportSimpleDTO">
-	select repo_repo_state, repo_table, repo_target, count(repo_target) as repo_count 
+	select repo_repo_state,  repo_table, repo_target, count(repo_target) as repo_count 
 	from report
 	<choose>
 		<when test='cri.type != "all" and cri.search != "대기중"'>
@@ -64,5 +64,9 @@
 				group by repo_table, repo_target, repo_repo_state
 		)
 		as r
+</select>
+<select id="selectReportList" resultType="ReportVO"> 
+	select * from report 
+	where repo_table = #{repo_table} and repo_target = #{repo_target}
 </select>
 </mapper>

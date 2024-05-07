@@ -1,11 +1,16 @@
 package kr.kh.team2.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.dto.ReportSimpleDTO;
 import kr.kh.team2.model.vo.common.ReportVO;
@@ -37,5 +42,21 @@ public class AdminController {
 		model.addAttribute("rsList", rsList);
 		return "/admin/report";
 	}
+	
+	@ResponseBody
+	@PostMapping("/admin/report/detail")
+	public Map<String, Object> mentorDetailPost(@RequestParam("repo_target")String repo_target, @RequestParam("repo_table")String repo_table) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		//받아온 테이블,타켓 정보로 신고 리스트 가져오기
+		ArrayList<ReportVO> rpList =reportService.getReportList(repo_target, repo_table);
+		map.put("rpList", rpList);		
+		
+		//신고대상 가져오기
+		//신고테이블과 대상에 따라 다르게 가져와야함
+		
+		return map;
+	}
+	
 
 }

@@ -114,4 +114,13 @@ public class ReportServiceImp implements ReportService{
 		return target;
 	}
 
+	/** 신고테이블, 타켓 정보로 신고 테이블 리스트를 가져오는 서비스 */
+	@Override
+	public ArrayList<ReportVO> getReportList(String repo_target, String repo_table) {
+		if(!methods.checkString(repo_table) || !methods.checkString(repo_target)) 
+			return null;
+		
+		return reportDAO.selectReportList(repo_table, repo_target);
+	}
+
 }

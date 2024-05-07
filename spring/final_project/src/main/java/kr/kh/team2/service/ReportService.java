@@ -22,6 +22,8 @@ public interface ReportService {
 
 	String setTargetStr(ReportSimpleDTO reportSimpleDTO);
 
+	ArrayList<ReportVO> getReportList(String repo_target, String repo_table);
+
 
 
 
