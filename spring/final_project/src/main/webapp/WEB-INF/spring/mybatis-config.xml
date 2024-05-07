@@ -26,6 +26,8 @@
 		<typeAlias type="kr.kh.team2.model.vo.group.GroupPostVO" alias="GroupPostVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.group.GroupCalendarVO" alias="GroupCalendarVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.group.MutualReviewVO" alias="MutualReviewVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.group.GroupApplyVO" alias="GroupApplyVO"/>
+		
 
 	</typeAliases>
 </configuration>
