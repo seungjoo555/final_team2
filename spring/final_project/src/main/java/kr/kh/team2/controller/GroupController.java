@@ -452,7 +452,8 @@ public class GroupController {
 
   
   @GetMapping("group/applydetail")
-  public String grouopApplyDetail(Model model) {
+  public String grouopApplyDetail(Model model, int num) {
+	  
 	  return "/group/applydetail";
   }
  
