@@ -205,6 +205,26 @@
 		select * FROM group_apply WHERE goap_num = #{num}
 	</select>
 	
+	<select id="getGroupMember" resultType="GroupMemberVO">
+		SELECT  group_member.*, me_nickname AS nickname
+			FROM group_member
+					JOIN member ON me_id = gome_me_id
+				WHERE gome_go_num = #{num}
+			<choose>
+				<when test='cri.type == "over-5"'>
+					AND gome_warn >= 5
+				</when>
+				<otherwise>
+					
+				</otherwise>
+			</choose>
+			LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="getGroupMemberTotalCount" resultType="int">
+		SELECT COUNT(*) FROM group_member WHERE gome_go_num = #{num}
+	</select>
+	
 	<!-- =============================== DELETE =============================== -->
 	
 	<delete id="deleteGroupPost">

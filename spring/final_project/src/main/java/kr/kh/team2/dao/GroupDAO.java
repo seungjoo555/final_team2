@@ -89,4 +89,8 @@ public interface GroupDAO {
 	
 	boolean updateGoap_stateCanceled(@Param("num")int num);
 
+	ArrayList<GroupApplyVO> getGroupMember(@Param("num")int num, @Param("cri")Criteria cri);
+	
+	int getGroupMemberTotalCount(@Param("num")int num);
+
 }

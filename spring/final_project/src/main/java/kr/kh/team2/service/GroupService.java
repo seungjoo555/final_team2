@@ -81,5 +81,9 @@ public interface GroupService {
 
 	boolean cancelApply(int num);
 
+	ArrayList<GroupApplyVO> getGroupMember(int num, Criteria cri);
+
+	int getGroupMemberTotalCount(int num);
+
 
 }

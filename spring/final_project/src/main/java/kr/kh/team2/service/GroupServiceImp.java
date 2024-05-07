@@ -450,6 +450,30 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.updateGoap_stateCanceled(num);
 	}
+
+	@Override
+	public ArrayList<GroupApplyVO> getGroupMember(int num, Criteria cri) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return null;
+		}
+		if(cri == null) {
+			System.out.println("null cri");
+			return null;
+		}
+		
+		return groupDao.getGroupMember(num, cri);
+	}
+
+	@Override
+	public int getGroupMemberTotalCount(int num) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return -1;
+		}
+		
+		return groupDao.getGroupMemberTotalCount(num);
+	}
 	
 	
 }

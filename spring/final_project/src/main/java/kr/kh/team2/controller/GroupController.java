@@ -341,6 +341,33 @@ public class GroupController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/group/manage/member/list")
+	public Map<String, Object> groupmanagememberlist(@RequestBody Criteria cri){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int num = -1;
+		
+		try {
+			num = Integer.parseInt(cri.getSearch());
+		}catch(Exception e) {
+			System.out.println("error ParseInt: " + cri.getSearch());
+		}
+		
+		cri.setPerPageNum(5);
+		
+		ArrayList<GroupApplyVO> list = groupService.getGroupMember(num, cri);
+		
+		int totalCount = groupService.getGroupMemberTotalCount(num);
+		
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		map.put("list", list);
+		map.put("pm", pm);
+		
+		return map;
+		
+	}
+	
+	@ResponseBody
 	@PostMapping("/group/calendar/insert")
 	public Map<String, Object> groupCalendarInsert(HttpSession session, @RequestParam("num")int num, 
 			@RequestParam("title")String title, @RequestParam("startdt")Date startdt, @RequestParam("enddt")Date enddt, 

@@ -9,6 +9,7 @@
 
 <!-- mygroup.css -->
 <link rel="stylesheet" href="<c:url value="/resources/css/mygroup.css"/>">
+
 </head>
 <body>
 <div class="container">
@@ -137,6 +138,7 @@ function displayApplicantList(list){
 						<th class="nickname">닉네임</th>
 						<th class="id">아이디</th>
 						<th class="content">지원 내용</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody class="applicant-list">
@@ -145,7 +147,7 @@ function displayApplicantList(list){
 			</table>
 		`;
 		
-		$(".applicant-list-bg").html(table); // 페이지 넘김이 아니라 아래에 내용 추가
+		$(".applicant-list-bg").html(table);
 }
 
 //페이지네이션
@@ -235,7 +237,6 @@ $("[name=type]").click(function(){
 
 <!-- 지원 거절 -->
 <script type="text/javascript">
-	// 구현 예정
 	$(document).on('click', '.apply-deny-btn', function(){
 		let num = $(this).data('num')
 		$.ajax({
