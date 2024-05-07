@@ -557,11 +557,11 @@ public class GroupController {
   }
   
   @PostMapping("/group/apply")
-  public String groupApplyPost(Model model, HttpSession session, @RequestParam("num") Integer recu_num,GroupApplyVO goapVo) {
+  public String groupApplyPost(Model model, HttpSession session, @RequestParam("num") Integer num, GroupApplyVO goapVo) {
 	  
 	  MemberVO user = (MemberVO)session.getAttribute("user");
 	  
-	  RecruitVO recruit = groupService.getRecruit(recu_num);
+	  RecruitVO recruit = groupService.getRecruit(num);
 	  if(recruit == null) {
 		  return "redirect:/";
 	  }
@@ -583,10 +583,10 @@ public class GroupController {
 	  
 	  if(apply) {
 	  	model.addAttribute("msg", "지원서를 제출했습니다.");
-	  	model.addAttribute("url", "/group/applydetail");
+	  	model.addAttribute("url", "/group/applydetail?num=" + num);
 	  } else {
 		  model.addAttribute("msg", "지원서를 제출하지 못했습니다.");
-		  	model.addAttribute("url", "/group/apply"); 
+		  	model.addAttribute("url", "/group/apply?num=" + num ); 
 	  }
 	  
 	  return "message";
@@ -594,7 +594,7 @@ public class GroupController {
 
   
   @GetMapping("group/applydetail")
-  public String grouopApplyDetail(Model model, int num) {
+  public String grouopApplyDetail(Model model, Integer num) {
 	  
 	  return "/group/applydetail";
   }
