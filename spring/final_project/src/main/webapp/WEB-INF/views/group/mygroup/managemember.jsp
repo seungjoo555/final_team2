@@ -9,21 +9,6 @@
 
 <!-- mygroup.css -->
 <link rel="stylesheet" href="<c:url value="/resources/css/mygroup.css"/>">
-<style>
-	
-	
-	/* ======================================= groupmanage.jsp ============================================ */
-	/* applicantmanage의 style을 주로 이용함. */
-
-	.member-list-bg>*{width: 90%; margin: 0px auto; text-align: center; padding: 10px;}
-	
-	.member-list-th tr th{width: calc(80% / 3);}
-	.member-list-th tr th:last-child{width: 20%;}
-	
-	.apply-manage-btn-group .member-warn-btn{background-color: yellow; margin-right: 5px;}
-	.apply-manage-btn-group .member-ban-btn{background-color: red; margin:auto 10px auto 0;}
-	
-</style>
 </head>
 <body>
 <div class="container">
