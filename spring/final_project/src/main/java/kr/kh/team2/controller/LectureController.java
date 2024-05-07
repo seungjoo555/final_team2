@@ -21,10 +21,9 @@ public class LectureController {
 	LectureService lectureService;
 	
 	@GetMapping("/lecture/list")
-	public String lectureList(Model model, Criteria cri, SearchMenuVO search) {
+	public String lectureList(Model model, Criteria cri) {
 		cri.setPerPageNum(5);
 		ArrayList<LectureVO> list = lectureService.getLectureList(cri);
-		log.info(search);
 		log.info(cri);
 		model.addAttribute("list", list);
 		model.addAttribute("title", "강의글 목록");
