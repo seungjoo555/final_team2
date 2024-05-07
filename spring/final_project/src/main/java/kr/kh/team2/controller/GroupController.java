@@ -274,6 +274,24 @@ public class GroupController {
 		return map;
 	}
 	
+	@ResponseBody
+	@PostMapping("/group/manage/info/deletegroup")
+	public Map<String, Object> groupManagedeletegroup(HttpSession session, @RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.deleteGroupByGoNum(num, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	
 	@GetMapping("/group/manage/applicant")
 	public String groupmanageapplicant(Model model, HttpSession session, int num){
 		MemberVO user = (MemberVO)session.getAttribute("user");

@@ -537,6 +537,28 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.updateGroupTimer(num);
 	}
+
+	@Override
+	public boolean deleteGroupByGoNum(int num, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		
+		return groupDao.deleteGroupByGoNum(num);
+	}
 	
 	
 }

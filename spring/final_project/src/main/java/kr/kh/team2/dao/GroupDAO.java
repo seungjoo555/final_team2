@@ -97,4 +97,6 @@ public interface GroupDAO {
 
 	boolean updateGroupTimer(@Param("num")int num);
 
+	boolean deleteGroupByGoNum(@Param("num")int num);
+
 }

@@ -91,5 +91,7 @@ public interface GroupService {
 
 	boolean updateGroupTimer(int num, MemberVO user);
 
+	boolean deleteGroupByGoNum(int num, MemberVO user);
+
 
 }

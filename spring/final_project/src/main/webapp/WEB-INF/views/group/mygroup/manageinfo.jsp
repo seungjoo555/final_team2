@@ -167,7 +167,30 @@ function resetTimer(){
 <!-- 그룹 삭제 script -->
 <script type="text/javascript">
 $(".delete-group-btn").click(function(){
-	alert("삭제")
+	if(confirm('그룹을 삭제하시겠습니까? 삭제된 그룹은 복구할 수 없습니다.')){
+		$.ajax({
+			async : false, 
+			url : '<c:url value="/group/manage/info/deletegroup"/>', 
+			type : 'post', 
+			data : {
+				num : ${group.go_num}
+			}, 
+			dataType : "json", 
+			success : function (data){
+				if(data.data == "ok"){
+					alert("그룹이 삭제되었습니다.")
+				}else{
+					alert("권한이 없습니다.")
+				}
+				
+				
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+				alert("그룹을 삭제하지 못했습니다. (에러발생)")
+			}
+		});
+	}
+	return
 })
 </script>
 </body>
