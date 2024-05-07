@@ -77,7 +77,27 @@ public interface GroupDAO {
 
 	boolean quitGroup(@Param("num")int num, @Param("user")MemberVO user);
 
-	ArrayList<GroupApplyVO> getApplyListByGoNum(@Param("num")int num);
+	ArrayList<GroupApplyVO> getApplyListByGoNum(@Param("num")int num, @Param("cri")Criteria cri);
+
+	int getApplicantTotalCount(@Param("num")int num);
+
+	GroupApplyVO getApplicationByGoap_num(@Param("num")int num);
+
+	boolean insertGroupMember(@Param("num")int goap_go_num, @Param("id")String goap_me_id);
+
+	boolean updateGoap_stateSigned(@Param("num")int num);
+	
+	boolean updateGoap_stateCanceled(@Param("num")int num);
+
+	ArrayList<GroupApplyVO> getGroupMember(@Param("num")int num, @Param("cri")Criteria cri);
+	
+	int getGroupMemberTotalCount(@Param("num")int num);
+
+	boolean updateGroupMemberGome_warn(@Param("num")int num, @Param("id")String id);
+
+	boolean updateGroupTimer(@Param("num")int num);
+
+	boolean deleteGroupByGoNum(@Param("num")int num);
 
 	boolean insertGroupApply(@Param("group")GroupVO group, @Param("recu_num")int recu_num, @Param("goap")GroupApplyVO goapVo, @Param("user")MemberVO user);
 

@@ -7,14 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.MutualReviewVO;
-import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.service.GroupService;
@@ -43,7 +40,6 @@ public class MypageController {
 	@GetMapping("/mypage/profile")
 	public String mypageProfile(Model model, String me_id) {
 		MemberVO member = memberService.getMember(me_id);
-		System.out.println(member);
 		model.addAttribute("member", member);
 		return "/mypage/profile";
 	}
@@ -52,18 +48,15 @@ public class MypageController {
 	public String groupListPost(Model model, String me_id) {
 		// 멤버 가져오기
 		MemberVO member = memberService.getMember(me_id);
-		System.out.println(member);
 		model.addAttribute("member", member);
 		
 		// 상호평가 리스트 가져오기
 		ArrayList<MutualReviewVO> mutualReviewList = reviewService.getMutualReviewList(me_id);
 		model.addAttribute("mutualReviewList", mutualReviewList);
-		System.out.println(mutualReviewList);
 		
 		// 내가 만든 스터디 리스트 가져오기
 		ArrayList<GroupVO> groupList = groupService.getStudyGroupList(me_id);
 		model.addAttribute("groupList", groupList);
-		System.out.println(groupList);
 		
 		// groupList에서 recu_num 가져오기
 		// 모집 공고에 등록된 분야 가져오기
@@ -74,7 +67,6 @@ public class MypageController {
 		
 		for(GroupVO group : groupList) {
 			int recu_num = group.getRecu_num();
-			System.out.println("recu_num : " + recu_num);
 			
 			ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table1);
 			ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table1);
@@ -88,7 +80,6 @@ public class MypageController {
 		// 내가 지원한 스터디 리스트 가져오기
 		ArrayList<GroupVO> groupApplyList = groupService.getStudyApplyList(me_id);
 		model.addAttribute("groupApplyList", groupApplyList);
-		System.out.println(groupApplyList);
 		
 		// groupList에서 recu_num 가져오기
 		// 모집 공고에 등록된 분야 가져오기
@@ -97,7 +88,6 @@ public class MypageController {
 		ArrayList<TotalLanguageVO> totalLanguage2 = new ArrayList<TotalLanguageVO>();
 		for(GroupVO group : groupApplyList) {
 			int recu_num = group.getRecu_num();
-			System.out.println("recu_num : " + recu_num);
 			
 			MemberVO groupKing = groupService.getGroupKing(recu_num);
 			model.addAttribute("groupKing", groupKing.getMe_nickname());
@@ -119,17 +109,15 @@ public class MypageController {
 		// 멘토링 가져오기
 		ArrayList<MetoringVO> mentoringList = mentorService.getMentoringList(me_id);
 		model.addAttribute("mentoringList", mentoringList);
-		System.out.println(mentoringList);
 		
 		// mentoringList에서 ment_num 가져오기
 		// 멘토링 공고에 등록된 분야 가져오기
 		
 		String table2 = "mentoring";
-		 ArrayList<TotalCategoryVO> mentoCategory = new ArrayList<TotalCategoryVO>();
+		ArrayList<TotalCategoryVO> mentoCategory = new ArrayList<TotalCategoryVO>();
 		
 		for (MetoringVO mentoring : mentoringList) {
 		    int ment_num = mentoring.getMent_num();
-		    System.out.println("ment_num: " + ment_num);
 		    
 		    ArrayList<TotalCategoryVO> Category = mentorService.getMentoCategory(ment_num, table2);
 		    mentoCategory.addAll(Category);
@@ -156,5 +144,4 @@ public class MypageController {
 		return "message";
 	}
 
-	
 }

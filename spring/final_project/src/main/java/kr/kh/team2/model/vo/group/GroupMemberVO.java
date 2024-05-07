@@ -10,4 +10,6 @@ public class GroupMemberVO {
     private int gome_go_num;
     private int gome_type;
     private int gome_warn;
+    
+    String nickname;
 }

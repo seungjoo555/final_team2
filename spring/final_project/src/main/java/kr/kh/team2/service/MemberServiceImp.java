@@ -86,7 +86,6 @@ public class MemberServiceImp implements MemberService {
 		if(me_id == null) {
 			return null;
 		}
-		System.out.println(memberDao.selectMember(me_id));
 		return memberDao.selectMember(me_id);
 	}
 
@@ -95,7 +94,6 @@ public class MemberServiceImp implements MemberService {
 		if(me_id == null) {
 			return false;
 		}
-		System.out.println(memberDao.updateProfile(me_id, member));
 		return memberDao.updateProfile(me_id, member);
 	}
 	

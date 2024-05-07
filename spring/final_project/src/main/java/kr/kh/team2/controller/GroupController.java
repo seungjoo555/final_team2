@@ -257,6 +257,41 @@ public class GroupController {
 		return map;
 	}
 	
+	@ResponseBody
+	@PostMapping("/group/manage/info/timereset")
+	public Map<String, Object> groupManagetimereset(HttpSession session, @RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.updateGroupTimer(num, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/info/deletegroup")
+	public Map<String, Object> groupManagedeletegroup(HttpSession session, @RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.deleteGroupByGoNum(num, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	
 	@GetMapping("/group/manage/applicant")
 	public String groupmanageapplicant(Model model, HttpSession session, int num){
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -273,12 +308,59 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/manage/applicant/list")
-	public Map<String, Object> groupmanageapplicantlist(@RequestParam("num")int num){
+	public Map<String, Object> groupmanageapplicantlist(@RequestBody Criteria cri){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int num = -1;
+		
+		try {
+			num = Integer.parseInt(cri.getSearch());
+		}catch(Exception e) {
+			System.out.println("error ParseInt: " + cri.getSearch());
+		}
+		
+		cri.setPerPageNum(10);
+		
+		ArrayList<GroupApplyVO> applyList = groupService.getApplyListByGoNum(num, cri);
+		int totalCount = groupService.getApplicantTotalCount(num);
+		
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		map.put("list", applyList);
+		map.put("pm", pm);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/applicant/insert")
+	public Map<String, Object> groupmanageapplicantinsert(HttpSession session, @RequestParam("num")int num){
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		ArrayList<GroupApplyVO> applyList = groupService.getApplyListByGoNum(num);
+		boolean result = groupService.insertGroupMember(user, num);
 		
-			map.put("list", applyList);
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/applicant/cancel")
+	public Map<String, Object> groupmanageapplicantcancel(HttpSession session, @RequestParam("num")int num){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.cancelApply(user, num);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
 		
 		return map;
 	}
@@ -294,6 +376,66 @@ public class GroupController {
 		
 		return "/group/mygroup/managemember";
 	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/member/list")
+	public Map<String, Object> groupmanagememberlist(@RequestBody Criteria cri){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int num = -1;
+		
+		try {
+			num = Integer.parseInt(cri.getSearch());
+		}catch(Exception e) {
+			System.out.println("error ParseInt: " + cri.getSearch());
+		}
+		
+		cri.setPerPageNum(5);
+		
+		ArrayList<GroupApplyVO> list = groupService.getGroupMember(num, cri);
+		
+		int totalCount = groupService.getGroupMemberTotalCount(num);
+		
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		map.put("list", list);
+		map.put("pm", pm);
+		
+		return map;
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/member/warn")
+	public Map<String, Object> groupmanagememberwarn(@RequestParam("num")int num, @RequestParam("id")String id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.updateGroupMemberGome_warn(num, id);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/applicant/ban")
+	public Map<String, Object> groupmanagememberban(@RequestParam("num")int num, @RequestParam("id")String id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.deleteGroupMember(num, id);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
 	
 	@ResponseBody
 	@PostMapping("/group/calendar/insert")

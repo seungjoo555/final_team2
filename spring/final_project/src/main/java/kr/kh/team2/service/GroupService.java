@@ -73,7 +73,25 @@ public interface GroupService {
 
 	boolean quitGroup(int num, MemberVO user);
 
-	ArrayList<GroupApplyVO> getApplyListByGoNum(int num);
+	ArrayList<GroupApplyVO> getApplyListByGoNum(int num, Criteria cri);
+
+	int getApplicantTotalCount(int num);
+
+	boolean insertGroupMember(MemberVO user, int num);
+
+	boolean cancelApply(MemberVO user, int num);
+
+	ArrayList<GroupApplyVO> getGroupMember(int num, Criteria cri);
+
+	int getGroupMemberTotalCount(int num);
+
+	boolean updateGroupMemberGome_warn(int num, String id);
+
+	boolean deleteGroupMember(int num, String id);
+
+	boolean updateGroupTimer(int num, MemberVO user);
+
+	boolean deleteGroupByGoNum(int num, MemberVO user);
 
 	ArrayList<GroupVO> getGroupListByRecuNum(int num);
 
