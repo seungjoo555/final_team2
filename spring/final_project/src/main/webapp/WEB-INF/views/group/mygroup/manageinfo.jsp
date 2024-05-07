@@ -179,6 +179,7 @@ $(".delete-group-btn").click(function(){
 			success : function (data){
 				if(data.data == "ok"){
 					alert("그룹이 삭제되었습니다.")
+					location.href = '<c:url value="/mygroup/list"/>'
 				}else{
 					alert("권한이 없습니다.")
 				}
