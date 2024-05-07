@@ -17,14 +17,14 @@
 	.applicant-list-bg>*{width: 90%; margin: 0px auto; text-align: center; padding: 10px;}
 	
 	/* applyList table thead*/
-	.applicant-list-th .id{width: 20%; overflow: hidden; white-space: nowrap; text-overflow:ellipsis;}
-	.applicant-list-th .nickname{width: 20%; overflow: hidden; white-space: nowrap; text-overflow:ellipsis;}
+	.applicant-list-th .id{width: 15%; overflow: hidden; white-space: nowrap; text-overflow:ellipsis;}
+	.applicant-list-th .nickname{width: 15%; overflow: hidden; white-space: nowrap; text-overflow:ellipsis;}
 	.applicant-list-th .content{width: 50%;}
 	
 	/* applyList table tbody*/
 	.applicant-list td{line-height: 50px; height: 50px;}
-	.applicant-list .nickname{
-		width: 90%; font-weight: bold; margin: auto; text-decoration: underline; color: black;
+	.applicant-list .nickname a{
+		width: 80%; display:block; font-weight: bold; margin: auto; text-decoration: underline; color: black;
 		overflow: hidden; white-space: nowrap; text-overflow:ellipsis;
 	}
 	.applicant-list .id{width: 90%; margin: auto; overflow: hidden; white-space: nowrap; text-overflow:ellipsis;}
@@ -50,6 +50,7 @@
 				<a href="<c:url value="/"/>">홈으로 가기</a>
 			</div>
 		</c:when>
+		
 		<c:otherwise>
 			<div class="container-info-bar">
 				<div class="float-left group-title">${group.go_name}</div>
@@ -58,69 +59,39 @@
 			<div class="applicant-list-bg">
 				
 			</div>
+			
+			<!-- 페이지네이션 -->
+			<div class="box-pagination">
+				<ul class="pagination justify-content-center">
+					<!-- 페이지네이션 출력됨 -->
+				</ul>
+			</div>
 		</c:otherwise>
 	</c:choose>
 </div>
 
 <!-- 그룹 지원자 불러오기 -->
 <script type="text/javascript">
+let cri = {
+	page : 1,
+	search : ${group.go_num}
+}
 
-getApplyList()
+getApplyList(cri)
 
-function getApplyList(){
-	let str = '';
-	
+function getApplyList(cri){
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
-		url : '<c:url value="/group/manage/applicant/list"/>', 
+		url : "<c:url value="/group/manage/applicant/list"/>", 
 		type : 'post', 
-		data : {
-			num : ${group.go_num},
-		}, 
-		dataType : "json", 
+		data : JSON.stringify(cri), 
+		//서버로 보낼 데이터 타입
+		contentType : "application/json; charset=utf-8",
+		//서버에서 보낸 데이터의 타입
+		dataType :"json", 
 		success : function (data){
-			if(data.list.length == 0){
-				$(".applicant-list-bg").append(`<div style="text-align: center">접수된 가입 신청이 없습니다.</div>`)
-			}
-			
-			for(apply of data.list){
-				
-				str +=
-					`
-					<tr>
-						<td>
-							<c:url var = 'url1' value = '/mypage/profile'/>
-							<a class="nickname" href="${url1}?me_id=\${apply.goap_me_id}">\${apply.nickname}</a>
-						</td>
-						<td><div class="id">\${apply.goap_me_id}<div></td>
-						<td class="text-center content">
-							<a href="#">\${apply.goap_content }</a>
-						</td class="content">
-						<td class="apply-manage-btn-group">
-							<a class="apply-confirm-btn" data-num="\${apply.goap_num}">수락</a>
-							<a class="apply-deny-btn" data-num="\${apply.goap_num}">거절</a>
-						<td>
-					</tr>
-					`;
-				}
-			
-				let table = `
-					<table>
-						<thead>
-							<tr>
-								<th class="nickname">닉네임</th>
-								<th class="id">아이디</th>
-								<th class="content">지원 내용</th>
-							</tr>
-						</thead>
-						<tbody class="applicant-list">
-							\${str}
-						</tbody>
-					</table>
-				`;
-				
-				$(".applicant-list-bg").append(table); // 페이지 넘김이 아니라 아래에 내용 추가
-				
+				displayApplicantList(data.list) // 지원자 리스트 표시
+				displayGroupPagination(data.pm) // 페이지네이션 표시
 			}, 
 			error : function(a, b, c){
 				
@@ -128,6 +99,92 @@ function getApplyList(){
 	});
 	
 }
+
+function displayApplicantList(list){
+	let str = '';
+	
+	if(list.length == 0){
+		$(".applicant-list-bg").html(`<div style="text-align: center">접수된 가입 신청이 없습니다.</div>`)
+	}
+	
+	for(apply of list){
+		
+		str +=
+			`
+			<tr>
+				<td class="nickname">
+					<c:url var = 'url1' value = '/mypage/profile'/>
+					<a href="${url1}?me_id=\${apply.goap_me_id}">\${apply.nickname}</a>
+				</td>
+				<td><div class="id">\${apply.goap_me_id}<div></td>
+				<td class="text-center content">
+					<a href="#">\${apply.goap_content }</a>
+				</td class="content">
+				<td class="apply-manage-btn-group">
+					<a class="apply-confirm-btn" data-num="\${apply.goap_num}">수락</a>
+					<a class="apply-deny-btn" data-num="\${apply.goap_num}">거절</a>
+				<td>
+			</tr>
+			`;
+		}
+	
+		let table = `
+			<table>
+				<thead class="applicant-list-th">
+					<tr>
+						<th class="nickname">닉네임</th>
+						<th class="id">아이디</th>
+						<th class="content">지원 내용</th>
+					</tr>
+				</thead>
+				<tbody class="applicant-list">
+					\${str}
+				</tbody>
+			</table>
+		`;
+		
+		$(".applicant-list-bg").html(table); // 페이지 넘김이 아니라 아래에 내용 추가
+}
+
+//페이지네이션
+function displayGroupPagination(pm){
+	let str = '';
+	
+	if(pm.prev){
+		str +=
+			`<li class="page-item">
+				<a class="page-link" href="javascript:void(0)" data-page="\${pm.startPage - 1}" data-type="\${pm.cri.type}">이전</a>
+		    </li>`;
+	}
+	
+	for(let i = pm.startPage; i<=pm.endPage; i++){
+		let active = pm.cri.page == i ? 'active':'';
+		str +=
+			`
+			 <li class="page-item \${active}">
+			 	<a class="page-link" href="javascript:void(0)" data-page="\${i}" data-type="\${pm.cri.type}">\${i}</a>
+		    </li>				
+			`;
+	}
+	
+	if(pm.next){
+		str +=
+			`
+			<li class="page-item">
+				<a class="page-link" href="javascript:void(0)" data-page="\${pm.endPage + 1}" data-type="\${pm.cri.type}">다음</a>
+		    </li>				
+			`;
+	}
+	$('.box-pagination>ul').html(str);
+}
+
+
+//클릭이벤트
+$(document).on('click', '.box-pagination .page-link', function(){
+	cri.page = $(this).data('page');
+	getApplyList(cri);
+})
+
 
 <!-- 지원자 리스트 hover 설정 -->
 $(document).on("mouseover",".applicant-list tr", function(){

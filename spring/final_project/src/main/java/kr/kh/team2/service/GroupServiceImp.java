@@ -392,13 +392,27 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public ArrayList<GroupApplyVO> getApplyListByGoNum(int num) {
+	public ArrayList<GroupApplyVO> getApplyListByGoNum(int num, Criteria cri) {
 		if(num == 0) {
 			System.out.println("goNum is 0");
 			return null;
 		}
+		if(cri == null) {
+			System.out.println("null cri");
+			return null;
+		}
 		
-		return groupDao.getApplyListByGoNum(num);
+		return groupDao.getApplyListByGoNum(num, cri);
+	}
+
+	@Override
+	public int getApplicantTotalCount(int num) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return -1;
+		}
+		
+		return groupDao.getApplicantTotalCount(num);
 	}
 	
 	

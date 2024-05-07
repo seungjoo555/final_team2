@@ -73,7 +73,9 @@ public interface GroupService {
 
 	boolean quitGroup(int num, MemberVO user);
 
-	ArrayList<GroupApplyVO> getApplyListByGoNum(int num);
+	ArrayList<GroupApplyVO> getApplyListByGoNum(int num, Criteria cri);
+
+	int getApplicantTotalCount(int num);
 
 
 }

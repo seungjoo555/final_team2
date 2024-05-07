@@ -182,6 +182,11 @@
 			FROM group_apply 
 				JOIN member ON me_id = goap_me_id
 			WHERE goap_go_num = #{num} AND goap_state = 0
+			LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="getApplicantTotalCount" resultType="int">
+		select COUNT(*) FROM group_apply WHERE goap_go_num = #{num}
 	</select>
 	
 	<!-- =============================== DELETE =============================== -->

@@ -273,12 +273,25 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/manage/applicant/list")
-	public Map<String, Object> groupmanageapplicantlist(@RequestParam("num")int num){
+	public Map<String, Object> groupmanageapplicantlist(@RequestBody Criteria cri){
 		Map<String, Object> map = new HashMap<String, Object>();
+		int num = -1;
 		
-		ArrayList<GroupApplyVO> applyList = groupService.getApplyListByGoNum(num);
+		try {
+			num = Integer.parseInt(cri.getSearch());
+		}catch(Exception e) {
+			System.out.println("error ParseInt: " + cri.getSearch());
+		}
 		
-			map.put("list", applyList);
+		cri.setPerPageNum(10);
+		
+		ArrayList<GroupApplyVO> applyList = groupService.getApplyListByGoNum(num, cri);
+		int totalCount = groupService.getApplicantTotalCount(num);
+		
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		map.put("list", applyList);
+		map.put("pm", pm);
 		
 		return map;
 	}

@@ -77,6 +77,8 @@ public interface GroupDAO {
 
 	boolean quitGroup(@Param("num")int num, @Param("user")MemberVO user);
 
-	ArrayList<GroupApplyVO> getApplyListByGoNum(@Param("num")int num);
+	ArrayList<GroupApplyVO> getApplyListByGoNum(@Param("num")int num, @Param("cri")Criteria cri);
+
+	int getApplicantTotalCount(@Param("num")int num);
 
 }
