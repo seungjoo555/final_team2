@@ -414,11 +414,46 @@ public class GroupController {
 	  return "/group/apply";
   }
   
-  @PostMapping("group/apply")
-  public String groupApplyPost(int num) {
+  @PostMapping("/group/apply")
+  public String groupApplyPost(Model model, HttpSession session, @RequestParam("num") Integer recu_num,GroupApplyVO goapVo) {
 	  
-	  return "";
+	  MemberVO user = (MemberVO)session.getAttribute("user");
+	  
+	  RecruitVO recruit = groupService.getRecruit(recu_num);
+	  if(recruit == null) {
+		  return "redirect:/";
+	  }
+	  
+	  // 그룹 번호랑 공고의 그룹 번호가 같은 거 select
+	  ArrayList<GroupVO> groups = groupService.getGroupListByRecuNum(recruit.getRecu_go_num());
+	  
+	  boolean apply = false;
+	  
+	  for (GroupVO group : groups) {
+		  if (group.getGo_num() == recruit.getRecu_go_num()) {
+			  boolean res = groupService.insertGroupApply(group, recruit.getRecu_num(), goapVo, user);
+			  if(res) {
+				  apply = true;
+			  }
+		  }
+	  }
+	  
+	  
+	  if(apply) {
+	  	model.addAttribute("msg", "지원서를 제출했습니다.");
+	  	model.addAttribute("url", "/group/applydetail");
+	  } else {
+		  model.addAttribute("msg", "지원서를 제출하지 못했습니다.");
+		  	model.addAttribute("url", "/group/apply"); 
+	  }
+	  
+	  return "message";
   }
-	
+
+  
+  @GetMapping("group/applydetail")
+  public String grouopApplyDetail(Model model) {
+	  return "/group/applydetail";
+  }
  
 }

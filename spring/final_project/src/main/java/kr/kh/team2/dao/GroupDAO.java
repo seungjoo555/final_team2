@@ -79,4 +79,8 @@ public interface GroupDAO {
 
 	ArrayList<GroupApplyVO> getApplyListByGoNum(@Param("num")int num);
 
+	boolean insertGroupApply(@Param("group")GroupVO group, @Param("recu_num")int recu_num, @Param("goap")GroupApplyVO goapVo, @Param("user")MemberVO user);
+
+	ArrayList<GroupVO> selectGroupListByGoNum(@Param("num")int num);
+
 }

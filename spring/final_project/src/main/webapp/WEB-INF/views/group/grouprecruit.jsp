@@ -10,8 +10,7 @@
 <script type="text/javascript" src="<c:url value="/resources/js/multi.dropdown.js"/>"></script>
 </head>
 <body>
-	<form action="<c:url value="/group/grouprecruit"/>" method="post"
-		class="insert-form">
+	<form action="<c:url value="/group/grouprecruit"/>" method="post" class="insert-form">
 		<div class="first-container">
 			<h5>1. 프로젝트 기본 정보를 입력해 주세요.</h5>
 			<hr>

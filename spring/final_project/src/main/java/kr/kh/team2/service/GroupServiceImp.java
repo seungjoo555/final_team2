@@ -400,6 +400,26 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.getApplyListByGoNum(num);
 	}
-	
+
+	@Override
+	public ArrayList<GroupVO> getGroupListByRecuNum(int num) {
+		if(num == 0) {
+			return null;
+		}	
+		return groupDao.selectGroupListByGoNum(num);
+	}
+
+	@Override
+	public boolean insertGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, MemberVO user) {
+		if(recu_num == 0) {
+			return false;
+		}
+		
+		if(group == null || goapVo == null || user == null) {
+			return false;
+		}
+		
+		return groupDao.insertGroupApply(group, recu_num, goapVo, user);
+	}
 	
 }

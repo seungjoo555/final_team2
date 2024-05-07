@@ -129,18 +129,18 @@
 		WHERE gome_me_id = #{me_id} and gome_type = '1'
 	</select>
     
-  <select id="getStudyApplyList" resultType="GroupVO">
-  SELECT final_team2.group.*, group_apply.goap_state as goap_state, group_apply.goap_me_id as goap_me_id, recruit.recu_num as recu_num, 
-  recruit.recu_topic as recu_topic, recruit.recu_count as recu_count
-  FROM final_team2.group
-    LEFT JOIN group_apply ON go_num = goap_go_num
-    LEFT JOIN recruit ON go_num = recu_go_num
-  WHERE goap_me_id = #{me_id}
-  </select>
+	<select id="getStudyApplyList" resultType="GroupVO">
+		SELECT final_team2.group.*, group_apply.goap_state as goap_state, group_apply.goap_me_id as goap_me_id, recruit.recu_num as recu_num, 
+	  		recruit.recu_topic as recu_topic, recruit.recu_count as recu_count
+	  	FROM final_team2.group
+	    	LEFT JOIN group_apply ON go_num = goap_go_num
+	    	LEFT JOIN recruit ON go_num = recu_go_num
+	  	WHERE goap_me_id = #{me_id}
+	</select>
 
-  <select id="selectGroupMemberCount" resultType="int" parameterType="int">
-    select COUNT(*) FROM group_member WHERE gome_go_num = #{go_num}
-  </select>
+	<select id="selectGroupMemberCount" resultType="int" parameterType="int">
+		select COUNT(*) FROM group_member WHERE gome_go_num = #{go_num}
+	</select>
   
 	<select id="getGroupPostByGoNum" resultType="GroupPostVO">
 		SELECT group_post.*, me_nickname as nickname 
@@ -182,6 +182,13 @@
 			FROM group_apply 
 				JOIN member ON me_id = goap_me_id
 			WHERE goap_go_num = #{num} AND goap_state = 0
+	</select>
+	
+	<select id="selectGroupListByGoNum" resultType="GroupVO">
+		select *
+		from `group`
+			join recruit on go_num = recu_go_num
+		where go_num = recu_go_num
 	</select>
 	
 	<!-- =============================== DELETE =============================== -->
@@ -230,4 +237,8 @@
 			VALUES(#{newSche.gocal_title},#{newSche.gocal_startdate}, #{newSche.gocal_enddate}, #{newSche.gocal_memo}, #{user.me_id}, #{num})
 	</insert>
  	
+ 	<insert id="insertGroupApply">
+ 		INSERT INTO `group_apply`(goap_go_num, goap_recu_num, goap_content, goap_state, goap_me_id)
+ 			VALUES(#{group.go_num}, #{recu_num}, #{goap.goap_content}, '0', #{user.me_id})
+ 	</insert>
 </mapper>

@@ -75,5 +75,8 @@ public interface GroupService {
 
 	ArrayList<GroupApplyVO> getApplyListByGoNum(int num);
 
+	ArrayList<GroupVO> getGroupListByRecuNum(int num);
+
+	boolean insertGroupApply(GroupVO group, int num, GroupApplyVO goapVo, MemberVO user);
 
 }
