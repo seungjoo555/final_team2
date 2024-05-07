@@ -30,6 +30,7 @@
 		<typeAlias type="kr.kh.team2.model.vo.group.GroupApplyVO" alias="GroupApplyVO"/>
 
 		<!-- ========================== lecture ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.lecture.LectureVO" alias="LectureVO"/>
 
 
 
