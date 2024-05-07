@@ -6,7 +6,8 @@
 		<div class="container-fluid">
 			<h1>
 				<a class="navbar-brand" href="<c:url value="/"/>">
-					<img alt="LOGO" src="<c:url value="/resources/img/smoLogo.png"/>">
+					<img alt="LOGO" src="<c:url value="/resources/img/smoLogo.png"/>" class="first-logo">
+					<img alt="LOGO" src="<c:url value="/resources/img/smoLogo2.png"/>" class="second-logo">
 				</a>
 			</h1>
 			<ul class="navbar-left">
