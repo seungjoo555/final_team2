@@ -414,6 +414,24 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.getApplicantTotalCount(num);
 	}
+
+	@Override
+	public boolean insertGroupMember(int num) {
+		if(num == 0) {
+			System.out.println("num is 0");
+			return false;
+		}
+		
+		GroupApplyVO application = groupDao.getApplicationByGoap_num(num);
+		
+		if(application == null) {
+			System.out.println("no application");
+			return false;
+		}
+		
+		return groupDao.updateGoap_stateSigned(num) 
+				&& groupDao.insertGroupMember(application.getGoap_go_num(), application.getGoap_me_id());
+	}
 	
 	
 }

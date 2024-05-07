@@ -296,6 +296,23 @@ public class GroupController {
 		return map;
 	}
 	
+	@ResponseBody
+	@PostMapping("/group/manage/applicant/insert")
+	public Map<String, Object> groupmanageapplicantinsert(@RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.insertGroupMember(num);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	
 	@GetMapping("/group/manage/member")
 	public String groupmanagemember(Model model, HttpSession session, int num){
 		MemberVO user = (MemberVO)session.getAttribute("user");

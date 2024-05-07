@@ -81,4 +81,12 @@ public interface GroupDAO {
 
 	int getApplicantTotalCount(@Param("num")int num);
 
+	GroupApplyVO getApplicationByGoap_num(@Param("num")int num);
+
+	boolean insertGroupMember(@Param("num")int goap_go_num, @Param("id")String goap_me_id);
+
+	boolean updateGoap_stateSigned(@Param("num")int num);
+	
+	boolean updateGoap_stateCanceled(@Param("num")int num);
+
 }

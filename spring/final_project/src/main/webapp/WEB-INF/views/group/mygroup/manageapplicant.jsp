@@ -239,7 +239,6 @@ $(document).on("mouseout",".applicant-list tr", function(){
 <!-- 지원자 리스트 query 설정 변경 -->
 <script type="text/javascript">
 $("[name=type]").click(function(){
-	
 	cri.type = $(this).attr('value');
 	getApplyList(cri);
 })
@@ -250,7 +249,24 @@ $("[name=type]").click(function(){
 	// 구현 예정
 	$(document).on('click', '.apply-confirm-btn', function(){
 		let num = $(this).data('num')
-		alert('수락'+num)
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/group/manage/applicant/insert"/>", 
+			type : 'post', 
+			data : {num : num}, 
+			dataType :"json", 
+			success : function (data){
+					if(data.data == 'ok'){
+						alert('지원자를 그룹에 추가했습니다.')
+						getApplyList(cri);
+					}else{
+						alert('지원자를 그룹에 추가하지 못했습니다. 새로고침 후 다시 이용해주세요.')
+					}
+				}, 
+				error : function(a, b, c){
+					
+			}
+		});
 	})
 </script>
 

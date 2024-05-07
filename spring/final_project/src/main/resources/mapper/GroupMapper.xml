@@ -201,6 +201,10 @@
 		select COUNT(*) FROM group_apply WHERE goap_go_num = #{num}
 	</select>
 	
+	<select id="getApplicationByGoap_num" resultType="GroupApplyVO">
+		select * FROM group_apply WHERE goap_num = #{num}
+	</select>
+	
 	<!-- =============================== DELETE =============================== -->
 	
 	<delete id="deleteGroupPost">
@@ -235,6 +239,18 @@
 		WHERE go_num = #{num}
 	</update>
 	
+	<update id="updateGoap_stateSigned">
+		UPDATE group_apply
+			SET goap_state = 1
+		WHERE goap_num = #{num}
+	</update>
+	
+	<update id="updateGoap_stateCanceled">
+		UPDATE group_apply
+			SET goap_state = -1
+		WHERE goap_num = #{num}
+	</update>
+	
 	<!-- =============================== INSERT =============================== -->	
 	
 	<insert id="insertGroupPost">
@@ -246,5 +262,9 @@
 		INSERT INTO group_calendar(gocal_title, gocal_startdate, gocal_enddate, gocal_memo, gocal_me_id, gocal_go_num)
 			VALUES(#{newSche.gocal_title},#{newSche.gocal_startdate}, #{newSche.gocal_enddate}, #{newSche.gocal_memo}, #{user.me_id}, #{num})
 	</insert>
+ 	
+ 	<insert id="insertGroupMember">
+ 		INSERT INTO group_member(gome_me_id, gome_go_num) VALUE(#{id}, #{num})
+ 	</insert>
  	
 </mapper>

@@ -77,5 +77,7 @@ public interface GroupService {
 
 	int getApplicantTotalCount(int num);
 
+	boolean insertGroupMember(int num);
+
 
 }
