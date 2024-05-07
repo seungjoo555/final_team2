@@ -14,17 +14,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.dto.MentorInfoDTO;
+import kr.kh.team2.model.vo.community.BoardVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.PageMaker;
+import kr.kh.team2.service.CommunityService;
 import kr.kh.team2.service.MentorService;
+import lombok.extern.log4j.Log4j;
 
 @Controller
+@Log4j
 public class AdminController {
 	
 	@Autowired
 	MentorService mentorService;
+	
+	@Autowired
+	CommunityService communityService;
 	
 	@ResponseBody
 	@PostMapping("/admin/managementor/list")
@@ -90,6 +97,56 @@ public class AdminController {
 			map.put("res", "false");
 		}
 		return map;
+	}
+	
+	@GetMapping("/admin/managecommunity")
+	public String manageCommunity() {
+		
+		return "/admin/managecommunity";
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/admin/managecommunity/list")
+	public Map<String, Object> displayboardList(@RequestBody Criteria cri) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		cri.setPerPageNum(10);
+		
+		ArrayList<BoardVO> boardList = communityService.getBoardList(cri);
+		int totalCount = communityService.getBoardTotalCount();
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		map.put("boardList", boardList);
+		map.put("pm", pm);
+		
+		return map;
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("/admin/managecommunity/insert")
+	public String insertBoard(@RequestParam String board_name) {
+		
+		int res = communityService.insertBoard(board_name);
+
+		return res +"";
+	}
+	
+	@ResponseBody
+	@PostMapping("/admin/managecommunity/update")
+	public String updateBoard(@RequestParam int board_num, @RequestParam String board_name) {
+
+		int res = communityService.updateBoard(board_num,board_name);
+		return res +"";
+	}
+	
+	@ResponseBody
+	@PostMapping("/admin/managecommunity/delete")
+	public String deleteBoard(@RequestParam int board_num) {
+		
+		boolean res = communityService.deleteBoard(board_num);
+		
+		
+		return res + "";
 	}
 	
 
