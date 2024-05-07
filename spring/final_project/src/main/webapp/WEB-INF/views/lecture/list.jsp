@@ -79,6 +79,6 @@
 		</li>
 	</c:if>
 </ul>
-<c:if test="${user }">
+<c:if test="${user.me_ma_auth == '멘토'}">
 	<a class="btn btn-outline-success" href="<c:url value="/lecture/insert"/>">강의 등록하기</a>
 </c:if>
