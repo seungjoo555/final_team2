@@ -9,7 +9,6 @@
 </head>
 <body>
 <div class="container">
-
 	<div class="first-container">
 		<a href="<c:url value="/group/list"/>">
 			<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" color="808080" 
@@ -101,8 +100,10 @@
 			</div>
 		</section>
 	</div>
-	<a class="btn btn-success col-12 mt-5" href="<c:url value="#"/>">신청하기</a>
-	
+	<c:if test="${groupKing_me_id != user.me_id}">
+		<a class="btn btn-success col-12 mt-5" href="<c:url value="/group/apply?num=${recruit.recu_num}"/>">지원하기</a>
+	</c:if>
+
    <!--------------------------- 신고화면 --------------------------->
    <div id="modal-report" class="modal-report report-modal" style="display:none;">
 		<div id="dimmed-report" class="dimmed-report report-dimmend"></div>

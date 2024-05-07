@@ -401,6 +401,24 @@ public class GroupController {
 		model.addAttribute("contentList", contentList);
 		return "/group/detail";
 	}
+  
+  @GetMapping("/group/apply")
+  public String groupApply(Model model, int num) {
+	  RecruitVO recruit = groupService.getRecruit(num);
+	  if(recruit == null) {
+		  return "redirect:/";
+	  }
+	  
+	  model.addAttribute("recruit", recruit);
+	  
+	  return "/group/apply";
+  }
+  
+  @PostMapping("group/apply")
+  public String groupApplyPost(int num) {
+	  
+	  return "";
+  }
 	
  
 }
