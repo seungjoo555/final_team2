@@ -9,42 +9,6 @@
 
 <!-- mygroup.css -->
 <link rel="stylesheet" href="<c:url value="/resources/css/mygroup.css"/>">
-<style>
-	
-	
-	/* ======================================= manageapplicant.jsp ============================================ */
-	
-	.applicant-list-bg>*{width: 90%; margin: 0px auto; text-align: center; padding: 10px;}
-	
-	/* applicant-query */
-	.applicant-query{width: 90%; margin: 0px auto;}
-	.applicant-query input{display: inline-block; margin-left: 20px;}
-	.applicant-query input:first-child{display: inline-block; margin-left: 0px;}
-	
-	/* applyList table thead*/
-	.applicant-list-th .id{width: 15%; overflow: hidden; white-space: nowrap; text-overflow:ellipsis;}
-	.applicant-list-th .nickname{width: 15%; overflow: hidden; white-space: nowrap; text-overflow:ellipsis;}
-	.applicant-list-th .content{width: 50%;}
-	
-	/* applyList table tbody*/
-	.applicant-list td{line-height: 50px; height: 50px;}
-	.applicant-list .nickname a{
-		width: 80%; display:block; font-weight: bold; margin: auto; text-decoration: underline; color: black;
-		overflow: hidden; white-space: nowrap; text-overflow:ellipsis;
-	}
-	.applicant-list .id{width: 90%; margin: auto; overflow: hidden; white-space: nowrap; text-overflow:ellipsis;}
-	.applicant-list .content a{
-		width: 80%; display: block; text-decoration: underline; color: black; margin: auto;
-		overflow: hidden; white-space: nowrap; text-overflow:ellipsis;
-	}
-	
-	.apply-manage-btn-group{text-align: center; margin-top: 0; visibility: hidden;}
-	.apply-manage-btn-group>*{width: 50px; border-radius: 5px; margin: auto 0;}
-	.apply-manage-btn-group>*:hover{text-decoration: none;}
-	.apply-manage-btn-group .apply-confirm-btn{background-color: #5A7059; color: white; margin-right: 5px;}
-	.apply-manage-btn-group .apply-deny-btn{background-color: #FFFFFF; color: #243323; margin:auto 10px auto 0;}
-	
-</style>
 </head>
 <body>
 <div class="container">
