@@ -246,7 +246,6 @@ $("[name=type]").click(function(){
 
 <!-- 지원 수락 -->
 <script type="text/javascript">
-	// 구현 예정
 	$(document).on('click', '.apply-confirm-btn', function(){
 		let num = $(this).data('num')
 		$.ajax({
@@ -275,7 +274,24 @@ $("[name=type]").click(function(){
 	// 구현 예정
 	$(document).on('click', '.apply-deny-btn', function(){
 		let num = $(this).data('num')
-		alert('거절'+num)
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/group/manage/applicant/cancel"/>", 
+			type : 'post', 
+			data : {num : num}, 
+			dataType :"json", 
+			success : function (data){
+					if(data.data == 'ok'){
+						alert('지원을 거절했습니다.')
+						getApplyList(cri);
+					}else{
+						alert('지원을 거절하지 못했습니다. 새로고침 후 다시 이용해주세요.')
+					}
+				}, 
+				error : function(a, b, c){
+					
+			}
+		});
 	})
 </script>
 </body>

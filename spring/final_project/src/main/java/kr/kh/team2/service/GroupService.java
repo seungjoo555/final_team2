@@ -79,5 +79,7 @@ public interface GroupService {
 
 	boolean insertGroupMember(int num);
 
+	boolean cancelApply(int num);
+
 
 }

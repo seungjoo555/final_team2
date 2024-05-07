@@ -2,6 +2,7 @@ package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -431,6 +432,23 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.updateGoap_stateSigned(num) 
 				&& groupDao.insertGroupMember(application.getGoap_go_num(), application.getGoap_me_id());
+	}
+
+	@Override
+	public boolean cancelApply(int num) {
+		if(num == 0) {
+			System.out.println("num is 0");
+			return false;
+		}
+		
+		GroupApplyVO application = groupDao.getApplicationByGoap_num(num);
+		
+		if(application == null) {
+			System.out.println("no application");
+			return false;
+		}
+		
+		return groupDao.updateGoap_stateCanceled(num);
 	}
 	
 	
