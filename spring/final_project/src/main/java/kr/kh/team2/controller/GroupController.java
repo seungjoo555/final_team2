@@ -257,6 +257,41 @@ public class GroupController {
 		return map;
 	}
 	
+	@ResponseBody
+	@PostMapping("/group/manage/info/timereset")
+	public Map<String, Object> groupManagetimereset(HttpSession session, @RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.updateGroupTimer(num, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/info/deletegroup")
+	public Map<String, Object> groupManagedeletegroup(HttpSession session, @RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.deleteGroupByGoNum(num, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	
 	@GetMapping("/group/manage/applicant")
 	public String groupmanageapplicant(Model model, HttpSession session, int num){
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -298,10 +333,11 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/manage/applicant/insert")
-	public Map<String, Object> groupmanageapplicantinsert(@RequestParam("num")int num){
+	public Map<String, Object> groupmanageapplicantinsert(HttpSession session, @RequestParam("num")int num){
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		boolean result = groupService.insertGroupMember(num);
+		boolean result = groupService.insertGroupMember(user, num);
 		
 		if(result) {
 			map.put("data", "ok");
@@ -314,10 +350,11 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/manage/applicant/cancel")
-	public Map<String, Object> groupmanageapplicantcancel(@RequestParam("num")int num){
+	public Map<String, Object> groupmanageapplicantcancel(HttpSession session, @RequestParam("num")int num){
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		boolean result = groupService.cancelApply(num);
+		boolean result = groupService.cancelApply(user, num);
 		
 		if(result) {
 			map.put("data", "ok");

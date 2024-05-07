@@ -239,6 +239,10 @@
 		DELETE FROM group_member WHERE gome_me_id = #{user.me_id} AND gome_go_num = #{num}
 	</delete>
 	
+	<delete id="deleteGroupByGoNum">
+		DELETE FROM `group` WHERE go_num = #{num}
+	</delete>
+	
 	<!-- =============================== UPDATE =============================== -->	
 	
 	<update id="updateGoTime">
@@ -275,6 +279,12 @@
 		UPDATE group_member
 			SET gome_warn = gome_warn + 1
 		WHERE gome_go_num = #{num} AND gome_me_id = #{id}
+	</update>
+	
+	<update id="updateGroupTimer">
+		UPDATE `group`
+			SET go_time = 0
+		WHERE go_num = #{num}
 	</update>
 	
 	<!-- =============================== INSERT =============================== -->	

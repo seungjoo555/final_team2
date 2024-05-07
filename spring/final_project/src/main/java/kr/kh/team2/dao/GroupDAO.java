@@ -95,4 +95,8 @@ public interface GroupDAO {
 
 	boolean updateGroupMemberGome_warn(@Param("num")int num, @Param("id")String id);
 
+	boolean updateGroupTimer(@Param("num")int num);
+
+	boolean deleteGroupByGoNum(@Param("num")int num);
+
 }

@@ -417,9 +417,16 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public boolean insertGroupMember(int num) {
+	public boolean insertGroupMember(MemberVO user, int num) {
 		if(num == 0) {
 			System.out.println("num is 0");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
 			return false;
 		}
 		
@@ -435,9 +442,16 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public boolean cancelApply(int num) {
+	public boolean cancelApply(MemberVO user, int num) {
 		if(num == 0) {
 			System.out.println("num is 0");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
 			return false;
 		}
 		
@@ -515,6 +529,49 @@ public class GroupServiceImp implements GroupService{
 		}
 		
 		return groupDao.quitGroup(num, user);
+	}
+
+	@Override
+	public boolean updateGroupTimer(int num, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		return groupDao.updateGroupTimer(num);
+	}
+
+	@Override
+	public boolean deleteGroupByGoNum(int num, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		GroupVO tmp = getGroupByGoNum(num);
+		
+		if(!tmp.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		
+		return groupDao.deleteGroupByGoNum(num);
 	}
 	
 	
