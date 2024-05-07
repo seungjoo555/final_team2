@@ -384,6 +384,23 @@ public class GroupController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/group/manage/applicant/ban")
+	public Map<String, Object> groupmanagememberban(@RequestParam("num")int num, @RequestParam("id")String id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.deleteGroupMember(num, id);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	
+	@ResponseBody
 	@PostMapping("/group/calendar/insert")
 	public Map<String, Object> groupCalendarInsert(HttpSession session, @RequestParam("num")int num, 
 			@RequestParam("title")String title, @RequestParam("startdt")Date startdt, @RequestParam("enddt")Date enddt, 

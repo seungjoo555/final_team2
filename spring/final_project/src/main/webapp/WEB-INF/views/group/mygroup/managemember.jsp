@@ -73,7 +73,6 @@ let cri = {
 getMemberList(cri)
 
 function getMemberList(cri){
-	console.log(cri.type)
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
 		url : "<c:url value="/group/manage/member/list"/>", 
@@ -84,7 +83,6 @@ function getMemberList(cri){
 		//서버에서 보낸 데이터의 타입
 		dataType :"json", 
 		success : function (data){
-				console.log(data)
 				displayMemberList(data.list) // 지원자 리스트 표시
 				displayGroupPagination(data.pm) // 페이지네이션 표시
 			}, 
@@ -232,6 +230,36 @@ $("[name=type]").click(function(){
 	})
 </script>
 
+<!-- 멤버 탈퇴 -->
+<script type="text/javascript">
+	$(document).on('click', '.member-ban-btn', function(){
+		let id = $(this).data('id')
+		
+		if(confirm(id +' 회원을 그룹에서 탈퇴시키겠습니까? 그룹 탈퇴 시, 해당 사용자가 작성한 모든 데이터가 삭제되며 복구할 수 없습니다.'))
+		
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/group/manage/applicant/ban"/>", 
+			type : 'post', 
+			data : {
+				num : ${group.go_num},
+				id : id
+				}, 
+			dataType :"json", 
+			success : function (data){
+					if(data.data == 'ok'){
+						alert('멤버를 탈퇴시켰습니다.')
+						getMemberList(cri);
+					}else{
+						alert('멤버를 탈퇴시키지 못했습니다. 새로고침 후 다시 이용해주세요.')
+					}
+				}, 
+				error : function(a, b, c){
+					
+			}
+		});
+	})
+</script>
 
 
 </body>

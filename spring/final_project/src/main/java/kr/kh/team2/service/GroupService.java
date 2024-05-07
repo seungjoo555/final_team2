@@ -87,5 +87,7 @@ public interface GroupService {
 
 	boolean updateGroupMemberGome_warn(int num, String id);
 
+	boolean deleteGroupMember(int num, String id);
+
 
 }
