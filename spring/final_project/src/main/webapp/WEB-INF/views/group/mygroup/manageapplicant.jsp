@@ -16,6 +16,11 @@
 	
 	.applicant-list-bg>*{width: 90%; margin: 0px auto; text-align: center; padding: 10px;}
 	
+	/* applicant-query */
+	.applicant-query{width: 90%; margin: 0px auto;}
+	.applicant-query input{display: inline-block; margin-left: 20px;}
+	.applicant-query input:first-child{display: inline-block; margin-left: 0px;}
+	
 	/* applyList table thead*/
 	.applicant-list-th .id{width: 15%; overflow: hidden; white-space: nowrap; text-overflow:ellipsis;}
 	.applicant-list-th .nickname{width: 15%; overflow: hidden; white-space: nowrap; text-overflow:ellipsis;}
@@ -56,6 +61,17 @@
 				<div class="float-left group-title">${group.go_name}</div>
 				<div class="float-left">지원자 관리페이지</div>
 			</div>
+			<div class="applicant-query">
+				<form>
+					<input type="radio" id="all" name="type" value="all" checked>
+					<label for="all">전체</label>
+					<input type="radio" id="not-passed-" value="not-passed" name="type">
+					<label for="not-passed">미처리 신청만</label>
+					<input type="radio" id="canceled" value="canceled" name="type">
+				<label for="canceled">거절된 신청만</label>
+				
+				</form>
+			</div>
 			<div class="applicant-list-bg">
 				
 			</div>
@@ -74,7 +90,8 @@
 <script type="text/javascript">
 let cri = {
 	page : 1,
-	search : ${group.go_num}
+	search : ${group.go_num},
+	type : 0
 }
 
 getApplyList(cri)
@@ -102,9 +119,10 @@ function getApplyList(cri){
 
 function displayApplicantList(list){
 	let str = '';
-	
+
 	if(list.length == 0){
-		$(".applicant-list-bg").html(`<div style="text-align: center">접수된 가입 신청이 없습니다.</div>`)
+		$(".applicant-list-bg").html(`<div style="text-align: center">조회 내역이 없습니다.</div>`)
+		return;
 	}
 	
 	for(apply of list){
@@ -120,12 +138,32 @@ function displayApplicantList(list){
 				<td class="text-center content">
 					<a href="#">\${apply.goap_content }</a>
 				</td class="content">
-				<td class="apply-manage-btn-group">
-					<a class="apply-confirm-btn" data-num="\${apply.goap_num}">수락</a>
-					<a class="apply-deny-btn" data-num="\${apply.goap_num}">거절</a>
-				<td>
-			</tr>
 			`;
+			
+			if(apply.goap_state == -1){
+				str+=`
+						<td class="apply-manage-btn-group">
+							거절됨
+						<td>
+					</tr>
+				`
+				
+			}else if(apply.goap_state == 1){
+				str+=`
+					<td class="apply-manage-btn-group">
+						승낙됨
+					<td>
+				</tr>
+			`
+			}else{
+				str+=`
+					<td class="apply-manage-btn-group">
+						<a class="apply-confirm-btn" data-num="\${apply.goap_num}">수락</a>
+						<a class="apply-deny-btn" data-num="\${apply.goap_num}">거절</a>
+					<td>
+				</tr>
+			`
+			}
 		}
 	
 		let table = `
@@ -179,7 +217,7 @@ function displayGroupPagination(pm){
 }
 
 
-//클릭이벤트
+// 클릭이벤트
 $(document).on('click', '.box-pagination .page-link', function(){
 	cri.page = $(this).data('page');
 	getApplyList(cri);
@@ -198,8 +236,14 @@ $(document).on("mouseout",".applicant-list tr", function(){
 })
 </script>
 
-
-
+<!-- 지원자 리스트 query 설정 변경 -->
+<script type="text/javascript">
+$("[name=type]").click(function(){
+	
+	cri.type = $(this).attr('value');
+	getApplyList(cri);
+})
+</script>
 
 <!-- 지원 수락 -->
 <script type="text/javascript">

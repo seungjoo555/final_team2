@@ -181,8 +181,20 @@
 		SELECT group_apply.*, me_nickname AS nickname 
 			FROM group_apply 
 				JOIN member ON me_id = goap_me_id
-			WHERE goap_go_num = #{num} AND goap_state = 0
+			WHERE goap_go_num = #{num}
+			<choose>
+				<when test='cri.type == "canceled"'>
+					AND goap_state = -1
+				</when>
+				<when test='cri.type == "not-passed"'>
+					AND goap_state = 0
+				</when>
+				<otherwise>
+					
+				</otherwise>
+			</choose>
 			LIMIT #{cri.pageStart}, #{cri.perPageNum}
+			
 	</select>
 	
 	<select id="getApplicantTotalCount" resultType="int">
