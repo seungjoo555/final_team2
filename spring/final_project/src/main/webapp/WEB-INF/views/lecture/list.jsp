@@ -41,7 +41,7 @@
 				</td>
 				<td>${lecture.lect_price}</td>
 				<td>${lecture.lect_posting}</td>
-				<td>${board.bo_update}</td>
+				<td>${lecture.lect_update}</td>
 			</tr>
 		</c:forEach>
 	</tbody>
@@ -79,5 +79,6 @@
 		</li>
 	</c:if>
 </ul>
-
-<a class="btn btn-outline-success" href="<c:url value="/lecture/insert"/>">강의 등록하기</a>
+<c:if test="${user }">
+	<a class="btn btn-outline-success" href="<c:url value="/lecture/insert"/>">강의 등록하기</a>
+</c:if>

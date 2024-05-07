@@ -16,14 +16,13 @@
 					lect_mentIf_me_id = #{cri.search}
 				</when>
 				<when test='cri.type == "writer"'>
-					bo_title like concat('%', #{cri.search}, '%')
+					lect_mentIf_me_id like concat('%', #{cri.search}, '%')
 				</when>
 				<otherwise>
-					bo_me_id = #{cri.search}
+					lect_name = #{cri.search}
 				</otherwise>
 			</choose>
-		GROUP BY bo_num
-		ORDER BY bo_num DESC
+		ORDER BY lect_num DESC
 		LIMIT #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	

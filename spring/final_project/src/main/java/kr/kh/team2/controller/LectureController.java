@@ -25,7 +25,7 @@ public class LectureController {
 		ArrayList<LectureVO> list = lectureService.getLectureList(cri); 
 		
 		
-		
+		model.addAttribute("list", list);
 		model.addAttribute("title", "강의글 목록");
 		return "/lecture/list";
 	}
