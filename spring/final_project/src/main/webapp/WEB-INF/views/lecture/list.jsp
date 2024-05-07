@@ -33,7 +33,7 @@
 					<a href="${url}">${lecture.lect_name}</a>
 				</td>
 				<td>
-					<c:url value="/board/list" var="url">
+					<c:url value="/lecture/list" var="url">
 						<c:param name="type" value="writer"/>
 						<c:param name="search" value="${lecture.lect_mentIf_me_id}"/>
 					</c:url>

@@ -23,11 +23,18 @@
 						<div class="dropdown-content-lecture">
 							<c:forEach items="${menuCateList}" var="cate">
 							<div class="dropdown-submenu-lecture">
-								<a class="subbtn-lecture" href="<c:url value="#"/>">${cate.progCt_name}</a>
+								<c:url value="/lecture/list/cate" var="lectUrl">
+									<c:param name="progCt_num" value="${cate.progCt_num}"/>
+								</c:url>
+								<a class="subbtn-lecture" href="${lectUrl}">${cate.progCt_name}</a>
 								<div class="submenu-content-lecture">
 									<c:forEach items="${menuLangList}" var="lang">
 									<c:if test="${cate.progCt_num == lang.progCt_num }">
-										<a href="#">${lang.lang_name}</a>
+										<c:url value="/lecture/list/lang" var="lectUrl">
+											<c:param name="lang_num" value="${lang.lang_num}"/>
+											<c:param name="progCt_num" value="${lang.progCt_num}"/>
+										</c:url>
+										<a href="${lectUrl}">${lang.lang_name}</a>
 									</c:if>
 									</c:forEach>
 								</div>
