@@ -368,6 +368,22 @@ public class GroupController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/group/manage/member/warn")
+	public Map<String, Object> groupmanagememberwarn(@RequestParam("num")int num, @RequestParam("id")String id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.updateGroupMemberGome_warn(num, id);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
 	@PostMapping("/group/calendar/insert")
 	public Map<String, Object> groupCalendarInsert(HttpSession session, @RequestParam("num")int num, 
 			@RequestParam("title")String title, @RequestParam("startdt")Date startdt, @RequestParam("enddt")Date enddt, 

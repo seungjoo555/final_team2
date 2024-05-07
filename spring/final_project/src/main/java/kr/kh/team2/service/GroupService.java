@@ -85,5 +85,7 @@ public interface GroupService {
 
 	int getGroupMemberTotalCount(int num);
 
+	boolean updateGroupMemberGome_warn(int num, String id);
+
 
 }

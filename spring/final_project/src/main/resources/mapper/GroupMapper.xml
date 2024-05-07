@@ -271,6 +271,12 @@
 		WHERE goap_num = #{num}
 	</update>
 	
+	<update id="updateGroupMemberGome_warn">
+		UPDATE group_member
+			SET gome_warn = gome_warn + 1
+		WHERE gome_go_num = #{num} AND gome_me_id = #{id}
+	</update>
+	
 	<!-- =============================== INSERT =============================== -->	
 	
 	<insert id="insertGroupPost">

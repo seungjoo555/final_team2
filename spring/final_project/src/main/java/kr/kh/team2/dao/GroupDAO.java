@@ -93,4 +93,6 @@ public interface GroupDAO {
 	
 	int getGroupMemberTotalCount(@Param("num")int num);
 
+	boolean updateGroupMemberGome_warn(@Param("num")int num, @Param("id")String id);
+
 }

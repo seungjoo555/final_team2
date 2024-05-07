@@ -43,7 +43,7 @@
 				<form>
 					<input type="radio" id="all" name="type" value="all" checked>
 					<label for="all">전체</label>
-					<input type="radio" id="over-5" value="over-5" name="type">
+					<input type="radio" id="over-5" name="type" value="over-5">
 					<label for="over-5">경고 5회 이상</label>
 				
 				</form>
@@ -67,12 +67,13 @@
 let cri = {
 		page : 1,
 		search : ${group.go_num},
-		type : 0
+		type : 'all'
 	}
 
 getMemberList(cri)
 
 function getMemberList(cri){
+	console.log(cri.type)
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
 		url : "<c:url value="/group/manage/member/list"/>", 
@@ -83,6 +84,7 @@ function getMemberList(cri){
 		//서버에서 보낸 데이터의 타입
 		dataType :"json", 
 		success : function (data){
+				console.log(data)
 				displayMemberList(data.list) // 지원자 리스트 표시
 				displayGroupPagination(data.pm) // 페이지네이션 표시
 			}, 
@@ -97,27 +99,29 @@ function displayMemberList(list){
 	let str = '';
 
 	if(list.length == 0){
-		$(".applicant-list-bg").html(`<div style="text-align: center">조회 내역이 없습니다.</div>`)
+		$(".member-list-bg").html(`<div style="text-align: center">조회 내역이 없습니다.</div>`)
 		return;
 	}
 	
 	for(member of list){
 		
-		str +=
-			`
-			<tr>
-				<td class="nickname">
-					<c:url var = 'url1' value = '/mypage/profile'/>
-					<a href="${url1}?me_id=\${member.gome_me_id}">\${member.nickname}</a>
-				</td>
-				<td><div class="id">\${member.gome_me_id}<div></td>
-				<td class="text-center warn">\${member.gome_warn}</td class="content">
-				<td class="apply-manage-btn-group">
-					<a class="member-warn-btn" data-id="\${member.gome_me_id}">경고</a>
-					<a class="member-ban-btn" data-id="\${member.gome_me_id}">탈퇴</a>
-				<td>
-			</tr>
-			`;
+		if(member.gome_me_id != "${group.leader}"){
+			str +=
+				`
+				<tr>
+					<td class="nickname">
+						<c:url var = 'url1' value = '/mypage/profile'/>
+						<a href="${url1}?me_id=\${member.gome_me_id}">\${member.nickname}</a>
+					</td>
+					<td><div class="id">\${member.gome_me_id}<div></td>
+					<td class="text-center warn">\${member.gome_warn}</td class="content">
+					<td class="apply-manage-btn-group">
+						<a class="member-warn-btn" data-id="\${member.gome_me_id}">경고</a>
+						<a class="member-ban-btn" data-id="\${member.gome_me_id}">탈퇴</a>
+					<td>
+				</tr>
+				`;
+		}
 			
 		let table = `
 			<table>
@@ -179,7 +183,7 @@ $(document).on('click', '.box-pagination .page-link', function(){
 })
 
 
-<!-- 지원자 리스트 hover 설정 -->
+<!-- 멤버 리스트 hover 설정 -->
 $(document).on("mouseover",".applicant-list tr", function(){
 	$(this).css("background-color", "#C9C9C9")
 	$(this).children('.apply-manage-btn-group').css("visibility", "visible")
@@ -192,12 +196,40 @@ $(document).on("mouseout",".applicant-list tr", function(){
 
 </script>
 
-<!-- 지원자 리스트 query 설정 변경 -->
+<!-- 멤버 리스트 query 설정 변경 -->
 <script type="text/javascript">
 $("[name=type]").click(function(){
-	cri.type = $(this).attr('value');
+	cri.type = $(this).val();
 	getMemberList(cri);
 })
+</script>
+
+<!-- 경고 부여 -->
+<script type="text/javascript">
+	$(document).on('click', '.member-warn-btn', function(){
+		let id = $(this).data('id')
+		$.ajax({
+			async : true, //비동기 : true(비동기), false(동기)
+			url : "<c:url value="/group/manage/member/warn"/>", 
+			type : 'post', 
+			data : {
+				num : ${group.go_num},
+				id : id
+				}, 
+			dataType :"json", 
+			success : function (data){
+					if(data.data == 'ok'){
+						alert('경고를 부여했습니다.')
+						getMemberList(cri);
+					}else{
+						alert('경고를 부여하지 못했습니다. 새로고침 후 다시 이용해주세요.')
+					}
+				}, 
+				error : function(a, b, c){
+					
+			}
+		});
+	})
 </script>
 
 

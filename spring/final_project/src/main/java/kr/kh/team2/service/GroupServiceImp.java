@@ -474,6 +474,27 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.getGroupMemberTotalCount(num);
 	}
+
+	@Override
+	public boolean updateGroupMemberGome_warn(int num, String id) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(!methods.checkString(id)) {
+			System.out.println("invalid id");
+			return false;
+		}
+		
+		MemberVO user = new MemberVO(id);
+		
+		if(!isGroupMember(user, num)){
+			System.out.println("not group member");
+			return false;
+		}
+		
+		return groupDao.updateGroupMemberGome_warn(num, id);
+	}
 	
 	
 }
