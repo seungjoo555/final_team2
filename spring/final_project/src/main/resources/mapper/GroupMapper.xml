@@ -181,7 +181,48 @@
 		SELECT group_apply.*, me_nickname AS nickname 
 			FROM group_apply 
 				JOIN member ON me_id = goap_me_id
-			WHERE goap_go_num = #{num} AND goap_state = 0
+			WHERE goap_go_num = #{num}
+			<choose>
+				<when test='cri.type == "canceled"'>
+					AND goap_state = -1
+				</when>
+				<when test='cri.type == "not-passed"'>
+					AND goap_state = 0
+				</when>
+				<otherwise>
+					
+				</otherwise>
+			</choose>
+			LIMIT #{cri.pageStart}, #{cri.perPageNum}
+			
+	</select>
+	
+	<select id="getApplicantTotalCount" resultType="int">
+		select COUNT(*) FROM group_apply WHERE goap_go_num = #{num}
+	</select>
+	
+	<select id="getApplicationByGoap_num" resultType="GroupApplyVO">
+		select * FROM group_apply WHERE goap_num = #{num}
+	</select>
+	
+	<select id="getGroupMember" resultType="GroupMemberVO">
+		SELECT  group_member.*, me_nickname AS nickname
+			FROM group_member
+					JOIN member ON me_id = gome_me_id
+				WHERE gome_go_num = #{num}
+			<choose>
+				<when test='cri.type == "over-5"'>
+					AND gome_warn >= 5
+				</when>
+				<otherwise>
+					
+				</otherwise>
+			</choose>
+			LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="getGroupMemberTotalCount" resultType="int">
+		SELECT COUNT(*) FROM group_member WHERE gome_go_num = #{num}
 	</select>
 	
 	<!-- =============================== DELETE =============================== -->
@@ -218,6 +259,24 @@
 		WHERE go_num = #{num}
 	</update>
 	
+	<update id="updateGoap_stateSigned">
+		UPDATE group_apply
+			SET goap_state = 1
+		WHERE goap_num = #{num}
+	</update>
+	
+	<update id="updateGoap_stateCanceled">
+		UPDATE group_apply
+			SET goap_state = -1
+		WHERE goap_num = #{num}
+	</update>
+	
+	<update id="updateGroupMemberGome_warn">
+		UPDATE group_member
+			SET gome_warn = gome_warn + 1
+		WHERE gome_go_num = #{num} AND gome_me_id = #{id}
+	</update>
+	
 	<!-- =============================== INSERT =============================== -->	
 	
 	<insert id="insertGroupPost">
@@ -229,5 +288,9 @@
 		INSERT INTO group_calendar(gocal_title, gocal_startdate, gocal_enddate, gocal_memo, gocal_me_id, gocal_go_num)
 			VALUES(#{newSche.gocal_title},#{newSche.gocal_startdate}, #{newSche.gocal_enddate}, #{newSche.gocal_memo}, #{user.me_id}, #{num})
 	</insert>
+ 	
+ 	<insert id="insertGroupMember">
+ 		INSERT INTO group_member(gome_me_id, gome_go_num) VALUE(#{id}, #{num})
+ 	</insert>
  	
 </mapper>
