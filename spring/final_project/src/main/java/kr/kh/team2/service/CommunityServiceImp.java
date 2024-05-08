@@ -25,7 +25,7 @@ public class CommunityServiceImp implements CommunityService{
 
 	@Override
 	public int insertBoard(String board_name) {
-		if(board_name == null || board_name.length()==0) {
+		if(board_name == null || board_name.length()==0 || board_name.length()>13) {
 			return -2;
 		}
 		
@@ -42,7 +42,8 @@ public class CommunityServiceImp implements CommunityService{
 
 	@Override
 	public int updateBoard(int board_num,String board_name) {
-		if(board_num == 0 || board_name.length()==0 || board_name==null) {
+		if(board_num == 0 || board_name.length()==0 || 
+							 board_name==null || board_name.length()>13) {
 			return -2;
 		}
 		
