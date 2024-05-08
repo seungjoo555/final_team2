@@ -1,10 +1,12 @@
 @charset "UTF-8";
 
+.apply-title {
+	font-weight: 700;	
+}
 
 .form-row-content {
   display: block;
-  margin: 10px 0px;
-  margin: 30px 0;
+  margin: 50px 0;
 }
 
 .button-area {

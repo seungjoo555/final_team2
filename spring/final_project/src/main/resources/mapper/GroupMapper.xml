@@ -235,7 +235,7 @@
 	<select id="selectGroupApply" resultType="GroupApplyVo">
 		SELECT * 
 		FROM group_apply
-		WHERE goap_recu_num = #{num};
+		WHERE goap_recu_num = #{num} and goap_me_id = #{me_id};
 	</select>
 	<!-- =============================== DELETE =============================== -->
 	
@@ -297,6 +297,12 @@
 		UPDATE `group`
 			SET go_time = 0
 		WHERE go_num = #{num}
+	</update>
+	
+	<update id="updateGroupApply">
+		UPDATE `group_apply` 
+			SET `goap_content` = #{goap.goap_content}
+		WHERE goap_num = #{goap.goap_num} and goap_me_id = #{me_id};	
 	</update>
 	
 	<!-- =============================== INSERT =============================== -->	

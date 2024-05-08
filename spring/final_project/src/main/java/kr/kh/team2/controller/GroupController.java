@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -569,15 +570,18 @@ public class GroupController {
 	  // 그룹 번호랑 공고의 그룹 번호가 같은 거 select
 	  ArrayList<GroupVO> groups = groupService.getGroupListByRecuNum(recruit.getRecu_go_num());
 	  
+	  
 	  boolean apply = false;
 	  
 	  for (GroupVO group : groups) {
+		  // 그룹 번호와 공고 그룹 번호 같은 경우
 		  if (group.getGo_num() == recruit.getRecu_go_num()) {
 			  boolean res = groupService.insertGroupApply(group, recruit.getRecu_num(), goapVo, user);
 			  if(res) {
 				  apply = true;
 			  }
 		  }
+		  
 	  }
 	  
 	  if(apply) {
@@ -585,7 +589,7 @@ public class GroupController {
 	  	model.addAttribute("url", "/group/applydetail?num=" + num);
 	  } else {
 		  model.addAttribute("msg", "지원서를 제출하지 못했습니다.");
-		  	model.addAttribute("url", "/group/apply?num=" + num ); 
+		  model.addAttribute("url", "/group/apply?num=" + num ); 
 	  }
 	  
 	  return "message";
@@ -593,13 +597,15 @@ public class GroupController {
 
   
   @GetMapping("group/applydetail")
-  public String grouopApplyDetail(Model model, Integer num) {
+  public String grouopApplyDetail(Model model, HttpSession session,Integer num) {
+	  MemberVO user = (MemberVO)session.getAttribute("user");
+	  
 	  RecruitVO recruit = groupService.getRecruit(num);
 	  if(recruit == null) {
 		  return "redirect:/";
 	  }
 	  
-	  GroupApplyVO goapVo = groupService.getGroupApply(num);
+	  GroupApplyVO goapVo = groupService.getGroupApply(num, user.getMe_id());
 	  if(goapVo == null) {
 		  return "redirect:/";
 	  }
@@ -610,4 +616,59 @@ public class GroupController {
 	  return "/group/applydetail";
   }
  
+  @GetMapping("group/applyupdate")
+  public String groupApplyUpdate(Model model, HttpSession session, Integer num) {
+	  MemberVO user = (MemberVO)session.getAttribute("user");
+	  
+	  RecruitVO recruit = groupService.getRecruit(num);
+	  if(recruit == null) {
+		  return "redirect:/";
+	  }
+	  
+	  GroupApplyVO goapVo = groupService.getGroupApply(num, user.getMe_id());
+	  if(goapVo == null) {
+		  return "redirect:/";
+	  }
+	  
+	  model.addAttribute("recruit", recruit);
+	  model.addAttribute("goap", goapVo);
+	  
+	  return "/group/applyupdate";
+  }
+  
+  @PostMapping("group/applyupdate")
+  public String groupApplyUpdatePost(Model model, HttpSession session, GroupApplyVO goapVo, Integer num) {
+	  MemberVO user = (MemberVO)session.getAttribute("user");
+	  
+	  RecruitVO recruit = groupService.getRecruit(num);
+	  if(recruit == null) {
+		  return "redirect:/";
+	  }
+	  
+	  // 그룹 번호랑 공고의 그룹 번호가 같은 거 select
+	  ArrayList<GroupVO> groups = groupService.getGroupListByRecuNum(recruit.getRecu_go_num());
+	  
+	  boolean updateapply = false;
+  
+	  for (GroupVO group : groups) {
+		  // 그룹 번호와 공고 그룹 번호 같은 경우
+		  if (group.getGo_num() == recruit.getRecu_go_num()) {
+			  boolean res = groupService.updateGroupApply(group, recruit.getRecu_num(), goapVo, user.getMe_id());
+			  if(res) {
+				  updateapply = true;
+			  }
+		  }
+		  
+	  }
+  
+	  if(updateapply) {
+	  	model.addAttribute("msg", "지원서를 수정했습니다.");
+	  	model.addAttribute("url", "/group/applydetail?num=" + num);
+	  } else {
+		  model.addAttribute("msg", "지원서를 수정하지 못했습니다.");
+		  model.addAttribute("url", "/group/apply?num=" + num ); 
+	  }
+	  
+	  return "message";
+  }
 }

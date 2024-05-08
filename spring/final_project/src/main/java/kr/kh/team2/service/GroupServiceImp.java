@@ -594,12 +594,35 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public GroupApplyVO getGroupApply(Integer num) {
-		if(num == 0) {
+	public GroupApplyVO getGroupApply(Integer num, String me_id) {
+		if(num == 0 || me_id == null) {
 			return null;
 		}	
-		return groupDao.selectGroupApply(num);
+		return groupDao.selectGroupApply(num, me_id);
 	}
 
-	
+	@Override
+	public boolean updateGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, String me_id) {
+		if(group == null || recu_num == 0 || goapVo == null || me_id == null) {
+			return false;
+		}
+		
+		System.out.println("서비스임프 그룹지원 공고번호" + goapVo.getGoap_recu_num());
+		
+		// 작성자가 맞는지 확인
+		GroupApplyVO goap = groupDao.selectGroupApply(goapVo.getGoap_recu_num(), me_id);
+		
+		if(goap == null || !goap.getGoap_me_id().equals(me_id)) {
+			return false;
+		}
+		
+		boolean res = groupDao.updateGroupApply(goapVo);
+		
+		if(!res) {
+			return false;
+		}
+			
+		return true;
+	}
+
 }

@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="<c:url value="/resources/css/applydetail.css"/>">
 <title>Insert title here</title>
 </head>
 <body>
@@ -17,25 +16,31 @@
 			프로젝트 지원서
 		</c:if>
 	</h3>
-	<input type="hidden" name="num" value="${goap.goap_recu_num}">
-	<div class="form-row-content">
-		<textarea rows="10" class="form-control second-box" disabled>${goap.goap_content}</textarea>
-	</div>
-	<div class="button-area">
-		<button class="group-apply-update-btn">수정하기</button>
-	</div>
+	
+	<form action="<c:url value="/group/applyupdate"/>" method="post" class="group-apply-form">
+		<input type="hidden" name="num" value="${recruit.recu_num}">
+		<div class="form-row-content">
+			<textarea rows="10" class="form-control second-box" id="goap_content" name="goap_content">${goap.goap_content}</textarea>
+		</div>
+		<div class="button-area">
+			<button type="button" class="group-apply-update-cancel-btn">취소</button>
+			<button class="group-apply-update-btn">수정하기</button>
+		</div>
+	</form>
 	<script type="text/javascript">
-		$('.second-box').summernote({
+		$('#goap_content').summernote({
 		  placeholder: '지원 직군 : <br> 지원 사유 : <br> 경험 / 경력 : <br> 사용 가능한 기술 / 언어 :  <br> 다짐 : ',
 		  tabsize: 2,
 		  height: 400
 		});
 		
-		$('.second-box').summernote('disable');
-		
+		<!-- 작성하기 버튼 클릭 이벤트-->
 		$('.group-apply-update-btn').click(function(){
-			location.href='<c:url value="/group/applyupdate?num=${goap.goap_recu_num}"/>';
-		})
+			if(!goap_content.value) {
+				alert('모든 항목은 필수 입력 사항입니다.');
+				return false;
+			}
+		});
 	</script>
 </body>
 </html>

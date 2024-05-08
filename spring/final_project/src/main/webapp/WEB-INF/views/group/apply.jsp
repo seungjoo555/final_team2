@@ -21,9 +21,7 @@
 	<form action="<c:url value="/group/apply"/>" method="post" class="group-apply-form">
 		<input type="hidden" name="num" value="${recruit.recu_num}">
 		<div class="form-row-content">
-			<textarea rows="10" class="form-control second-box" id="goap_content" name="goap_content">
-				지원 직군 : <br> 지원 사유 : <br> 경험 / 경력 : <br> 사용 가능한 기술 / 언어 :  <br> 다짐 : 
-			</textarea>
+			<textarea rows="10" class="form-control second-box" id="goap_content" name="goap_content">지원 직군 : <br> 지원 사유 : <br> 경험 / 경력 : <br> 사용 가능한 기술 / 언어 :  <br> 다짐 : </textarea>
 		</div>
 		<div class="button-area">
 			<button type="button" class="group-apply-cancel-btn">취소</button>
