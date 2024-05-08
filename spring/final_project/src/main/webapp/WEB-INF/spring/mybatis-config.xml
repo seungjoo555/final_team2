@@ -38,5 +38,8 @@
 		<!-- ========================== report ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.common.ReportContentVO" alias="ReportContentVO"/>
 		
+		<!-- ========================== community ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.community.BoardVO" alias="BoardVO"/>
+		
 	</typeAliases>
 </configuration>

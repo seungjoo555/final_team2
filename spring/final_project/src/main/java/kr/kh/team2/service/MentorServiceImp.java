@@ -176,7 +176,7 @@ public class MentorServiceImp implements MentorService {
 	@Override
 	public int getMentorInfoTotalCount(Criteria cri) {
 		if(cri == null) {
-			cri = new Criteria(1, 20);
+			cri = new Criteria(1, 10);
 		}
 		return mentorDAO.selectMentorInfoTotalCount(cri);
 	}
