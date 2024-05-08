@@ -21,6 +21,14 @@
 		update member set me_interests = #{member.me_interests}, me_preferloc = #{member.me_preferloc}, me_prefertime = #{member.me_prefertime}, me_onoff = #{member.me_onoff}, me_intro = #{member.me_intro}
 		where me_id = #{me_id}
 	</update>
+	
+	  <update id="updateMemberCookie">
+	  	update member set 
+	  		me_cookie = #{user.me_cookie},
+	  		me_cookie_limit = #{user.me_cookie_limit}
+	  	where
+	  		me_id = #{user.me_id}
+ 	 </update>
 
 	<!-- =============================== SELECT =============================== -->	
 	
@@ -39,7 +47,13 @@
 	
 	<select id="idFind" resultType="String">
 		select me_id from member where me_name = #{me_name} and me_phone = #{me_phone}
-		
+	</select>
+	
+	<select id="selectMemberByCookie" resultType="MemberVO">
+	  	<![CDATA[
+	  	select * from member where 
+	  		me_cookie = #{session_id} and me_cookie_limit >= now()
+	 	]]>
 	</select>
 
 </mapper>

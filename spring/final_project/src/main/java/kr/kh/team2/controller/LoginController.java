@@ -29,6 +29,7 @@ public class LoginController {
 	public String loginPost(Model model, LoginDTO loginDTO) {
 		MemberVO user = memberService.login(loginDTO);
 		if(user!= null) {
+			user.setAutoLogin(loginDTO.isAutoLogin());
 			model.addAttribute("user",user);
 			model.addAttribute("msg","로그인 되었습니다.");
 			model.addAttribute("url","/");
@@ -42,8 +43,13 @@ public class LoginController {
 	
 	@RequestMapping(value ="/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, Model model) {
+		//자동로그인 해제
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		user.setMe_cookie(null);
+		user.setMe_cookie_limit(null);
+		memberService.updateMemberCookie(user);
+		//세션 정보 제거
 		session.removeAttribute("user");
-		
 		model.addAttribute("msg", "로그아웃 했습니다.");
 		model.addAttribute("url", "/");
 		return "message";

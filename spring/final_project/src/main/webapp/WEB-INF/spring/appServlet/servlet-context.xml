@@ -42,6 +42,9 @@
 	<beans:bean id="menuInterceptor" class="kr.kh.team2.interceptor.MenuInterceptor"/>
 	<!-- MemberInterceptor를 등록 -->
 	<beans:bean id="memberInterceptor" class="kr.kh.team2.interceptor.MemberInterceptor"/>
+	<!-- AutoLoginInterceptor -->
+	<beans:bean id="autoLoginInterceptor" 
+		class="kr.kh.team2.interceptor.AutoLoginInterceptor"/>
 
 	<!-- 인터셉터 맵핑 -->
 	<interceptors>
@@ -62,6 +65,10 @@
 			<mapping path="/mentor/mentoring/insert"/>
 			<beans:ref bean="memberInterceptor"/>
 		</interceptor>	
+		<interceptor>
+			<mapping path="/*"/>
+			<beans:ref bean="autoLoginInterceptor"/>
+		</interceptor>
 	</interceptors>	
 
 </beans:beans>

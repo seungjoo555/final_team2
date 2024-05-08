@@ -83,7 +83,7 @@
 				<input type="password" class="form-control login-pw" id="pw" name="pw">
 			</div>
 			<div class="login-auto-container">
-				<input type = "checkbox" name="login-auto" class="login-auto">
+				<input type = "checkbox" name="autoLogin" class="login-auto" value="true">
 				<label for="auto-login">자동로그인</label>
 			</div>
 			<div class="login-warnning">

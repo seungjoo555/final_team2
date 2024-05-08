@@ -22,5 +22,9 @@ public interface MemberService {
 
 	String findId(String me_name, String me_phone);
 
+	void updateMemberCookie(MemberVO user);
+
+	MemberVO getMemberByCookie(String sessionId);
+
 
 }
