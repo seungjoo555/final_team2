@@ -65,4 +65,6 @@ public interface GroupService {
 
 	ArrayList<GroupVO> countGroupListById(String me_id);
 
+	String getGroupLeaderID(int parseInt);
+
 }

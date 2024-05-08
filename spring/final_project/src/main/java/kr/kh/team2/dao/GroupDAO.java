@@ -70,4 +70,6 @@ public interface GroupDAO {
 
 	ArrayList<GroupVO> countGroupListById(@Param("me_id") String me_id);
 
+	String selectGroupLeaderID(@Param("recu_num")int recu_num);
+
 }

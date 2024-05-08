@@ -103,7 +103,14 @@
 	 	</ul>
 	</div>
   
-  <!-- 상세화면 -->
+	<!-- 멘토링 상세 화면 -->
+   <div id="modal" class="modal apply-mentoring-modal" style="display:none;">
+      <div id="dimmed" class="dimmed apply-mentoring-dimmend"></div>
+      <div class="apply-mentoring_container">
+      	<div class="apply-mentoring_box"></div>
+      </div>
+   </div>
+  <!-- 신고내역 상세화면 -->
    <div id="modal" class="modal admin-report-modal" style="display:none;">
       <div id="dimmed" class="dimmed admin-report-dimmed"></div>
       <div class="admin-report-container">
@@ -111,15 +118,14 @@
       </div>
    </div>
   
-	<!-- 회원 처리 화면 -->
-
+   
 </div>
 
-<!-- 신고 상세 버튼 클릭 이벤트 -->
+<!-- 신고 상세화면 출력 - 클릭 이벤트 -->
 <script type="text/javascript">
 $(document).on('click', '.report-detail-btn', function(){
 	//모달창 활성화 
-	$("#modal").css('display','block');
+	$(".admin-report-modal").css('display','block');
    //스크롤 비활성화
 	$("body").css('overflow','hidden');
    //테이블과 타켓 정보 받아오기
@@ -138,17 +144,18 @@ $(document).on('click', '.report-detail-btn', function(){
 			},
 			dataType :"json", 
 			success : function (data){
-				displayReportList(data.rpList);
+				displayReportList(data.rpList, data.stateList, data.member ,data.link);
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
 			}
 		});	//ajax end
-	}	//getReportList(repo); end
+	}	//getReportList(); end
 	
    
-	function displayReportList(rpList){
-		let str = '', table='';
+	function displayReportList(rpList, stateList, member, link){
+		let str = '', table='', option ='', linkStr='';
 		
+		//신고리스트
 		if(rpList == null || rpList.length == 0){
 			table +=
 				`
@@ -170,10 +177,26 @@ $(document).on('click', '.report-detail-btn', function(){
 					`
 			}
 		}
+		//멤버 상태
+		for(var i=0; i<stateList.length; i++){
+			let state = stateList[i], select = "";
+			if(member.me_ms_state == state){
+				select = "selected";
+			}
+			option +=
+				`
+				<option value="\${state}" \${select}>\${state}</option>
+				`
+		}
 		
-		//바로가기 주소 가져오기
+		//링크 이동
+		if(repo_table == "mentoring"){
+			linkStr += `<a href="#" class="report-target-link mentoring-link">바로가기(클릭)</a>`
+		}else{
+			linkStr += `<a href="<c:url value="\${link}"/>" class="report-target-link">바로가기(클릭)</a>`
+		}
 		
-		
+				
 		
 		str += 
 			`
@@ -184,7 +207,14 @@ $(document).on('click', '.report-detail-btn', function(){
 		      	<div class="amidn-report-body">
 		      		<div class="box-targe-link">
 		      			<div class="report-target-title">신고대상</div>
-		      			<a href="<c:url value=""/>" class="report-target-link">바로가기(클릭)</a>
+		      			<input type="hidden" id="repo_target" value="\${repo_target}">
+		      			<input type="hidden" id="repo_table" value="\${repo_table}">
+		      `
+		      +
+		      linkStr
+		      +
+		      `
+		      			
 		      		</div>
 		      		<div class="box-report-table">
 		      		<table class="table table-hover">
@@ -206,7 +236,19 @@ $(document).on('click', '.report-detail-btn', function(){
 		      		</div>
 		      	</div>
 		      	<div class="amidn-report-footer">
-		      		<div class="box-report-process-btn"><button class="report-process-btn">신고 처리하기</button></div>
+		      		<div class="report-meid" value="\${member.me_id}">\${member.me_id}</div>
+		      		<div class="state-select-box">
+						<select name="type" class="form-control state-select" name="state-select">
+				`
+				+
+				option
+				+
+				`
+							
+							
+						</select> 
+					</div>
+		      		<div class="box-report-process-btn"><button type="button" class="report-process-btn">변경</button></div>
 				</div>
 			`
       $('.admin-report-box').html(str);
@@ -232,15 +274,59 @@ function convertDate(milliSecond) {
 
 
 /* dimmed 클릭 시 모달창 비활성화 */
-$(document).on('click', '#dimmed', function(){
-   $("#modal").css('display','none');
+$(document).on('click', '.admin-report-dimmed', function(){
+   $(".admin-report-modal").css('display','none');
    $("body").css('overflow','visible');
+})
+$(document).on('click', '.apply-mentoring-dimmend', function(){
+   $(".apply-mentoring-modal").css('display','none');
 })
 /* X 클릭 시 창 없애기 */
 $(document).on('click', '.btn-cancel', function(){
-   $("#modal").css('display','none');
+   $(".admin-report-modal").css('display','none');
    $("body").css('overflow','visible');
 })
+</script>
+
+
+<!-- 신고된 유저 상태 변경 버튼 이벤트 -->
+<script type="text/javascript">
+$(document).on('click', '.report-process-btn', function(){
+	let set_state =  $(".state-select :selected").val();
+	let set_me_id = $('.report-meid').attr("value");
+	
+	if(confirm("해당 유저의 상태를 [" + set_state + "]로 변경하시겠습니까?") == false)
+		return;
+	$.ajax({
+		async : true, //비동기 : true(비동기), false(동기)
+		url : '<c:url value="/admin/report/update"/>', 
+		type : 'post', 
+		data : {
+			set_me_id : set_me_id,
+			set_state : set_state,
+			repo_target : $("#repo_target").val(), 
+		    repo_table :$("#repo_table").val()
+		},
+		dataType : "json", 
+		success : function (data){
+			if(data.result){
+				alert("해당 신고건이 " + data.state + "되었습니다.");
+				$(".admin-report-modal").css('display','none');
+				$("body").css('overflow','visible');
+				location.href = '<c:url value="/admin/report"/>';	
+			}else{
+				alert("해당 신고를 처리하지 못했습니다.");
+			}
+		}, 
+		error : function(jqXHR, textStatus, errorThrown){	//errorThrown얘는 거의 비어있음(굳이 체크 안하기로)
+			console.log(jqXHR);
+			console.log(textStatus);
+		}
+	});
+	
+	
+})
+
 </script>
 
 
@@ -266,5 +352,96 @@ $(document).on('click', '.total-check-report', function(){
 	}
 })
 </script>
+
+<!-- 멘토링 상세화면 출력 -->
+<script type="text/javascript">
+$(document).on('click', '.mentoring-link', function(){
+	let ment_num = 1;
+
+	   $(".apply-mentoring-modal").css('display','block');
+	   //출력
+		getMentoring(ment_num);
+		function getMentoring(ment_num){
+			$.ajax({
+				async : true, //비동기 : true(비동기), false(동기)
+				url : "<c:url value="/mentor/detail"/>", 
+				type : 'post', 
+				data : {
+					ment_num : ment_num
+				},
+				dataType :"json", 
+				success : function (data){
+					displayMentoringDetail(data.mentoring, data.mentor);
+				}, 
+				error : function(jqXHR, textStatus, errorThrown){
+				}
+			});	//ajax end
+		}	//getMentoring(ment_num); end
+		
+		/* 멘토링 모집 글 상세 출력 */
+		function displayMentoringDetail(mentoring, mentor) {
+			let str="";
+			
+			if(mentoring == null || mentor == null){
+				str += `<h1>등록되지 않은 멘토링 정보입니다.<h1>`;
+			}
+			
+			//마감일 데이터포맷
+			let dateString = convertDate(mentoring.ment_duration);
+			
+			//직무, 경력, 포토폴리오가 없을 경우 출력 메세지 설정
+			
+			str += 
+				`
+		      	<div class="apply-mentoring_header">
+		      		<div class="header-title"><h1>멘토링 소개</h1></div>
+		      	</div>
+		      	<div class="apply-mentoring_body">
+		      		<div class="apply-mentoring_body_info_header">
+	      				<div class="memberInfo" >
+							<img class="basic-profile" value="\${mentor.mentIf_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+							<a href="<c:url value="/mypage/profile?me_id=\${mentor.mentIf_me_id}"/>" class="memberNickname" value="\${mentor.mentIf_me_id}">\${mentor.mentIf_me_nickname} </a>
+						</div>
+		      		</div>
+		      		<h1>\${mentoring.ment_title}</h1>
+		      		<div class="apply-mentoring_body_info_list">
+		      			<ul>
+		      				<li>직무 : \${mentor.mentIf_ment_job}</li>
+		      				<li>경력 : \${mentor.mentIf_date}년</li>
+		      				<li>포토폴리오 : \${mentor.mentIf_portfolio}</li>
+		      			</ul>
+		      		</div>
+		      		<div class="apply-box-border-line"><div class="apply-border-line"></div></div>
+		      		<div class="apply-mentoring_body_content">
+		      			<div>\${mentoring.ment_content}</div>
+		      		</div>
+		      	</div>
+		      	<div class="apply-mentoring_footer">
+					<div class="apply-due">종료일 : \${dateString}</div>
+					
+				</div>
+				`
+			$('.apply-mentoring_box').html(str);
+		}//displayMentoringDetail(); end
+		
+		//날짜 변경 함수
+		function convertDate(milliSecond) {
+		  const days = ['일', '월', '화', '수', '목', '금', '토'];
+		  const data = new Date(milliSecond);  //Date객체 생성
+
+		  const year = data.getFullYear();    //0000년 가져오기
+		  const month = data.getMonth() + 1;  //월은 0부터 시작하니 +1하기
+		  const date = data.getDate();        //일자 가져오기
+		  const day = days[data.getDay()];    //요일 가져오기
+
+		//  return `${year}.${month}.${date}. (${day})`;
+		  return `\${year}.\${month}.\${date}`;
+		}
+	   
+})
+
+
+</script>
+
 </body>
 </html>

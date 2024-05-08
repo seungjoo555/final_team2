@@ -24,6 +24,8 @@ public interface ReportService {
 
 	ArrayList<ReportVO> getReportList(String repo_target, String repo_table);
 
+	void reportStateProcess(String repo_target, String repo_table, String state);
+
 
 
 

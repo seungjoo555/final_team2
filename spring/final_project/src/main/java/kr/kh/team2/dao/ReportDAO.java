@@ -21,4 +21,6 @@ public interface ReportDAO {
 
 	ArrayList<ReportVO> selectReportList(@Param("repo_table")String repo_table, @Param("repo_target")String repo_target);
 
+	void updateReportState(@Param("repo_table")String repo_table,  @Param("repo_target")String repo_target,@Param("state") String state);
+
 }

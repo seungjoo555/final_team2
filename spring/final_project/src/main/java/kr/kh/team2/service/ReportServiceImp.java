@@ -123,4 +123,12 @@ public class ReportServiceImp implements ReportService{
 		return reportDAO.selectReportList(repo_table, repo_target);
 	}
 
+	/** 신고 상태를 업데이트 하는 서비스 */
+	@Override
+	public void reportStateProcess(String repo_target, String repo_table, String state) {
+		if(!methods.checkString(repo_table) || !methods.checkString(repo_target)) 
+			return;
+		reportDAO.updateReportState(repo_table, repo_target, state);
+	}
+
 }

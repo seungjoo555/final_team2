@@ -1,5 +1,7 @@
 package kr.kh.team2.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -97,6 +99,19 @@ public class MemberServiceImp implements MemberService {
 		}
 		System.out.println(memberDao.updateProfile(me_id, member));
 		return memberDao.updateProfile(me_id, member);
+	}
+
+	@Override
+	public ArrayList<String> getMemberStateList() {
+		return memberDao.selectMemberStateList();
+	}
+
+	@Override
+	public boolean updateMemberState(String set_me_id, String set_state) {
+		if(!methods.checkString(set_state)||!methods.checkString(set_me_id)) {
+			return false;
+		}
+		return memberDao.updateMemberState(set_me_id, set_state);
 	}
 	
 	

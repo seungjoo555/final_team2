@@ -177,7 +177,13 @@
             ) 
            GROUP BY gome_go_num;
 	</select>
-	
+	<select id="selectGroupLeaderID" resultType="String">
+		select me_id 
+		from recruit 
+			join `group_member` on gome_go_num = recu_go_num
+			join`member` on  me_id  = gome_me_id
+			where gome_type = 1 and recu_num = #{recu_num};
+	</select>
 	
 	<!-- =============================== DELETE =============================== -->
 	

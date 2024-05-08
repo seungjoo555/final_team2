@@ -13,6 +13,10 @@
 	<!-- =============================== DELETE =============================== -->
 	
 	<!-- =============================== UPDATE =============================== -->	
+<update id="updateReportState">
+	update report set repo_repo_state = #{state}
+	where repo_table = #{repo_table} and repo_target  = #{repo_target}
+</update>
 	
 	<!-- =============================== SELECT =============================== -->	
 <select id="selectReportContentList" resultType="ReportContentVO">

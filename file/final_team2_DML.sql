@@ -121,7 +121,7 @@ INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_
 SELECT * FROM final_team2.member;   
 
 /* 신고 처리 상태 */
-INSERT INTO report_state(repo_state) VALUES("대기중"), ("승인"), ("반려");
+INSERT INTO report_state(repo_state) VALUES("대기중"), ("처리완료"), ("반려");
 
 /* 신고 사유 */
 INSERT INTO report_content(repo_content) 

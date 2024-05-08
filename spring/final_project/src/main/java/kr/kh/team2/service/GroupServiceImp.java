@@ -331,6 +331,15 @@ public class GroupServiceImp implements GroupService{
 		}		
 		return groupDao.countGroupListById(me_id);
 	}
+
+	/** 그룹 리더 아이디를 가져오는 서비스*/
+	@Override
+	public String getGroupLeaderID(int recu_num) {
+		if(recu_num <= 0) {
+			return null;
+		}
+		return groupDao.selectGroupLeaderID(recu_num);
+	}
 	
 	
 }
