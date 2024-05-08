@@ -138,6 +138,12 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("groupNum is 0");
 			return false;
 		}
+		
+		if(!groupDao.getGoUpdate(groupNum)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
 		return groupDao.updateGoTime(groupNum);
 	}
 
@@ -216,6 +222,11 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("not group member");
 			return false;
 		}else {
+			if(!groupDao.getGoUpdate(goNum)) {
+				System.out.println("frozen group");
+				return false;
+			}
+			
 			return groupDao.insertGroupPost(goNum, writer, content);
 		}
 		
@@ -307,6 +318,10 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("null user");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
 		
 		GroupVO tmp = getGroupByGoNum(num);
 		
@@ -348,6 +363,10 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("null user");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
 		
 		// 로그인 한 유저가 멤버인지 확인함(후에 writer로 변경)
 		if(!isGroupMember(user, num)) {
@@ -369,6 +388,11 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("null user");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
 		
 		// 로그인 한 유저가 멤버인지 확인함
 		if(!isGroupMember(user, num)) {
@@ -423,6 +447,10 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("num is 0");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
 		
 		GroupVO tmp = getGroupByGoNum(num);
 		
@@ -446,6 +474,10 @@ public class GroupServiceImp implements GroupService{
 	public boolean cancelApply(MemberVO user, int num) {
 		if(num == 0) {
 			System.out.println("num is 0");
+			return false;
+		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
 			return false;
 		}
 		
@@ -500,6 +532,11 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("invalid id");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
 		
 		MemberVO user = new MemberVO(id);
 		
@@ -521,6 +558,11 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("invalid id");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
 		
 		MemberVO user = new MemberVO(id);
 		
@@ -542,6 +584,11 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("null user");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
 		
 		GroupVO tmp = getGroupByGoNum(num);
 		
@@ -589,6 +636,11 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("invalid id");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
 		
 		GroupVO tmpGroup = getGroupByGoNum(num);
 		

@@ -213,6 +213,11 @@ $("[name=type]").click(function(){
 <!-- 지원 수락 -->
 <script type="text/javascript">
 	$(document).on('click', '.apply-confirm-btn', function(){
+		if(!${group.go_update}){
+			alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+			return;
+		}
+		
 		let num = $(this).data('num')
 		$.ajax({
 			async : true, //비동기 : true(비동기), false(동기)
@@ -238,6 +243,11 @@ $("[name=type]").click(function(){
 <!-- 지원 거절 -->
 <script type="text/javascript">
 	$(document).on('click', '.apply-deny-btn', function(){
+		if(!${group.go_update}){
+			alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+			return;
+		}
+		
 		let num = $(this).data('num')
 		$.ajax({
 			async : true, //비동기 : true(비동기), false(동기)

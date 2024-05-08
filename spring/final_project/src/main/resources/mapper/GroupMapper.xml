@@ -227,6 +227,10 @@
 		SELECT COUNT(*) FROM group_member WHERE gome_go_num = #{num}
 	</select>
 	
+	<select id="getGoUpdate" resultType="boolean">
+		SELECT go_update FROM `group` WHERE go_num = #{num}
+	</select>
+	
 	<!-- =============================== DELETE =============================== -->
 	
 	<delete id="deleteGroupPost">

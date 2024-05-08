@@ -105,6 +105,11 @@
 <!-- 그룹이름 변경 script -->
 <script type="text/javascript">
 $(".change-group-name-btn").click(function(){
+	if(!${group.go_update}){
+		alert('그룹이 얼려진 상태입니다. 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+		return;
+	}
+	
 	$.ajax({
 		async : false, 
 		url : '<c:url value="/group/manage/info/update"/>', 
@@ -134,6 +139,11 @@ $(".change-group-name-btn").click(function(){
 <!-- 타이머 초기화 script -->
 <script type="text/javascript">
 function resetTimer(){
+	if(!${group.go_update}){
+		alert('그룹이 얼려진 상태입니다. 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+		return;
+	}
+	
 	if(confirm('타이머를 초기화 하시겠습니까? 복구할 수 없습니다.')){
 		$.ajax({
 			async : false, 
@@ -206,6 +216,11 @@ $("#freeze").on("change", function(){
 <script type="text/javascript">
 
 $(".set-leader").click(function(){
+	if(!${group.go_update}){
+		alert('그룹이 얼려진 상태입니다. 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+		return;
+	}
+	
 	if(confirm($(this).data("id") + '님에게 현재 사용자가 가진 리더 권한을 위임합니다. 진행하시겠습니까?')){
 		$.ajax({
 			async : true, 

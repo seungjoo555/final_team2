@@ -246,6 +246,10 @@
 	let isTimerWork = false;
 	
 	$(".start-btn").click(function(){
+		if(!${group.go_update}){
+			alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+			return;
+		}
 		
 		// 타이머가 비활성화 되어있을 경우(에러 or 1000시간 이상)
 		if(!timerOn){
@@ -464,6 +468,10 @@ function parse(str) {    
 <!-- 그룹 일정 등록 -->
 <script type="text/javascript">
 function insertSch(modal, arg){
+	if(!${group.go_update}){
+		alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+		return;
+	}
 	
 	if($('.'+modal+' #title').val() == ''){
 		alert('제목을 입력해주세요');
@@ -535,6 +543,11 @@ function insertSch(modal, arg){
 <!-- 그룹 일정 삭제 -->
 <script type="text/javascript">
 function deleteSch(modal, arg){
+	if(!${group.go_update}){
+		alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+		return;
+	}
+	
 	if(confirm('일정을 삭제하시겠습니까?')){
 		console.log(arg)
 		//DB 삭제

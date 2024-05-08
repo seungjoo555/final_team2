@@ -108,4 +108,6 @@ public interface GroupDAO {
 
 	boolean updateGoUpdate(@Param("num")int num, @Param("freeze")boolean freeze);
 
+	boolean getGoUpdate(@Param("num")int num);
+
 }
