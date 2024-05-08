@@ -220,7 +220,7 @@ $(".set-leader").click(function(){
 				if(data.data == "ok"){
 					alert("그룹 리더가 변경되었습니다.")
 					location.reload();
-					location.href = '<c:url value="/group/home?num=${group.go_num}"/>'					
+					location.replace('<c:url value="/group/home?num=${group.go_num}"/>')					
 				}else{
 					alert("권한이 없습니다.")
 				}
@@ -262,7 +262,7 @@ $(".delete-group-btn").click(function(){
 			success : function (data){
 				if(data.data == "ok"){
 					alert("그룹이 삭제되었습니다.")
-					location.href = '<c:url value="/mygroup/list"/>'
+					location.replace('<c:url value="/mygroup/list"/>')
 				}else{
 					alert("권한이 없습니다.")
 				}
