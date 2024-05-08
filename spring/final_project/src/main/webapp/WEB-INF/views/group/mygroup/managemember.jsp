@@ -88,23 +88,21 @@ function displayMemberList(list){
 	
 	for(member of list){
 		
-		if(member.gome_me_id != "${group.leader}"){
-			str +=
-				`
-				<tr>
-					<td class="nickname">
-						<c:url var = 'url1' value = '/mypage/profile'/>
-						<a href="${url1}?me_id=\${member.gome_me_id}">\${member.nickname}</a>
-					</td>
-					<td><div class="id">\${member.gome_me_id}<div></td>
-					<td class="text-center warn">\${member.gome_warn}</td class="content">
-					<td class="apply-manage-btn-group">
-						<a class="member-warn-btn" data-id="\${member.gome_me_id}">경고</a>
-						<a class="member-ban-btn" data-id="\${member.gome_me_id}">탈퇴</a>
-					<td>
-				</tr>
-				`;
-		}
+		str +=
+			`
+			<tr>
+				<td class="nickname">
+					<c:url var = 'url1' value = '/mypage/profile'/>
+					<a href="${url1}?me_id=\${member.gome_me_id}">\${member.nickname}</a>
+				</td>
+				<td><div class="id">\${member.gome_me_id}<div></td>
+				<td class="text-center warn">\${member.gome_warn}</td class="content">
+				<td class="apply-manage-btn-group">
+					<a class="member-warn-btn" data-id="\${member.gome_me_id}">경고</a>
+					<a class="member-ban-btn" data-id="\${member.gome_me_id}">탈퇴</a>
+				<td>
+			</tr>
+			`;
 			
 		let table = `
 			<table>

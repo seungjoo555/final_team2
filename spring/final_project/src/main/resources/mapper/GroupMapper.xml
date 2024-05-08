@@ -209,7 +209,7 @@
 		SELECT  group_member.*, me_nickname AS nickname
 			FROM group_member
 					JOIN member ON me_id = gome_me_id
-				WHERE gome_go_num = #{num}
+				WHERE gome_go_num = #{num} AND gome_type != 1
 			<choose>
 				<when test='cri.type == "over-5"'>
 					AND gome_warn >= 5
@@ -218,7 +218,9 @@
 					
 				</otherwise>
 			</choose>
-			LIMIT #{cri.pageStart}, #{cri.perPageNum}
+			<if test="cri.perPageNum > 0">
+				LIMIT #{cri.pageStart}, #{cri.perPageNum}
+			</if>
 	</select>
 	
 	<select id="getGroupMemberTotalCount" resultType="int">
@@ -285,6 +287,18 @@
 		UPDATE `group`
 			SET go_time = 0
 		WHERE go_num = #{num}
+	</update>
+	
+	<update id="updateGomeStateTo0">
+		UPDATE group_member
+			SET gome_type = 0
+		WHERE gome_me_id = #{id} AND gome_go_num = #{num}
+	</update>
+	
+	<update id="updateGomeStateTo1">
+		UPDATE group_member
+			SET gome_type = 1
+		WHERE gome_me_id = #{id} AND gome_go_num = #{num}
 	</update>
 	
 	<!-- =============================== INSERT =============================== -->	

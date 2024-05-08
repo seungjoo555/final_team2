@@ -94,5 +94,7 @@ public interface GroupService {
 
 	boolean deleteGroupByGoNum(int num, MemberVO user);
 
+	boolean changeGroupLeader(int num, String id, MemberVO user);
+
 
 }

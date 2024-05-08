@@ -234,6 +234,13 @@ public class GroupController {
 		GroupVO group = groupService.getGroupByGoNum(num);
 		
 		if(group.getLeader().equals(user.getMe_id())) {
+			Criteria cri = new Criteria();
+			
+			cri.setPerPageNum(0); // 모든 내역을 보기 위해서(Mapper에서 관련 조건 설정함)
+			
+			ArrayList<GroupMemberVO> list = groupService.getGroupMember(num, cri);
+			
+			model.addAttribute("list", list);
 			model.addAttribute("group", group);
 		}
 		
@@ -265,6 +272,23 @@ public class GroupController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		boolean result = groupService.updateGroupTimer(num, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/info/changeleader")
+	public Map<String, Object> groupManagechangeleader(HttpSession session, @RequestParam("num")int num, @RequestParam("id")String id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.changeGroupLeader(num, id, user);
 		
 		if(result) {
 			map.put("data", "ok");

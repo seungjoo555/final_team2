@@ -102,4 +102,8 @@ public interface GroupDAO {
 
 	ArrayList<GroupMemberVO> getGroupMemberByGoNum(@Param("num")int num);
 
+	boolean updateGomeStateTo0(@Param("num")int num, @Param("id")String id);
+	
+	boolean updateGomeStateTo1(@Param("num")int num, @Param("id")String id);
+
 }
