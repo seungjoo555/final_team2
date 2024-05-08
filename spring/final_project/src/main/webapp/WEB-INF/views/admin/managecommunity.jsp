@@ -41,6 +41,7 @@
 		background-color : #649B60;
 		color : white;
 		height : 40px;
+		border : 1px solid black;
 		border-radius : 5px;
 	}
 	
@@ -82,6 +83,7 @@
 	.btn-update{
 		width : 45%;
 		height : 60%;
+		border : 1px solid black;
 		border-radius : 5px;
 		background-color : #649B60;
 		color : white;
@@ -89,6 +91,7 @@
 	.btn-delete{
 		width : 45%;
 		height : 60%;
+		border : 1px solid black;
 		border-radius : 5px;
 		background-color: orange;
 		color : black;
@@ -114,6 +117,7 @@
 		height : 35px;
 		border-radius : 5px;
 		background-color : #649B60;
+		border : 1px solid black;
 		margin-left : 10px;
 		color : white;
 	}
