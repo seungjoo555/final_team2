@@ -26,5 +26,7 @@ public interface MemberService {
 
 	MemberVO getMemberByCookie(String sessionId);
 
+	MemberVO findPw(String me_id, String me_phone);
+
 
 }

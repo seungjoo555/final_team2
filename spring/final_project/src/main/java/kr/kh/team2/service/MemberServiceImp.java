@@ -126,6 +126,20 @@ public class MemberServiceImp implements MemberService {
 	public MemberVO getMemberByCookie(String sessionId) {
 		return memberDao.selectMemberByCookie(sessionId);
 	}
+
+	@Override
+	public MemberVO findPw(String me_id, String me_phone) {
+		
+		if(!methods.checkString(me_id) || !methods.checkString(me_phone)) {
+			return null;
+		}
+		
+		MemberVO dbMember = memberDao.pwFind(me_id,me_phone);
+		
+		return dbMember;
+		
+		
+	}
 	
 	
 }

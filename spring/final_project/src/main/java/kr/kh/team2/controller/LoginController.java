@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -92,6 +93,34 @@ public class LoginController {
 	public String findPw() {
 		
 		return "/login/findpw";
+	}
+	
+	@PostMapping("/login/findpw")
+	public String findPwPost(String me_id, String me_phone,Model model) {
+		
+		MemberVO dbMember  = memberService.findPw(me_id,me_phone);
+		
+		if(dbMember !=null) {
+			model.addAttribute("dbMember",dbMember);
+			return "/login/authentication";
+		}
+		
+		model.addAttribute("msg","입력하신 정보와 일치하는 회원이 존재하지 않습니다.");
+		model.addAttribute("url","/login/findpw");
+		return "message";
+		
+	}
+	
+	@GetMapping("/login/authentication")
+	public String authentication() {
+		
+		return "/login/authentication";
+	}
+	
+	@PostMapping("/login/authentication")
+	public String authenticationPost() {
+		
+		return "";
 	}
 	
 

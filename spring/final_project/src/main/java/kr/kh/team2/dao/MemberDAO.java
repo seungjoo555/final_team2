@@ -22,4 +22,6 @@ public interface MemberDAO {
 	void updateMemberCookie(@Param("user")MemberVO user);
 
 	MemberVO selectMemberByCookie(@Param("session_id")String sessionId);
+
+	MemberVO pwFind(@Param("me_id")String me_id, @Param("me_phone")String me_phone);
 }
