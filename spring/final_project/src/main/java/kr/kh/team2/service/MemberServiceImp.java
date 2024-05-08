@@ -96,6 +96,23 @@ public class MemberServiceImp implements MemberService {
 		}
 		return memberDao.updateProfile(me_id, member);
 	}
+
+	@Override
+	public String findId(String me_name, String me_phone) {
+		if(!methods.checkString(me_phone)||!methods.checkString(me_name)) {
+			return null;
+		}
+		
+		String dbMemberId = memberDao.idFind(me_name,me_phone);
+		
+		if(!methods.checkString(dbMemberId)) {
+			return null;
+		}
+		
+		return dbMemberId;
+		
+		
+	}
 	
 	
 }

@@ -36,5 +36,10 @@
 	<select id="selectMember" resultType="MemberVO">
 		SELECT * FROM member WHERE me_id = #{me_id}
 	</select>
+	
+	<select id="idFind" resultType="String">
+		select me_id from member where me_name = #{me_name} and me_phone = #{me_phone}
+		
+	</select>
 
 </mapper>

@@ -64,7 +64,7 @@
 		</div>
 			<div class="findidcom-form-group">
 				<label for="id">아이디</label>
-				<input type="text" class="form-control finded-id" id="id" name="id" value="">
+				<input type="text" class="form-control finded-id" id="id" name="id" value="${dbId}" readonly>
 			</div>
 			<button class="btn-login" type="button">로그인</button>
 			<div class="login-links">

@@ -20,5 +20,7 @@ public interface MemberService {
 
 	boolean updateProfile(String me_id, MemberVO memberVo);
 
+	String findId(String me_name, String me_phone);
+
 
 }
