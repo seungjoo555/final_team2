@@ -301,6 +301,12 @@
 		WHERE gome_me_id = #{id} AND gome_go_num = #{num}
 	</update>
 	
+	<update id="updateGoUpdate">
+		UPDATE `group`
+			SET go_update = #{freeze}
+		WHERE go_num = #{num}
+	</update>
+	
 	<!-- =============================== INSERT =============================== -->	
 	
 	<insert id="insertGroupPost">

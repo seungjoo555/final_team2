@@ -283,6 +283,23 @@ public class GroupController {
 	}
 	
 	@ResponseBody
+	@PostMapping("/group/manage/info/freeze")
+	public Map<String, Object> groupManagefreeze(HttpSession session, @RequestParam("num")int num, @RequestParam("freeze")boolean freeze){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.updateGoUpdate(num, freeze, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
 	@PostMapping("/group/manage/info/changeleader")
 	public Map<String, Object> groupManagechangeleader(HttpSession session, @RequestParam("num")int num, @RequestParam("id")String id){
 		Map<String, Object> map = new HashMap<String, Object>();

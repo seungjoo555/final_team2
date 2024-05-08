@@ -96,5 +96,7 @@ public interface GroupService {
 
 	boolean changeGroupLeader(int num, String id, MemberVO user);
 
+	boolean updateGoUpdate(int num, boolean freeze, MemberVO user);
+
 
 }

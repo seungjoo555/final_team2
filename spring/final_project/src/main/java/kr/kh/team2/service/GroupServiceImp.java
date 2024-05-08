@@ -606,5 +606,26 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.updateGomeStateTo0(num, user.getMe_id()) && groupDao.updateGomeStateTo1(num, id);
 	}
+
+	@Override
+	public boolean updateGoUpdate(int num, boolean freeze, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		GroupVO tmpGroup = getGroupByGoNum(num);
+		
+		if(!tmpGroup.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		return groupDao.updateGoUpdate(num, freeze);
+	}
 	
 }

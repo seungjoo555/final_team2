@@ -51,7 +51,7 @@
 					</div>
 					<div class="info-option-content">
 						<label for="freeze">그룹 얼리기</label>
-						<input type="checkbox" id="freeze">
+						<input type="checkbox" id="freeze" name="freeze" <c:if test="${!group.go_update}">checked</c:if>>
 					</div>
 				</div>
 				<div class="manage-info-option">
@@ -117,7 +117,7 @@ $(".change-group-name-btn").click(function(){
 		success : function (data){
 			if(data.data == "ok"){
 				alert("그룹 이름이 수정되었습니다.")
-				$(".group-title").text($("[name=group-name]").val())
+				location.reload();
 			}else{
 				alert("권한이 없습니다.")
 			}
@@ -163,7 +163,42 @@ function resetTimer(){
 
 <!-- 그룹 얼리기 script -->
 <script type="text/javascript">
-
+$("#freeze").on("change", function(){
+	let freeze
+	
+	if(this.checked){
+		freeze = false
+	}else{
+		freeze = true
+	}
+	$.ajax({
+		async : false, 
+		url : '<c:url value="/group/manage/info/freeze"/>', 
+		type : 'post', 
+		data : {
+			num : ${group.go_num},
+			freeze : freeze
+		}, 
+		dataType : "json", 
+		success : function (data){
+			if(data.data == "ok"){
+				if(freeze){
+					alert("그룹 얼리기를 해제하였습니다.")
+				}else{
+					alert("그룹을 얼렸습니다.")
+				}
+				location.reload();
+			}else{
+				alert("권한이 없습니다.")
+			}
+			
+			
+		}, 
+		error : function(jqXHR, textStatus, errorThrown){
+			alert("타이머를 초기화하지 못했습니다. (에러발생)")
+		}
+	});
+})
 </script>
 
 
@@ -184,6 +219,7 @@ $(".set-leader").click(function(){
 			success : function (data){
 				if(data.data == "ok"){
 					alert("그룹 리더가 변경되었습니다.")
+					location.reload();
 					location.href = '<c:url value="/group/home?num=${group.go_num}"/>'					
 				}else{
 					alert("권한이 없습니다.")
