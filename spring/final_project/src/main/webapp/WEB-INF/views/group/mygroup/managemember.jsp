@@ -188,6 +188,11 @@ $("[name=type]").click(function(){
 <!-- 경고 부여 -->
 <script type="text/javascript">
 	$(document).on('click', '.member-warn-btn', function(){
+		if(!${group.go_update}){
+			alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+			return;
+		}
+		
 		let id = $(this).data('id')
 		$.ajax({
 			async : true, //비동기 : true(비동기), false(동기)
@@ -216,6 +221,11 @@ $("[name=type]").click(function(){
 <!-- 멤버 탈퇴 -->
 <script type="text/javascript">
 	$(document).on('click', '.member-ban-btn', function(){
+		if(!${group.go_update}){
+			alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+			return;
+		}
+		
 		let id = $(this).data('id')
 		
 		if(confirm(id +' 회원을 그룹에서 탈퇴시키겠습니까? 그룹 탈퇴 시, 해당 사용자가 작성한 모든 데이터가 삭제되며 복구할 수 없습니다.'))
