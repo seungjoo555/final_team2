@@ -20,22 +20,9 @@
 	text-decoration: none;
 }
 
-.form-control[readonly] {
-	background-color: #fff;
-}
-
-.form-control.second-box {
-	text-align: start;
-	height: 400px;
-}
-
-.note-editor.note-frame .note-editing-area .note-editable[contenteditable=false] {
-	background-color: #fff;	
-}
-
 .form-row-content {
-	display: block;
-	margin: 50px 0;	
+  display: block;
+  margin: 50px 0;
 }
 
 .button-area {
@@ -44,7 +31,7 @@
   justify-content: flex-end;
 }
 
-.group-apply-back-btn {
+.group-apply-update-cancel-btn {
   outline: none;
   border-radius: 5px;
   height: 50px;

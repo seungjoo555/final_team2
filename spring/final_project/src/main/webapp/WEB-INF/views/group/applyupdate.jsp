@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="<c:url value="/resources/css/applyupdate.css"/>">
 <title>Insert title here</title>
 </head>
 <body>
@@ -16,7 +17,11 @@
 			프로젝트 지원서
 		</c:if>
 	</h3>
-	
+	<div class="sub-box">
+		<h5 class="sub-title">1. 지원서를 수정해 주세요.</h5>
+		<a href="<c:url value="/group/detail?num=${recruit.recu_num}"/>" class="recruit-detail">공고 보기</a>
+	</div>
+	<hr>
 	<form action="<c:url value="/group/applyupdate"/>" method="post" class="group-apply-form">
 		<input type="hidden" name="num" value="${recruit.recu_num}">
 		<div class="form-row-content">
