@@ -535,6 +535,18 @@ public class GroupController {
 		return map;
 	}
 	
+	@GetMapping("/group/review")
+	public String groupmutualreview(Model model, HttpSession session, int num){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		GroupVO group = groupService.getGroupByGoNum(num);
+		
+		if(groupService.isGroupMember(user, num)) {
+			model.addAttribute("group", group);
+		}
+		
+		return "/group/mygroup/mutualreview";
+	}
+	
 	
 	// ================================ group ================================
 		
