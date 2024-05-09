@@ -11,6 +11,7 @@
 		<c:otherwise>스프링</c:otherwise>
 	</c:choose>
 </title>
+<!-- cdn 오류 대응 https://cdn -> http://fastly -->
 <link rel="stylesheet" href="http://fastly.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/common.css"/>">
 <link href="http://fastly.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.css" rel="stylesheet">

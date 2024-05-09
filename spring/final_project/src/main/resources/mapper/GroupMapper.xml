@@ -76,12 +76,11 @@
 			LIMIT #{count};
 	</select>
  	
-	<select id="getDday" resultType="GroupCalendarVO">
-		SELECT * FROM group_calendar 
-			WHERE gocal_go_num = #{num} AND gocal_startdate >= date_format(Now(), '%Y-%m-%d')
+ 	<select id="getCalendar" resultType="GroupCalendarVO">
+ 		SELECT * FROM group_calendar 
+			WHERE gocal_go_num = #{num}
 		    ORDER BY gocal_startdate 
-		    LIMIT #{count};
-	</select>
+ 	</select>
  	
  	<select id="selectRecruit" resultType="RecruitVO">
  		select * from recruit where recu_num = #{num}
@@ -165,7 +164,7 @@
 	</select>
 	
 	<select id="checkWriter" resultType="GroupPostVO">
-		SELECT * FROM group_post WHERE gopo_num = #{num} AND gopo_gome_me_id = #{me_id}
+		SELECT * FROM group_post WHERE gopo_num = #{num} AND gopo_gome_me_id = #{id}
 	</select>
 	
 	<select id="countGroupListById" resultType="GroupVO">
@@ -183,6 +182,59 @@
 			join `group_member` on gome_go_num = recu_go_num
 			join`member` on  me_id  = gome_me_id
 			where gome_type = 1 and recu_num = #{recu_num};
+	
+	<select id="getApplyListByGoNum" resultType="GroupApplyVO">
+		SELECT group_apply.*, me_nickname AS nickname 
+			FROM group_apply 
+				JOIN member ON me_id = goap_me_id
+			WHERE goap_go_num = #{num}
+			<choose>
+				<when test='cri.type == "canceled"'>
+					AND goap_state = -1
+				</when>
+				<when test='cri.type == "not-passed"'>
+					AND goap_state = 0
+				</when>
+				<otherwise>
+					
+				</otherwise>
+			</choose>
+			LIMIT #{cri.pageStart}, #{cri.perPageNum}
+			
+	</select>
+	
+	<select id="getApplicantTotalCount" resultType="int">
+		select COUNT(*) FROM group_apply WHERE goap_go_num = #{num}
+	</select>
+	
+	<select id="getApplicationByGoap_num" resultType="GroupApplyVO">
+		select * FROM group_apply WHERE goap_num = #{num}
+	</select>
+	
+	<select id="getGroupMember" resultType="GroupMemberVO">
+		SELECT  group_member.*, me_nickname AS nickname
+			FROM group_member
+					JOIN member ON me_id = gome_me_id
+				WHERE gome_go_num = #{num} AND gome_type != 1
+			<choose>
+				<when test='cri.type == "over-5"'>
+					AND gome_warn >= 5
+				</when>
+				<otherwise>
+					
+				</otherwise>
+			</choose>
+			<if test="cri.perPageNum > 0">
+				LIMIT #{cri.pageStart}, #{cri.perPageNum}
+			</if>
+	</select>
+	
+	<select id="getGroupMemberTotalCount" resultType="int">
+		SELECT COUNT(*) FROM group_member WHERE gome_go_num = #{num}
+	</select>
+	
+	<select id="getGoUpdate" resultType="boolean">
+		SELECT go_update FROM `group` WHERE go_num = #{num}
 	</select>
 	
 	<!-- =============================== DELETE =============================== -->
@@ -191,6 +243,17 @@
 		DELETE FROM group_post WHERE gopo_num = #{num}
 	</delete>
 	
+	<delete id="deleteGroupCal">
+		DELETE FROM group_calendar WHERE gocal_num = #{num}
+	</delete>
+	
+	<delete id="quitGroup">
+		DELETE FROM group_member WHERE gome_me_id = #{user.me_id} AND gome_go_num = #{num}
+	</delete>
+	
+	<delete id="deleteGroupByGoNum">
+		DELETE FROM `group` WHERE go_num = #{num}
+	</delete>
 	
 	<!-- =============================== UPDATE =============================== -->	
 	
@@ -212,11 +275,62 @@
 		WHERE go_num = #{num}
 	</update>
 	
+	<update id="updateGoap_stateSigned">
+		UPDATE group_apply
+			SET goap_state = 1
+		WHERE goap_num = #{num}
+	</update>
+	
+	<update id="updateGoap_stateCanceled">
+		UPDATE group_apply
+			SET goap_state = -1
+		WHERE goap_num = #{num}
+	</update>
+	
+	<update id="updateGroupMemberGome_warn">
+		UPDATE group_member
+			SET gome_warn = gome_warn + 1
+		WHERE gome_go_num = #{num} AND gome_me_id = #{id}
+	</update>
+	
+	<update id="updateGroupTimer">
+		UPDATE `group`
+			SET go_time = 0
+		WHERE go_num = #{num}
+	</update>
+	
+	<update id="updateGomeStateTo0">
+		UPDATE group_member
+			SET gome_type = 0
+		WHERE gome_me_id = #{id} AND gome_go_num = #{num}
+	</update>
+	
+	<update id="updateGomeStateTo1">
+		UPDATE group_member
+			SET gome_type = 1
+		WHERE gome_me_id = #{id} AND gome_go_num = #{num}
+	</update>
+	
+	<update id="updateGoUpdate">
+		UPDATE `group`
+			SET go_update = #{freeze}
+		WHERE go_num = #{num}
+	</update>
+	
 	<!-- =============================== INSERT =============================== -->	
 	
 	<insert id="insertGroupPost">
-		INSERT INTO group_post(gopo_gome_go_num, gopo_gome_me_id, gopo_content, gopo_date) VALUES(#{num}, #{writer}, #{content}, NOW());
+		INSERT INTO group_post(gopo_gome_go_num, gopo_gome_me_id, gopo_content, gopo_date) 
+			VALUES(#{num}, #{writer}, #{content}, NOW());
 	</insert>
-
+	
+	<insert id="insertGroupCal">
+		INSERT INTO group_calendar(gocal_title, gocal_startdate, gocal_enddate, gocal_memo, gocal_me_id, gocal_go_num)
+			VALUES(#{newSche.gocal_title},#{newSche.gocal_startdate}, #{newSche.gocal_enddate}, #{newSche.gocal_memo}, #{user.me_id}, #{num})
+	</insert>
+ 	
+ 	<insert id="insertGroupMember">
+ 		INSERT INTO group_member(gome_me_id, gome_go_num) VALUE(#{id}, #{num})
+ 	</insert>
  	
 </mapper>

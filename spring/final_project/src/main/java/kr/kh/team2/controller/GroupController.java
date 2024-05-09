@@ -1,6 +1,8 @@
 package kr.kh.team2.controller;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.team2.model.vo.common.ReportContentVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
+import kr.kh.team2.model.vo.group.GroupMemberVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
@@ -25,6 +30,7 @@ import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.GroupService;
+import kr.kh.team2.service.ReportService;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -33,6 +39,8 @@ public class GroupController {
 	
 	@Autowired
 	GroupService groupService;
+	@Autowired
+	ReportService reportService;
 	
 	// ================================ mygroup ================================
 
@@ -66,8 +74,8 @@ public class GroupController {
 	@GetMapping("/group/home")
 	public String grouphome(Model model, HttpSession session, int num){
 		int recentBoard = 6;
-		int dday = 7;
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		ArrayList<GroupCalendarVO> ddaylist = new ArrayList<GroupCalendarVO>();
 		
 		// 해당 그룹 가입 유저가 아니라면
 		if(!groupService.isGroupMember(user, num)) {
@@ -82,16 +90,27 @@ public class GroupController {
 		
 		// 최근 게시글 불러오기
 		ArrayList<GroupPostVO> boardlist = groupService.getRecentGroupBoard(num, recentBoard);
-		// d-day 불러오기
-		ArrayList<GroupCalendarVO> ddaylist = groupService.getDday(num, dday);
+		// 전체 그룹 일정 불러오기
+		ArrayList<GroupCalendarVO> calendarlist = groupService.getCalendar(num);
 		
-		// 가장 마지막 일정을 dday 최상단에 표시되도록 하기(의미가 있나? 그룹 시작일로 하는게 낫지 않을지,)
-		/*
-		if(ddaylist.size() != 0 || ddaylist != null) {
+		if(calendarlist != null || calendarlist.size() != 0) {
+			Calendar today = Calendar.getInstance();
+			Calendar calDate = Calendar.getInstance();
 			
+			for(GroupCalendarVO tmp : calendarlist) {
+				 calDate.setTime(tmp.getGocal_startdate()); 
+				 
+				 long calMs = calDate.getTimeInMillis();
+				 long todayMs = today.getTimeInMillis();
+				 long res = (calMs - todayMs)/(60*60*1000*24);
+				 
+				if(res >= 0) {
+					ddaylist.add(tmp);
+				}
+			}
 		}
-		*/
 		
+		model.addAttribute("calendarlist", calendarlist);
 		model.addAttribute("ddaylist", ddaylist);
 		model.addAttribute("boardlist", boardlist);
 		
@@ -215,6 +234,13 @@ public class GroupController {
 		GroupVO group = groupService.getGroupByGoNum(num);
 		
 		if(group.getLeader().equals(user.getMe_id())) {
+			Criteria cri = new Criteria();
+			
+			cri.setPerPageNum(0); // 모든 내역을 보기 위해서(Mapper에서 관련 조건 설정함)
+			
+			ArrayList<GroupMemberVO> list = groupService.getGroupMember(num, cri);
+			
+			model.addAttribute("list", list);
 			model.addAttribute("group", group);
 		}
 		
@@ -239,6 +265,148 @@ public class GroupController {
 		return map;
 	}
 	
+	@ResponseBody
+	@PostMapping("/group/manage/info/timereset")
+	public Map<String, Object> groupManagetimereset(HttpSession session, @RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.updateGroupTimer(num, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/info/freeze")
+	public Map<String, Object> groupManagefreeze(HttpSession session, @RequestParam("num")int num, @RequestParam("freeze")boolean freeze){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.updateGoUpdate(num, freeze, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/info/changeleader")
+	public Map<String, Object> groupManagechangeleader(HttpSession session, @RequestParam("num")int num, @RequestParam("id")String id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.changeGroupLeader(num, id, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/info/deletegroup")
+	public Map<String, Object> groupManagedeletegroup(HttpSession session, @RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.deleteGroupByGoNum(num, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	
+	@GetMapping("/group/manage/applicant")
+	public String groupmanageapplicant(Model model, HttpSession session, int num){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		GroupVO group = groupService.getGroupByGoNum(num);
+		
+		if(group.getLeader().equals(user.getMe_id())) {
+			
+			
+			model.addAttribute("group", group);		// 그룹 정보
+		}
+		
+		return "/group/mygroup/manageapplicant";
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/applicant/list")
+	public Map<String, Object> groupmanageapplicantlist(@RequestBody Criteria cri){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int num = -1;
+		
+		try {
+			num = Integer.parseInt(cri.getSearch());
+		}catch(Exception e) {
+			System.out.println("error ParseInt: " + cri.getSearch());
+		}
+		
+		cri.setPerPageNum(10);
+		
+		ArrayList<GroupApplyVO> applyList = groupService.getApplyListByGoNum(num, cri);
+		int totalCount = groupService.getApplicantTotalCount(num);
+		
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		map.put("list", applyList);
+		map.put("pm", pm);
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/applicant/insert")
+	public Map<String, Object> groupmanageapplicantinsert(HttpSession session, @RequestParam("num")int num, @RequestParam("apNum")int apNum){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.insertGroupMember(user, num, apNum);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/applicant/cancel")
+	public Map<String, Object> groupmanageapplicantcancel(HttpSession session, @RequestParam("num")int num, @RequestParam("apNum")int apNum){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.cancelApply(user, num, apNum);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
 	@GetMapping("/group/manage/member")
 	public String groupmanagemember(Model model, HttpSession session, int num){
 		MemberVO user = (MemberVO)session.getAttribute("user");
@@ -251,17 +419,122 @@ public class GroupController {
 		return "/group/mygroup/managemember";
 	}
 	
-	@GetMapping("/group/manage/applicant")
-	public String groupmanageapplicant(Model model, HttpSession session, int num){
-		MemberVO user = (MemberVO)session.getAttribute("user");
-		GroupVO group = groupService.getGroupByGoNum(num);
+	@ResponseBody
+	@PostMapping("/group/manage/member/list")
+	public Map<String, Object> groupmanagememberlist(@RequestBody Criteria cri){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int num = -1;
 		
-		if(group.getLeader().equals(user.getMe_id())) {
-			model.addAttribute("group", group);
+		try {
+			num = Integer.parseInt(cri.getSearch());
+		}catch(Exception e) {
+			System.out.println("error ParseInt: " + cri.getSearch());
 		}
 		
-		return "/group/mygroup/manageapplicant";
+		cri.setPerPageNum(5);
+		
+		ArrayList<GroupMemberVO> list = groupService.getGroupMember(num, cri);
+		
+		int totalCount = groupService.getGroupMemberTotalCount(num);
+		
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		map.put("list", list);
+		map.put("pm", pm);
+		
+		return map;
+		
 	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/member/warn")
+	public Map<String, Object> groupmanagememberwarn(@RequestParam("num")int num, @RequestParam("id")String id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.updateGroupMemberGome_warn(num, id);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/applicant/ban")
+	public Map<String, Object> groupmanagememberban(@RequestParam("num")int num, @RequestParam("id")String id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean result = groupService.deleteGroupMember(num, id);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/group/calendar/insert")
+	public Map<String, Object> groupCalendarInsert(HttpSession session, @RequestParam("num")int num, 
+			@RequestParam("title")String title, @RequestParam("startdt")Date startdt, @RequestParam("enddt")Date enddt, 
+			@RequestParam("memo")String memo){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		GroupCalendarVO newSch = new GroupCalendarVO(title, startdt, enddt, memo);
+		
+		boolean result = groupService.insertGroupCal(num, newSch, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/calendar/delete")
+	public Map<String, Object> groupCalendarDelete(HttpSession session, @RequestParam("num")int num, @RequestParam("calNum")int calNum){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.deleteGroupCal(num, calNum, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/quit")
+	public Map<String, Object> groupQuit(HttpSession session, @RequestParam("num")int num){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		
+		boolean res = groupService.quitGroup(num, user);
+		
+		if (res) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", null);
+		}
+		
+		return map;
+	}
+	
 	
 	// ================================ group ================================
 		
@@ -301,12 +574,17 @@ public class GroupController {
 		String table = "recruit";
 		ArrayList<TotalCategoryVO> totalCategory = groupService.getCategory(num, table);
 		ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(num, table);
+		//신고 유형 정보 가져오기
+		ArrayList<ReportContentVO> contentList = reportService.getReportContentList();
 		//화면에 전송
 		model.addAttribute("recruit", recruit);
 		model.addAttribute("groupKing", groupKing.getMe_nickname());
+		model.addAttribute("groupKing_me_id", groupKing.getMe_id());
 		model.addAttribute("totalCategory", totalCategory);
 		model.addAttribute("totalLanguage", totalLanguage);
+		model.addAttribute("contentList", contentList);
 		return "/group/detail";
 	}
 	
+ 
 }
