@@ -13,7 +13,14 @@
 			VALUE(#{member.me_id}, "이용중", "일반", #{member.me_pw}, #{member.me_nickname}, #{member.me_name}, #{member.me_phone}, #{member.me_address}, 0)
 	</insert>	
 	
+	<insert id="insertMemberVerify">
+		INSERT INTO me_verify value(#{mv.mv_me_id},#{mv.mv_code},DATE_ADD(NOW(), INTERVAL 3 MINUTE),now())
+	</insert>
+	
 	<!-- =============================== DELETE =============================== -->
+	<delete id="deleteMemberVerify">
+		delete from me_verify where mv_me_id = #{me_id}
+	</delete>
 	
 	<!-- =============================== UPDATE =============================== -->	
 	
@@ -29,7 +36,22 @@
 	  	where
 	  		me_id = #{user.me_id}
  	 </update>
-
+	
+	<update id="updateMemberPwToTemp">
+		update member set
+			me_pw = #{member.me_pw},
+			me_temppw = 1
+		where
+			me_id = #{member.me_id}
+	</update>
+	
+	<update id="updateMemberPwToNorm">
+		update member set
+			me_pw = #{cpt.me_pw},
+			me_temppw = 0
+		where
+			me_id =#{cpt.me_id}
+	</update>
 	<!-- =============================== SELECT =============================== -->	
 	
 	<select id="findMemberById" resultType="MemberVO">
@@ -58,6 +80,15 @@
 	  	select * from member where 
 	  		me_cookie = #{session_id} and me_cookie_limit >= now()
 	 	]]>
+	</select>
+	
+	<select id="selectMeVerify" resultType="MeVerifyVO">
+		<![CDATA[
+		select * 
+		from me_verify
+		where mv_me_id = #{mv.mv_me_id} and mv_code = #{mv.mv_code}
+			  and mv_createtime <= NOW() and mv_exptime >= NOW()
+		]]>
 	</select>
 
 </mapper>

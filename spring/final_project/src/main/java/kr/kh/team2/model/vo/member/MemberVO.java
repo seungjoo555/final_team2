@@ -31,6 +31,7 @@ public class MemberVO {
     private String me_intro;
     private String me_cookie;
     private Date me_cookie_limit;
+    private int me_temppw;
     private boolean autoLogin;
     
 	public MemberVO(SignupDTO signupDto) {

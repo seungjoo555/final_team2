@@ -121,6 +121,9 @@ public class MentorController {
 		if(mentorInfo.getMentIf_state()==-1) {
 			return "denied";
 		}
+		if(user.getMe_temppw()==1) {
+			return "needchange";
+		}
 		return "false";
 	}
 	

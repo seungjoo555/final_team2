@@ -2,6 +2,8 @@ package kr.kh.team2.dao;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.team2.model.dto.ChangePwTempDTO;
+import kr.kh.team2.model.vo.member.MeVerifyVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 
 public interface MemberDAO {
@@ -24,4 +26,14 @@ public interface MemberDAO {
 	MemberVO selectMemberByCookie(@Param("session_id")String sessionId);
 
 	MemberVO pwFind(@Param("me_id")String me_id, @Param("me_phone")String me_phone);
+
+	boolean insertMemberVerify(@Param("mv")MeVerifyVO meVerify);
+
+	void deleteMemberVerify(@Param("me_id")String me_id);
+
+	MeVerifyVO selectMeVerify(@Param("mv")MeVerifyVO meVerify);
+
+	boolean updateMemberPwToTemp(@Param("member")MemberVO dbMember);
+
+	boolean updateMemberPwToNorm(@Param("cpt")ChangePwTempDTO cptDTO);
 }

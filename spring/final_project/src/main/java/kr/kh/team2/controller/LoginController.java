@@ -1,5 +1,8 @@
 package kr.kh.team2.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,10 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.team2.model.dto.ChangePwTempDTO;
 import kr.kh.team2.model.dto.LoginDTO;
+import kr.kh.team2.model.vo.member.MeVerifyVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.service.MemberService;
 
@@ -117,11 +125,52 @@ public class LoginController {
 		return "/login/authentication";
 	}
 	
-	@PostMapping("/login/authentication")
-	public String authenticationPost() {
+	
+	
+	@ResponseBody	
+	@GetMapping("/login/auth/mailsend")
+	public String findMailSend(@RequestParam String me_id) {
 		
-		return "";
+		boolean res = memberService.findMailForm(me_id);
+		
+		return res + "";
 	}
+	
+	@ResponseBody
+	@PostMapping("/login/auth/verify")
+	public Map<String, Object> findPwVerify(@RequestBody MeVerifyVO meVerify) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean res = memberService.findPwVerify(meVerify);
+		map.put("res", res+"");
+		return map;
+		
+	}
+	
+	@GetMapping("/login/changepwtemp")
+	public String changePwTemp() {
+		
+		return "/login/changepwtemp";
+	}
+	
+	@PostMapping("/login/changepwtemp")
+	public String changePwTempPost(ChangePwTempDTO cptDTO, HttpSession session, Model model) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		boolean res = memberService.changePwTemp(cptDTO,user.getMe_id());
+		
+		
+		if(res) {
+			model.addAttribute("msg","비밀번호가 변경되었습니다. 다시 로그인 해주세요.");
+			session.removeAttribute("user");
+			model.addAttribute("url","/");
+			return "message";
+		}
+		
+		model.addAttribute("msg","비밀번호 변경에 실패하였습니다,");
+		model.addAttribute("url","/login/changepwtemp");
+		return "message";
+	}
+
 	
 
 }

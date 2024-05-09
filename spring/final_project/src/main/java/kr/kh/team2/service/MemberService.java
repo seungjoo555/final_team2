@@ -1,8 +1,10 @@
 package kr.kh.team2.service;
 
 
+import kr.kh.team2.model.dto.ChangePwTempDTO;
 import kr.kh.team2.model.dto.LoginDTO;
 import kr.kh.team2.model.dto.SignupDTO;
+import kr.kh.team2.model.vo.member.MeVerifyVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 
 public interface MemberService {
@@ -27,6 +29,12 @@ public interface MemberService {
 	MemberVO getMemberByCookie(String sessionId);
 
 	MemberVO findPw(String me_id, String me_phone);
+
+	boolean findMailForm(String me_id);
+
+	boolean findPwVerify(MeVerifyVO meVerify);
+
+	boolean changePwTemp(ChangePwTempDTO cptDTO, String me_id);
 
 
 }
