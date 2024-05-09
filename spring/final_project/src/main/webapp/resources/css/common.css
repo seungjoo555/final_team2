@@ -26,27 +26,44 @@
 header{
 	width: 100%; min-width: 1200px;
 }
-header h1{ width: 110px; }
-header img{ width: 110px; }
+
+.navbar-brand {
+	position: relative;	
+}
+
+.second-logo {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: none;
+}
+
+.navbar-brand:hover .second-logo {
+	display: block;
+}
+
+header h1{ width: 150px; }
+
+header img{ width: 150px; }
 header .navbar { background-color: #E6F5E5; margin: 0; padding: 0; height: 80px;}
 header .navbar>.container-fluid {
 	width: 1200px; margin: 0 auto; padding: 0; height: 80px;
 }
 
 
-header .navbar-left{ width: 300px; display: flex; justify-content: space-around; margin:0;}
+header .navbar-left{ width: 400px; display: flex; justify-content: space-around; margin:0;}
 header .navbar-left a{ font-size: 16px; color: #000000; padding: 0;}
 
 header .navbar-right{ width: 150px; display: flex; justify-content: space-around; margin:0;}
 header .navbar-right a{ font-size: 14px; color: #000000; padding: 0; }
 
 header .d-flex {
-	width: calc(100% - 560px); justify-content: flex-end;
+	width: calc(100% - 700px); justify-content: flex-end;
 }
 
 /* header 검색구역 */
 #totalsearch{ 
-	width: 550px; border-radius: 5px 0 0 5px;
+	width: 450px; border-radius: 5px 0 0 5px;
 	border: none;
 }
 #totalsearch::placeholder{ color: #999; }
@@ -90,6 +107,89 @@ header .d-flex {
 
 /* 드롭다운 마우스 호버 스타일 */
 .dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* 강의 드롭다운 */
+
+/* Dropdown Button */
+.dropbtn-lecture {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn-lecture:hover, .dropbtn-lecture:focus {
+  background-color: #3e8e41;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content-lecture {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content-lecture a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content-lecture a:hover {
+  background-color: #f1f1f1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown-lecture:hover .dropdown-content-lecture {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown-lecture:hover .dropbtn-lecture {
+  background-color: #3e8e41;
+}
+
+/* Submenu Button */
+.subbtn-lecture {
+  background-color: #f1f1f1;
+  color: black;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+/* Submenu Button on hover */
+.subbtn-lecture:hover {
+  background-color: #ddd;
+}
+
+/* Submenu Content (Hidden by Default) */
+.submenu-content-lecture {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+}
+
+/* Show the submenu content on hover */
+.dropdown-submenu-lecture:hover .submenu-content-lecture {
   display: block;
 }
 

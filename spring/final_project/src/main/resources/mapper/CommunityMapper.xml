@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team2.dao.CommunityDAO">
+
+	<insert id="insertBoard">
+		insert into board(board_name) value(#{board_name})
+	</insert>
+
+	<select id="selectBoardList" resultType="BoardVO">
+		select board_num,board_name, count(post_board_num) as "board_post_count" 
+		from board 
+		left join post on board_num = post_board_num 
+		group by board_num 
+		order by board_num DESC
+		limit #{cri.pageStart}, #{cri.perPageNum} 
+	</select>
+	
+	<select id="selectBoard" resultType="BoardVO">
+		select * from board where board_name = #{board_name}
+	</select>
+	
+	<select id="selectBoardTotalCount" resultType="int">
+		select count(*) from board
+	</select>
+	
+	<update id="updateBoard">
+		update board
+		set
+		board_name = #{board_name}
+		where
+		board_num = #{board_num}
+	
+	</update>
+	
+	<delete id="deleteBoard">
+		delete 
+		from board
+		where board_num = #{board_num}
+	</delete>
+	
+</mapper>

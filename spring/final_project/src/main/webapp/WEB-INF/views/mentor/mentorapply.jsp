@@ -64,12 +64,17 @@ $('.btn-apply-link').click(function(){
 
 			if(data==="true"){
 				location.href="<c:url value='/mentor/insert'/>";
-			}else if(data ==="false"){
-				alert("이미 멘토신청을 완료한 계정입니다.")
-				location.href = "<c:url value='/mentor/apply'/>"
+			}else if(data ==="duplicate"){
+				alert("이미 멘토신청을 완료한 계정입니다.");
+				location.href = "<c:url value='/mentor/apply'/>";
 			}else if(jqXHR.getResponseHeader("SESSION_EXPIRED") === "true"){
 				if(confirm('로그인이 필요한 서비스입니다. 로그인페이지로 이동하시겠습니까?')){
 					location.href = "<c:url value='/login'/>";
+				}
+			}else if(data ==="denied"){
+				alert("멘토신청 거절 이력이 존재합니다.")
+				if(confirm("멘토신청을 다시 하시겠습니까?")){
+					location.href = "<c:url value='/mentor/update'/>";
 				}
 			}
 		},error : function(xhr, textStatus, errorThrown){

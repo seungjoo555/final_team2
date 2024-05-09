@@ -10,6 +10,7 @@ import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MentoringApplyVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
+import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.CriteriaMentor;
 
 public interface MentorDAO {
@@ -38,5 +39,17 @@ public interface MentorDAO {
 	boolean insertMentoring(@Param("ment")MetoringVO mentoring);
 
 	boolean insertTotalCategory(@Param("toCt")TotalCategoryVO toCt);
+
+	ArrayList<MentorInfoVO> selectMentorInfoList(@Param("cri")Criteria cri);
+
+	int selectMentorInfoTotalCount(@Param("cri")Criteria cri);
+
+	boolean mentorInfoAccept(@Param("me_id")String me_id);
+
+	boolean updateMemberMentorInfo(@Param("me_id")String me_id);
+
+	boolean mentorInfoDeny(@Param("me_id")String me_id);
+
+	boolean updateMentorInfoForDenied(@Param("mt_info")MentorInfoVO mentorInfoVO,@Param("me_id") String me_id);
 
 }

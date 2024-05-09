@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class BoardVO {
 	private int board_num;
     private String board_name;
+    private int board_post_count;
 }

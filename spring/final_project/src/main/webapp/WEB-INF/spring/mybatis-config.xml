@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<!-- Mapper에서 resultType을 간단히 줄여쓰기 위해 typeAlias를 활용 -->
+		<typeAlias type="kr.kh.team2.model.vo.common.SearchMenuVO" alias="SearchMenuVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.common.ProgrammingCategoryVO" alias="ProgrammingCategoryVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.common.ProgrammingLanguageVO" alias="ProgrammingLanguageVO"/>
 
@@ -14,7 +15,7 @@
 		<!-- ========================== member ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.member.MemberVO" alias="MemberVO"/>
     
-    <!-- ========================== mentor ========================== -->
+    	<!-- ========================== mentor ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.member.MentorJobVO" alias="MentorJobVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.member.MetoringVO" alias="MetoringVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.member.MentorInfoVO" alias="MentorInfoVO"/>
@@ -27,5 +28,16 @@
 		<typeAlias type="kr.kh.team2.model.vo.group.GroupCalendarVO" alias="GroupCalendarVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.group.MutualReviewVO" alias="MutualReviewVO"/>
 
+		<!-- ========================== lecture ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.lecture.LectureVO" alias="LectureVO"/>
+
+
+
+		<!-- ========================== report ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.common.ReportContentVO" alias="ReportContentVO"/>
+		
+		<!-- ========================== community ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.community.BoardVO" alias="BoardVO"/>
+		
 	</typeAliases>
 </configuration>

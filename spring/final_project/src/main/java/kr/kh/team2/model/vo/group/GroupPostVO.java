@@ -1,5 +1,6 @@
 package kr.kh.team2.model.vo.group;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -21,6 +22,11 @@ public class GroupPostVO {
 	public void setGopo_date(Date date){
 		this.gopo_date = date;
 		calcTimeAgo();
+	}
+	
+	public String getGopo_date() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일");
+		return format.format(gopo_date);
 	}
 	
 	// 'n시간 전' 문자열 생성 메서드 | setTime_ago()

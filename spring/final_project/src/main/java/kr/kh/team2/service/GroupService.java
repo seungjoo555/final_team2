@@ -6,6 +6,7 @@ import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
+import kr.kh.team2.model.vo.group.GroupMemberVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
@@ -35,8 +36,6 @@ public interface GroupService {
 
 	ArrayList<GroupPostVO> getRecentGroupBoard(int groupNum, int recentBoard);
 
-	ArrayList<GroupCalendarVO> getDday(int groupNum, int dday);
-
 	long getGroupTime(int groupNum);
 
 	boolean updateGoTime(int goNum);
@@ -63,6 +62,40 @@ public interface GroupService {
 
 	boolean updateGroupName(int num, String name, MemberVO user);
 
+
 	ArrayList<GroupVO> countGroupListById(String me_id);
+
+	ArrayList<GroupCalendarVO> getCalendar(int num);
+
+	boolean insertGroupCal(int num, GroupCalendarVO newSch, MemberVO user);
+
+	boolean deleteGroupCal(int num, int calNum, MemberVO user);
+
+	boolean quitGroup(int num, MemberVO user);
+
+	ArrayList<GroupApplyVO> getApplyListByGoNum(int num, Criteria cri);
+
+	int getApplicantTotalCount(int num);
+
+	boolean insertGroupMember(MemberVO user, int num, int apNum);
+
+	boolean cancelApply(MemberVO user, int num, int apNum);
+
+	ArrayList<GroupMemberVO> getGroupMember(int num, Criteria cri);
+
+	int getGroupMemberTotalCount(int num);
+
+	boolean updateGroupMemberGome_warn(int num, String id);
+
+	boolean deleteGroupMember(int num, String id);
+
+	boolean updateGroupTimer(int num, MemberVO user);
+
+	boolean deleteGroupByGoNum(int num, MemberVO user);
+
+	boolean changeGroupLeader(int num, String id, MemberVO user);
+
+	boolean updateGoUpdate(int num, boolean freeze, MemberVO user);
+
 
 }
