@@ -97,8 +97,8 @@ public interface GroupService {
 
 	boolean insertGroupApply(GroupVO group, int num, GroupApplyVO goapVo, MemberVO user);
 
-	GroupApplyVO getGroupApply(Integer num, String me_id);
+	GroupApplyVO getGroupApply(Integer num, MemberVO user);
 
-	boolean updateGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, String me_id);
+	boolean updateGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, MemberVO user);
 
 }

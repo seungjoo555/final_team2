@@ -103,8 +103,10 @@ public interface GroupDAO {
 
 	ArrayList<GroupVO> selectGroupListByGoNum(@Param("num")int num);
 
-	GroupApplyVO selectGroupApply(@Param("num")Integer num, @Param("me_id")String me_id);
+	GroupApplyVO selectGroupApply(@Param("num")Integer num, @Param("user")MemberVO user);
 
-	boolean updateGroupApply(@Param("goap")GroupApplyVO goapVo);
+	boolean updateGroupApply(@Param("goap")GroupApplyVO goap, @Param("user")MemberVO user);
+
+	boolean updateGroupApply(@Param("goapVo")GroupApplyVO goapVo, @Param("goap")GroupApplyVO goap, @Param("user")MemberVO user);
 
 }

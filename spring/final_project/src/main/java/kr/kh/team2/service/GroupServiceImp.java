@@ -2,7 +2,6 @@ package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,6 @@ import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
-import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.utils.Methods;
 
@@ -594,29 +592,31 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public GroupApplyVO getGroupApply(Integer num, String me_id) {
-		if(num == 0 || me_id == null) {
+	public GroupApplyVO getGroupApply(Integer num, MemberVO user) {
+		if(num == 0 || user == null) {
 			return null;
 		}	
-		return groupDao.selectGroupApply(num, me_id);
+		return groupDao.selectGroupApply(num, user);
 	}
 
 	@Override
-	public boolean updateGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, String me_id) {
-		if(group == null || recu_num == 0 || goapVo == null || me_id == null) {
+	public boolean updateGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, MemberVO user) {
+		if(group == null || recu_num == 0 || goapVo == null || user == null) {
 			return false;
 		}
-		
-		System.out.println("서비스임프 그룹지원 공고번호" + goapVo.getGoap_recu_num());
 		
 		// 작성자가 맞는지 확인
-		GroupApplyVO goap = groupDao.selectGroupApply(goapVo.getGoap_recu_num(), me_id);
+		GroupApplyVO goap = groupDao.selectGroupApply(recu_num, user);
+		System.out.println("서비스임프 goap 확인"+goap);
 		
-		if(goap == null || !goap.getGoap_me_id().equals(me_id)) {
+		System.out.println("서비스임프 그룹지원 공고번호" + goap.getGoap_recu_num());
+		System.out.println("서비스임프 user" + user);
+		
+		if(goap == null || !goap.getGoap_me_id().equals(user.getMe_id())) {
 			return false;
 		}
 		
-		boolean res = groupDao.updateGroupApply(goapVo);
+		boolean res = groupDao.updateGroupApply(goapVo, goap, user);
 		
 		if(!res) {
 			return false;

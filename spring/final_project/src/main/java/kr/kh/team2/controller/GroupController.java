@@ -605,7 +605,7 @@ public class GroupController {
 		  return "redirect:/";
 	  }
 	  
-	  GroupApplyVO goapVo = groupService.getGroupApply(num, user.getMe_id());
+	  GroupApplyVO goapVo = groupService.getGroupApply(num, user);
 	  if(goapVo == null) {
 		  return "redirect:/";
 	  }
@@ -625,7 +625,7 @@ public class GroupController {
 		  return "redirect:/";
 	  }
 	  
-	  GroupApplyVO goapVo = groupService.getGroupApply(num, user.getMe_id());
+	  GroupApplyVO goapVo = groupService.getGroupApply(num, user);
 	  if(goapVo == null) {
 		  return "redirect:/";
 	  }
@@ -653,7 +653,7 @@ public class GroupController {
 	  for (GroupVO group : groups) {
 		  // 그룹 번호와 공고 그룹 번호 같은 경우
 		  if (group.getGo_num() == recruit.getRecu_go_num()) {
-			  boolean res = groupService.updateGroupApply(group, recruit.getRecu_num(), goapVo, user.getMe_id());
+			  boolean res = groupService.updateGroupApply(group, recruit.getRecu_num(), goapVo, user);	
 			  if(res) {
 				  updateapply = true;
 			  }
