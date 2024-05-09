@@ -94,9 +94,19 @@ public interface GroupService {
 
 	boolean deleteGroupByGoNum(int num, MemberVO user);
 
+
+	ArrayList<GroupVO> getGroupListByRecuNum(int num);
+
+	boolean insertGroupApply(GroupVO group, int num, GroupApplyVO goapVo, MemberVO user);
+
+	GroupApplyVO getGroupApply(Integer num, MemberVO user);
+
+	boolean updateGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, MemberVO user);
+
 	boolean changeGroupLeader(int num, String id, MemberVO user);
 
 	boolean updateGoUpdate(int num, boolean freeze, MemberVO user);
+
 
 
 }

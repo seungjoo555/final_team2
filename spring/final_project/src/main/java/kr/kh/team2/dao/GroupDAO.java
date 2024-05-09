@@ -102,6 +102,17 @@ public interface GroupDAO {
 
 	boolean deleteGroupByGoNum(@Param("num")int num);
 
+
+	boolean insertGroupApply(@Param("group")GroupVO group, @Param("recu_num")int recu_num, @Param("goap")GroupApplyVO goapVo, @Param("user")MemberVO user);
+
+	ArrayList<GroupVO> selectGroupListByGoNum(@Param("num")int num);
+
+	GroupApplyVO selectGroupApply(@Param("num")Integer num, @Param("user")MemberVO user);
+
+	boolean updateGroupApply(@Param("goap")GroupApplyVO goap, @Param("user")MemberVO user);
+
+	boolean updateGroupApply(@Param("goapVo")GroupApplyVO goapVo, @Param("goap")GroupApplyVO goap, @Param("user")MemberVO user);
+
 	ArrayList<GroupMemberVO> getGroupMemberByGoNum(@Param("num")int num);
 
 	boolean updateGomeStateTo0(@Param("num")int num, @Param("id")String id);
@@ -111,5 +122,6 @@ public interface GroupDAO {
 	boolean updateGoUpdate(@Param("num")int num, @Param("freeze")boolean freeze);
 
 	boolean getGoUpdate(@Param("num")int num);
+
 
 }
