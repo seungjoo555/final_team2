@@ -224,7 +224,10 @@ $("[name=type]").click(function(){
 			async : true, //비동기 : true(비동기), false(동기)
 			url : "<c:url value="/group/manage/applicant/insert"/>", 
 			type : 'post', 
-			data : {num : num}, 
+			data : {
+				num : ${group.go_num},
+				apNum : num
+			}, 
 			dataType :"json", 
 			success : function (data){
 					if(data.data == 'ok'){
@@ -254,7 +257,10 @@ $("[name=type]").click(function(){
 			async : true, //비동기 : true(비동기), false(동기)
 			url : "<c:url value="/group/manage/applicant/cancel"/>", 
 			type : 'post', 
-			data : {num : num}, 
+			data : {
+				num : ${group.go_num},
+				apNum : num
+			}, 
 			dataType :"json", 
 			success : function (data){
 					if(data.data == 'ok'){

@@ -110,6 +110,16 @@ $(".change-group-name-btn").click(function(){
 		return;
 	}
 	
+	if( $("[name=group-name]").val().length > 20){
+		alert('그룹 이름은 최대 20글자만 작성할 수 있습니다.')
+		return;
+	}
+	
+	if( $("[name=group-name]").val() == "${group.go_name}"){
+		alert('기존 이름과 같은 이름입니다. 이름을 수정하고 다시 시도해주세요.')
+		return;
+	}
+	
 	$.ajax({
 		async : false, 
 		url : '<c:url value="/group/manage/info/update"/>', 

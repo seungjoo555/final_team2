@@ -442,9 +442,11 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public boolean insertGroupMember(MemberVO user, int num) {
-		if(num == 0) {
+	public boolean insertGroupMember(MemberVO user, int num, int apNum) {
+		if(num == 0 || apNum == 0) {
 			System.out.println("num is 0");
+			System.out.println("num: "+num);
+			System.out.println("apNum: "+apNum);
 			return false;
 		}
 		if(!groupDao.getGoUpdate(num)) {
@@ -459,19 +461,19 @@ public class GroupServiceImp implements GroupService{
 			return false;
 		}
 		
-		GroupApplyVO application = groupDao.getApplicationByGoap_num(num);
+		GroupApplyVO application = groupDao.getApplicationByGoap_num(apNum);
 		
 		if(application == null) {
 			System.out.println("no application");
 			return false;
 		}
 		
-		return groupDao.updateGoap_stateSigned(num) 
+		return groupDao.updateGoap_stateSigned(apNum) 
 				&& groupDao.insertGroupMember(application.getGoap_go_num(), application.getGoap_me_id());
 	}
 
 	@Override
-	public boolean cancelApply(MemberVO user, int num) {
+	public boolean cancelApply(MemberVO user, int num, int apNum) {
 		if(num == 0) {
 			System.out.println("num is 0");
 			return false;
@@ -488,14 +490,14 @@ public class GroupServiceImp implements GroupService{
 			return false;
 		}
 		
-		GroupApplyVO application = groupDao.getApplicationByGoap_num(num);
+		GroupApplyVO application = groupDao.getApplicationByGoap_num(apNum);
 		
 		if(application == null) {
 			System.out.println("no application");
 			return false;
 		}
 		
-		return groupDao.updateGoap_stateCanceled(num);
+		return groupDao.updateGoap_stateCanceled(apNum);
 	}
 
 	@Override
