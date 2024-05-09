@@ -579,8 +579,13 @@ public class GroupController {
 		  if (group.getGo_num() == recruit.getRecu_go_num()) {
 			  System.out.println("컨트롤러 goap 2 : " + goap);
 			  
-			  if (goap != null) {				  
-				  System.out.println("컨트롤러 goap 3 : " + goap);
+			  if(goap == null || goap.getGoap_me_id() == null) {
+				  boolean res = groupService.insertGroupApply(group, recruit.getRecu_num(), goapVo, user);
+				  if(res) {
+					  apply = true;
+					  break;
+				  }
+			  } else {
 				  String[] applyUserIds = goap.getGoap_me_id().split(",");
 				  boolean alreadyApply = false;
 				  
@@ -590,7 +595,6 @@ public class GroupController {
 						  break;
 					  }
 				  }
-				  
 				  if(alreadyApply) {
 					  model.addAttribute("msg", "이미 지원한 그룹입니다.");
 					  model.addAttribute("url", "/group/detail?num=" + num);
@@ -600,14 +604,11 @@ public class GroupController {
 					  System.out.println("컨트롤러 goap 4 : " + goap);
 					  System.out.println("2중지원 아니다.");
 					  boolean res = groupService.insertGroupApply(group, recruit.getRecu_num(), goapVo, user);
-					  
-					  if(res) {
-						  apply = true;
-					  }
 				  }
 			  }
 		  }
 	  }
+	  
 	  if(apply) {
 		  model.addAttribute("msg", "지원서를 제출했습니다.");
 		  model.addAttribute("url", "/group/applydetail?num=" + num);
