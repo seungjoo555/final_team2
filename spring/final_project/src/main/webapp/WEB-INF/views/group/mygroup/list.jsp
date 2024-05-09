@@ -27,26 +27,6 @@
 					</thead>
 					<tbody>
 						<!-- 그룹 목록 출력됨 -->
-						<!--  
-						<c:forEach items="${list}" var="group">
-							<tr class="group-info">
-								<td class="group-title">
-									<c:url value="/group/home" var="url">
-										<c:param name="groupNum" value="${group.go_num}"/>
-									</c:url>
-									<a href="${url}">${group.go_name}</a>
-								</td>
-								<td class="group-time text-center">
-									<c:choose>
-										<c:when test="${group.go_time < 3600}">0시간</c:when>
-										<c:when test="${group.go_time / 3600 > 999}">999+시간</c:when>
-										<c:otherwise>${Math.round(group.go_time / 3600)}시간</c:otherwise>
-									</c:choose>
-								</td>
-								<td class="text-center">${group.go_member_count}명</td>
-							</tr>
-						</c:forEach>
-						-->
 					</tbody>
 				</table>
 				<!-- 페이지네이션 -->
@@ -99,7 +79,7 @@
 			str = `
 				<div class="no-list-page">
 					<div>가입한 그룹이 없습니다.</div>
-					<a href="<c:url value="/"/>">모집공고 보러 가기</a>
+					<a href="<c:url value="/group/list"/>">모집공고 보러 가기</a>
 				</div>
 				`
 			$('.group-list-bg').addClass("text-align-center")

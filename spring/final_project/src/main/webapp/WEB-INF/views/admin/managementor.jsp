@@ -10,7 +10,6 @@
 	
 	.manage-mentor-container{
 		background-color : #F9F9F9;
-		height : 100%;
 		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 	    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
 	}
@@ -165,6 +164,10 @@
 	
 	}
 	
+	.box-pagination{
+		margin-top : 50px;
+	}
+	
 	
 </style>
 </head>
@@ -206,8 +209,8 @@
 		<button type="button" class="multi-accept" value="accept">허가</button>
 		<button type="button" class="multi-deny" value="deny">거절</button>
 	</div>
-	<div class="mentor-pagination">
-			<ul class="box-pagination justify-content-center">
+	<div class="box-pagination">
+			<ul class="pagination justify-content-center">
 			</ul>
 	</div>
 	<div id="modalWrap" class="modalWrap"> <!-- 모달 창을 감싸는 div -->
@@ -445,7 +448,7 @@
 			    </li>				
 				`;
 		}
-		$('.box-pagination').html(str);
+		$('.box-pagination>ul').html(str);
 	}
 	
 	<!-- 페이지네이션 클릭 -->

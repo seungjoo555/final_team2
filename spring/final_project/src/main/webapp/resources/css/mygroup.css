@@ -231,6 +231,34 @@
 		
 		
 	
+	/* ======================================= manageinfo.jsp ============================================ */
+	
+	.manage-info-bg{padding: 55px 30px;}
+	
+	.manage-info-option{margin-bottom: 30px;}
+	.manage-info-option .info-option-title{width: 100%; font-size: 18px; font-weight: bold; color: #243323; border-bottom: 1px solid #C9C9C9;}
+	.manage-info-option .option-sub{font-weight: normal; text-align: right; color: #4F4F4F; width: 70%;
+		font-size: 14px; line-height: 28px;}
+	.manage-info-option .info-option-content{padding: 20px;}
+	
+	/* 그룹 정보 관리 관련 style */
+		[name=group-name]{border-bottom: 1px solid #C9C9C9;}
+		[name=group-name]:focus{outline: none; background-color: #C9C9C9;}
+		
+		.change-group-name-btn{height: 28px; line-heiht: 28px; padding: 2px 12px;}
+		.change-group-name-btn a{background-color: white;}
+	
+	
+	/* 리더권한 부여 */
+		.leader{width: 20%;}
+		
+		.member-list-bg{border: 1px solid black; padding: 20px 0; height: 250px; overflow-y: auto;}
+		.member-list tr{height: 50px; line-height: 50px; padding: 0; text-align: center;}
+	
+		.member-manage-btn{visibility: hidden; font-size: 14px;}
+	
+	
+	
 	/* ======================================= manageapplicant.jsp ============================================ */
 	
 	.applicant-list-bg>*{width: 90%; margin: 0px auto; text-align: center; padding: 10px;}
@@ -259,7 +287,7 @@
 		.apply-manage-btn-group .apply-deny-btn{background-color: #FFFFFF; color: #243323; margin:auto 10px auto 0;}
 		
 		
-	/* ======================================= groupmanage.jsp ============================================ */
+	/* ======================================= managemember.jsp ============================================ */
 	/* applicantmanage의 style을 주로 이용함. */
 
 	.member-list-bg>*{width: 90%; margin: 0px auto; text-align: center; padding: 10px;}

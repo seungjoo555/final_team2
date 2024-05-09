@@ -1,5 +1,7 @@
 package kr.kh.team2.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -34,8 +36,7 @@ public class MemberServiceImp implements MemberService {
 			|| !methods.checkString(signupDto.getNickname())
 			|| !methods.checkString(signupDto.getName())
 			|| !methods.checkString(signupDto.getPhone())
-			|| !methods.checkString(signupDto.getAdd1())
-			|| !methods.checkString(signupDto.getAdd2())) {
+			|| !methods.checkString(signupDto.getAdd1())) {
 			System.out.println("null String");
 			System.out.println("signupDto : "+signupDto);
 			return false;
@@ -86,6 +87,7 @@ public class MemberServiceImp implements MemberService {
 		if(me_id == null) {
 			return null;
 		}
+		System.out.println(memberDao.selectMember(me_id));
 		return memberDao.selectMember(me_id);
 	}
 
@@ -94,7 +96,21 @@ public class MemberServiceImp implements MemberService {
 		if(me_id == null) {
 			return false;
 		}
+		System.out.println(memberDao.updateProfile(me_id, member));
 		return memberDao.updateProfile(me_id, member);
+	}
+
+	@Override
+	public ArrayList<String> getMemberStateList() {
+		return memberDao.selectMemberStateList();
+	}
+
+	@Override
+	public boolean updateMemberState(String set_me_id, String set_state) {
+		if(!methods.checkString(set_state)||!methods.checkString(set_me_id)) {
+			return false;
+		}
+		return memberDao.updateMemberState(set_me_id, set_state);
 	}
 	
 	

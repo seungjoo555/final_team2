@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team2.dao.LectureDAO">
 	
-	<select id="selectLectureList" resultType="LectureVO">
+	<select id="selectAllLectureList" resultType="LectureVO">
 		SELECT 
 		    *
 		FROM
@@ -22,6 +22,52 @@
 					lect_name = #{cri.search}
 				</otherwise>
 			</choose>
+		ORDER BY lect_num DESC
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="selectLectureList" resultType="LectureVO">
+		select * from lecture where
+			<if test='search.searchType == "cate"'>
+				lect_num in
+				(select toCt_table_pk from total_category where toCt_progCt_num = ${search.progCt_num} and toCt_table_name = 'lecture')
+			</if>
+			<if test='search.searchType == "lang"'>
+				lect_num in
+				(select toLg_table_pk from total_language where toLg_lang_num = ${search.lang_num} and toLg_table_name = 'lecture')
+			</if>
+		ORDER BY lect_num DESC
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="selectLectureCount" resultType="int">
+		SELECT 
+		    count(*)
+		FROM
+		    lecture
+		where
+		<if test='search.searchType == "all"'>
+			<choose>
+				<when test='cri.type == "all"'>
+					lect_name like concat('%', #{cri.search}, '%') or
+					lect_mentIf_me_id = #{cri.search}
+				</when>
+				<when test='cri.type == "writer"'>
+					lect_mentIf_me_id like concat('%', #{cri.search}, '%')
+				</when>
+				<otherwise>
+					lect_name = #{cri.search}
+				</otherwise>
+			</choose>
+		</if>
+		<if test='search.searchType == "cate"'>
+			lect_num in
+			(select toCt_table_pk from total_category where toCt_progCt_num = ${search.progCt_num} and toCt_table_name = 'lecture')
+		</if>
+		<if test='search.searchType == "lang"'>
+			lect_num in
+			(select toLg_table_pk from total_language where toLg_lang_num = ${search.lang_num} and toLg_table_name = 'lecture')
+		</if>
 		ORDER BY lect_num DESC
 		LIMIT #{cri.pageStart}, #{cri.perPageNum}
 	</select>

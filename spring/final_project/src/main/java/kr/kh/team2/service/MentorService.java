@@ -35,7 +35,7 @@ public interface MentorService {
 
 	ArrayList<TotalCategoryVO> getMentoCategory(int ment_num, String table2);
 
-	MentorInfoVO getMentorInfo(String me_id);
+  MentorInfoVO getMentorInfo(String me_id);
 
 	MetoringVO getMetoring(String me_id);
 
@@ -52,6 +52,7 @@ public interface MentorService {
 	boolean mentorRequest(String mentIf_me_id, String btnType);
 
 	boolean updateMentorInfoForDenied(MentorInfoVO mentorInfoVO, String me_id);
+
 
 
 
