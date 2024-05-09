@@ -292,6 +292,11 @@
 	display: inline-block; 
 }
 
+.apply-icon {
+	width: 30px;
+	height: 30px;
+}
+
 .apply-totalcontainer {
 	margin: 30px 0 100px 0;
     width: 100%;
@@ -314,6 +319,12 @@
 	margin: 10px 20px 10px 10px; 
 	padding: 20px;   
 	text-decoration: none; 
+	color: black;
+}
+
+.apply-item-container:hover {
+	color: black;
+	text-decoration: none;
 }
 
 .apply-list-item-title {

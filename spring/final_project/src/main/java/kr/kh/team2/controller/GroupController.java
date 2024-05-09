@@ -665,8 +665,8 @@ public class GroupController {
 	  	model.addAttribute("msg", "지원서를 수정했습니다.");
 	  	model.addAttribute("url", "/group/applydetail?num=" + num);
 	  } else {
-		  model.addAttribute("msg", "지원서를 수정하지 못했습니다.");
-		  model.addAttribute("url", "/group/apply?num=" + num ); 
+		model.addAttribute("msg", "지원서를 수정하지 못했습니다.");
+		model.addAttribute("url", "/group/apply?num=" + num ); 
 	  }
 	  
 	  return "message";
