@@ -22,6 +22,7 @@ import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
+import kr.kh.team2.model.vo.group.GroupMemberVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
@@ -233,6 +234,13 @@ public class GroupController {
 		GroupVO group = groupService.getGroupByGoNum(num);
 		
 		if(group.getLeader().equals(user.getMe_id())) {
+			Criteria cri = new Criteria();
+			
+			cri.setPerPageNum(0); // 모든 내역을 보기 위해서(Mapper에서 관련 조건 설정함)
+			
+			ArrayList<GroupMemberVO> list = groupService.getGroupMember(num, cri);
+			
+			model.addAttribute("list", list);
 			model.addAttribute("group", group);
 		}
 		
@@ -264,6 +272,40 @@ public class GroupController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		
 		boolean result = groupService.updateGroupTimer(num, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/info/freeze")
+	public Map<String, Object> groupManagefreeze(HttpSession session, @RequestParam("num")int num, @RequestParam("freeze")boolean freeze){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.updateGoUpdate(num, freeze, user);
+		
+		if(result) {
+			map.put("data", "ok");
+		}else {
+			map.put("data", "");
+		}
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/manage/info/changeleader")
+	public Map<String, Object> groupManagechangeleader(HttpSession session, @RequestParam("num")int num, @RequestParam("id")String id){
+		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		boolean result = groupService.changeGroupLeader(num, id, user);
 		
 		if(result) {
 			map.put("data", "ok");
@@ -333,11 +375,11 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/manage/applicant/insert")
-	public Map<String, Object> groupmanageapplicantinsert(HttpSession session, @RequestParam("num")int num){
+	public Map<String, Object> groupmanageapplicantinsert(HttpSession session, @RequestParam("num")int num, @RequestParam("apNum")int apNum){
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		boolean result = groupService.insertGroupMember(user, num);
+		boolean result = groupService.insertGroupMember(user, num, apNum);
 		
 		if(result) {
 			map.put("data", "ok");
@@ -350,11 +392,11 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/manage/applicant/cancel")
-	public Map<String, Object> groupmanageapplicantcancel(HttpSession session, @RequestParam("num")int num){
+	public Map<String, Object> groupmanageapplicantcancel(HttpSession session, @RequestParam("num")int num, @RequestParam("apNum")int apNum){
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		boolean result = groupService.cancelApply(user, num);
+		boolean result = groupService.cancelApply(user, num, apNum);
 		
 		if(result) {
 			map.put("data", "ok");
@@ -391,7 +433,7 @@ public class GroupController {
 		
 		cri.setPerPageNum(5);
 		
-		ArrayList<GroupApplyVO> list = groupService.getGroupMember(num, cri);
+		ArrayList<GroupMemberVO> list = groupService.getGroupMember(num, cri);
 		
 		int totalCount = groupService.getGroupMemberTotalCount(num);
 		

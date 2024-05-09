@@ -277,7 +277,7 @@ INSERT INTO `recruit`(recu_go_num,recu_content,recu_due,recu_state,recu_type,rec
 					  "2024-04-09",0,0,"학원 방과후 스터디하실분~","방과후 스터디","3","java, jsp, github, java script","",0,1);
 
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
-			VALUES(1,1,"지원합니다. 저는 프로젝트에서 프론트엔드를 맡을 수 있습니다.",0,"qwert@final.com");
+			VALUES(1,1,"지원합니다. 저는 프로젝트에서 프론트엔드를 맡을 수 있습니다.",1,"qwert@final.com");
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
 			VALUES(2,2,"스프링스터디에 지원합니다.",0,"asdfg@final.com");
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
@@ -285,7 +285,7 @@ INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
 			VALUES(1,1,"그룹 지원 2",0,"user@naver.com");
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
-			VALUES(1,1,"그룹 지원 3",0,"dkdlel@final.com");
+			VALUES(1,1,"그룹 지원 3",-1,"dkdlel@final.com");
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
 			VALUES(1,1,"그룹 지원 4",0,"abcde@final.com");
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)

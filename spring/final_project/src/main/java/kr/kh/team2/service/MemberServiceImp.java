@@ -34,8 +34,7 @@ public class MemberServiceImp implements MemberService {
 			|| !methods.checkString(signupDto.getNickname())
 			|| !methods.checkString(signupDto.getName())
 			|| !methods.checkString(signupDto.getPhone())
-			|| !methods.checkString(signupDto.getAdd1())
-			|| !methods.checkString(signupDto.getAdd2())) {
+			|| !methods.checkString(signupDto.getAdd1())) {
 			System.out.println("null String");
 			System.out.println("signupDto : "+signupDto);
 			return false;

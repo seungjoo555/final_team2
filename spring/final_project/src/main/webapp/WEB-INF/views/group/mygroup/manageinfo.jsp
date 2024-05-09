@@ -9,26 +9,6 @@
 
 <!-- mygroup.css -->
 <link rel="stylesheet" href="<c:url value="/resources/css/mygroup.css"/>">
-<style>
-	
-	
-	/* ======================================= manageinfo.jsp ============================================ */
-	
-	.manage-info-bg{padding: 55px 30px;}
-	
-	.manage-info-option{margin-bottom: 30px;}
-	.manage-info-option .info-option-title{width: 100%; font-size: 18px; font-weight: bold; color: #243323; border-bottom: 1px solid #C9C9C9;}
-	.manage-info-option .option-sub{font-weight: normal; text-align: right; color: #4F4F4F; width: 70%;
-		font-size: 14px; line-height: 28px;}
-	.manage-info-option .info-option-content{padding: 20px;}
-	
-	/* 그룹 정보 관리 관련 style */
-	[name=group-name]{border-bottom: 1px solid #C9C9C9;}
-	[name=group-name]:focus{outline: none; background-color: #C9C9C9;}
-	
-	.change-group-name-btn{height: 28px; line-heiht: 28px; padding: 2px 12px;}
-	
-</style>
 </head>
 <body>
 <div class="container">
@@ -71,13 +51,41 @@
 					</div>
 					<div class="info-option-content">
 						<label for="freeze">그룹 얼리기</label>
-						<input type="checkbox" id="freeze">
+						<input type="checkbox" id="freeze" name="freeze" <c:if test="${!group.go_update}">checked</c:if>>
 					</div>
 				</div>
 				<div class="manage-info-option">
 					<div class="info-option-title">리더 변경</div>
 					<div class="info-option-content">
-						멤버리스트 출력
+						<div class="member-list-bg">
+							<c:choose>
+								<c:when test="${list.size() == 0}">
+									멤버없음
+								</c:when>
+								<c:otherwise>
+									<table>
+										<thead>
+											<tr>
+												<th class="nickname">닉네임</th>
+												<th class="id">아이디</th>
+												<th class="leader"></th>
+											</tr>
+										</thead>
+										<tbody class="member-list">
+											<c:forEach var="member" items="${list }">
+												<tr>
+													<td>${member.nickname }</td>
+													<td>${member.gome_me_id}</td>
+													<td class="member-manage-btn">
+														<a class="btn btn-outline-danger set-leader" data-id="${member.gome_me_id}">리더 만들기</a>
+													</td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</c:otherwise>
+							</c:choose>
+						</div>
 					</div>
 				</div>
 				<div class="manage-info-option">
@@ -97,6 +105,21 @@
 <!-- 그룹이름 변경 script -->
 <script type="text/javascript">
 $(".change-group-name-btn").click(function(){
+	if(!${group.go_update}){
+		alert('그룹이 얼려진 상태입니다. 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+		return;
+	}
+	
+	if( $("[name=group-name]").val().length > 20){
+		alert('그룹 이름은 최대 20글자만 작성할 수 있습니다.')
+		return;
+	}
+	
+	if( $("[name=group-name]").val() == "${group.go_name}"){
+		alert('기존 이름과 같은 이름입니다. 이름을 수정하고 다시 시도해주세요.')
+		return;
+	}
+	
 	$.ajax({
 		async : false, 
 		url : '<c:url value="/group/manage/info/update"/>', 
@@ -109,7 +132,7 @@ $(".change-group-name-btn").click(function(){
 		success : function (data){
 			if(data.data == "ok"){
 				alert("그룹 이름이 수정되었습니다.")
-				$(".group-title").text($("[name=group-name]").val())
+				location.reload();
 			}else{
 				alert("권한이 없습니다.")
 			}
@@ -126,6 +149,11 @@ $(".change-group-name-btn").click(function(){
 <!-- 타이머 초기화 script -->
 <script type="text/javascript">
 function resetTimer(){
+	if(!${group.go_update}){
+		alert('그룹이 얼려진 상태입니다. 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+		return;
+	}
+	
 	if(confirm('타이머를 초기화 하시겠습니까? 복구할 수 없습니다.')){
 		$.ajax({
 			async : false, 
@@ -155,13 +183,93 @@ function resetTimer(){
 
 <!-- 그룹 얼리기 script -->
 <script type="text/javascript">
-
+$("#freeze").on("change", function(){
+	let freeze
+	
+	if(this.checked){
+		freeze = false
+	}else{
+		freeze = true
+	}
+	$.ajax({
+		async : false, 
+		url : '<c:url value="/group/manage/info/freeze"/>', 
+		type : 'post', 
+		data : {
+			num : ${group.go_num},
+			freeze : freeze
+		}, 
+		dataType : "json", 
+		success : function (data){
+			if(data.data == "ok"){
+				if(freeze){
+					alert("그룹 얼리기를 해제하였습니다.")
+				}else{
+					alert("그룹을 얼렸습니다.")
+				}
+				location.reload();
+			}else{
+				alert("권한이 없습니다.")
+			}
+			
+			
+		}, 
+		error : function(jqXHR, textStatus, errorThrown){
+			alert("타이머를 초기화하지 못했습니다. (에러발생)")
+		}
+	});
+})
 </script>
 
 
 <!-- 그룹 리더 변경 script -->
 <script type="text/javascript">
 
+$(".set-leader").click(function(){
+	if(!${group.go_update}){
+		alert('그룹이 얼려진 상태입니다. 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+		return;
+	}
+	
+	if(confirm($(this).data("id") + '님에게 현재 사용자가 가진 리더 권한을 위임합니다. 진행하시겠습니까?')){
+		$.ajax({
+			async : true, 
+			url : '<c:url value="/group/manage/info/changeleader"/>', 
+			type : 'post', 
+			data : {
+				num : ${group.go_num},
+				id : $(this).data("id")
+			}, 
+			dataType : "json", 
+			success : function (data){
+				if(data.data == "ok"){
+					alert("그룹 리더가 변경되었습니다.")
+					location.reload();
+					location.replace('<c:url value="/group/home?num=${group.go_num}"/>')					
+				}else{
+					alert("권한이 없습니다.")
+				}
+				
+			}, 
+			error : function(jqXHR, textStatus, errorThrown){
+				alert("그룹 리더를 수정하지 못했습니다. (에러발생)")
+			}
+		});
+		
+	}else{
+		return
+	}
+	
+})
+
+<!-- 멤버 리스트 hover 설정 -->
+$(document).on("mouseover",".member-list tr", function(){
+	$(this).children('.member-manage-btn').css("visibility", "visible")
+})
+
+$(document).on("mouseout",".member-list tr", function(){
+	$(this).children('.member-manage-btn').css("visibility", "hidden")
+})
 </script>
 
 <!-- 그룹 삭제 script -->
@@ -179,7 +287,7 @@ $(".delete-group-btn").click(function(){
 			success : function (data){
 				if(data.data == "ok"){
 					alert("그룹이 삭제되었습니다.")
-					location.href = '<c:url value="/mygroup/list"/>'
+					location.replace('<c:url value="/mygroup/list"/>')
 				}else{
 					alert("권한이 없습니다.")
 				}

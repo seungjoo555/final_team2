@@ -8,6 +8,7 @@ import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
+import kr.kh.team2.model.vo.group.GroupMemberVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
@@ -89,7 +90,7 @@ public interface GroupDAO {
 	
 	boolean updateGoap_stateCanceled(@Param("num")int num);
 
-	ArrayList<GroupApplyVO> getGroupMember(@Param("num")int num, @Param("cri")Criteria cri);
+	ArrayList<GroupMemberVO> getGroupMember(@Param("num")int num, @Param("cri")Criteria cri);
 	
 	int getGroupMemberTotalCount(@Param("num")int num);
 
@@ -98,5 +99,15 @@ public interface GroupDAO {
 	boolean updateGroupTimer(@Param("num")int num);
 
 	boolean deleteGroupByGoNum(@Param("num")int num);
+
+	ArrayList<GroupMemberVO> getGroupMemberByGoNum(@Param("num")int num);
+
+	boolean updateGomeStateTo0(@Param("num")int num, @Param("id")String id);
+	
+	boolean updateGomeStateTo1(@Param("num")int num, @Param("id")String id);
+
+	boolean updateGoUpdate(@Param("num")int num, @Param("freeze")boolean freeze);
+
+	boolean getGoUpdate(@Param("num")int num);
 
 }
