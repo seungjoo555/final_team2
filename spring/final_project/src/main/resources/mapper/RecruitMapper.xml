@@ -4,8 +4,8 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team2.dao.RecruitDAO">
 	<insert id="insertGroup" useGeneratedKeys="true" keyProperty="group.go_num">
-		insert into `group`(go_name)
-		values(#{group.go_name})
+		insert into `group`(go_name, go_update)
+		values(#{group.go_name}, '1')
 	</insert>
 	
 	<insert id="insertRecruit" useGeneratedKeys="true" keyProperty="recruit.recu_num">
