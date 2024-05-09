@@ -424,6 +424,7 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.insertGroupApply(group, recu_num, goapVo, user);
 	}
+	
 	public int getApplicantTotalCount(int num) {
 		if(num == 0) {
 			System.out.println("goNum is 0");

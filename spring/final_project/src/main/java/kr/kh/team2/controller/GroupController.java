@@ -567,26 +567,50 @@ public class GroupController {
 		  return "redirect:/";
 	  }
 	  
+	  GroupApplyVO goap = groupService.getGroupApply(num, user);
+	  
 	  // 그룹 번호랑 공고의 그룹 번호가 같은 거 select
 	  ArrayList<GroupVO> groups = groupService.getGroupListByRecuNum(recruit.getRecu_go_num());
-	  
-	  
+	  System.out.println("컨트롤러 goap 1 : " + goap);
 	  boolean apply = false;
 	  
 	  for (GroupVO group : groups) {
 		  // 그룹 번호와 공고 그룹 번호 같은 경우
 		  if (group.getGo_num() == recruit.getRecu_go_num()) {
-			  boolean res = groupService.insertGroupApply(group, recruit.getRecu_num(), goapVo, user);
-			  if(res) {
-				  apply = true;
+			  System.out.println("컨트롤러 goap 2 : " + goap);
+			  
+			  if (goap != null) {				  
+				  System.out.println("컨트롤러 goap 3 : " + goap);
+				  String[] applyUserIds = goap.getGoap_me_id().split(",");
+				  boolean alreadyApply = false;
+				  
+				  for(String applyUserId : applyUserIds) {
+					  if(applyUserId.trim().equals(user.getMe_id())) {
+						  alreadyApply = true;
+						  break;
+					  }
+				  }
+				  
+				  if(alreadyApply) {
+					  model.addAttribute("msg", "이미 지원한 그룹입니다.");
+					  model.addAttribute("url", "/group/detail?num=" + num);
+					  System.out.println("2중지원 안된다");
+					  return "message";
+				  } else {
+					  System.out.println("컨트롤러 goap 4 : " + goap);
+					  System.out.println("2중지원 아니다.");
+					  boolean res = groupService.insertGroupApply(group, recruit.getRecu_num(), goapVo, user);
+					  
+					  if(res) {
+						  apply = true;
+					  }
+				  }
 			  }
 		  }
-		  
 	  }
-	  
 	  if(apply) {
-	  	model.addAttribute("msg", "지원서를 제출했습니다.");
-	  	model.addAttribute("url", "/group/applydetail?num=" + num);
+		  model.addAttribute("msg", "지원서를 제출했습니다.");
+		  model.addAttribute("url", "/group/applydetail?num=" + num);
 	  } else {
 		  model.addAttribute("msg", "지원서를 제출하지 못했습니다.");
 		  model.addAttribute("url", "/group/apply?num=" + num ); 

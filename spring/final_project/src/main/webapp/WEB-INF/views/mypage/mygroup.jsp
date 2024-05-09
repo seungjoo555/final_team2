@@ -114,7 +114,7 @@
 														<div class="item-category">수락 대기</div>
 													</c:if>
 													<c:if test="${applylist.goap_state == 1}">
-														<div class="item-category">진행 중</div>
+														<div class="item-category">수락 완료</div>
 													</c:if>
 													<c:if test="${applylist.goap_state == 2}">
 														<div class="item-category">반려</div>
@@ -160,7 +160,7 @@
 														<div class="item-category">수락 대기</div>
 													</c:if>
 													<c:if test="${applylist.goap_state == 1}">
-														<div class="item-category">진행 중</div>
+														<div class="item-category">수락 완료</div>
 													</c:if>
 													<c:if test="${applylist.goap_state == 2}">
 														<div class="item-category">반려</div>
@@ -206,7 +206,7 @@
 														<div class="item-category">수락 대기</div>
 													</c:if>
 													<c:if test="${applylist.goap_state == 1}">
-														<div class="item-category">진행 중</div>
+														<div class="item-category">수락 완료</div>
 													</c:if>
 													<c:if test="${applylist.goap_state == 2}">
 														<div class="item-category">반려</div>

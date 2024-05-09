@@ -17,6 +17,9 @@
 			프로젝트 지원서
 		</c:if>
 	</h3>
+	<div class="sub-box">
+		<a href="<c:url value="/group/detail?num=${recruit.recu_num}"/>" class="recruit-detail">공고 보기</a>
+	</div>
 	<input type="hidden" name="num" value="${goap.goap_recu_num}">
 	<div class="form-row-content">
 		<textarea rows="10" class="form-control second-box" disabled>${goap.goap_content}</textarea>

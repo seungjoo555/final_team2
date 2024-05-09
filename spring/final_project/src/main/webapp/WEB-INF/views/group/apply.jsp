@@ -18,7 +18,7 @@
 		</c:if>
 	</h3>
 	<div class="sub-box">
-		<h5 class="sub-title">1. 프로젝트 기본 정보를 입력해 주세요.</h5>
+		<h5 class="sub-title">1. 지원서를 작성해 주세요.</h5>
 		<a href="<c:url value="/group/detail?num=${recruit.recu_num}"/>" class="recruit-detail">공고 보기</a>
 	</div>
 	<hr>
