@@ -22,7 +22,9 @@
 		<textarea rows="10" class="form-control second-box" disabled>${goap.goap_content}</textarea>
 	</div>
 	<div class="button-area">
-		<button class="group-apply-update-btn">수정하기</button>
+		<c:if test="${goap.goap_me_id == user.me_id}">
+			<button class="group-apply-update-btn">수정하기</button>
+		</c:if>
 	</div>
 	<script type="text/javascript">
 		$('.second-box').summernote({
