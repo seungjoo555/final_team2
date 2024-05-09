@@ -31,6 +31,47 @@
 	
 	<!-- =============================== UPDATE =============================== -->	
 	
+	<update id="mentorInfoAccept">
+		update mentor_info
+		set
+		mentIf_state = 1
+		where
+		mentIf_me_id = #{me_id}
+	</update>
+	
+	<update id="updateMemberMentorInfo">
+		update member
+		set
+		me_ma_auth = "멘토"
+		where
+		me_id = #{me_id}
+	</update>
+	
+	<update id="mentorInfoDeny">
+		update mentor_info
+		set
+		mentIf_state = -1
+		where
+		mentIf_me_id = #{me_id}
+	
+	</update>
+	
+	<update id ="updateMentorInfoForDenied">
+		update mentor_info
+		set
+		mentIf_exp = #{mt_info.mentIf_exp},
+		mentIf_portfolio = #{mt_info.mentIf_portfolio},
+		mentIf_intro = #{mt_info.mentIf_intro},
+		mentIf_account = #{mt_info.mentIf_account},
+		mentIf_date = now(),
+		mentIf_ment_job = #{mt_info.mentIf_ment_job},
+		mentif_bank = #{mt_info.mentIf_bank},
+		mentIf_state = 0
+		where
+		mentIf_me_id = #{me_id}
+	
+	</update>
+	
 	<!-- =============================== SELECT =============================== -->	
 	<select id="selectMentorList" resultType="MetoringVO">
         select mentoring.*, me_nickname as ment_me_nickname, mentIf_exp as ment_mentIf_exp, mentIf_ment_job as ment_mentIf_job
@@ -87,6 +128,23 @@
 		join `member` on me_id = mentIf_me_id
 		where mentIf_me_id = #{me_id} 
 	
+	</select>
+	
+	<select id="selectMentorInfoList" resultType ="MentorInfoVO">
+		select * 
+		from mentor_info
+		where
+			mentIf_ment_job like concat("%",#{cri.search},"%")
+			and mentIf_state = 0
+		order by mentIf_date DESC
+		limit #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+	<select id="selectMentorInfoTotalCount" resultType="int">
+		select count(*) 
+		from mentor_info
+		where
+			mentIf_ment_job like concat("%",#{cri.search},"%")
 	</select>
 	
 	<select id="selectMentoring" resultType="MetoringVO">

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.MentorDAO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.dto.MentorInfoDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
@@ -69,13 +70,11 @@ public class MentorServiceImp implements MentorService {
 	}
 
 	@Override
-	public boolean checkMentor(String me_id) {
+	public MentorInfoVO checkMentor(String me_id) {
 		
 		MentorInfoVO dbMentor = mentorDAO.selectMentorInfo(me_id);
-		if(dbMentor==null) {
-			return true;
-		}
-		return false;
+		
+		return dbMentor;
 		
 	}
 
@@ -164,6 +163,77 @@ public class MentorServiceImp implements MentorService {
 		
 		return true;
 	}
+
+	@Override
+	public ArrayList<MentorInfoVO> getMentorInfoList(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 10);
+		}
+
+		return mentorDAO.selectMentorInfoList(cri);
+	}
+
+	@Override
+	public int getMentorInfoTotalCount(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 10);
+		}
+		return mentorDAO.selectMentorInfoTotalCount(cri);
+	}
+
+	@Override
+	public boolean mentorMultiRequest(MentorInfoDTO mentorInfoDTO) {
+		boolean resMentorInfo = false;
+		boolean resMentorInfoMember = false;
+		if(mentorInfoDTO.getBtnType().equals("accept")) {
+			for(String me_id : mentorInfoDTO.getCheckedIds()) {
+				resMentorInfo = mentorDAO.mentorInfoAccept(me_id);
+				resMentorInfoMember = mentorDAO.updateMemberMentorInfo(me_id);
+			}
+			return resMentorInfo&&resMentorInfoMember;
+		}
+		else if(mentorInfoDTO.getBtnType().equals("deny")) {
+			for(String me_id : mentorInfoDTO.getCheckedIds()) {
+				resMentorInfo = mentorDAO.mentorInfoDeny(me_id);
+			}
+			return resMentorInfo;
+		}
+		return false;
+		
+	}
+
+	@Override
+	public boolean mentorRequest(String mentIf_me_id, String btnType) {
+		boolean resMentorInfo = false;
+		boolean resMentorInfoMember = false;
+		if(btnType.equals("accept")) {
+			resMentorInfo = mentorDAO.mentorInfoAccept(mentIf_me_id);
+			resMentorInfoMember = mentorDAO.updateMemberMentorInfo(mentIf_me_id);
+			return resMentorInfo&&resMentorInfoMember;
+		}else if(btnType.equals("deny")) {
+			resMentorInfo = mentorDAO.mentorInfoDeny(mentIf_me_id);
+			return resMentorInfo;
+		}
+		return false;
+		
+		
+	}
+
+	@Override
+	public boolean updateMentorInfoForDenied(MentorInfoVO mentorInfoVO, String me_id) {
+		if(!methods.checkString(mentorInfoVO.getMentIf_me_id())||
+				   !methods.checkString(mentorInfoVO.getMentIf_bank())||
+				   !methods.checkString(mentorInfoVO.getMentIf_account())||
+				   !methods.checkString(mentorInfoVO.getMentIf_ment_job())||
+				   !methods.checkString(mentorInfoVO.getMentIf_portfolio())) {
+					return false;
+			}
+		
+		return mentorDAO.updateMentorInfoForDenied(mentorInfoVO,me_id);
+		
+	}
+
+
 
 
 }

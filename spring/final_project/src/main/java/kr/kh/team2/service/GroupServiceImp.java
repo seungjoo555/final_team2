@@ -624,7 +624,7 @@ public class GroupServiceImp implements GroupService{
 		return groupDao.deleteGroupByGoNum(num);
 	}
 
-	@Override
+  @Override
 	public boolean changeGroupLeader(int num, String id, MemberVO user) {
 		if(num == 0) {
 			System.out.println("goNum is 0");
@@ -681,5 +681,6 @@ public class GroupServiceImp implements GroupService{
 		
 		return groupDao.updateGoUpdate(num, freeze);
 	}
+
 	
 }

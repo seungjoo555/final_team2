@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team2.dao.LectureDAO">
+	
+	<select id="selectLectureList" resultType="LectureVO">
+		SELECT 
+		    *
+		FROM
+		    lecture
+		where
+			<choose>
+				<when test='cri.type == "all"'>
+					lect_name like concat('%', #{cri.search}, '%') or
+					lect_mentIf_me_id = #{cri.search}
+				</when>
+				<when test='cri.type == "writer"'>
+					lect_mentIf_me_id like concat('%', #{cri.search}, '%')
+				</when>
+				<otherwise>
+					lect_name = #{cri.search}
+				</otherwise>
+			</choose>
+		ORDER BY lect_num DESC
+		LIMIT #{cri.pageStart}, #{cri.perPageNum}
+	</select>
+	
+</mapper>

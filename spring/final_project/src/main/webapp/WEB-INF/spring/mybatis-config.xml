@@ -28,13 +28,18 @@
 		<typeAlias type="kr.kh.team2.model.vo.group.GroupCalendarVO" alias="GroupCalendarVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.group.MutualReviewVO" alias="MutualReviewVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.group.GroupApplyVO" alias="GroupApplyVO"/>
+		
 
 		<!-- ========================== lecture ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.lecture.LectureVO" alias="LectureVO"/>
 
 
 
 		<!-- ========================== report ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.common.ReportContentVO" alias="ReportContentVO"/>
+		
+		<!-- ========================== community ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.community.BoardVO" alias="BoardVO"/>
 		
 	</typeAliases>
 </configuration>

@@ -6,7 +6,7 @@
 		<div class="container-fluid">
 			<h1>
 				<a class="navbar-brand" href="<c:url value="/"/>">
-					<img alt="LOGO" src="<c:url value="/resources/img/smo.png"/>">
+					<img alt="LOGO" src="<c:url value="/resources/img/smoLogo.png"/>">
 				</a>
 			</h1>
 			<ul class="navbar-left">
@@ -17,14 +17,20 @@
 					<a class="nav-link" href="<c:url value="/mentor/list" />">멘토링</a>
 				</li>
 				<li class="nav-item">
-					<div class="dropdown">
-						<a class="nav-link" href="<c:url value="/lecture/list" />">강의</a>
-						<div class="dropdown-content">
+					<div class="dropdown-lecture">
+						<a class="nav-link dropbtn-lecture" href="<c:url value="/lecture/list" />">강의</a>
+						<div class="dropdown-content-lecture">
 							<c:forEach items="${menuCateList}" var="cate">
-								<a class="dropdown-a" href="<c:url value="#"/>">${cate.progCt_name}</a>
-								<ul class="dropdown-second">
-									<li><a href="<c:url value="#"/>">분야밑에언어</a></li>
-								</ul>
+							<div class="dropdown-submenu-lecture">
+								<a class="subbtn-lecture" href="<c:url value="#"/>">${cate.progCt_name}</a>
+								<div class="submenu-content-lecture">
+									<c:forEach items="${menuLangList}" var="lang">
+									<c:if test="${cate.progCt_num == lang.progCt_num }">
+										<a href="#">${lang.lang_name}</a>
+									</c:if>
+									</c:forEach>
+								</div>
+							</div>
 							</c:forEach>
 						</div>
 					</div>
