@@ -27,7 +27,7 @@
 						<option value="comment" <c:if test="${pm.cri.type == 'comment'}">selected</c:if>>댓글</option>
 					</select> 
 				</div>
-				<div class="count-report">신고된 게시글 : </div>
+				<div class="count-report">신고된 게시글 : ${pm.totalCount}개</div>
 				<div class="check-view-box">
 					<input name="search" value="대기중" type="checkbox" id="check-view" <c:if test="${pm.cri.search == '대기중'}">checked</c:if> >
 					<label for="check-view" > <span>미처리 된 신고 항목만 보기</span></label>
@@ -55,10 +55,17 @@
 				<c:if test="${fn:length(rsList) != 0}">
 					<c:forEach items="${rsList}" var="report">
 						<tr>
-							<td><input class="check-report" type="checkbox"></td>
+							<td>
+								<c:if test="${report.repo_repo_state == '대기중'}">
+									<input class="check-report" name="check-report" type="checkbox">
+								</c:if>
+								<c:if test="${report.repo_repo_state != '대기중'}">
+									<input class="check-report-disabled" name="check-report-disabled"  type="checkbox" disabled="disabled" >
+								</c:if>
+							</td>
 							<td>${report.repo_count}</td>
-							<td>${report.repo_table_str}</td>
-							<td>${report.repo_target_str}</td>
+							<td data-table="${report.repo_table}">${report.repo_table_str}</td>
+							<td data-target="${report.repo_target}">${report.repo_target_str}</td>
 							<td><button class="report-detail-btn" type="button" value="${report.repo_table}" data-target="${report.repo_target}">신고상세</button></td>
 							<td>${report.repo_repo_state}</td>
 						</tr>
@@ -66,6 +73,8 @@
 				</c:if>
 			</tbody>
 		</table>
+		
+		<button class="btn-batch-processing" type="button">처리하기</button>
 		
 	<!-- 페이지네이션 -->
 	<div class="box-pagination">
@@ -117,6 +126,13 @@
       	<div class="admin-report-box"></div>
       </div>
    </div>
+  <!-- 신고 일괄 처리 화면 -->
+   <div id="modal" class="modal admin-report-process-modal" style="display:none;">
+      <div id="dimmed" class="dimmed admin-report-process-dimmed"></div>
+      <div class="admin-report-process-container">
+      	
+      </div>
+   </div>
   
    
 </div>
@@ -153,7 +169,7 @@ $(document).on('click', '.report-detail-btn', function(){
 	
    
 	function displayReportList(rpList, stateList, member, link){
-		let str = '', table='', option ='', linkStr='';
+		let str = '', table='', option ='', linkStr='', btnStr='';
 		
 		//신고리스트
 		if(rpList == null || rpList.length == 0){
@@ -170,9 +186,9 @@ $(document).on('click', '.report-detail-btn', function(){
 				table += 
 					`
 					<tr>
-						<td>\${report.repo_me_id}</td>
-						<td>\${report.repo_detail}</td>
-						<td>\${dateStr}</td>
+						<td class="tbody-td td-f">\${report.repo_me_id}</td>
+						<td class="tbody-td td-s">\${report.repo_detail}</td>
+						<td class="tbody-td td-e">\${dateStr}</td>
 					</tr>
 					`
 			}
@@ -196,6 +212,13 @@ $(document).on('click', '.report-detail-btn', function(){
 			linkStr += `<a href="<c:url value="\${link}"/>" class="report-target-link">바로가기(클릭)</a>`
 		}
 		
+		//처리된 신고 버튼 비호활성화
+			console.log("rpList[0].repo_repo_state :: " + rpList[0].repo_repo_state);
+		if(rpList[0].repo_repo_state == "대기중"){
+			btnStr += `<div class="box-report-process-btn"><button type="button" class="report-process-btn">변경</button></div>`
+		}else{
+			btnStr += `<div class="box-report-process-btn">\${rpList[0].repo_repo_state}</div>`
+		}
 				
 		
 		str += 
@@ -217,12 +240,12 @@ $(document).on('click', '.report-detail-btn', function(){
 		      			
 		      		</div>
 		      		<div class="box-report-table">
-		      		<table class="table table-hover">
-						<thead>
+		      		<table class="table table-hover table-report">
+						<thead class="thead-flex">
 							<tr>
-						        <th>신고자 ID</th>
-						        <th>신고 사유</th>
-						        <th>신고 일자</th>
+						        <th class="thead-th th-f">신고자 ID</th>
+						        <th class="thead-th th-s">신고 사유</th>
+						        <th class="thead-th th-e">신고 일자</th>
 					       </tr>
 						</thead>
 						<tbody class="tdoby-scroll">
@@ -248,7 +271,11 @@ $(document).on('click', '.report-detail-btn', function(){
 							
 						</select> 
 					</div>
-		      		<div class="box-report-process-btn"><button type="button" class="report-process-btn">변경</button></div>
+				`
+				+
+				btnStr
+				+
+				`
 				</div>
 			`
       $('.admin-report-box').html(str);
@@ -280,6 +307,10 @@ $(document).on('click', '.admin-report-dimmed', function(){
 })
 $(document).on('click', '.apply-mentoring-dimmend', function(){
    $(".apply-mentoring-modal").css('display','none');
+})
+$(document).on('click', '.admin-report-process-dimmed', function(){
+   $(".admin-report-process-modal").css('display','none');
+   $("body").css('overflow','visible');
 })
 /* X 클릭 시 창 없애기 */
 $(document).on('click', '.btn-cancel', function(){
@@ -344,14 +375,137 @@ $("#check-view").change(function(){
 	}
 })
 
+</script>
+
+<!-- 체크박스 일괄 처리 이벤트 -->
+<script type="text/javascript">
 $(document).on('click', '.total-check-report', function(){
 	if($(".total-check-report").prop("checked")){
-		$("input:checkbox[id='check-report']").prop('checked',true);
+		$("input:checkbox[class='check-report']").prop('checked',true);
 	}else{
-		$("input:checkbox[id='check-report']").prop('checked',false);
+		$("input:checkbox[class='check-report']").prop('checked',false);
 	}
 })
+
+//select 이벤트 동작 없애기
+
+
+$(document).on('click', '.btn-batch-processing', function(){
+	var checkBox = $("input[name=check-report]:checked");
+	
+	if(checkBox.length === 0){
+		alert("선택된 신고내역이 없습니다.");
+		return;
+	}
+	
+	var tdList = [];
+	
+	//반복해서 값 가져오기
+	checkBox.each(function(i){
+		//tr, td 정보 가져오기
+		var tr = checkBox.parent().parent().eq(i);
+		var td = tr.children();
+		//특정 td값 가져오기
+		let obj = {
+			repo_table :  td.eq(2).data("table"),
+			repo_target : td.eq(3).data("target")
+		}
+		tdList.push(obj);
+	})
+	
+	//처리화면 띄우기
+	//모달창 활성화 
+	$(".admin-report-process-modal").css('display','block');
+   //스크롤 비활성화
+	$("body").css('overflow','hidden');
+	
+   let processStr = "";
+   processStr += 
+	   `
+		<div class="admin-report-process-box">
+	  	<div> <h1>신고처리</h1> </div>
+	  	<input type="hidden" id="td-list" value="\${tdList}">
+	  	<div class="state-select-box">
+			<select name="type" class="form-control state-select" name="state-select" onchange="">
+				<c:forEach items="${stateList}" var="state">
+					<option value="${state}" >${state}</option>
+				</c:forEach>
+			</select> 
+		</div>
+		<div class="box-btn-admin-report-process"><button type="button" class="btn-admin-report-process">처리하기</button></div>
+	  	</div>
+	   `
+	   
+   $('.admin-report-process-container').html(processStr);
+})
+
+//일괄 처리 버튼 클릭 이벤트
+$(document).on('click', '.btn-admin-report-process', function(){
+	let set_state =  $(".state-select :selected").val();
+	console.log("변경 상태 : " + set_state);
+	//let set_me_id = $('.report-meid').attr("value");
+	//var tdList = $(".td-list").val();
+	//console.log(...tdList);
+	
+	var checkBox = $("input[name=check-report]:checked");
+	
+	if(checkBox.length === 0){
+		alert("선택된 신고내역이 없습니다.");
+		return;
+	}
+	
+	var tdList = [];
+	
+	//반복해서 값 가져오기
+	checkBox.each(function(i){
+		//tr, td 정보 가져오기
+		var tr = checkBox.parent().parent().eq(i);
+		var td = tr.children();
+		//특정 td값 가져오기
+		let obj = {
+			repo_table :  td.eq(2).data("table"),
+			repo_target : td.eq(3).data("target")
+		}
+		tdList.push(obj);
+	})
+
+	if(confirm("해당 유저의 상태를 [" + set_state + "]로 변경하시겠습니까?") == false)
+		return;
+	
+	let updateDto = {
+		set_state : set_state,
+		tdList : tdList
+	}
+	
+	$.ajax({
+		async : true, //비동기 : true(비동기), false(동기)
+		url : '<c:url value="/admin/report/update/all"/>', 
+		type : 'post', 
+		data : JSON.stringify(updateDto),
+		contentType : "application/json; charset=utf-8",
+		dataType : "json", 
+		success : function (data){
+			if(data.result){
+				alert("해당 신고건들이 " + data.state + "되었습니다.");
+				$(".admin-report-modal").css('display','none');
+				$("body").css('overflow','visible');
+				location.href = '<c:url value="/admin/report"/>';	
+			}else{
+				alert("해당 신고를 처리하지 못했습니다.");
+			}
+		}, 
+		error : function(jqXHR, textStatus, errorThrown){	//errorThrown얘는 거의 비어있음(굳이 체크 안하기로)
+			console.log(jqXHR);
+			console.log(textStatus);
+		}
+	});
+	
+	
+})
+
 </script>
+
+
 
 <!-- 멘토링 상세화면 출력 -->
 <script type="text/javascript">

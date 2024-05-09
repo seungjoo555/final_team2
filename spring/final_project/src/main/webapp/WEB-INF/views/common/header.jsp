@@ -40,7 +40,6 @@
 						href="<c:url value="/login" />">로그인</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="<c:url value="/signup" />">회원가입</a></li>
-									<a href="<c:url value="/admin/report"/>">신고 관리</a>
 				</c:if>
 				<c:if test="${user != null}">
 					<li class="nav-item">

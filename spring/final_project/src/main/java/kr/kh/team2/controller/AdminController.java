@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.dto.ReportSimpleDTO;
+import kr.kh.team2.model.dto.ReportUpdateAllDTO;
 import kr.kh.team2.model.vo.common.ReportVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -52,6 +53,9 @@ public class AdminController {
 			//신고 대상 명 지정
 			rsList.get(i).setRepo_target_str(reportService.setTargetStr(rsList.get(i)));
 		}
+		//멤버 상태 리스트 가져오기
+		ArrayList<String> stateList = memberService.getMemberStateList();
+		model.addAttribute("stateList", stateList);		
 		int totalCount = reportService.gerRepoertSimpleCount(cri);
 		PageMaker pm = new PageMaker(10, cri, totalCount);
 		model.addAttribute("pm", pm);
@@ -105,20 +109,60 @@ public class AdminController {
 	public Map<String, Object> adminReportUpdate(@RequestParam("set_me_id")String set_me_id, @RequestParam("set_state") String set_state
 												, @RequestParam("repo_target")String repo_target, @RequestParam("repo_table")String repo_table) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("set_me_id :: " + set_me_id);
-		System.out.println("set_state :: " + set_state);
-		System.out.println("repo_target :: " + repo_target);
-		System.out.println("repo_table :: " + repo_table);
 		
 		//멤버 상태 변경하기
 		boolean res = memberService.updateMemberState(set_me_id, set_state);
 		//신고 처리여부 변경(대기중, 반려, 승인)
 		String state = "처리완료";
+		
 		if(res) {
 			if(memberService.getMember(set_me_id).getMe_ms_state().equals("이용중")) {
 				state = "반려";
 			}
 			reportService.reportStateProcess(repo_target, repo_table, state);
+		}
+		map.put("result", res);
+		map.put("state", state);
+		return map;
+	}
+	@ResponseBody
+	@PostMapping("/admin/report/update/all")
+	public Map<String, Object> adminReportUpdateAll(@RequestBody ReportUpdateAllDTO updateDto) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<String> meIdList = new ArrayList<String>();
+		for(ReportSimpleDTO i: updateDto.getTdList()) {
+			//회원 아이디 가져오기
+			if(i.getRepo_table().equals("recruit")) {	//모집공고
+				meIdList.add(groupService.getGroupLeaderID(Integer.parseInt(i.getRepo_target())));
+			}else if(i.getRepo_table().equals("member")) {		//유저
+				meIdList.add(i.getRepo_target());
+			}else if(i.getRepo_table().equals("mentoring")) {		//멘토링
+				meIdList.add(mentorService.getMentoring(Integer.parseInt(i.getRepo_target())).getMent_me_id());
+			}else if(i.getRepo_table().equals("lecture")) {		//강의
+				
+			}else if(i.getRepo_table().equals("post")) {		//게시글
+				
+			}else if(i.getRepo_table().equals("comment")) {		//댓글
+				
+			}
+		}
+		
+		//회원 정보 처리
+		boolean res = false;
+		for(String set_me_id : meIdList) {
+			res = memberService.updateMemberState(set_me_id, updateDto.getSet_state());
+		}
+		//신고처리여부 변경
+		String state = "처리완료";
+		
+		if(res) {
+			if(updateDto.getSet_state().equals("이용중")) {
+				state = "반려";
+			}
+			for(ReportSimpleDTO i: updateDto.getTdList()) {
+				reportService.reportStateProcess(i.getRepo_target(), i.getRepo_table(), state);
+			}
 		}
 		map.put("result", res);
 		map.put("state", state);

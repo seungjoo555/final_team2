@@ -37,7 +37,22 @@ body{width:100%; overflow : visible;
 .btn-cancel > button{background-color:transparent;}	
 	
 /* body */
-.amidn-report-body{ width:100%; height: 80%; overflow: scroll; overflow-x:hidden; }
+.amidn-report-body{ width:100%; height: 80%; }
+.box-targe-link{height: 10%}
+.box-report-table{height:90%; width: 100%;}
+/*table*/
+.table-report{width: 100%;}
+.thead-flex{width:100%; display:block; }
+.tdoby-scroll{display: block; overflow: auto; overflow-x:hidden; height: 400px; width:100%;}
+.thead-flex > tr, .tdoby-scroll > tr{width: 100%;}
+
+.th-f, .td-f{width: 180px;}
+.th-s, .td-s{width: 440px;}
+.th-e, .td-e{width: 110px;}
+
+
+
+
 .box-targe-link{display: flex; flex-direction: row; align-items: center;}
 .report-target-title{font-weight: bold; font-size:18px; margin-right: 10px;}
 .report-target-link{color: black;  text-decoration: none;}
@@ -47,6 +62,13 @@ body{width:100%; overflow : visible;
 .amidn-report-footer{display: flex; flex-direction: row;}
 .report-meid{width: 200px;}
 .box-report-process-btn{display: flex; justify-content: flex-end; margin-left: auto;}
+/*********************************** 신고 일괄 처리 화면 ***********************************/
+.admin-report-process-container{
+   display: flex; flex-direction: column;  width: 500px; min-width:500px; height: 200px; min-height:200px;
+   background-color: white;  position: relative; bottom: 0;   margin:auto; margin-top: 160px;
+   border-radius: 10px; padding: 40px; positon :relative; 
+}
+
 /*********************************** 멘토링 상세 화면 ***********************************/
 .apply-mentoring-modal{z-index:2;}
 .apply-mentoring_container{

@@ -100,7 +100,7 @@ INSERT INTO `final_team2`.`search_menu` (`sear_progCt_num`, `sear_lang_num`) VAL
 INSERT INTO `final_team2`.`search_menu` (`sear_progCt_num`, `sear_lang_num`) VALUES ('7', '28');
 INSERT INTO `final_team2`.`search_menu` (`sear_progCt_num`, `sear_lang_num`) VALUES ('7', '29');
 
-INSERT INTO member_state(ms_state) VALUES("이용중"),("기간정지"), ("영구정지"), ("탈퇴");
+INSERT INTO member_state(ms_state) VALUES("이용중"), ("영구정지"), ("탈퇴");
 INSERT INTO member_auth(ma_auth) VALUES("관리자"),("멘토"), ("일반");
 
 /* 운영자 정보 추가 */
