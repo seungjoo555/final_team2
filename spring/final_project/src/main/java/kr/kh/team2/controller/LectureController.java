@@ -21,10 +21,12 @@ public class LectureController {
 	LectureService lectureService;
 	
 	@GetMapping("/lecture/list")
-	public String lectureList(Model model, Criteria cri) {
+	public String lectureList(Model model, Criteria cri, SearchMenuVO search) {
 		cri.setPerPageNum(5);
-		ArrayList<LectureVO> list = lectureService.getLectureList(cri);
+		search.setSearchType("all");
+		ArrayList<LectureVO> list = lectureService.getAllLectureList(cri);
 		log.info(cri);
+		int lectureCount = lectureService.getLectureCount(cri, search);
 		model.addAttribute("list", list);
 		model.addAttribute("title", "강의글 목록");
 		return "/lecture/list";
@@ -34,7 +36,8 @@ public class LectureController {
 	@GetMapping("/lecture/list/cate")
 	public String lectureListCate(Model model, Criteria cri, SearchMenuVO search) {
 		cri.setPerPageNum(5);
-		ArrayList<LectureVO> list = lectureService.getLectureList(cri);
+		search.setSearchType("cate");
+		ArrayList<LectureVO> list = lectureService.getLectureList(cri, search);
 		log.info(search);
 		
 		model.addAttribute("list", list);
@@ -46,7 +49,8 @@ public class LectureController {
 	@GetMapping("/lecture/list/lang")
 	public String lectureListLang(Model model, Criteria cri, SearchMenuVO search) {
 		cri.setPerPageNum(5);
-		ArrayList<LectureVO> list = lectureService.getLectureList(cri);
+		search.setSearchType("lang");
+		ArrayList<LectureVO> list = lectureService.getLectureList(cri, search);
 		log.info(search);
 		
 		model.addAttribute("list", list);

@@ -6,7 +6,8 @@
 <form action="<c:url value="/lecture/list"/>" method="get">
 	<div class="input-group mb-3">
 		<input type="hidden" name="type" value="all">
-		<input type="text" name="search" class="form-control" placeholder="검색어" value="${pm.cri.search}">
+		<input type="text" name="search" class="form-control" placeholder="전체검색창" value="${pm.cri.search}">
+		<button class="btn btn-outline-success">검색</button>
 	</div>
 </form>
 
@@ -46,39 +47,108 @@
 		</c:forEach>
 	</tbody>
 </table>
-
-<ul class="pagination justify-content-center">
-	<c:if test="${pm.prev}">
-		<c:url value="/board/list" var="url">
-			<c:param name="page" value="${pm.startPage - 1}"/>
-			<c:param name="type" value="${pm.cri.type}"/>
-			<c:param name="search" value="${pm.cri.search}"/>
-		</c:url>
-		<li class="page-item">
-			<a class="page-link" href="${url}">이전</a>
-		</li>
-	</c:if>
-	<c:forEach begin="${pm.startPage }" end="${pm.endPage}" var="i">
-		<c:url value="/board/list" var="url">
-			<c:param name="page" value="${i}"/>
-			<c:param name="type" value="${pm.cri.type}"/>
-			<c:param name="search" value="${pm.cri.search}"/>
-		</c:url>
-		<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
-			<a class="page-link" href="${url}">${i}</a>
-		</li>
-	</c:forEach>
-	<c:if test="${pm.next}">
-		<c:url value="/board/list" var="url">
-			<c:param name="page" value="${pm.endPage + 1}"/>
-			<c:param name="type" value="${pm.cri.type}"/>
-			<c:param name="search" value="${pm.cri.search}"/>
-		</c:url>
-		<li class="page-item">
-			<a class="page-link" href="${url}">다음</a>
-		</li>
-	</c:if>
-</ul>
+<c:if test="${search.searchType == 'all'}">
+	<ul class="pagination justify-content-center">
+		<c:if test="${pm.prev}">
+			<c:url value="/board/list" var="url">
+				<c:param name="page" value="${pm.startPage - 1}"/>
+				<c:param name="type" value="${pm.cri.type}"/>
+				<c:param name="search" value="${pm.cri.search}"/>
+			</c:url>
+			<li class="page-item">
+				<a class="page-link" href="${url}">이전</a>
+			</li>
+		</c:if>
+		<c:forEach begin="${pm.startPage }" end="${pm.endPage}" var="i">
+			<c:url value="/board/list" var="url">
+				<c:param name="page" value="${i}"/>
+				<c:param name="type" value="${pm.cri.type}"/>
+				<c:param name="search" value="${pm.cri.search}"/>
+			</c:url>
+			<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
+				<a class="page-link" href="${url}">${i}</a>
+			</li>
+		</c:forEach>
+		<c:if test="${pm.next}">
+			<c:url value="/board/list" var="url">
+				<c:param name="page" value="${pm.endPage + 1}"/>
+				<c:param name="type" value="${pm.cri.type}"/>
+				<c:param name="search" value="${pm.cri.search}"/>
+			</c:url>
+			<li class="page-item">
+				<a class="page-link" href="${url}">다음</a>
+			</li>
+		</c:if>
+	</ul>
+</c:if>
+<c:if test="${search.searchType == 'cate'}">
+	<ul class="pagination justify-content-center">
+		<c:if test="${pm.prev}">
+			<c:url value="/board/list/cate" var="url">
+				<c:param name="page" value="${pm.startPage - 1}"/>
+				<c:param name="type" value="${pm.cri.type}"/>
+				<c:param name="search" value="${pm.cri.search}"/>
+			</c:url>
+			<li class="page-item">
+				<a class="page-link" href="${url}">이전</a>
+			</li>
+		</c:if>
+		<c:forEach begin="${pm.startPage }" end="${pm.endPage}" var="i">
+			<c:url value="/board/list/cate" var="url">
+				<c:param name="page" value="${i}"/>
+				<c:param name="type" value="${pm.cri.type}"/>
+				<c:param name="search" value="${pm.cri.search}"/>
+			</c:url>
+			<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
+				<a class="page-link" href="${url}">${i}</a>
+			</li>
+		</c:forEach>
+		<c:if test="${pm.next}">
+			<c:url value="/board/list/cate" var="url">
+				<c:param name="page" value="${pm.endPage + 1}"/>
+				<c:param name="type" value="${pm.cri.type}"/>
+				<c:param name="search" value="${pm.cri.search}"/>
+			</c:url>
+			<li class="page-item">
+				<a class="page-link" href="${url}">다음</a>
+			</li>
+		</c:if>
+	</ul>
+</c:if>
+<c:if test="${search.searchType == 'lang'}">
+	<ul class="pagination justify-content-center">
+		<c:if test="${pm.prev}">
+			<c:url value="/board/list/lang" var="url">
+				<c:param name="page" value="${pm.startPage - 1}"/>
+				<c:param name="type" value="${pm.cri.type}"/>
+				<c:param name="search" value="${pm.cri.search}"/>
+			</c:url>
+			<li class="page-item">
+				<a class="page-link" href="${url}">이전</a>
+			</li>
+		</c:if>
+		<c:forEach begin="${pm.startPage }" end="${pm.endPage}" var="i">
+			<c:url value="/board/list/lang" var="url">
+				<c:param name="page" value="${i}"/>
+				<c:param name="type" value="${pm.cri.type}"/>
+				<c:param name="search" value="${pm.cri.search}"/>
+			</c:url>
+			<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
+				<a class="page-link" href="${url}">${i}</a>
+			</li>
+		</c:forEach>
+		<c:if test="${pm.next}">
+			<c:url value="/board/list/lang" var="url">
+				<c:param name="page" value="${pm.endPage + 1}"/>
+				<c:param name="type" value="${pm.cri.type}"/>
+				<c:param name="search" value="${pm.cri.search}"/>
+			</c:url>
+			<li class="page-item">
+				<a class="page-link" href="${url}">다음</a>
+			</li>
+		</c:if>
+	</ul>
+</c:if>
 <c:if test="${user.me_ma_auth == '멘토'}">
 	<a class="btn btn-outline-success" href="<c:url value="/lecture/insert"/>">강의 등록하기</a>
 </c:if>
