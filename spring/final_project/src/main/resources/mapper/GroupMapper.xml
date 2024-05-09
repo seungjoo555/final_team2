@@ -319,7 +319,8 @@
 		UPDATE `group_apply` 
 			SET `goap_content` = #{goapVo.goap_content}
 		WHERE goap_num = #{goap.goap_num} and goap_me_id = #{user.me_id};	
-
+	</update>
+	
 	<update id="updateGomeStateTo0">
 		UPDATE group_member
 			SET gome_type = 0
