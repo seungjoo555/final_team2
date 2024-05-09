@@ -130,12 +130,12 @@
 	</select>
     
   <select id="getStudyApplyList" resultType="GroupVO">
-  SELECT final_team2.group.*, group_apply.goap_state as goap_state, group_apply.goap_me_id as goap_me_id, recruit.recu_num as recu_num, 
-  recruit.recu_topic as recu_topic, recruit.recu_count as recu_count
-  FROM final_team2.group
-    LEFT JOIN group_apply ON go_num = goap_go_num
-    LEFT JOIN recruit ON go_num = recu_go_num
-  WHERE goap_me_id = #{me_id}
+	  SELECT final_team2.group.*, group_apply.goap_state as goap_state, group_apply.goap_me_id as goap_me_id, recruit.recu_num as recu_num, 
+	  recruit.recu_topic as recu_topic, recruit.recu_count as recu_count
+	  FROM final_team2.group
+	    LEFT JOIN group_apply ON go_num = goap_go_num
+	    LEFT JOIN recruit ON go_num = recu_go_num
+	  WHERE goap_me_id = #{me_id}
   </select>
 
   <select id="selectGroupMemberCount" resultType="int" parameterType="int">
@@ -182,7 +182,7 @@
 			join `group_member` on gome_go_num = recu_go_num
 			join`member` on  me_id  = gome_me_id
 			where gome_type = 1 and recu_num = #{recu_num};
-	
+	</select>
 	<select id="getApplyListByGoNum" resultType="GroupApplyVO">
 		SELECT group_apply.*, me_nickname AS nickname 
 			FROM group_apply 
