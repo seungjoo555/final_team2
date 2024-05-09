@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <header>
 	<nav class="navbar navbar-expand-sm navbar-light">
 		<div class="container-fluid">
@@ -74,6 +75,8 @@
 								<a href="#">내 정보</a>
 								<a href="<c:url value="/mygroup/list"/>">나의 그룹</a>
 								<a href="#">그리고 뭐?</a>
+								<c:if test="${user.me_ma_auth.equals('관리자') == true}">
+								</c:if>
 							</div>
 						</div>
 					</li>

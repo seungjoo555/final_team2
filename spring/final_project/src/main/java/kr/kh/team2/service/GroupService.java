@@ -65,6 +65,7 @@ public interface GroupService {
 
 	ArrayList<GroupVO> countGroupListById(String me_id);
 
+	String getGroupLeaderID(int parseInt);
 	ArrayList<GroupCalendarVO> getCalendar(int num);
 
 	boolean insertGroupCal(int num, GroupCalendarVO newSch, MemberVO user);

@@ -21,6 +21,10 @@
 		update member set me_interests = #{member.me_interests}, me_preferloc = #{member.me_preferloc}, me_prefertime = #{member.me_prefertime}, me_onoff = #{member.me_onoff}, me_intro = #{member.me_intro}
 		where me_id = #{me_id}
 	</update>
+	<update id="updateMemberState">
+		update member set me_ms_state = #{me_ms_state}
+		where me_id = #{me_id}
+	</update>
 
 	<!-- =============================== SELECT =============================== -->	
 	
@@ -35,6 +39,11 @@
 	<!-- 회원 정보 가져오기 -->
 	<select id="selectMember" resultType="MemberVO">
 		SELECT * FROM member WHERE me_id = #{me_id}
+	</select>
+	
+	<!-- 회원 상태 리스트 가져오기 -->
+	<select id="selectMemberStateList" resultType="String">
+		select ms_state from member_state
 	</select>
 
 </mapper>

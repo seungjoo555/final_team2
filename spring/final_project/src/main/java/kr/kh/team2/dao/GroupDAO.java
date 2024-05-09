@@ -71,6 +71,7 @@ public interface GroupDAO {
 
 	ArrayList<GroupVO> countGroupListById(@Param("me_id") String me_id);
 
+	String selectGroupLeaderID(@Param("recu_num")int recu_num);
 	ArrayList<GroupCalendarVO> getCalendar(@Param("num")int num);
 
 	boolean insertGroupCal(@Param("num")int num, @Param("newSche")GroupCalendarVO newSch, @Param("user")MemberVO user);

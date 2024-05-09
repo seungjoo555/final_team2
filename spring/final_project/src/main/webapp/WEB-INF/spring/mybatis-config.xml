@@ -36,6 +36,8 @@
 
 		<!-- ========================== report ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.common.ReportContentVO" alias="ReportContentVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.common.ReportVO" alias="ReportVO"/>
+		<typeAlias type="kr.kh.team2.model.dto.ReportSimpleDTO" alias="ReportSimpleDTO"/>
 		
 		<!-- ========================== community ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.community.BoardVO" alias="BoardVO"/>
