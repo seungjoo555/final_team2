@@ -160,6 +160,8 @@
 			
 			if(confirm("입력하신 내용으로 모집 공고를 올리시겠습니까?")) {
 				location.href='<c:url value="/group/grouplist"/>';
+			} else {
+				return false;
 			}
 		})
 		

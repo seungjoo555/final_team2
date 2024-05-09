@@ -17,7 +17,11 @@
 			프로젝트 지원서
 		</c:if>
 	</h3>
-	
+	<div class="sub-box">
+		<h5 class="sub-title">1. 프로젝트 기본 정보를 입력해 주세요.</h5>
+		<a href="<c:url value="/group/detail?num=${recruit.recu_num}"/>" class="recruit-detail">공고 보기</a>
+	</div>
+	<hr>
 	<form action="<c:url value="/group/apply"/>" method="post" class="group-apply-form">
 		<input type="hidden" name="num" value="${recruit.recu_num}">
 		<div class="form-row-content">
@@ -47,6 +51,12 @@
 	$('.group-apply-btn').click(function(){
 		if(!goap_content.value) {
 			alert('모든 항목은 필수 입력 사항입니다.');
+			return false;
+		}
+		
+		if(confirm("입력하신 내용으로 모집 공고를 올리시겠습니까?")) {
+			location.href='<c:url value="/group/applydetail?num=${recruit.recu_num}"/>';
+		} else {
 			return false;
 		}
 	});

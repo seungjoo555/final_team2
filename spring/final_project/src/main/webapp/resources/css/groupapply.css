@@ -4,6 +4,21 @@
 	font-weight: 700;	
 }
 
+.sub-box {
+	display: flex;	
+	margin-top: 50px;
+}
+
+.recruit-detail {
+	margin-left: auto;
+	color: #000;
+	text-decoration: none;
+}
+
+.recruit-detail:hover {
+	color: #000;
+	text-decoration: none;
+}
 .form-row-content {
   display: block;
   margin: 50px 0;
