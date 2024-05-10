@@ -26,5 +26,13 @@ public interface MemberService {
 
 	boolean updateMemberState(String set_me_id, String set_state);
 
+	ArrayList<MemberVO> getAdminMemberList();
+
+	ArrayList<String> getMemberAuthList();
+
+	boolean updateMember(MemberVO member);
+
+	boolean deleteMember(String me_id);
+
 
 }

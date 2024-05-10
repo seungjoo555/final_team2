@@ -15,6 +15,11 @@
 	
 	<!-- =============================== DELETE =============================== -->
 	
+	<!-- 멤버 정보 삭제 -->
+	<delete id="deleteMemberVO">
+		delete from member where me_id = #{me_id}
+	</delete>
+	
 	<!-- =============================== UPDATE =============================== -->	
 	
 	<update id="updateProfile">
@@ -24,6 +29,11 @@
 	<update id="updateMemberState">
 		update member set me_ms_state = #{me_ms_state}
 		where me_id = #{me_id}
+	</update>
+	<!-- 회원 정보 변경(상태, 권한) -->
+	<update id="updateMember">
+		update member set me_ma_auth = #{me.me_ma_auth}, me_ms_state = #{me.me_ms_state}
+		where me_id = #{me.me_id}
 	</update>
 
 	<!-- =============================== SELECT =============================== -->	
@@ -44,6 +54,17 @@
 	<!-- 회원 상태 리스트 가져오기 -->
 	<select id="selectMemberStateList" resultType="String">
 		select ms_state from member_state
+	</select>
+	
+	<!-- 관리자 제외한 회원 전체 리스트 가져오기 -->
+	<select id="selectAdminMemberList" resultType="MemberVO">
+		select * from member where me_ma_auth != "관리자"
+	</select>
+	
+	<!-- 관리자 제외한 회원 권한 리스트 가져오기 -->
+	<select id="selectMemberAuthList" resultType="String">
+		select ma_auth from member_auth where ma_auth != "관리자"
+	
 	</select>
 
 </mapper>

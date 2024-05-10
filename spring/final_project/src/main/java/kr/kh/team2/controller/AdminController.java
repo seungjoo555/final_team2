@@ -26,6 +26,7 @@ import kr.kh.team2.service.MemberService;
 import kr.kh.team2.service.MentorService;
 import kr.kh.team2.service.RecruitService;
 import kr.kh.team2.service.ReportService;
+import kr.kh.team2.model.dto.AdminMemberUpdateDTO;
 import kr.kh.team2.model.dto.MentorInfoDTO;
 import kr.kh.team2.model.vo.community.BoardVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
@@ -300,6 +301,53 @@ public class AdminController {
 	}
 	
 	/** 멤버관리 */
+	@GetMapping("/admin/managemember")
+	public String adminManagemember(Model model) {
+		
+		//멤버리스트
+		ArrayList<MemberVO> memberList = memberService.getAdminMemberList();
+		//멤버권한리스트
+		ArrayList<String> memberAuthList = memberService.getMemberAuthList();
+		//멤버상태리스트
+		ArrayList<String> memberStateList = memberService.getMemberStateList();
+		memberStateList.remove("탈퇴");
+		
+		model.addAttribute("list", memberList);
+		model.addAttribute("authList", memberAuthList);
+		model.addAttribute("stateList", memberStateList);
+		
+		return "/admin/managemember";
+	}
 	
+	//멤버 개별 정보 변경
+	@ResponseBody
+	@PostMapping("/admin/managemember/update")
+	public Map<String, Object> adminManagememberUpdate(@RequestBody MemberVO member) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		//회원정보 업데이트
+		boolean res = memberService.updateMember(member);
+		map.put("result", res);
+		return map;
+	}
+	//멤버 개별 정보 삭제
+	@ResponseBody
+	@PostMapping("/admin/managemember/quit")
+	public Map<String, Object> adminManagememberQuit(@RequestParam("me_id") String me_id) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println("me_id :: "+me_id);
+		//회원정보 삭제
+		boolean res = memberService.deleteMember(me_id);
+		map.put("result", res);
+		return map;
+	}
+	//멤버 일괄 정보 변경
+	@ResponseBody
+	@PostMapping("/admin/managemember/update/all")
+	public Map<String, Object> adminManagememberUpdateAll(@RequestBody AdminMemberUpdateDTO meAll) {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+//		map.put("result", res);
+		return map;
+	}
 
 }

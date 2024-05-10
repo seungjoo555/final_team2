@@ -22,4 +22,12 @@ public interface MemberDAO {
 	ArrayList<String> selectMemberStateList();
 
 	boolean updateMemberState(@Param("me_id")String set_me_id, @Param("me_ms_state")String set_state);
+
+	ArrayList<MemberVO> selectAdminMemberList();
+
+	ArrayList<String> selectMemberAuthList();
+
+	boolean updateMember(@Param("me") MemberVO member);
+
+	boolean deleteMemberVO(@Param("me_id")String me_id);
 }

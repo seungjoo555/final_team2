@@ -112,6 +112,30 @@ public class MemberServiceImp implements MemberService {
 		}
 		return memberDao.updateMemberState(set_me_id, set_state);
 	}
+
+	@Override
+	public ArrayList<MemberVO> getAdminMemberList() {
+		return memberDao.selectAdminMemberList();
+	}
+
+	@Override
+	public ArrayList<String> getMemberAuthList() {
+		return memberDao.selectMemberAuthList();
+	}
+
+	@Override
+	public boolean updateMember(MemberVO member) {
+		if(member == null || !methods.checkString(member.getMe_id())|| !methods.checkString(member.getMe_ma_auth())|| !methods.checkString(member.getMe_ms_state()))
+		return false;
+		return memberDao.updateMember(member);
+	}
+
+	@Override
+	public boolean deleteMember(String me_id) {
+		if(!methods.checkString(me_id))
+			return false;
+		return memberDao.deleteMemberVO(me_id);
+	}
 	
 	
 }
