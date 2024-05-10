@@ -33,17 +33,32 @@ public class RecommendController {
 	public Map<String, Object> GroupRecommend(HttpSession session, Integer recu_num) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		// 로그인 여부 확인
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+	    if (user == null) {
+	        map.put("result", false);
+	        return map;
+	    }
+	    
 		// 추천 정보 받아오기
 		RecommendVO recommendVo = new RecommendVO();
 	    recommendVo.setRecu_num(recu_num);
 		RecommendVO recommend = recommendService.getRecuRecommend(recommendVo);
+		
+		// 추천 정보가 없을 경우 처리
+	    if (recommend == null) {
+	        map.put("result", false);
+	        return map;
+	    }
+	    
+	    map.put("result", true);
 		map.put("recommend", recommend);
 		return map;
 	}
 	
 	@ResponseBody
 	@PostMapping("/group/recommend")
-	public Map<String, Object> GroupRecommendPost(HttpSession session,@RequestBody Map<String, Integer> requestBody) {
+	public Map<String, Object> GroupRecommendPost(HttpSession session, @RequestBody Map<String, Integer> requestBody) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		// user 정보
@@ -57,7 +72,6 @@ public class RecommendController {
 		
 		// 공고 번호 가져오기
 		Integer recu_num = requestBody.get("recu_num");
-		System.out.println(recu_num);
 		
 		// 추천 정보 생성
 	    RecommendVO recommendVo = new RecommendVO();
@@ -67,9 +81,6 @@ public class RecommendController {
 	    
 	    // 좋아요 상태 확인
 	    RecommendVO reco = recommendService.getRecuRecommend(recommendVo);
-	    System.out.println("================================");
-	    System.out.println("컨트롤러 reco : " + reco);
-	    System.out.println("================================");
 	    
 	    if(reco == null) {
 	    	RecommendVO newRecommend = new RecommendVO();
