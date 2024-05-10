@@ -272,13 +272,11 @@ $(document).on('click', '.btn-admin-member-process', function(){
 				alert("선택된 멤버들의 정보가 변경되지 못했습니다.");
 			}
 		}, 
-		error : function(jqXHR, textStatus, errorThrown){	//errorThrown얘는 거의 비어있음(굳이 체크 안하기로)
+		error : function(jqXHR, textStatus, errorThrown){
 			console.log(jqXHR);
 			console.log(textStatus);
 		}
 	});	//ajax end
-   
-   
 })
 
 </script>
