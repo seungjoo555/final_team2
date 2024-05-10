@@ -114,7 +114,7 @@ DROP TABLE IF EXISTS `mutual_review`;
 
 CREATE TABLE `mutual_review` (
 	`mure_num`	int auto_increment primary key	NOT NULL,
-	`mure_content`	text	NULL,
+	`mure_content`	text	NOT NULL,
 	`mure_rate`	int default 5	NOT NULL,
 	`mure_me_id`	varchar(50)	NOT NULL,
 	`mure_target_id`	varchar(50)	NOT NULL,
