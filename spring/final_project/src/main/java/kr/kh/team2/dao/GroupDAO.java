@@ -72,6 +72,7 @@ public interface GroupDAO {
 
 	ArrayList<GroupVO> countGroupListById(@Param("me_id") String me_id);
 
+	String selectGroupLeaderID(@Param("recu_num")int recu_num);
 	ArrayList<GroupCalendarVO> getCalendar(@Param("num")int num);
 
 	boolean insertGroupCal(@Param("num")int num, @Param("newSche")GroupCalendarVO newSch, @Param("user")MemberVO user);
@@ -101,6 +102,17 @@ public interface GroupDAO {
 	boolean updateGroupTimer(@Param("num")int num);
 
 	boolean deleteGroupByGoNum(@Param("num")int num);
+
+
+	boolean insertGroupApply(@Param("group")GroupVO group, @Param("recu_num")int recu_num, @Param("goap")GroupApplyVO goapVo, @Param("user")MemberVO user);
+
+	ArrayList<GroupVO> selectGroupListByGoNum(@Param("num")int num);
+
+	GroupApplyVO selectGroupApply(@Param("num")Integer num, @Param("user")MemberVO user);
+
+	boolean updateGroupApply(@Param("goap")GroupApplyVO goap, @Param("user")MemberVO user);
+
+	boolean updateGroupApply(@Param("goapVo")GroupApplyVO goapVo, @Param("goap")GroupApplyVO goap, @Param("user")MemberVO user);
 
 	ArrayList<GroupMemberVO> getGroupMemberByGoNum(@Param("num")int num);
 

@@ -431,6 +431,26 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
+	public ArrayList<GroupVO> getGroupListByRecuNum(int num) {
+		if(num == 0) {
+			return null;
+		}	
+		return groupDao.selectGroupListByGoNum(num);
+	}
+
+	@Override
+	public boolean insertGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, MemberVO user) {
+		if(recu_num == 0) {
+			return false;
+		}
+		
+		if(group == null || goapVo == null || user == null) {
+			return false;
+		}
+		
+		return groupDao.insertGroupApply(group, recu_num, goapVo, user);
+	}
+	
 	public int getApplicantTotalCount(int num) {
 		if(num == 0) {
 			System.out.println("goNum is 0");
@@ -623,6 +643,38 @@ public class GroupServiceImp implements GroupService{
 		return groupDao.deleteGroupByGoNum(num);
 	}
 
+
+	@Override
+	public GroupApplyVO getGroupApply(Integer num, MemberVO user) {
+		if(num == 0 || user == null) {
+			return null;
+		}	
+		return groupDao.selectGroupApply(num, user);
+	}
+
+	@Override
+	public boolean updateGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, MemberVO user) {
+		if(group == null || recu_num == 0 || goapVo == null || user == null) {
+			return false;
+		}
+		
+		// 작성자가 맞는지 확인
+		GroupApplyVO goap = groupDao.selectGroupApply(recu_num, user);
+		
+		if(goap == null || !goap.getGoap_me_id().equals(user.getMe_id())) {
+			return false;
+		}
+		
+		boolean res = groupDao.updateGroupApply(goapVo, goap, user);
+		
+		if(!res) {
+			return false;
+		}
+			
+		return true;
+	}
+
+
   @Override
 	public boolean changeGroupLeader(int num, String id, MemberVO user) {
 		if(num == 0) {
@@ -737,5 +789,13 @@ public class GroupServiceImp implements GroupService{
 		return groupDao.getReviewedMemberTotalCount(num, id);
 	}
 
+	/** 그룹 리더 아이디를 가져오는 서비스*/
+	@Override
+	public String getGroupLeaderID(int recu_num) {
+		if(recu_num <= 0) {
+			return null;
+		}
+		return groupDao.selectGroupLeaderID(recu_num);
+	}
 	
 }

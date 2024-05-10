@@ -66,6 +66,7 @@ public interface GroupService {
 
 	ArrayList<GroupVO> countGroupListById(String me_id);
 
+	String getGroupLeaderID(int parseInt);
 	ArrayList<GroupCalendarVO> getCalendar(int num);
 
 	boolean insertGroupCal(int num, GroupCalendarVO newSch, MemberVO user);
@@ -94,6 +95,15 @@ public interface GroupService {
 
 	boolean deleteGroupByGoNum(int num, MemberVO user);
 
+
+	ArrayList<GroupVO> getGroupListByRecuNum(int num);
+
+	boolean insertGroupApply(GroupVO group, int num, GroupApplyVO goapVo, MemberVO user);
+
+	GroupApplyVO getGroupApply(Integer num, MemberVO user);
+
+	boolean updateGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, MemberVO user);
+
 	boolean changeGroupLeader(int num, String id, MemberVO user);
 
 	boolean updateGoUpdate(int num, boolean freeze, MemberVO user);
@@ -105,6 +115,7 @@ public interface GroupService {
 	ArrayList<MutualReviewVO> getReviewedMember(int num, String type);
 
 	int getReviewedMemberTotalCount(int num, String type);
+
 
 
 }

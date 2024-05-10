@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <header>
 	<nav class="navbar navbar-expand-sm navbar-light">
 		<div class="container-fluid">
 			<h1>
 				<a class="navbar-brand" href="<c:url value="/"/>">
-					<img alt="LOGO" src="<c:url value="/resources/img/smoLogo.png"/>">
+					<img alt="LOGO" src="<c:url value="/resources/img/smoLogo.png"/>" class="first-logo">
+					<img alt="LOGO" src="<c:url value="/resources/img/smoLogo2.png"/>" class="second-logo">
 				</a>
 			</h1>
 			<ul class="navbar-left">
@@ -22,11 +24,18 @@
 						<div class="dropdown-content-lecture">
 							<c:forEach items="${menuCateList}" var="cate">
 							<div class="dropdown-submenu-lecture">
-								<a class="subbtn-lecture" href="<c:url value="#"/>">${cate.progCt_name}</a>
+								<c:url value="/lecture/list/cate" var="lectUrl">
+									<c:param name="progCt_num" value="${cate.progCt_num}"/>
+								</c:url>
+								<a class="subbtn-lecture" href="${lectUrl}">${cate.progCt_name}</a>
 								<div class="submenu-content-lecture">
 									<c:forEach items="${menuLangList}" var="lang">
 									<c:if test="${cate.progCt_num == lang.progCt_num }">
-										<a href="#">${lang.lang_name}</a>
+										<c:url value="/lecture/list/lang" var="lectUrl">
+											<c:param name="lang_num" value="${lang.lang_num}"/>
+											<c:param name="progCt_num" value="${lang.progCt_num}"/>
+										</c:url>
+										<a href="${lectUrl}">${lang.lang_name}</a>
 									</c:if>
 									</c:forEach>
 								</div>
@@ -66,6 +75,8 @@
 								<a href="#">내 정보</a>
 								<a href="<c:url value="/mygroup/list"/>">나의 그룹</a>
 								<a href="#">그리고 뭐?</a>
+								<c:if test="${user.me_ma_auth.equals('관리자') == true}">
+								</c:if>
 							</div>
 						</div>
 					</li>
