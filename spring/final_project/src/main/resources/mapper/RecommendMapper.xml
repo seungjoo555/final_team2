@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.kh.team2.dao.RecommendDAO">
+	<select id="selectRecuRecommend" resultType="RecommendVO">
+		SELECT *
+		FROM recommend
+		WHERE reco_table = #{recommend.reco_table} and reco_target = #{recommend.reco_target} and reco_me_id = #{recommend.reco_me_id}
+	</select>
+
+	<insert id="insertRecuRecommend">
+		INSERT INTO recommend (reco_me_id, reco_state, reco_table, reco_target)
+		VALUES(#{recommend.reco_me_id}, '1', #{recommend.reco_table}, #{recommend.reco_target})
+	</insert>
+	
+	<update id="updateRecuRecommend">
+		UPDATE recommend
+			SET reco_state = #{recommend.reco_state}
+		WHERE reco_table = #{recommend.reco_table} and reco_target = #{recommend.reco_target} and reco_me_id = #{recommend.reco_me_id}
+	</update>
+</mapper>
