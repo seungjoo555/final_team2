@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team2.dao.LectureDAO">
 	
+	<!-- 강의 전체검색, 작성자 눌렀을떄 불러오기 -->
 	<select id="selectAllLectureList" resultType="LectureVO">
 		SELECT 
 		    *
@@ -26,20 +27,22 @@
 		LIMIT #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	
+	<!-- 헤더에 강의 눌렀을 때 리스트 불러오기 -->
 	<select id="selectLectureList" resultType="LectureVO">
 		select * from lecture where
 			<if test='search.searchType == "cate"'>
 				lect_num in
-				(select toCt_table_pk from total_category where toCt_progCt_num = ${search.progCt_num} and toCt_table_name = 'lecture')
+				(select toCt_table_pk from total_category where toCt_progCt_num = #{search.progCt_num} and toCt_table_name = 'lecture')
 			</if>
 			<if test='search.searchType == "lang"'>
 				lect_num in
-				(select toLg_table_pk from total_language where toLg_lang_num = ${search.lang_num} and toLg_table_name = 'lecture')
+				(select toLg_table_pk from total_language where toLg_lang_num = #{search.lang_num} and toLg_table_name = 'lecture')
 			</if>
 		ORDER BY lect_num DESC
 		LIMIT #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	
+	<!-- 강의 리스트에 페이지네이션을 위한 카운트 -->
 	<select id="selectLectureCount" resultType="int">
 		SELECT 
 		    count(*)
@@ -62,14 +65,60 @@
 		</if>
 		<if test='search.searchType == "cate"'>
 			lect_num in
-			(select toCt_table_pk from total_category where toCt_progCt_num = ${search.progCt_num} and toCt_table_name = 'lecture')
+			(select toCt_table_pk from total_category where toCt_progCt_num = #{search.progCt_num} and toCt_table_name = 'lecture')
 		</if>
 		<if test='search.searchType == "lang"'>
 			lect_num in
-			(select toLg_table_pk from total_language where toLg_lang_num = ${search.lang_num} and toLg_table_name = 'lecture')
+			(select toLg_table_pk from total_language where toLg_lang_num = #{search.lang_num} and toLg_table_name = 'lecture')
 		</if>
 		ORDER BY lect_num DESC
 		LIMIT #{cri.pageStart}, #{cri.perPageNum}
 	</select>
+	
+	<!-- 강의 불러오기 -->
+	<select id="selectLecture" resultType="LectureVO">
+		select * from lecture where lect_num = #{lect_num}
+	</select>
+	
+	<!-- 강의 작성자 아이디, 닉네임 불러오기 -->
+	<select id="selectLecture_Mento" resultType="MemberVO">
+		select me_id as me_id, me_nickname as me_nickname from member where me_id = #{mentIf_me_id}
+	</select>
+	
+	<!-- 강의 분야,언어 불러오기 -->
+	<select id="selectCategoryList" resultType="TotalCategoryVO">
+ 		select
+ 			total_category.*,
+ 			progCt_name as toCt_progCt_name
+ 		from
+ 			total_category
+ 				join
+ 			programming_category on progCt_num = toCt_progCt_num
+ 		where
+	        toCt_table_name = #{table} and toCt_table_pk = #{num}
+ 	</select>
+ 	
+ 	<select id="selectLanguageList" resultType="TotalLanguageVO">
+ 		select
+ 			total_language.*,
+ 			lang_name as toLg_lang_name
+ 		from
+ 			total_language
+ 				join
+ 			programming_language on lang_num = toLg_lang_num
+ 		where
+ 			toLg_table_name = #{table} and toLg_table_pk = #{num}
+ 	</select>
+	
+	<!-- 강의 등록 분야, 언어 불러오기 -->
+	<select id="selectProgrammingCategoryList" resultType="ProgrammingCategoryVO">
+		select * from programming_category
+	</select>
+	
+	<select id="selectProgrammingLanguageList" resultType="ProgrammingLanguageVO">
+		select * from programming_language
+	</select>
+	
+	
 	
 </mapper>
