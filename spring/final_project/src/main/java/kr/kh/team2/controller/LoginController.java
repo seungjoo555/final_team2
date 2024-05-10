@@ -38,10 +38,15 @@ public class LoginController {
 	public String loginPost(Model model, LoginDTO loginDTO) {
 		MemberVO user = memberService.login(loginDTO);
 		if(user!= null) {
+			if(user.getMe_verify()==0) {
+				model.addAttribute("msg","이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.");
+				model.addAttribute("url","/signup/verify");
+			}else {
+				model.addAttribute("msg","로그인 되었습니다.");
+				model.addAttribute("url","/");
+			}
 			user.setAutoLogin(loginDTO.isAutoLogin());
 			model.addAttribute("user",user);
-			model.addAttribute("msg","로그인 되었습니다.");
-			model.addAttribute("url","/");
 			return "message"; 
 		}
 		
