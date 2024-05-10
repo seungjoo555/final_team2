@@ -37,7 +37,8 @@
 				<label for="reviewed">평가한 멤버</label>
 			</div>
 			<div class="member-list-bg">
-				
+			
+			
 			</div>
 			
 			<!-- 페이지네이션 -->
@@ -234,7 +235,7 @@ $("#reviewed").click(function(){
 
 <!-- 상호평가 하기 -->
 <script type="text/javascript">
-	$(document).on('click', '.member-warn-btn', function(){
+	$(document).on('click', '.insert-review', function(){
 		if(!${group.go_update}){
 			alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
 			return;
@@ -267,32 +268,8 @@ $("#reviewed").click(function(){
 
 <!-- 상호평가 내용 보기 -->
 <script type="text/javascript">
-	$(document).on('click', '.member-ban-btn', function(){
-		let id = $(this).data('id')
+	$(document).on('click', '.view-review', function(){
 		
-		if(confirm(id +' 회원을 그룹에서 탈퇴시키겠습니까? 그룹 탈퇴 시, 해당 사용자가 작성한 모든 데이터가 삭제되며 복구할 수 없습니다.'))
-		
-		$.ajax({
-			async : true, //비동기 : true(비동기), false(동기)
-			url : "<c:url value="/group/manage/applicant/ban"/>", 
-			type : 'post', 
-			data : {
-				num : ${group.go_num},
-				id : id
-				}, 
-			dataType :"json", 
-			success : function (data){
-					if(data.data == 'ok'){
-						alert('멤버를 탈퇴시켰습니다.')
-						getMemberList(cri);
-					}else{
-						alert('멤버를 탈퇴시키지 못했습니다. 새로고침 후 다시 이용해주세요.')
-					}
-				}, 
-				error : function(a, b, c){
-					
-			}
-		});
 	})
 </script>
 
