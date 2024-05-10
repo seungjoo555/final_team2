@@ -33,6 +33,7 @@ public class MemberVO {
     private Date me_cookie_limit;
     private int me_temppw;
     private boolean autoLogin;
+    private int me_verify;
     
 	public MemberVO(SignupDTO signupDto) {
 		this.me_id = signupDto.getId();

@@ -52,6 +52,13 @@
 		where
 			me_id =#{cpt.me_id}
 	</update>
+	
+	<update id="updateMemberVerify">
+		update member set
+			me_verify = #{member.me_verify}
+		where
+			me_id = #{member.me_id}
+	</update>
 	<!-- =============================== SELECT =============================== -->	
 	
 	<select id="findMemberById" resultType="MemberVO">

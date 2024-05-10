@@ -49,6 +49,16 @@ public class MemberInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
+		if(user != null && user.getMe_verify()==0) {
+			if(isAjaxRequest(request)) {
+				response.setHeader("NonVerified_User", "true");
+			}else {
+				response.setContentType("text/html;charset=UTF-8");
+		        response.getWriter().write("<script>alert('이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.');location.href='" + request.getContextPath() + "/signup/verify';</script>");
+		        return false;
+			}
+		}
+		
 		return true;
 	}
 	

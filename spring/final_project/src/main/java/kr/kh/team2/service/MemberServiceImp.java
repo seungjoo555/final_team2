@@ -32,12 +32,12 @@ public class MemberServiceImp implements MemberService {
 	private JavaMailSender mailSender;
 	
 	@Override
-	public boolean signUp(SignupDTO signupDto) {
+	public MemberVO signUp(SignupDTO signupDto) {
 		// null check
 		if(signupDto == null) {
 			System.out.println("null dto");
 			System.out.println("signupDto : "+signupDto);
-			return false;
+			return null;
 		}
 		if(!methods.checkString(signupDto.getId())
 			|| !methods.checkString(signupDto.getPw())
@@ -48,14 +48,19 @@ public class MemberServiceImp implements MemberService {
 			|| !methods.checkString(signupDto.getAdd2())) {
 			System.out.println("null String");
 			System.out.println("signupDto : "+signupDto);
-			return false;
+			return null;
 		}
 		
 		signupDto.setPw(passwordEncoder.encode(signupDto.getPw()));
 		
 		MemberVO member = new MemberVO(signupDto);
 			
-		return memberDao.insertMember(member);
+		boolean res = memberDao.insertMember(member);
+		
+		if(res) {
+			return member;
+		}
+		return null;
 	}
 
 	@Override
@@ -181,7 +186,7 @@ public class MemberServiceImp implements MemberService {
 	}
 	
 	private boolean findMailSend(String me_id, String title, String content) {
-	    String setfrom = "mimsso9703@gmail.com";
+	   String setfrom = "mimsso9703@gmail.com";
 	   try{
 	        MimeMessage message = mailSender.createMimeMessage();
 	        MimeMessageHelper messageHelper
@@ -280,6 +285,59 @@ public class MemberServiceImp implements MemberService {
 		cptDTO.setMe_pw(passwordEncoder.encode(cptDTO.getMe_pw()));
 		
 		return memberDao.updateMemberPwToNorm(cptDTO);
+	}
+
+	@Override
+	public boolean sendVerifyMail(String me_id) {
+		if(!methods.checkString(me_id)) {
+			return false;
+		}
+		String authKey = randomAuthKey(6);
+		String title = "회원가입을 위한 인증키입니다.";
+		String content = "회원가입 인증키는 <b>"+ authKey +"</b> 입니다.";
+		MeVerifyVO meVerify = new MeVerifyVO();
+		meVerify.setMv_me_id(me_id);
+		meVerify.setMv_code(authKey);
+		
+		MemberVO dbMember = memberDao.findMemberById(me_id);
+		
+		if(dbMember == null) {
+			return false;
+		}
+		
+		deleteVerify(me_id);
+		boolean res = findMailSend(me_id,title,content) && memberDao.insertMemberVerify(meVerify);
+		
+		return res;
+	}
+
+	@Override
+	public boolean signupVerify(MeVerifyVO meVerify) {
+		if(meVerify == null || !methods.checkString(meVerify.getMv_code())||
+				!methods.checkString(meVerify.getMv_me_id())) {
+			
+			return false;
+		}
+		
+		MeVerifyVO dbVerify = memberDao.selectMeVerify(meVerify);
+		
+		if(dbVerify ==null) {
+			return false;
+		}
+		
+		if(dbVerify.getMv_code().equals(meVerify.getMv_code())) {
+			deleteVerify(meVerify.getMv_me_id());
+			MemberVO dbMember = memberDao.findMemberById(meVerify.getMv_me_id());
+			dbMember.setMe_verify(1);
+			
+			boolean res = memberDao.updateMemberVerify(dbMember);
+			if(res) {
+				return true;
+			}
+			
+		}
+		
+		return false;
 	}
 	
 	

@@ -36,4 +36,6 @@ public interface MemberDAO {
 	boolean updateMemberPwToTemp(@Param("member")MemberVO dbMember);
 
 	boolean updateMemberPwToNorm(@Param("cpt")ChangePwTempDTO cptDTO);
+
+	boolean updateMemberVerify(@Param("member")MemberVO dbMember);
 }

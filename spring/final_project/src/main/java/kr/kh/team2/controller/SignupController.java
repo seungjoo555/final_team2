@@ -3,15 +3,20 @@ package kr.kh.team2.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.dto.SignupDTO;
+import kr.kh.team2.model.vo.member.MeVerifyVO;
+import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.service.MemberService;
 
 @Controller
@@ -50,12 +55,13 @@ public class SignupController {
 	}
 	
 	@PostMapping("/signup")
-	public String signupPost(Model model, SignupDTO signupDto){
+	public String signupPost(Model model, SignupDTO signupDto, HttpSession session){
 //		System.out.println("signupDto: "+signupDto);
-		
-		if(memberService.signUp(signupDto)) {
-			model.addAttribute("msg", "회원가입을 완료했습니다");
-			model.addAttribute("url", "/");
+		MemberVO user = memberService.signUp(signupDto);
+		if(user!=null) {
+			session.setAttribute("user", user);
+			model.addAttribute("msg", "회원가입을 완료했습니다. 이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.");
+			model.addAttribute("url", "/signup/verify");
 		}else {
 			model.addAttribute("msg", "회원가입을 하지 못했습니다");
 			model.addAttribute("url", "/signup");
@@ -68,6 +74,35 @@ public class SignupController {
 	public String signupVerify(){
 		
 		return "/signup/verify";
+	}
+	
+	@ResponseBody
+	@GetMapping("/signup/sendAuth")
+	public String sendVerifyMail(@RequestParam String me_id) {
+		
+		boolean res = memberService.sendVerifyMail(me_id);
+		
+		return res + "";
+	}
+	
+	@ResponseBody
+	@PostMapping("/signup/checkverify")
+	public Map<String, Object> checkVerify(@RequestBody MeVerifyVO meVerify, HttpSession session) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean res = memberService.signupVerify(meVerify);
+		
+		if(res) {
+			MemberVO user = memberService.getMember(meVerify.getMv_me_id());
+			if(user!=null) {
+				session.setAttribute("user", user);
+			}
+		}
+		
+		map.put("res", res+"");
+		
+		
+		return map;
 	}
 	
 	@PostMapping("/signup/verify")
