@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
+import kr.kh.team2.model.dto.MutualReviewDTO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupApplyVO;
@@ -128,8 +129,14 @@ public interface GroupDAO {
 
 	int getNotReviewedMemberTotalCount(@Param("num")int num, @Param("id")String id);
 
-	ArrayList<MutualReviewVO> getReviewedMember(@Param("num")int num,  @Param("id")String id);
+	ArrayList<MutualReviewVO> getReviewedMember(@Param("num")int num,  @Param("cri")Criteria cri);
 
 	int getReviewedMemberTotalCount(@Param("num")int num,  @Param("id")String id);
+
+	boolean insertMutualReview(@Param("review")MutualReviewDTO mutualReviewDto);
+
+	Object isReviewedMember(@Param("review")MutualReviewDTO mutualReviewDto);
+
+	boolean updateMeDgree(@Param("id")String target_id, @Param("degree")float degree);
 
 }

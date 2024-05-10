@@ -258,7 +258,8 @@
 			WHERE gome_go_num = #{num} AND gome_me_id != #{cri.type}
 				AND gome_me_id NOT IN(
 					SELECT mure_target_id FROM mutual_review WHERE mure_go_num = #{num} AND mure_me_id = #{cri.type}
-		    );
+		    )
+	    LIMIT #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	
 	<select id="getNotReviewedMemberTotalCount" resultType="int">
@@ -269,20 +270,25 @@
 				AND gome_me_id NOT IN(
 					SELECT mure_target_id FROM mutual_review WHERE mure_go_num = #{num} AND mure_me_id = #{id}
 		    )
-		    GROUP BY gome_go_num;
+		    
 	</select>
 	
 	<select id="getReviewedMember" resultType="MutualReviewVO">
 		SELECT mutual_review.*, me_nickname AS nickname, me_id AS gome_me_id
 			FROM mutual_review JOIN `member` on mure_target_id = me_id
-		    WHERE mure_me_id = #{id} AND mure_go_num = #{num};
+		    WHERE mure_me_id = #{cri.type} AND mure_go_num = #{num}
+	    LIMIT #{cri.pageStart}, #{cri.perPageNum}
 	</select>
 	
 	<select id="getReviewedMemberTotalCount" resultType="int">
 		SELECT COUNT(*)
 			FROM mutual_review
 			WHERE mure_me_id =  #{id} AND mure_go_num = #{num}
-		    GROUP BY mure_go_num;
+	</select>
+	
+	<select id="isReviewedMember" resultType="MutualReviewVO">
+		SELECT * FROM mutual_review 
+			WHERE mure_me_id = #{review.user_id} AND mure_target_id = #{review.target_id} AND mure_go_num = #{review.num}
 	</select>
 	
 	<!-- =============================== DELETE =============================== -->
@@ -372,6 +378,12 @@
 		WHERE go_num = #{num}
 	</update>
 	
+	<update id="updateMeDgree">
+		UPDATE `member`
+			SET me_degree = me_degree + #{degree}
+		WHERE me_id = #{id}
+	</update>
+	
 	<!-- =============================== INSERT =============================== -->	
 	
 	<insert id="insertGroupPost">
@@ -391,6 +403,11 @@
 	
  	<insert id="insertGroupMember">
  		INSERT INTO group_member(gome_me_id, gome_go_num) VALUE(#{id}, #{num})
+ 	</insert>
+ 	
+ 	<insert id="insertMutualReview">
+ 		INSERT INTO mutual_review(mure_content, mure_rate, mure_me_id, mure_target_id, mure_go_num)
+ 			VALUE(#{review.memo}, #{review.rate}, #{review.user_id}, #{review.target_id}, #{review.num})
  	</insert>
  	
 </mapper>

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.GroupDAO;
+import kr.kh.team2.model.dto.MutualReviewDTO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupApplyVO;
@@ -762,17 +763,17 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public ArrayList<MutualReviewVO> getReviewedMember(int num, String id) {
+	public ArrayList<MutualReviewVO> getReviewedMember(int num, Criteria cri) {
 		if(num == 0) {
 			System.out.println("goNum is 0");
 			return null;
 		}
-		if(!methods.checkString(id)) {
-			System.out.println("invalid id");
+		if(cri == null) {
+			System.out.println("null cri");
 			return null;
 		}
 		
-		return groupDao.getReviewedMember(num, id);
+		return groupDao.getReviewedMember(num, cri);
 	}
 
 	@Override
@@ -796,6 +797,42 @@ public class GroupServiceImp implements GroupService{
 			return null;
 		}
 		return groupDao.selectGroupLeaderID(recu_num);
+	}
+
+	@Override
+	public boolean insertMutualReview(MutualReviewDTO mutualReviewDto, MemberVO user) {
+		if(mutualReviewDto == null) {
+			System.out.println("null DTO");
+			return false;
+		}
+		if(groupDao.isGroupMember(user.getMe_id(), mutualReviewDto.getNum()) == null) {
+			System.out.println("not group member");
+			return false;
+		}
+		
+		// 매너온도 계산
+		float degree;
+		int rate = mutualReviewDto.getRate();
+		
+		if(rate>5) {
+			// 5점 이상이면 매너 온도 상승
+			degree = rate / 2;
+		}else {
+			// 5점 이하면 매너 온도 하락
+			degree = -(rate / 2);
+		}
+		
+		return groupDao.insertMutualReview(mutualReviewDto) && groupDao.updateMeDgree(mutualReviewDto.getTarget_id(), degree);
+	}
+
+	@Override
+	public Object isReviewedMember(MutualReviewDTO mutualReviewDto) {
+		if(mutualReviewDto == null) {
+			System.out.println("null DTO");
+			return false;
+		}
+		
+		return groupDao.isReviewedMember(mutualReviewDto);
 	}
 	
 }

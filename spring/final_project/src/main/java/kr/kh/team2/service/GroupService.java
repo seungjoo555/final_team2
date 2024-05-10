@@ -2,6 +2,7 @@ package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
+import kr.kh.team2.model.dto.MutualReviewDTO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupApplyVO;
@@ -112,9 +113,13 @@ public interface GroupService {
 
 	int getNotReviewedMemberTotalCount(int num, String type);
 
-	ArrayList<MutualReviewVO> getReviewedMember(int num, String type);
-
 	int getReviewedMemberTotalCount(int num, String type);
+
+	boolean insertMutualReview(MutualReviewDTO mutualReviewDto, MemberVO user);
+
+	Object isReviewedMember(MutualReviewDTO mutualReviewDto);
+
+	ArrayList<MutualReviewVO> getReviewedMember(int num, Criteria cri);
 
 
 

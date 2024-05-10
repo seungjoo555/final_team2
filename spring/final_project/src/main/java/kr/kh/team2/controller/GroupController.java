@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.team2.model.dto.MutualReviewDTO;
 import kr.kh.team2.model.vo.common.ReportContentVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
@@ -553,7 +553,7 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/noreview/list")
-	public Map<String, Object> groupmutualreviewnolist(HttpSession session, @RequestBody Criteria cri){
+	public Map<String, Object> groupmutualreviewnolist(@RequestBody Criteria cri){
 		Map<String, Object> map = new HashMap<String, Object>();
 		int num = -1;
 		
@@ -580,7 +580,7 @@ public class GroupController {
 	
 	@ResponseBody
 	@PostMapping("/group/reviewed/list")
-	public Map<String, Object> groupmutualreviewedlist(HttpSession session, @RequestBody Criteria cri){
+	public Map<String, Object> groupmutualreviewedlist(@RequestBody Criteria cri){
 		Map<String, Object> map = new HashMap<String, Object>();
 		int num = -1;
 		
@@ -592,7 +592,7 @@ public class GroupController {
 		
 		cri.setPerPageNum(2);
 		
-		ArrayList<MutualReviewVO> list = groupService.getReviewedMember(num, cri.getType());
+		ArrayList<MutualReviewVO> list = groupService.getReviewedMember(num, cri);
 		
 		int totalCount = groupService.getReviewedMemberTotalCount(num, cri.getType());
 		
@@ -605,6 +605,23 @@ public class GroupController {
 		return map;
 	}
 	
+	@PostMapping("/group/review/insert")
+	public String mutualreviewinsert(HttpSession session, Model model, MutualReviewDTO mutualReviewDto){
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		if(groupService.isReviewedMember(mutualReviewDto) != null) {
+			model.addAttribute("msg", "이미 평가한 멤버입니다.");
+		}
+		else if(groupService.insertMutualReview(mutualReviewDto, user)) {
+			model.addAttribute("msg", "상호평가를 저장했습니다");
+		}else {
+			model.addAttribute("msg", "작성된 상호평가를 저장하지 못했습니다");
+		}
+		
+		model.addAttribute("url", "/group/review?num="+mutualReviewDto.getNum());
+
+		return "message";
+	}
 	
 	// ================================ group ================================
 		

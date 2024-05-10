@@ -36,9 +36,11 @@
 				<input type="radio" id="reviewed" value="reviewed" name="type">
 				<label for="reviewed">평가한 멤버</label>
 			</div>
-			<div class="member-list-bg">
-			
-			
+			<div>
+				<div class="member-list-bg">
+				
+				
+				</div>
 			</div>
 			
 			<!-- 페이지네이션 -->
@@ -47,6 +49,44 @@
 					<!-- 페이지네이션 출력됨 -->
 				</ul>
 			</div>
+			
+			<!-- 모달창 -->
+			<div id="modal" class="modal mutual-review-modal" style="display:none;">
+		      <div id="dimmed" class="dimmed apply-mentoring-dimmend"></div>
+		      <div class="manage-group_container">
+		      	<button class="cancle-btn">X</button>	
+	      		
+	      		<!-- Modal Header -->
+		        <div class="modal-header">
+		          <h4 class="modal-title">사용자 평가</h4>
+		          <button type="button" class="close" onclick="initModal('insertModal', g_arg)">&times;</button>
+		        </div>
+		        
+		        <!-- Modal body -->
+		        <div class="modal-body">
+			        <form action="<c:url value="/group/review/insert"/>" method="post" id="review-form">
+			        	<div class="extra-info" style="display: none;">
+			        		<input class="form-control" placeholder="" id="user_id" name="user_id" readonly>
+			        		<input class="form-control" placeholder="" id="num" name="num" readonly>
+			        	</div>
+				          <div class="form-group empl_nm">
+							<label for="id">평가 대상:</label>
+							<input class="form-control" placeholder="" id="target_id" name="target_id" readonly>
+						  </div>
+						  <br>
+				          <div class="form-group">
+							<label for="memo">평가 내용:</label>
+							<textarea class="form-control" placeholder="1자 이상 작성" id="memo" name="memo" ></textarea>
+						  </div>
+						  <div class="form-group">
+							<label for="rate">평가 점수:</label>
+							<input type="text" class="form-control" placeholder="1~10(소수점 x)" id="rate" name="rate" >
+						  </div>
+						  <button class="btn btn-outline-success float-right insertBtn">등록</button>
+			        </form>
+		      </div>
+		   </div>
+		   </div>
 		</c:otherwise>
 	</c:choose>
 </div>
@@ -59,7 +99,7 @@ let cri = {
 		type : '${user.me_id}'
 	}
 
-let btn = '<a class="insert-review", data-id = "\${groupMember.gome_me_id}">평가하기</a>'
+let btn = '<a data-id = "\${groupMember.gome_me_id}" onclick="insertModalOpen(member)">평가하기</a>'
 
 	getNoReviewMemberList(cri)
 
@@ -215,65 +255,108 @@ $(document).on("mouseout",".applicant-list tr", function(){
 <!-- 멤버 리스트 query 설정 변경 -->
 <script type="text/javascript">
 
-//평가하ㅣ 않은 멤버를 조회할 시,
+//평가하지 않은 멤버를 조회할 시,
 //<a class="insert-review", data-id = "\${groupMember.gome_me_id}">평가하기</a>
 
 //이미 평가한 멤버를 조회할 시, 
 //<a class="view-review", data-num = "\${mure.mure_num}">평가보기</a>
 
 $("#not-reviewed").click(function(){
-	btn = '<a class="insert-review", data-id = "\${member.gome_me_id}">평가하기</a>'
+	btn = '<a data-id = "\${member.gome_me_id}" onclick="insertModalOpen(member)">평가하기</a>'
 	getNoReviewMemberList(cri);
 })
 
 $("#reviewed").click(function(){
-	btn = '<a class="view-review", data-num = "\${member.mure_num}">평가보기</a>'
+	btn = '<a data-num = "\${member.mure_num}" onclick="insertModalOpen(member)">평가보기</a>'
 	getReviewedMemberList(cri);
 })
 
 </script>
 
-<!-- 상호평가 하기 -->
+
+<!-- 모달창 관련 script -->
 <script type="text/javascript">
-	$(document).on('click', '.insert-review', function(){
-		if(!${group.go_update}){
-			alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
-			return;
-		}
+let g_arg
+
+//모달 초기화
+function initModal(modal, arg){
+	$('.mutual-review-modal #target_id').val('');
+	$('.'+modal+' #memo').val('');
+	$('.'+modal+' #rate').val('');
+
+	document.getElementById('memo').readOnly = false; 
+	document.getElementById('rate').readOnly = false; 
+	
+	$('.mutual-review-modal .insertBtn').hide()
+	
+	$('.'+modal).modal('hide');
+}
+
+//모달 show
+function insertModalOpen(arg){
+	
+	$('.mutual-review-modal #num').val(${group.go_num});
+	$('.mutual-review-modal #user_id').val('${user.me_id}');
+	$('.mutual-review-modal #target_id').val(arg.gome_me_id);
+	
+	// 값이 있는 경우(기존 일정을 클릭했을 경우) 세팅
+	if(arg.mure_content){
+		console.log('reviewed')
+		$('.mutual-review-modal #memo').text(arg.mure_content);
+		$('.mutual-review-modal #rate').val(arg.mure_rate);
 		
-		let id = $(this).data('id')
-		$.ajax({
-			async : true, //비동기 : true(비동기), false(동기)
-			url : "<c:url value="/group/manage/member/warn"/>", 
-			type : 'post', 
-			data : {
-				num : ${group.go_num},
-				id : id
-				}, 
-			dataType :"json", 
-			success : function (data){
-					if(data.data == 'ok'){
-						alert('경고를 부여했습니다.')
-						getMemberList(cri);
-					}else{
-						alert('경고를 부여하지 못했습니다. 새로고침 후 다시 이용해주세요.')
-					}
-				}, 
-				error : function(a, b, c){
-					
-			}
-		});
-	})
+		document.getElementById('memo').readOnly = true; 
+		document.getElementById('rate').readOnly = true; 
+		
+	}else{
+		
+		$('.mutual-review-modal .insertBtn').show()
+	}
+	
+	//모달창 show
+	$("#modal").css('display','block');
+   	//스크롤 비활성화
+  	$("body").css('overflow','hidden');
+}
+
+/* dimmed 클릭 시 창 없애기 */
+$(document).on('click', '#dimmed', function(){
+   $("#modal").css('display','none');
+   $("body").css('overflow','visible');
+})
+/* X 클릭 시 창 없애기 */
+$(document).on('click', '.cancle-btn', function(){
+   $("#modal").css('display','none');
+   $("body").css('overflow','visible');
+})
+
+
 </script>
 
-<!-- 상호평가 내용 보기 -->
+
+<!-- 상호평가form submit event -->
 <script type="text/javascript">
-	$(document).on('click', '.view-review', function(){
-		
-	})
+$('#review-form').on('submit', function(){
+	let memo = $('#memo').val()
+	let rate = $('#rate').val()
+	
+	if(!memo){
+		alert('평가 내용을 입력해주세요.')
+		return false
+	}
+	
+	if(rate > 10 || rate < 1 || isNaN(rate)){
+		alert('1~10의 점수를 입력해주세요.')
+		return false
+	}
+	if(confirm('상호평가는 그룹의 멤버 당 한 번만 가능하며, 수정할 수 없습니다. 작성하신 내역을 저장하시겠습니까?')){
+		$('#rate').val(Math.floor(rate))
+		return true
+	}else{
+		return false
+	}
+})
 </script>
-
-
 </body>
 
 
