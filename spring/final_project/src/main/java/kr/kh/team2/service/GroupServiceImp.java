@@ -2,7 +2,6 @@ package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +13,9 @@ import kr.kh.team2.model.vo.group.GroupCalendarVO;
 import kr.kh.team2.model.vo.group.GroupMemberVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
+import kr.kh.team2.model.vo.group.MutualReviewVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
-import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.utils.Methods;
 
@@ -680,6 +679,62 @@ public class GroupServiceImp implements GroupService{
 		}
 		
 		return groupDao.updateGoUpdate(num, freeze);
+	}
+
+	@Override
+	public ArrayList<GroupMemberVO> getNotReviewedMember(int num, Criteria cri) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return null;
+		}
+		if(cri == null) {
+			System.out.println("null cri");
+			return null;
+		}
+		
+		return groupDao.getNotReviewedMember(num, cri);
+	}
+
+	@Override
+	public int getNotReviewedMemberTotalCount(int num, String id) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return -1;
+		}
+		if(!methods.checkString(id)) {
+			System.out.println("invalid id");
+			return -1;
+		}
+		
+		return groupDao.getNotReviewedMemberTotalCount(num, id);
+	}
+
+	@Override
+	public ArrayList<MutualReviewVO> getReviewedMember(int num, String id) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return null;
+		}
+		if(!methods.checkString(id)) {
+			System.out.println("invalid id");
+			return null;
+		}
+		
+		return groupDao.getReviewedMember(num, id);
+	}
+
+	@Override
+	public int getReviewedMemberTotalCount(int num, String id) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return -1;
+		}
+		if(!methods.checkString(id)) {
+			System.out.println("invalid id");
+			return -1;
+		}
+		
+		return groupDao.getReviewedMemberTotalCount(num, id);
 	}
 
 	

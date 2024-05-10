@@ -2,7 +2,6 @@ package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
-import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupApplyVO;
@@ -10,9 +9,10 @@ import kr.kh.team2.model.vo.group.GroupCalendarVO;
 import kr.kh.team2.model.vo.group.GroupMemberVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
+import kr.kh.team2.model.vo.group.MutualReviewVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
-import kr.kh.team2.model.vo.member.MetoringVO;
+import kr.kh.team2.pagination.Criteria;
 
 
 public interface GroupService {
@@ -97,6 +97,14 @@ public interface GroupService {
 	boolean changeGroupLeader(int num, String id, MemberVO user);
 
 	boolean updateGoUpdate(int num, boolean freeze, MemberVO user);
+
+	ArrayList<GroupMemberVO> getNotReviewedMember(int num, Criteria cri);
+
+	int getNotReviewedMemberTotalCount(int num, String type);
+
+	ArrayList<MutualReviewVO> getReviewedMember(int num, String type);
+
+	int getReviewedMemberTotalCount(int num, String type);
 
 
 }

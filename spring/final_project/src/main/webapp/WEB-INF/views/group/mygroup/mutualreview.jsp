@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/mygroup.css"/>">
 <style>
 	.btn-box{width: 20%;}
+	.review-manage-btn-group{visibility: hidden;}
 	
 </style>
 
@@ -29,6 +30,12 @@
 				<div class="float-left group-title">${group.go_name}</div>
 				<div class="float-left">그룹 멤버 상호평가 페이지</div>
 			</div>
+			<div class="applicant-query">
+				<input type="radio" id="not-reviewed" value="not-reviewed" name="type" checked>
+				<label for="not-reviewed">미평가한 멤버</label>
+				<input type="radio" id="reviewed" value="reviewed" name="type">
+				<label for="reviewed">평가한 멤버</label>
+			</div>
 			<div class="member-list-bg">
 				
 			</div>
@@ -43,20 +50,22 @@
 	</c:choose>
 </div>
 
-<!-- 그룹 멤버 불러오기 -->
+<!-- 미평가한 멤버 목록 불러오기(페이지 시작 시 자동 실행) -->
 <script type="text/javascript">
 let cri = {
 		page : 1,
 		search : ${group.go_num},
-		type : 'all'
+		type : '${user.me_id}'
 	}
 
-getMemberList(cri)
+let btn = '<a class="insert-review", data-id = "\${groupMember.gome_me_id}">평가하기</a>'
 
-function getMemberList(cri){
+	getNoReviewMemberList(cri)
+
+function getNoReviewMemberList(cri){
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
-		url : "<c:url value="/group/manage/member/list"/>", 
+		url : "<c:url value="/group/noreview/list"/>", 
 		type : 'post', 
 		data : JSON.stringify(cri), 
 		//서버로 보낼 데이터 타입
@@ -64,7 +73,7 @@ function getMemberList(cri){
 		//서버에서 보낸 데이터의 타입
 		dataType :"json", 
 		success : function (data){
-				displayMemberList(data.list) // 지원자 리스트 표시
+				displayMemberList(data.list, btn) // 지원자 리스트 표시
 				displayGroupPagination(data.pm) // 페이지네이션 표시
 			}, 
 			error : function(a, b, c){
@@ -73,8 +82,35 @@ function getMemberList(cri){
 	});
 	
 }
-	
-function displayMemberList(list){
+</script>
+
+<!-- 평가한 멤버 목록 불러오기 -->
+<script type="text/javascript">
+
+function getReviewedMemberList(cri){
+	$.ajax({
+		async : true, //비동기 : true(비동기), false(동기)
+		url : "<c:url value="/group/reviewed/list"/>", 
+		type : 'post', 
+		data : JSON.stringify(cri), 
+		//서버로 보낼 데이터 타입
+		contentType : "application/json; charset=utf-8",
+		//서버에서 보낸 데이터의 타입
+		dataType :"json", 
+		success : function (data){
+				displayMemberList(data.list, btn) // 지원자 리스트 표시
+				displayGroupPagination(data.pm) // 페이지네이션 표시
+			}, 
+			error : function(a, b, c){
+				
+		}
+	});
+}
+</script>
+
+<!-- 리스트 화면에 출력 -->
+<script type="text/javascript">
+function displayMemberList(list, btn){
 	let str = '';
 
 	if(list.length == 0){
@@ -83,12 +119,6 @@ function displayMemberList(list){
 	}
 	
 	for(member of list){
-		
-		// 만약 이미 평가한 사람이라면 
-		// <a class="view-review", data-num = "\${mure.mure_num}">평가보기</a>
-		
-		// 아니라면
-		// <a class="insert-review", data-id = "\${groupMember.gome_me_id}">평가하기</a>
 		
 		str +=
 			`
@@ -99,7 +129,7 @@ function displayMemberList(list){
 				</td>
 				<td><div class="id">\${member.gome_me_id}<div></td>
 				<td class="review-manage-btn-group">
-					<a class="member-warn-btn" data-id="\${member.gome_me_id}">평가하기</a>
+					\${btn}
 				<td>
 			</tr>
 			`;
@@ -160,7 +190,11 @@ function displayGroupPagination(pm){
 // 클릭이벤트
 $(document).on('click', '.box-pagination .page-link', function(){
 	cri.page = $(this).data('page');
-	getMemberList(cri);
+	if($('#not-reviewed').is(':checked')){
+		getNoReviewMemberList(cri)
+	}else{
+		getReviewedMemberList(cri)
+	}
 })
 
 
@@ -179,10 +213,23 @@ $(document).on("mouseout",".applicant-list tr", function(){
 
 <!-- 멤버 리스트 query 설정 변경 -->
 <script type="text/javascript">
-$("[name=type]").click(function(){
-	cri.type = $(this).val();
-	getMemberList(cri);
+
+//평가하ㅣ 않은 멤버를 조회할 시,
+//<a class="insert-review", data-id = "\${groupMember.gome_me_id}">평가하기</a>
+
+//이미 평가한 멤버를 조회할 시, 
+//<a class="view-review", data-num = "\${mure.mure_num}">평가보기</a>
+
+$("#not-reviewed").click(function(){
+	btn = '<a class="insert-review", data-id = "\${member.gome_me_id}">평가하기</a>'
+	getNoReviewMemberList(cri);
 })
+
+$("#reviewed").click(function(){
+	btn = '<a class="view-review", data-num = "\${member.mure_num}">평가보기</a>'
+	getReviewedMemberList(cri);
+})
+
 </script>
 
 <!-- 상호평가 하기 -->
@@ -221,11 +268,6 @@ $("[name=type]").click(function(){
 <!-- 상호평가 내용 보기 -->
 <script type="text/javascript">
 	$(document).on('click', '.member-ban-btn', function(){
-		if(!${group.go_update}){
-			alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
-			return;
-		}
-		
 		let id = $(this).data('id')
 		
 		if(confirm(id +' 회원을 그룹에서 탈퇴시키겠습니까? 그룹 탈퇴 시, 해당 사용자가 작성한 모든 데이터가 삭제되며 복구할 수 없습니다.'))

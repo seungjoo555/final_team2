@@ -25,6 +25,7 @@ import kr.kh.team2.model.vo.group.GroupCalendarVO;
 import kr.kh.team2.model.vo.group.GroupMemberVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
+import kr.kh.team2.model.vo.group.MutualReviewVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -540,11 +541,67 @@ public class GroupController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		GroupVO group = groupService.getGroupByGoNum(num);
 		
+		model.addAttribute("user", user);
+
 		if(groupService.isGroupMember(user, num)) {
 			model.addAttribute("group", group);
 		}
 		
 		return "/group/mygroup/mutualreview";
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/noreview/list")
+	public Map<String, Object> groupmutualreviewnolist(HttpSession session, @RequestBody Criteria cri){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int num = -1;
+		
+		try {
+			num = Integer.parseInt(cri.getSearch());
+		}catch(Exception e) {
+			System.out.println("error ParseInt: " + cri.getSearch());
+		}
+		
+		cri.setPerPageNum(2);
+		
+		ArrayList<GroupMemberVO> list = groupService.getNotReviewedMember(num, cri);
+		
+		int totalCount = groupService.getNotReviewedMemberTotalCount(num, cri.getType());
+		
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		map.put("list", list);
+		map.put("pm", pm);
+		
+		
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/group/reviewed/list")
+	public Map<String, Object> groupmutualreviewedlist(HttpSession session, @RequestBody Criteria cri){
+		Map<String, Object> map = new HashMap<String, Object>();
+		int num = -1;
+		
+		try {
+			num = Integer.parseInt(cri.getSearch());
+		}catch(Exception e) {
+			System.out.println("error ParseInt: " + cri.getSearch());
+		}
+		
+		cri.setPerPageNum(2);
+		
+		ArrayList<MutualReviewVO> list = groupService.getReviewedMember(num, cri.getType());
+		
+		int totalCount = groupService.getReviewedMemberTotalCount(num, cri.getType());
+		
+		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		map.put("list", list);
+		map.put("pm", pm);
+		
+		
+		return map;
 	}
 	
 	

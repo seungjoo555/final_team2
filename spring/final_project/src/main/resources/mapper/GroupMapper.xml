@@ -231,6 +231,40 @@
 		SELECT go_update FROM `group` WHERE go_num = #{num}
 	</select>
 	
+	<select id="getNotReviewedMember" resultType="GroupMemberVO">
+		SELECT group_member.*, me_nickname AS nickname
+			FROM group_member
+				JOIN `member` ON gome_me_id = me_id
+			WHERE gome_go_num = #{num} AND gome_me_id != #{cri.type}
+				AND gome_me_id NOT IN(
+					SELECT mure_target_id FROM mutual_review WHERE mure_go_num = #{num} AND mure_me_id = #{cri.type}
+		    );
+	</select>
+	
+	<select id="getNotReviewedMemberTotalCount" resultType="int">
+		SELECT COUNT(*)
+			FROM group_member
+				JOIN `member` ON gome_me_id = me_id
+			WHERE gome_go_num = #{num} AND gome_me_id != #{id}
+				AND gome_me_id NOT IN(
+					SELECT mure_target_id FROM mutual_review WHERE mure_go_num = #{num} AND mure_me_id = #{id}
+		    )
+		    GROUP BY gome_go_num;
+	</select>
+	
+	<select id="getReviewedMember" resultType="MutualReviewVO">
+		SELECT mutual_review.*, me_nickname AS nickname, me_id AS gome_me_id
+			FROM mutual_review JOIN `member` on mure_target_id = me_id
+		    WHERE mure_me_id = #{id} AND mure_go_num = #{num};
+	</select>
+	
+	<select id="getReviewedMemberTotalCount" resultType="int">
+		SELECT COUNT(*)
+			FROM mutual_review
+			WHERE mure_me_id =  #{id} AND mure_go_num = #{num}
+		    GROUP BY mure_go_num;
+	</select>
+	
 	<!-- =============================== DELETE =============================== -->
 	
 	<delete id="deleteGroupPost">
