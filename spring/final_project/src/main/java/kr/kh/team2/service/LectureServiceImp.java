@@ -94,4 +94,52 @@ public class LectureServiceImp implements LectureService{
 		return lectureDao.selectProgrammingLanguageList();
 	}
 
+	@Override
+	public boolean insertLecture(LectureVO lecture, MemberVO user, String progCtList, String progLangList) {
+		if(user == null || lecture == null) {
+			return false;
+		}
+		if( !checkString(lecture.getLect_name()) ||
+			!checkString(lecture.getLect_intro()) ||
+			!checkString(progCtList) ||
+			!checkString(progLangList) ) {
+			return false;
+		}
+		lecture.setLect_mentIf_me_id(user.getMe_id());
+		boolean res = lectureDao.insertLecture(lecture);
+		//강의 등록에 실패하면 분야,언어,파일 업로드 필요x
+		if(!res) {
+			return false;
+		}
+		//분야 insert
+		String [] progCt = progCtList.split(",");
+		for(String tmp : progCt) {
+			int ct = Integer.parseInt(tmp);
+			TotalCategoryVO totalCateVo = new TotalCategoryVO();
+			totalCateVo.setToCt_progCt_num(ct);
+			totalCateVo.setToCt_table_name("lecture");
+			totalCateVo.setToCt_table_pk(""+lecture.getLect_num());
+			boolean resCate = lectureDao.insertTotalCate(totalCateVo);
+			
+			if(!resCate) {
+				System.out.println("분야 등록 실패");
+			}
+		}
+		//사용 언어,스킬 insert
+		String [] progLang = progLangList.split(",");
+		for(String tmp : progLang) {
+			int ct = Integer.parseInt(tmp);
+			TotalLanguageVO totalLangVo = new TotalLanguageVO();
+			totalLangVo.setToLg_lang_num(ct);
+			totalLangVo.setToLg_table_name("lecture");
+			totalLangVo.setToLg_table_pk(""+lecture.getLect_num());
+			boolean resLang = lectureDao.insertTotalLang(totalLangVo);
+			
+			if(!resLang) {
+				System.out.println("언어 등록 실패");
+			}
+		}
+		return true;
+	}
+
 }

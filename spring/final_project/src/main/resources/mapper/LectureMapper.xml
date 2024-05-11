@@ -119,6 +119,17 @@
 		select * from programming_language
 	</select>
 	
+	<insert id="insertLecture" useGeneratedKeys="true" keyProperty="lecture.lect_num">
+		insert into lecture(lect_mentIf_me_id, lect_name, lect_intro, lect_price, lect_posting, lect_update)
+		values(#{lecture.lect_mentIf_me_id},#{lecture.lect_name},#{lecture.lect_intro},#{lecture.lect_price},now(),now())
+	</insert>
 	
+	<insert id="insertTotalCate">
+		insert into total_category(toCt_progCt_num, toCt_table_name, toCt_table_pk) VALUES (#{toCate.toCt_progCt_num}, #{toCate.toCt_table_name}, #{toCate.toCt_table_pk});
+	</insert>
+	
+	<insert id="insertTotalLang">
+		insert into total_language(toLg_lang_num, toLg_table_name, toLg_table_pk) VALUES (#{toLang.toLg_lang_num}, #{toLang.toLg_table_name}, #{toLang.toLg_table_pk});
+	</insert>
 	
 </mapper>

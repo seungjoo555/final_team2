@@ -33,4 +33,10 @@ public interface LectureDAO {
 
 	ArrayList<ProgrammingLanguageVO> selectProgrammingLanguageList();
 
+	boolean insertLecture(@Param("lecture")LectureVO lecture);
+
+	boolean insertTotalCate(@Param("toCate")TotalCategoryVO totalCateVo);
+
+	boolean insertTotalLang(@Param("toLang")TotalLanguageVO totalLangVo);
+
 }

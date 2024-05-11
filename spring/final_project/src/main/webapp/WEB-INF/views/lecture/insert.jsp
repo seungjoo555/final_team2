@@ -14,13 +14,23 @@
 			<h5>1. 강의 기본 정보 설정</h5>
 			<hr>
 			<ul class="recruit-inputList">
+				<li class="recruit-listItem">
+					<label for="lect_mentIf_me_id" class="inputbox-lableText">작성자 닉네임</label> 
+					<input type="text" value="${user.me_nickname}" readonly class="inputbox-input" id="lect_mentIf_me_id" name="lect_mentIf_me_id">
+				</li>
+				<li class="recruit-listItem">
+					<label for="lect_price" class="inputbox-lableText">강의 가격</label> 
+					<input type="text" placeholder="강의 적정 가격을 써 주세요." class="inputbox-input" id="lect_price" name="lect_price">
+				</li>
+			</ul>
+			<ul class="recruit-inputList">
 				<li class="recruit-listItem"><label for="progCt_name"
 					class="inputbox-lableText">강의 분야</label>
 					<div class="input-row multi-dropdown not-label">
 						<div class="multi-dropdown-box placeholder">
 							<!-- <input type="hidden" name="products" id="progCt_name" value="progCt_name" />  -->
 							<button type="button" tabindex="-1"
-								data-placeholder="모집 분야를 선택해 주세요.">모집 분야를 선택해 주세요.</button>
+								data-placeholder="모집 분야를 선택해 주세요.">강의 분야를 선택해 주세요.</button>
 							<input type="hidden" name="progCtList" />
 							<div class="dropdown-list">
 								<ul>
@@ -35,7 +45,8 @@
 								</ul>
 							</div>
 						</div>
-					</div></li>
+					</div>
+				</li>
 				<li class="recruit-listItem"><label for="lang_name"
 					class="inputbox-lableText">사용 언어,스킬</label>
 					<div class="input-row multi-dropdown not-label">
@@ -56,16 +67,7 @@
 								</ul>
 							</div>
 						</div>
-					</div></li>
-			</ul>
-			<ul class="recruit-inputList">
-				<li class="recruit-listItem">
-					<label for="lect_mentIf_me_id" class="inputbox-lableText">작성자 닉네임</label> 
-					<input type="text" value="${user.me_nickname}" readonly class="inputbox-input" id="lect_mentIf_me_id" name="lect_mentIf_me_id">
-				</li>
-				<li class="recruit-listItem">
-					<label for="lect_price" class="inputbox-lableText">강의 가격</label> 
-					<input type="text" placeholder="강의 적정 가격을 써 주세요." class="inputbox-input" id="lect_price" name="lect_price">
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -112,7 +114,7 @@
 			
 			let chkCount = /^[0-9]*$/;
 			
-			if(!chkCount.test(recu_count.value)) {
+			if(!chkCount.test(lect_price.value)) {
 				alert("강의 가격은 숫자만 작성 가능합니다.")
 				return false;
 			}
