@@ -32,7 +32,6 @@ public class RecommendController {
 	public Map<String, Object> GroupRecommend(HttpSession session, @RequestParam(name = "recu_num")Integer recu_num) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		System.out.println("get 요청 수신중");
 		// 로그인 여부 확인
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    
@@ -49,7 +48,6 @@ public class RecommendController {
 	    
 	    // 좋아요 상태 확인
 	    RecommendVO reco = recommendService.getRecuRecommend(recommendVo);
-	    System.out.println(reco);
 	    
 	    // 추천 정보가 없을 경우 처리
 	    if (reco == null) {
@@ -58,12 +56,47 @@ public class RecommendController {
 	    }
 	    
 	    RecommendVO reco_recu_count = recommendService.getRecuRecoCount(recu_num);
-	    System.out.println("rrc : "+reco_recu_count);
-	    System.out.println("rrcget : "+reco_recu_count.getReco_recu_count());
 	    
 	    map.put("result", true);
 		map.put("recommend", reco);
 		map.put("reco_recu_count", reco_recu_count.getReco_recu_count());
+		
+		return map;
+	}
+	
+	@GetMapping("/mentoring/recommend")
+	public Map<String, Object> MentoringRecommend(HttpSession session, @RequestParam(name = "ment_num")Integer ment_num) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		System.out.println("get 요청 수신중");
+		// 로그인 여부 확인
+	    MemberVO user = (MemberVO) session.getAttribute("user");
+	    
+	    if (user == null) {
+	        map.put("result", false);
+	        return map;
+	    }
+	    
+	    // 추천 정보 생성
+	    RecommendVO recommendVo = new RecommendVO();
+	    recommendVo.setReco_target(""+ment_num);
+	    recommendVo.setReco_me_id(user.getMe_id());
+	    recommendVo.setReco_table("mentoring");
+	    
+	    // 좋아요 상태 확인
+	    RecommendVO reco = recommendService.getMentoringRecommend(recommendVo);
+	    
+	    // 추천 정보가 없을 경우 처리
+	    if (reco == null) {
+	        map.put("result", false);
+	        return map;
+	    }
+	    
+	    RecommendVO reco_ment_count = recommendService.getRecoMentoringCount(ment_num);
+	    
+	    map.put("result", true);
+		map.put("recommend", reco);
+		map.put("reco_ment_count", reco_ment_count.getReco_ment_count());
 		
 		return map;
 	}
@@ -166,8 +199,9 @@ public class RecommendController {
 	        }
 	    }
 	    
-	    RecommendVO reco_ment_count = recommendService.getRecuMentoringCount(ment_num);
+	    RecommendVO reco_ment_count = recommendService.getRecoMentoringCount(ment_num);
 	    System.out.println("컨트롤러 멘토링 수 : " + reco_ment_count);
+	    System.out.println("컨트롤러 멘토링 수 : " + reco_ment_count.getReco_ment_count());
 	    map.put("reco_ment_count", reco_ment_count.getReco_ment_count());
 	    
 		return map;

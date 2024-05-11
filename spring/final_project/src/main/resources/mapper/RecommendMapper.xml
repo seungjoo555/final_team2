@@ -24,13 +24,13 @@
 	<select id="selectRecuRecoCount" resultType="RecommendVO">
 		SELECT count(*) AS reco_recu_count
 		FROM recommend 
-		WHERE reco_target = #{ment_num} AND reco_state = 1
+		WHERE reco_target = #{recu_num} AND reco_state = 1 AND reco_table = 'recruit'
 	</select>
 	
-	<select id="selectRecuMentoringCount" resultType="RecommendVO">
-		SELECT count(*) AS reco_recu_count
+	<select id="selectRecoMentoringCount" resultType="RecommendVO">
+		SELECT count(*) AS reco_ment_count
 		FROM recommend 
-		WHERE reco_target = #{ment_num} AND reco_state = 1
+		WHERE reco_target = #{ment_num} AND reco_state = 1 AND reco_table = 'mentoring'
 	</select>
 
 	<insert id="insertRecuRecommend">

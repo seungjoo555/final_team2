@@ -25,7 +25,7 @@ public interface RecommendService {
 
 	boolean updateMentoringRecommend(RecommendVO reco, MemberVO user, Integer ment_num);
 
-	RecommendVO getRecuMentoringCount(Integer ment_num);
+	RecommendVO getRecoMentoringCount(Integer ment_num);
 
 
 

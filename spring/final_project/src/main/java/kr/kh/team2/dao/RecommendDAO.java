@@ -24,7 +24,7 @@ public interface RecommendDAO {
 
 	boolean updateMentoringRecommend(@Param("recommend")RecommendVO reco);
 
-	RecommendVO selectRecuMentoringCount(@Param("ment_num")Integer ment_num);
+	RecommendVO selectRecoMentoringCount(@Param("ment_num")Integer ment_num);
 
 
 }

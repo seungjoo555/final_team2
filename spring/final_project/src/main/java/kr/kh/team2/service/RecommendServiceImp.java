@@ -134,12 +134,12 @@ public class RecommendServiceImp implements RecommendService {
 	}
 
 	@Override
-	public RecommendVO getRecuMentoringCount(Integer ment_num) {
+	public RecommendVO getRecoMentoringCount(Integer ment_num) {
 		if (ment_num == null) {
 			return null;
 		}
 		
-		return recommendDao.selectRecuMentoringCount(ment_num);
+		return recommendDao.selectRecoMentoringCount(ment_num);
 	}
 
 

@@ -287,11 +287,11 @@ $(document).on('click', '.mento-item', function(event){
 						</button>
 					</div>
 					<div class="like-btn-box">
-						<input type="hidden" class="reco_recu_num" value="${recruit.recu_num}">
-						<input type="hidden" class="reco_recu_count" value="${reco_recu_count.reco_recu_count}">
+						<input type="hidden" class="reco_ment_num">
+						<input type="hidden" class="reco_ment_count">
 						<button type="button" id="btnUp" data-state="1" class="like-btn btn-up">
 							<img src="<c:url value="/resources/img/like_icon.svg" />" alt="라이크아이콘" width="24" class="like-icon">
-							<span class="init-like">${reco_recu_count.reco_recu_count}</span>
+							<span class="init-like">좋아요 수</span>
 						</button>
 					</div>			
 					</div>
@@ -626,8 +626,8 @@ $(document).on('click', '.btn-apply-prev', function(){
 		$('.apply-mentoring_box').html(str);
 	}//displayMentoringDetail(); end
    
-	
-})
+});
+
 /* 신청버튼 이벤트 */
  //신청중일 때(추가필요)
 $(document).on('click', '.btn-apply-insert', function(){
@@ -687,6 +687,7 @@ $(document).on('click', '.btn-up', function(){
 	}
 	
 	let ment_num = $('.btn-apply').val();
+	
 	let recommend = {
 			ment_num : ment_num
 	}
@@ -712,7 +713,10 @@ $(document).on('click', '.btn-up', function(){
 		error : function(jqXHR, textStatus, errorThrown){
 		}
 	});	// ajax end
+	
 });
+
+
 
 </script>
 
