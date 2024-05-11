@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.kh.team2.model.vo.common.RecommendVO;
 import kr.kh.team2.model.vo.common.ReportContentVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
@@ -31,6 +31,7 @@ import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.GroupService;
+import kr.kh.team2.service.RecommendService;
 import kr.kh.team2.service.ReportService;
 import lombok.extern.log4j.Log4j;
 
@@ -42,6 +43,8 @@ public class GroupController {
 	GroupService groupService;
 	@Autowired
 	ReportService reportService;
+	@Autowired
+	RecommendService recommendService;
 	
 	// ================================ mygroup ================================
 
@@ -563,7 +566,7 @@ public class GroupController {
 	}
 	
   @GetMapping("/group/detail")
-	public String postDetail(Model model, int num) {
+	public String postDetail(HttpSession session, Model model, int num) {
 		//모집공고를 가져옴
 		RecruitVO recruit = groupService.getRecruit(num);
 		if(recruit == null) {
@@ -577,6 +580,11 @@ public class GroupController {
 		ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(num, table);
 		//신고 유형 정보 가져오기
 		ArrayList<ReportContentVO> contentList = reportService.getReportContentList();
+		
+		// 좋아요수 
+		Integer recu_num = num;
+		RecommendVO reco_recu_count = recommendService.getRecuRecoCount(recu_num);
+		
 		//화면에 전송
 		model.addAttribute("recruit", recruit);
 		model.addAttribute("groupKing", groupKing.getMe_nickname());
@@ -584,6 +592,7 @@ public class GroupController {
 		model.addAttribute("totalCategory", totalCategory);
 		model.addAttribute("totalLanguage", totalLanguage);
 		model.addAttribute("contentList", contentList);
+		model.addAttribute("reco_recu_count", reco_recu_count);
 		return "/group/detail";
 	}
   

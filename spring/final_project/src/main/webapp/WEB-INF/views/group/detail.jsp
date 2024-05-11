@@ -27,9 +27,10 @@
 			</div>
 			<div class="like-btn-box">
 				<input type="hidden" class="reco_recu_num" value="${recruit.recu_num}">
+				<input type="hidden" class="reco_recu_count" value="${reco_recu_count.reco_recu_count}">
 				<button type="button" id="btnUp" data-state="1" class="like-btn btn-up">
 					<img src="<c:url value="/resources/img/like_icon.svg" />" alt="라이크아이콘" width="24" class="like-icon">
-					<span class="init-like">${recommend.reco_recu_count}</span>
+					<span class="init-like">${reco_recu_count.reco_recu_count}</span>
 				</button>
 			</div>				
 			<!-- <div class="recruit_regDate">날짜</div> -->
@@ -258,27 +259,31 @@ $(document).on('click', '#dimmed-report', function(){
 	                alert('알 수 없는 상태입니다.');
 	            }
 				updatevote();
+				location.reload(true);
 			},
 			error : function(jqXHR, textStatus, errorThrown){
 			}
 		});	// ajax end
 	});
 	
-	function updatevote(action) {
+	function updatevote(action, data) {
 		let recu_num = $(".reco_recu_num").val();
+		let reco_recu_count = $(".reco_recu_count").val();
 		let recommend = {
-				recu_num : recu_num
+				recu_num : recu_num,
+				reco_recu_count : reco_recu_count
 		}
 		
 		$.ajax({
 			url : '<c:url value="/group/recommend"/>',
 			method : "get",
 			data : recommend,
-			success : function(data){
-				//data : 총 좋아요 수
-				console.log(data);
+			success: function (data){
+				
 				let count = parseInt(data.reco_recu_count);
+				console.log(count)
 	            count += action;
+	            
 				$(".init-like").text(count);
 			}, 
 			error : function(a, b, c){
