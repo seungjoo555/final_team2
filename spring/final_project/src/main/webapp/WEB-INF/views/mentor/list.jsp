@@ -677,7 +677,6 @@ $(document).on('click', '.btn-apply-insert', function(){
 });
 
 $(document).on('click', '.btn-up', function(){
-	alert(1);
 	
 	if(${user == null}){
 		if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?") == true){
@@ -709,7 +708,6 @@ $(document).on('click', '.btn-up', function(){
             } else {
                 alert('알 수 없는 상태입니다.');
             }
-			location.reload(true);
 		},
 		error : function(jqXHR, textStatus, errorThrown){
 		}
