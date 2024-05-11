@@ -281,7 +281,19 @@ $(document).on('click', '.mento-item', function(event){
       				<div class="memberInfo" >
 						<img class="basic-profile" value="\${mentor.mentIf_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
 						<a href="<c:url value="/mypage/profile?me_id=\${mentor.mentIf_me_id}"/>" class="memberNickname" value="\${mentor.mentIf_me_id}">\${mentor.mentIf_me_nickname} </a>
-						<div class="report-btn-box"><button class="report-btn">신고</button></div>
+						<div class="report-btn-box">
+						<button class="report-btn">
+							<img src="<c:url value="/resources/img/siren_icon.svg" />" alt="사이렌아이콘" width="24" class="siren-icon">
+						</button>
+					</div>
+					<div class="like-btn-box">
+						<input type="hidden" class="reco_recu_num" value="${recruit.recu_num}">
+						<input type="hidden" class="reco_recu_count" value="${reco_recu_count.reco_recu_count}">
+						<button type="button" id="btnUp" data-state="1" class="like-btn btn-up">
+							<img src="<c:url value="/resources/img/like_icon.svg" />" alt="라이크아이콘" width="24" class="like-icon">
+							<span class="init-like">${reco_recu_count.reco_recu_count}</span>
+						</button>
+					</div>			
 					</div>
 	      		</div>
 	      		<h1>\${mentoring.ment_title}</h1>
@@ -387,6 +399,7 @@ $(document).on('click', '.report-btn', function(){
 			`
 			<div class="report-header">
 		     		<div class="header-title"><h1>신고하기</h1></div>
+		     		
 		     	</div>
 			<div class="report-body">
 				<form action="<c:url value="/report/mentor"/>"  method="post" class="form-report">
@@ -661,7 +674,46 @@ $(document).on('click', '.btn-apply-insert', function(){
 			console.log(textStatus);
 		}
 	});
-})
+});
+
+$(document).on('click', '.btn-up', function(){
+	
+	if(${user == null}){
+		if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?") == true){
+			location.href = '<c:url value="/login"/>';			
+		}else{
+			return false;
+		}
+	}
+	
+	let ment_num = $('.btn-apply').val();
+	let recommend = {
+			ment_num : ment_num
+	}
+	
+	$.ajax({
+		async : true,
+		url : '<c:url value="/mentoring/recommend"/>', 
+		type : 'post', 
+		contentType: "application/json; charset=utf-8",
+		data : JSON.stringify(recommend),
+		dataType : "json", 
+		success : function(data) {
+			let result = data.result;
+			console.log(result);
+			if (result === 1) {
+                alert('좋아요를 눌렀습니다.');
+            } else if (result === 0) {
+                alert('좋아요를 취소했습니다.');
+            } else {
+                alert('알 수 없는 상태입니다.');
+            }
+		},
+		error : function(jqXHR, textStatus, errorThrown){
+		}
+	});	// ajax end
+});
+
 </script>
 
 
