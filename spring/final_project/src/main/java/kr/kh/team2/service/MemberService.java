@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import kr.kh.team2.model.dto.LoginDTO;
 import kr.kh.team2.model.dto.SignupDTO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.pagination.Criteria;
 
 public interface MemberService {
 
@@ -25,6 +26,16 @@ public interface MemberService {
 	ArrayList<String> getMemberStateList();
 
 	boolean updateMemberState(String set_me_id, String set_state);
+
+	ArrayList<MemberVO> getAdminMemberList(Criteria cri);
+
+	ArrayList<String> getMemberAuthList();
+
+	boolean updateMember(MemberVO member);
+
+	boolean deleteMember(String me_id);
+
+	int getAdminMemberTotalCount(Criteria cri);
 
 
 }

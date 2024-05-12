@@ -101,7 +101,7 @@ INSERT INTO `final_team2`.`search_menu` (`sear_progCt_num`, `sear_lang_num`) VAL
 INSERT INTO `final_team2`.`search_menu` (`sear_progCt_num`, `sear_lang_num`) VALUES ('7', '29');
 
 INSERT INTO member_state(ms_state) VALUES("이용중"), ("영구정지"), ("탈퇴");
-INSERT INTO member_auth(ma_auth) VALUES("관리자"),("멘토"), ("일반");
+INSERT INTO member_auth(ma_auth) VALUES("관리자"),("부관리자"),("멘토"), ("일반");
 
 /* 운영자 정보 추가 */
 INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth)
@@ -358,5 +358,17 @@ INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_mem
 INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
 		    VALUES("d-day0","2023-07-20","2023-04-20","d-day0 memo", "qwert@final.com",1);
             
-            
-            
+/*참조무결성*/
+/*멤버*/
+ALTER TABLE `final_team2`.`member` 
+DROP FOREIGN KEY `FK_member_auth_TO_member_1`,
+DROP FOREIGN KEY `FK_member_state_TO_member_1`;
+ALTER TABLE `final_team2`.`member` 
+ADD CONSTRAINT `FK_member_auth_TO_member_1`
+  FOREIGN KEY (`me_ma_auth`)
+  REFERENCES `final_team2`.`member_auth` (`ma_auth`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_member_state_TO_member_1`
+  FOREIGN KEY (`me_ms_state`)
+  REFERENCES `final_team2`.`member_state` (`ms_state`)
+  ON DELETE CASCADE;            
