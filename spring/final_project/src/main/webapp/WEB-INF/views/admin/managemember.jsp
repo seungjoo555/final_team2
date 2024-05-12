@@ -15,14 +15,14 @@
 	<h1>멤버관리</h1>
 	
 	<div class="box-search-form">
-		<form action="" class="search-form">
-			<select>
-				<option>아이디</option>
-				<option>권한</option>
-				<option>상태</option>
+		<form action="<c:url value="/admin/managemember"/>" method="get" class="search-form">
+			<select name="type" class="form-control" name="type">
+				<option value="all" <c:if test="${pm.cri.type == 'all'}">selected</c:if>>아이디</option>
+				<option value="auth" <c:if test="${pm.cri.type == 'auth'}">selected</c:if>>등급</option>
+				<option value="state" <c:if test="${pm.cri.type == 'state'}">selected</c:if>>상태</option>
 			</select>
 			<div class="box-search-input">
-				<input>
+				<input type="text" name="search" class="form-control" placeholder="검색어" value="${pm.cri.search}">
 				<button>
 					<img alt="검색" src="/team2/resources/img/search_icon.svg">
 				</button>
@@ -108,7 +108,42 @@
 
 	</div>
 
-	<!-- 페이지네이션 -->	
+	<!-- 페이지네이션 -->
+	<div class="box-pagination">
+		 <ul class="pagination justify-content-center">
+		 	<c:if test="${pm.prev}">
+		 		<c:url value="/admin/managemember" var="url">
+		 			<c:param name="page" value="${pm.startPage - 1 }"></c:param>
+		 			<c:param name="type" value="${pm.cri.type}"></c:param>
+		 			<c:param name="search" value="${pm.cri.search}"></c:param>
+		 		</c:url>
+			    <li class="page-item">
+			    	<a class="page-link" href="${url}">이전</a>
+			    </li>
+		 	</c:if>
+		 	<c:forEach begin="${pm.startPage}" end="${pm.endPage}" var="i">
+		 		<c:url value="/admin/managemember" var="url">
+		 			<c:param name="page" value="${i}"></c:param>
+		 			<c:param name="type" value="${pm.cri.type}"></c:param>
+		 			<c:param name="search" value="${pm.cri.search}"></c:param>
+		 		</c:url>
+			    <li class="page-item <c:if test="${pm.cri.page == i }">active</c:if>">	
+			    	<a class="page-link" href="${url}">${i}</a>
+			    </li>
+		 	</c:forEach>
+		    <c:if test="${pm.next}">
+		    	<c:url value="/admin/managemember" var="url">
+		 			<c:param name="page" value="${pm.endPage + 1 }"></c:param>
+		 			<c:param name="type" value="${pm.cri.type}"></c:param>
+		 			<c:param name="search" value="${pm.cri.search}"></c:param>
+		 		</c:url>
+			    <li class="page-item">
+			    	<a class="page-link" href="${url}">다음</a>
+			    </li>
+		    </c:if>
+	 	</ul>
+	</div>
+  	
 	
 	
 	<!-- 회원 일괄 정보 변경 처리 화면 -->
@@ -184,8 +219,9 @@ $(document).on("click", ".btn-delete", function(){
 	let tr = $(this).parent().parent();
 	let td = tr.children();
 	
-	//if(confirm("해당 유저 "+member.me_id+"를 삭제하시겠습니까? 삭제 후 취소할 수 없습니다.") == false)
-	//	return;
+	if(confirm("해당 유저 "+member.me_id+"를 삭제하시겠습니까? 삭제 후 취소할 수 없습니다.") == false)
+		return;
+	
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
 		url : '<c:url value="/admin/managemember/quit"/>', 
@@ -226,19 +262,22 @@ $(document).on('click', '.total-check-member', function(){
 	}
 })
 
+///멤버 선택 변경 클릭이벤트
 $(document).on('click', '.btn-batch-processing', function(){
+   var checkBox = $("input[name=check-member]:checked");
+   if(checkBox.length === 0){
+		alert("선택된 신고내역이 없습니다.");
+		return;
+	}
    $(".admin-member-process-modal").css('display','block');
    $("body").css('overflow','hidden');
 })
 
+
+//선택된 멤버 정보 변경 이벤트
 $(document).on('click', '.btn-admin-member-process', function(){
-	   //체크된 멤버 정보 변경
+   //체크된 멤버 정보 변경
 	var checkBox = $("input[name=check-member]:checked");
-	
-	if(checkBox.length === 0){
-		alert("선택된 신고내역이 없습니다.");
-		return;
-	}
 	
 	var idList = [];
 	
@@ -260,7 +299,7 @@ $(document).on('click', '.btn-admin-member-process', function(){
 	
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
-		url : '<c:url value="/admin/member/update/all"/>', 
+		url : '<c:url value="/admin/managemember/update/all"/>', 
 		type : 'post', 
 		data : JSON.stringify(memberUpdateDto),
 		contentType : "application/json; charset=utf-8",
@@ -270,6 +309,51 @@ $(document).on('click', '.btn-admin-member-process', function(){
 				alert("선택된 멤버들의 정보가 변경 되었습니다.");
 			}else{
 				alert("선택된 멤버들의 정보가 변경되지 못했습니다.");
+			}
+		}, 
+		error : function(jqXHR, textStatus, errorThrown){
+			console.log(jqXHR);
+			console.log(textStatus);
+		}
+	});	//ajax end
+})
+
+//선택된 멤버 일괄 삭제 이벤트
+$(document).on('click', '.btn-batch-delete', function(){
+   //체크된 멤버 정보 변경
+	var checkBox = $("input[name=check-member]:checked");
+	
+	var idList = [];
+	
+	//반복해서 id값 가져오기
+	checkBox.each(function(i){
+		//tr, td 정보 가져오기
+		var tr = checkBox.parent().parent().eq(i);
+		var td = tr.children();
+		//특정 td값 가져오기
+		var id = td.eq(1).data("me_id");
+		idList.push(id);
+	})
+	
+	let memberUpdateDto = {
+		idList : idList,
+	}
+	
+	if(confirm("해당 유저들의 정보를 정말 삭제하시겠습니까? 삭제 후 취소할 수 없습니다.") == false)
+		return;
+
+	$.ajax({
+		async : true, //비동기 : true(비동기), false(동기)
+		url : '<c:url value="/admin/managemember/quit/all"/>', 
+		type : 'post', 
+		data : JSON.stringify(memberUpdateDto),
+		contentType : "application/json; charset=utf-8",
+		dataType : "json", 
+		success : function (data){
+			if(data.result){
+				alert("선택된 멤버 정보를 삭제했습니다.");
+			}else{
+				alert("선택된 멤버 정보를 삭제하지 못했습니다.");
 			}
 		}, 
 		error : function(jqXHR, textStatus, errorThrown){

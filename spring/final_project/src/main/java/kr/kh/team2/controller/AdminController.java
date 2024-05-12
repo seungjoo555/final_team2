@@ -302,16 +302,22 @@ public class AdminController {
 	
 	/** 멤버관리 */
 	@GetMapping("/admin/managemember")
-	public String adminManagemember(Model model) {
+	public String adminManagemember(Model model, Criteria cri) {
+		
+		cri.setPerPageNum(10);
 		
 		//멤버리스트
-		ArrayList<MemberVO> memberList = memberService.getAdminMemberList();
+		ArrayList<MemberVO> memberList = memberService.getAdminMemberList(cri);
+		int totalCount = memberService.getAdminMemberTotalCount(cri);
 		//멤버권한리스트
 		ArrayList<String> memberAuthList = memberService.getMemberAuthList();
 		//멤버상태리스트
 		ArrayList<String> memberStateList = memberService.getMemberStateList();
 		memberStateList.remove("탈퇴");
+		//페이지메이커
+		PageMaker pm = new PageMaker(10, cri, totalCount);
 		
+		model.addAttribute("pm", pm);
 		model.addAttribute("list", memberList);
 		model.addAttribute("authList", memberAuthList);
 		model.addAttribute("stateList", memberStateList);
@@ -334,7 +340,6 @@ public class AdminController {
 	@PostMapping("/admin/managemember/quit")
 	public Map<String, Object> adminManagememberQuit(@RequestParam("me_id") String me_id) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("me_id :: "+me_id);
 		//회원정보 삭제
 		boolean res = memberService.deleteMember(me_id);
 		map.put("result", res);
@@ -345,8 +350,35 @@ public class AdminController {
 	@PostMapping("/admin/managemember/update/all")
 	public Map<String, Object> adminManagememberUpdateAll(@RequestBody AdminMemberUpdateDTO meAll) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		
+		boolean res = false;
+		//반복 업데이트
+		for (String me_id : meAll.getIdList()) {
+			MemberVO member = new MemberVO(me_id);
+			member.setMe_ma_auth(meAll.getMe_ma_auth());
+			member.setMe_ms_state(meAll.getMe_ms_state());
+			res = memberService.updateMember(member);
+		}
+		//회원정보 업데이트
+		map.put("result", res);
 
-//		map.put("result", res);
+		return map;
+	}
+	
+	//멤버 일괄 정보 삭제
+	@ResponseBody
+	@PostMapping("/admin/managemember/quit/all")
+	public Map<String, Object> adminManagememberQuitAll(@RequestBody AdminMemberUpdateDTO meAll) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(meAll);
+		
+		boolean res = false;
+		//반복 회원 정보 삭제
+		for (String me_id : meAll.getIdList()) {
+			res = memberService.deleteMember(me_id);
+		}
+		map.put("result", res);
+		
 		return map;
 	}
 
