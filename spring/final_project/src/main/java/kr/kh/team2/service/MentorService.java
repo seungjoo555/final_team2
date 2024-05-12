@@ -53,6 +53,10 @@ public interface MentorService {
 
 	boolean updateMentorInfoForDenied(MentorInfoVO mentorInfoVO, String me_id);
 
+	boolean updateMentoring(MetoringVO mentoring, TotalCategoryVO toCt);
+
+	boolean deleteMentoring(Integer mentNum);
+
 
 
 

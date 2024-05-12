@@ -52,4 +52,8 @@ public interface MentorDAO {
 
 	boolean updateMentorInfoForDenied(@Param("mt_info")MentorInfoVO mentorInfoVO,@Param("me_id") String me_id);
 
+	boolean updateMentoring(@Param("ment")MetoringVO mentoring);
+
+	boolean deleteMentoring(@Param("ment_num")Integer mentNum);
+
 }
