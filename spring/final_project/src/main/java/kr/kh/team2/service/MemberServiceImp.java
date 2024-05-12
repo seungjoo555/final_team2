@@ -9,6 +9,7 @@ import kr.kh.team2.model.dto.LoginDTO;
 import kr.kh.team2.dao.MemberDAO;
 import kr.kh.team2.model.dto.SignupDTO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.utils.Methods;
 
 
@@ -111,6 +112,42 @@ public class MemberServiceImp implements MemberService {
 			return false;
 		}
 		return memberDao.updateMemberState(set_me_id, set_state);
+	}
+
+	@Override
+	public ArrayList<MemberVO> getAdminMemberList(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 10);
+		}
+		
+		return memberDao.selectAdminMemberList(cri);
+	}
+
+	@Override
+	public ArrayList<String> getMemberAuthList() {
+		return memberDao.selectMemberAuthList();
+	}
+
+	@Override
+	public boolean updateMember(MemberVO member) {
+		if(member == null || !methods.checkString(member.getMe_id())|| !methods.checkString(member.getMe_ma_auth())|| !methods.checkString(member.getMe_ms_state()))
+		return false;
+		return memberDao.updateMember(member);
+	}
+
+	@Override
+	public boolean deleteMember(String me_id) {
+		if(!methods.checkString(me_id))
+			return false;
+		return memberDao.deleteMemberVO(me_id);
+	}
+
+	@Override
+	public int getAdminMemberTotalCount(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 10);
+		}
+		return memberDao.selectAdminMemberTotalCount(cri);
 	}
 	
 	
