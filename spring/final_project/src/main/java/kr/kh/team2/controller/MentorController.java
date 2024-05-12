@@ -273,5 +273,59 @@ public class MentorController {
 		
 		return "";
 	}
+	
+	@GetMapping("/mentor/mentoring/update")
+	public String mentoringUpdate(Model model, Integer mentNum,  HttpSession session) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		MentorInfoVO mentIf = mentorService.getMentorInfo(user.getMe_id());
+		ArrayList<ProgrammingCategoryVO> progCt = mentorService.getProgrammingCategory();
+		
+		MetoringVO mentoring = mentorService.getMentoring(mentNum);
+		
+		
+		model.addAttribute("progCtList",progCt);
+		model.addAttribute("mentIf",mentIf);
+		model.addAttribute("mentoring",mentoring);
+		
+		
+		return "/mentor/mentoringupdate";
+	}
+	
+	@PostMapping("/mentor/mentoring/update")
+	public String mentoringUpdatetPost(Model model, HttpSession session, MetoringVO mentoring, TotalCategoryVO toCt) {
+		
+		toCt.setToCt_table_name("mentoring");
+		System.out.println(mentoring);
+		boolean res = mentorService.updateMentoring(mentoring,toCt);
+		
+		if(res) {
+			model.addAttribute("msg","멘토링 글을 수정했습니다.");
+			model.addAttribute("url","/mentor/list");
+			return "message";
+		}
+		
+		
+		model.addAttribute("msg","멘토링 글을 수정하지 못했습니다.");
+		model.addAttribute("url","");
+		return "message";
+	}
+	
+	@GetMapping("/mentor/mentoring/delete")
+	public String mentoringDelete(Model model, Integer mentNum,  HttpSession session) {
+		
+		
+		boolean res = mentorService.deleteMentoring(mentNum);
+		
+		if(res) {
+			model.addAttribute("msg","멘토링 글을 삭제했습니다.");
+			model.addAttribute("url","/mentor/list");
+			return "message";
+		}
+		
+		
+		model.addAttribute("msg","멘토링 글을 삭제하지 못했습니다.");
+		model.addAttribute("url","/mentor/list");
+		return "message";
+	}
 
 }
