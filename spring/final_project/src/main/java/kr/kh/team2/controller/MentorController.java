@@ -75,8 +75,13 @@ public class MentorController {
 		//멘토 정보 받아오기
 		MentorInfoVO mentorInfo = mentorService.getMentor(mentoring.getMent_me_id());
 		
+		// 좋아요수 
+		Integer mentNum = ment_num;
+		RecommendVO reco_ment_count = recommendService.getRecoMentoringCount(mentNum);
+		
 		map.put("mentoring",mentoring);
 		map.put("mentor", mentorInfo);
+		map.put("reco_ment_count", reco_ment_count);
 		
 		return map;
 	}
@@ -179,7 +184,7 @@ public class MentorController {
 		}
 		if(res) {
 			model.addAttribute("msg","멘토 신청을 완료하였습니다.");
-			model.addAttribute("url","/mentor/mentorcom");
+			model.addAttribute("url","/mentor/complete");
 		}else {
 			model.addAttribute("msg","멘토 신청을 완료하지 못했습니다.");
 			model.addAttribute("url","/");

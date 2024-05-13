@@ -112,8 +112,19 @@
 			return;	
 		}
 		
+		//멘토링 상태
+		
 		
 		for(mentoing of list){
+			
+			//멘토 신청 상태
+			let stateStr = '';
+			if(mentoing.ment_state == 1){
+				stateStr += `<div class="mentoSituation">모집중</div>`
+			}else if(mentoing.ment_state == -1){
+				stateStr += `<div class="mentoSituation">모집완료</div>`
+			}
+			
 			
 			str +=
 				`
@@ -138,7 +149,11 @@
 						<div class="mento-list-item-memberInfo" >
 							<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
 							<div class="memberNickname">\${mentoing.ment_me_nickname } </div>
-							<div class="mentoSituation">0</div>
+					`
+					+
+					stateStr
+					+
+					`
 						</div>
 					</li>
 				</a>
@@ -251,7 +266,7 @@ $(document).on('click', '.mento-item', function(event){
 			},
 			dataType :"json", 
 			success : function (data){
-				displayMentoringDetail(data.mentoring, data.mentor);
+				displayMentoringDetail(data.mentoring, data.mentor, data.reco_ment_count);
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
 			}
@@ -259,15 +274,16 @@ $(document).on('click', '.mento-item', function(event){
 	}	//getMentoring(ment_num); end
 	
 	/* 멘토링 모집 글 상세 출력 */
-	function displayMentoringDetail(mentoring, mentor) {
+	function displayMentoringDetail(mentoring, mentor, reco_ment_count) {
 		let str="";
 		
-		if(mentoring == null || mentor == null){
+		if(mentoring == null || mentor == null || reco_ment_count == null){
 			str += `<h1>등록되지 않은 멘토링 정보입니다.<h1>`;
 		}
 		
-		//본인 글일 경우 삭제, 수정 버튼 추가
-		let meStr = '';
+		//본인 글일 경우 신고를 숨기고 삭제, 수정 버튼 추가
+		//모집완료일 경우 신청버튼 숨기기 & 본인 글일 경우 모집종료 버튼 추가<?
+		let meStr = '', reportStr = '';
 		if(mentor.mentIf_me_id == $("[name=user-meId]").val()){
 			meStr += 
 				`
@@ -281,6 +297,17 @@ $(document).on('click', '.mento-item', function(event){
 				</button>
 				`
 			
+		}else{
+			reportStr +=
+				`
+				<button class="report-btn">
+					<img src="<c:url value="/resources/img/siren_icon.svg" />" alt="사이렌아이콘" width="24" class="siren-icon">
+				</button>
+				`
+			meStr +=
+				`
+				<div class="btn-apply-box"><button type="button" class="btn-apply" value="\${mentoring.ment_num}">신청하기</button></div>
+				`
 		}
 		
 		
@@ -300,31 +327,27 @@ $(document).on('click', '.mento-item', function(event){
 						<img class="basic-profile" value="\${mentor.mentIf_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
 						<a href="<c:url value="/mypage/profile?me_id=\${mentor.mentIf_me_id}"/>" class="memberNickname" value="\${mentor.mentIf_me_id}">\${mentor.mentIf_me_nickname} </a>
 						<div class="report-btn-box">
-						<button class="report-btn">
-							<img src="<c:url value="/resources/img/siren_icon.svg" />" alt="사이렌아이콘" width="24" class="siren-icon">
-						</button>
-					</div>
-					<div class="like-btn-box">
-						<input type="hidden" class="reco_ment_num">
-						<input type="hidden" class="reco_ment_count">
-						<button type="button" id="btnUp" data-state="1" class="like-btn btn-up">
-							<img src="<c:url value="/resources/img/like_icon.svg" />" alt="라이크아이콘" width="24" class="like-icon">
-							<span class="init-like">좋아요 수</span>
-						</button>
-					</div>			
 			`
 			+
-			meStr
+			reportStr
 			+
 			`
-							</div>
+							
+						</div>
+						<div class="like-btn-box">
+							<input type="hidden" class="reco_ment_count" value="\${reco_ment_count.reco_ment_count}">
+							<button type="button" id="btnUp" data-state="1" class="like-btn btn-up">
+								<img src="<c:url value="/resources/img/like_icon.svg" />" alt="라이크아이콘" width="24" class="like-icon">
+								<span class="init-like">\${reco_ment_count.reco_ment_count}</span>
+							</button>
+						</div>			
 					</div>
 	      		</div>
 	      		<h1>\${mentoring.ment_title}</h1>
 	      		<div class="apply-mentoring_body_info_list">
 	      			<ul>
 	      				<li>직무 : \${mentor.mentIf_ment_job}</li>
-	      				<li>경력 : \${mentor.mentIf_date}년</li>
+	      				<li>경력 : \${mentor.mentIf_exp}년</li>
 	      				<li>포토폴리오 : \${mentor.mentIf_portfolio}</li>
 	      			</ul>
 	      		</div>
@@ -335,7 +358,12 @@ $(document).on('click', '.mento-item', function(event){
 	      	</div>
 	      	<div class="apply-mentoring_footer">
 				<div class="apply-due">종료일 : \${dateString}</div>
-				<div class="btn-apply-box"><button type="button" class="btn-apply" value="\${mentoring.ment_num}">신청하기</button></div>
+			`
+			+
+			meStr
+			+
+			`
+				
 			</div>
 			`
 		$('.apply-mentoring_box').html(str);
@@ -725,11 +753,12 @@ $(document).on('click', '.btn-up', function(){
 		dataType : "json", 
 		success : function(data) {
 			let result = data.result;
-			console.log(result);
 			if (result === 1) {
                 alert('좋아요를 눌렀습니다.');
+                updatevote(1);
             } else if (result === 0) {
                 alert('좋아요를 취소했습니다.');
+                updatevote(-1);
             } else {
                 alert('알 수 없는 상태입니다.');
             }
@@ -740,11 +769,29 @@ $(document).on('click', '.btn-up', function(){
 	
 });
 
-
-
+function updatevote(action, data) {
+	let ment_num = $('.btn-apply').val();
+	let reco_ment_count = $(".reco_ment_count").val();
+	let recommend = {
+			ment_num : ment_num,
+			reco_ment_count : reco_ment_count
+	}
+	
+	$.ajax({
+		url : '<c:url value="/mentoring/recommend"/>',
+		method : "get",
+		data : recommend,
+		success: function (data){
+			
+			let count = parseInt(data.reco_ment_count);
+			$('.init-like').text(count);
+			
+		}, 
+		error : function(a, b, c){
+			console.log("실패");
+		}
+	});
+}
 </script>
-
-
-
 </body>
 </html>

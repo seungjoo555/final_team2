@@ -248,7 +248,6 @@ $(document).on('click', '#dimmed-report', function(){
 			dataType : "json", 
 			success : function(data) {
 				let result = data.result;
-				console.log(result);
 				if (result === 1) {
 	                alert('좋아요를 눌렀습니다.');
 	                updatevote(1);
@@ -258,8 +257,7 @@ $(document).on('click', '#dimmed-report', function(){
 	            } else {
 	                alert('알 수 없는 상태입니다.');
 	            }
-				updatevote();
-				location.reload(true);
+				
 			},
 			error : function(jqXHR, textStatus, errorThrown){
 			}
@@ -281,13 +279,11 @@ $(document).on('click', '#dimmed-report', function(){
 			success: function (data){
 				
 				let count = parseInt(data.reco_recu_count);
-				console.log(count)
-	            count += action;
-	            
-				$(".init-like").text(count);
+				$('.init-like').text(count);
+				
 			}, 
 			error : function(a, b, c){
-				
+				console.log("실패");
 			}
 		})
 	}

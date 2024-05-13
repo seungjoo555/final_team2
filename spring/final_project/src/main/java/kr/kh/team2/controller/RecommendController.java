@@ -27,7 +27,7 @@ public class RecommendController {
 	@Autowired
 	RecruitService recruitService;
 	
-	
+	@ResponseBody
 	@GetMapping("/group/recommend")
 	public Map<String, Object> GroupRecommend(HttpSession session, @RequestParam(name = "recu_num")Integer recu_num) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -64,6 +64,7 @@ public class RecommendController {
 		return map;
 	}
 	
+	@ResponseBody
 	@GetMapping("/mentoring/recommend")
 	public Map<String, Object> MentoringRecommend(HttpSession session, @RequestParam(name = "ment_num")Integer ment_num) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -168,7 +169,6 @@ public class RecommendController {
 		
 		// 공고 번호 가져오기
 		Integer ment_num = requestBody.get("ment_num");
-		System.out.println(ment_num);
 		
 		// 추천 정보 생성
 	    RecommendVO recommendVo = new RecommendVO();
@@ -178,7 +178,6 @@ public class RecommendController {
 	    
 	    // 좋아요 상태 확인
 	    RecommendVO reco = recommendService.getMentoringRecommend(recommendVo);
-	    System.out.println("컨트롤러 reco : " + reco);
 	    
 	    if(reco == null) {
 	    	RecommendVO newRecommend = new RecommendVO();
@@ -200,8 +199,6 @@ public class RecommendController {
 	    }
 	    
 	    RecommendVO reco_ment_count = recommendService.getRecoMentoringCount(ment_num);
-	    System.out.println("컨트롤러 멘토링 수 : " + reco_ment_count);
-	    System.out.println("컨트롤러 멘토링 수 : " + reco_ment_count.getReco_ment_count());
 	    map.put("reco_ment_count", reco_ment_count.getReco_ment_count());
 	    
 		return map;
