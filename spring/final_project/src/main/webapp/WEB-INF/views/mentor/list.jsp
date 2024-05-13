@@ -266,7 +266,7 @@ $(document).on('click', '.mento-item', function(event){
 			},
 			dataType :"json", 
 			success : function (data){
-				displayMentoringDetail(data.mentoring, data.mentor, data.reco_ment_count);
+				displayMentoringDetail(data.mentoring, data.mentor, data.istrue, data.reco_ment_count);
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
 			}
@@ -274,7 +274,9 @@ $(document).on('click', '.mento-item', function(event){
 	}	//getMentoring(ment_num); end
 	
 	/* 멘토링 모집 글 상세 출력 */
-	function displayMentoringDetail(mentoring, mentor, reco_ment_count) {
+
+	function displayMentoringDetail(mentoring, mentor, istrue, reco_ment_count) {
+
 		let str="";
 		
 		if(mentoring == null || mentor == null || reco_ment_count == null){
@@ -306,6 +308,8 @@ $(document).on('click', '.mento-item', function(event){
 				`
 			meStr +=
 				`
+
+				<input type="hidden" class="report-isture" value="\${istrue}">
 				<div class="btn-apply-box"><button type="button" class="btn-apply" value="\${mentoring.ment_num}">신청하기</button></div>
 				`
 		}
@@ -339,6 +343,7 @@ $(document).on('click', '.mento-item', function(event){
 							<button type="button" id="btnUp" data-state="1" class="like-btn btn-up">
 								<img src="<c:url value="/resources/img/like_icon.svg" />" alt="라이크아이콘" width="24" class="like-icon">
 								<span class="init-like">\${reco_ment_count.reco_ment_count}</span>
+
 							</button>
 						</div>			
 					</div>
@@ -412,6 +417,12 @@ $(document).on('click', '.report-btn', function(){
 		}else{
 			return false;
 		}
+	}
+	
+	//만약 신고내역이 이미 있다면
+	if($(".report-isture").val() =='false'){
+		alert("이미 신고한 게시글입니다.");
+		return;
 	}
 	
    $(".modal-report").css('display','block');
@@ -504,7 +515,7 @@ $(document).on('click', '.btn-report-insert', function(){
 	
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
-		url : '<c:url value="/reportr"/>', 
+		url : '<c:url value="/report"/>', 
 		type : 'post', 
 		data : JSON.stringify(ReportVO), 
 		contentType : "application/json; charset=utf-8",

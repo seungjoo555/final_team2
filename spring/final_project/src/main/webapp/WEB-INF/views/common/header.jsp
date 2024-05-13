@@ -74,8 +74,11 @@
 								<a href="<c:url value="/mypage/mygroup?me_id=${user.me_id}"/>">그룹/프로젝트</a>
 								<a href="#">내 정보</a>
 								<a href="<c:url value="/mygroup/list"/>">나의 그룹</a>
-								<a href="#">그리고 뭐?</a>
 								<c:if test="${user.me_ma_auth.equals('관리자') == true}">
+									<a href="<c:url value="/admin/managecommunity"/>">커뮤니티 게시판 관리</a>
+									<a href="<c:url value="/admin/managemember"/>">멤버 관리</a>
+									<a href="<c:url value="/admin/managementor"/>">멘토 관리</a>
+									<a href="<c:url value="/admin/report"/>">신고 관리</a>
 								</c:if>
 							</div>
 						</div>
