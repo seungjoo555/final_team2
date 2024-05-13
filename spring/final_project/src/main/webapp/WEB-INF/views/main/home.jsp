@@ -130,8 +130,8 @@
 			<tr>
 				<td>
 					<c:url value="/lecture/detail" var="url">
-						<c:param name="page" value="${pm.cri.page}"/>
-						<c:param name="type" value="${pm.cri.type}"/>
+						<c:param name="page" value="1"/>
+						<c:param name="type" value="all"/>
 						<c:param name="search" value="${pm.cri.search}"/>
 						<c:param name="lectNum" value="${lecture.lect_num}"/>
 					</c:url>
