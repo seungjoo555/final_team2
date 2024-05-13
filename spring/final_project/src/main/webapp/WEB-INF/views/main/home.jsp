@@ -23,11 +23,18 @@
 						<li>
 							<!-- 프로젝트/스터디 구분 -->
 							<div class="group-list-item-category" >
-								<div class="item-category">${type}</div>
+								<div class="item-category">
+									<c:if test="${group.recu_type == 0}">
+										스터디
+									</c:if>
+									<c:if test="${group.recu_type == 1}">
+										프로젝트
+									</c:if>
+								</div>
 							</div>
 							<!-- 마감일 -->
 							<div class="group-list-item-schedule">
-								<p>마감일 | ${dateString}</p>	
+								<p>마감일 | ${group.recu_due}</p>	
 							</div>
 							<div class="group-list-item-content">
 								<!-- 그룹 모집 제목 -->
@@ -48,10 +55,10 @@
 								<div class="memberNickname">${group.recu_gome_me_nickname } </div>
 								<div class="groupSituation">
 									<c:if test="${group.recu_state == 0}">
-										"모집완료"
+										모집완료
 									</c:if>
 									<c:if test="${group.recu_state == 1}">
-										"모집 중"
+										모집 중
 									</c:if>
 								</div>
 							</div>
@@ -87,7 +94,14 @@
 							<div class="mento-list-item-memberInfo" >
 								<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
 								<div class="memberNickname">${mentoing.ment_me_nickname } </div>
-								<div class="mentoSituation">0</div>
+								<div class="mentoSituation">
+									<c:if test="${mentoing.ment_state == 1}">
+										모집 중
+									</c:if>
+									<c:if test="${mentoing.ment_state == -1}">
+										모집완료
+									</c:if>
+								</div>
 							</div>
 						</li>
 					</a>

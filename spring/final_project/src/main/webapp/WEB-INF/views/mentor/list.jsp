@@ -505,7 +505,7 @@ $(document).on('click', '.btn-report-insert', function(){
 	
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
-		url : '<c:url value="/reportr"/>', 
+		url : '<c:url value="/report"/>', 
 		type : 'post', 
 		data : JSON.stringify(ReportVO), 
 		contentType : "application/json; charset=utf-8",
