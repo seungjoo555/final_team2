@@ -6,9 +6,9 @@
 
 	<!-- =============================== INSERT =============================== -->
 	<insert id="insertMentorInfo">
-		insert into mentor_info(mentif_me_id,mentif_exp,mentif_portfolio,mentif_bank,mentif_account,mentif_date,mentif_state,mentif_ment_job) 
+		insert into mentor_info(mentif_me_id,mentif_exp,mentif_portfolio,mentif_bank,mentif_account,mentif_date,mentif_state,mentif_ment_job,mentif_intro) 
 		values(#{mt_info.mentIf_me_id},#{mt_info.mentIf_exp},#{mt_info.mentIf_portfolio},#{mt_info.mentIf_bank},#{mt_info.mentIf_account},
-			   now(),0,#{mt_info.mentIf_ment_job})
+			   now(),0,#{mt_info.mentIf_ment_job},#{mt_info.mentIf_intro})
 	</insert>
 	
 	<insert id="insertMentoringApply">
