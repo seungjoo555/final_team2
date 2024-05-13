@@ -142,19 +142,20 @@ public class MentorController {
 		
 		MentorInfoVO mentorInfo = mentorService.getMentorInfo(user.getMe_id());
 		
-		if(mentorInfo.getMentIf_state()==0 || mentorInfo.getMentIf_state() == 1) {
-			model.addAttribute("msg","이미 멘토 신청을 완료한 계정입니다.");
-			model.addAttribute("url","/");
-			return "message";
-		}
-		
-		if(mentorInfo.getMentIf_state()==-1) {
-			model.addAttribute("msg","멘토 신청 거절 이력이 있습니다.");
-			model.addAttribute("url","/mentor/insert");
-			model.addAttribute("confirm", true);
-			model.addAttribute("confirmMsg","멘토신청을 다시 하시겠습니까?");
-			model.addAttribute("confirmUrl","/mentor/update");
-			return "message";
+		if(mentorInfo != null) {
+			if(mentorInfo.getMentIf_state()==0 || mentorInfo.getMentIf_state() == 1) {
+				model.addAttribute("msg","이미 멘토 신청을 완료한 계정입니다.");
+				model.addAttribute("url","/");
+				return "message";
+			}
+			if(mentorInfo.getMentIf_state()==-1) {
+				model.addAttribute("msg","멘토 신청 거절 이력이 있습니다.");
+				model.addAttribute("url","/mentor/insert");
+				model.addAttribute("confirm", true);
+				model.addAttribute("confirmMsg","멘토신청을 다시 하시겠습니까?");
+				model.addAttribute("confirmUrl","/mentor/update");
+				return "message";
+			}
 		}
 		
 		ArrayList<MentorJobVO> jobList = mentorService.getJobList();
@@ -277,6 +278,60 @@ public class MentorController {
 		
 		
 		return "";
+	}
+	
+	@GetMapping("/mentor/mentoring/update")
+	public String mentoringUpdate(Model model, Integer mentNum,  HttpSession session) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		MentorInfoVO mentIf = mentorService.getMentorInfo(user.getMe_id());
+		ArrayList<ProgrammingCategoryVO> progCt = mentorService.getProgrammingCategory();
+		
+		MetoringVO mentoring = mentorService.getMentoring(mentNum);
+		
+		
+		model.addAttribute("progCtList",progCt);
+		model.addAttribute("mentIf",mentIf);
+		model.addAttribute("mentoring",mentoring);
+		
+		
+		return "/mentor/mentoringupdate";
+	}
+	
+	@PostMapping("/mentor/mentoring/update")
+	public String mentoringUpdatetPost(Model model, HttpSession session, MetoringVO mentoring, TotalCategoryVO toCt) {
+		
+		toCt.setToCt_table_name("mentoring");
+		System.out.println(mentoring);
+		boolean res = mentorService.updateMentoring(mentoring,toCt);
+		
+		if(res) {
+			model.addAttribute("msg","멘토링 글을 수정했습니다.");
+			model.addAttribute("url","/mentor/list");
+			return "message";
+		}
+		
+		
+		model.addAttribute("msg","멘토링 글을 수정하지 못했습니다.");
+		model.addAttribute("url","");
+		return "message";
+	}
+	
+	@GetMapping("/mentor/mentoring/delete")
+	public String mentoringDelete(Model model, Integer mentNum,  HttpSession session) {
+		
+		
+		boolean res = mentorService.deleteMentoring(mentNum);
+		
+		if(res) {
+			model.addAttribute("msg","멘토링 글을 삭제했습니다.");
+			model.addAttribute("url","/mentor/list");
+			return "message";
+		}
+		
+		
+		model.addAttribute("msg","멘토링 글을 삭제하지 못했습니다.");
+		model.addAttribute("url","/mentor/list");
+		return "message";
 	}
 
 }

@@ -13,6 +13,7 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/report.css"/>">
 <body>
 <div class="container">
+<input type="hidden" name="user-meId" value="${user.me_id}">
 	<!-- 검색창 -->
 	<div class="menu-bar">
 		<div class="mentor mentor-insert">
@@ -265,11 +266,28 @@ $(document).on('click', '.mento-item', function(event){
 			str += `<h1>등록되지 않은 멘토링 정보입니다.<h1>`;
 		}
 		
+		//본인 글일 경우 삭제, 수정 버튼 추가
+		let meStr = '';
+		if(mentor.mentIf_me_id == $("[name=user-meId]").val()){
+			meStr += 
+				`
+				<button class="update-btn" >
+					<a class="btn-outline-success mentor-mentoring-update" 
+					href="<c:url value="/mentor/mentoring/update?mentNum=\${mentoring.ment_num}"/>">수정</a>
+				</button>	
+				<button class="delete-btn">
+					<a class="btn-outline-success mentor-mentoring-delete" 
+						href="<c:url value="/mentor/mentoring/delete?mentNum=\${mentoring.ment_num}"/>">삭제</a>
+				</button>
+				`
+			
+		}
+		
+		
 		//마감일 데이터포맷
 		let dateString = convertDate(mentoring.ment_duration);
 		
 		//직무, 경력, 포토폴리오가 없을 경우 출력 메세지 설정
-		
 		str += 
 			`
 	      	<div class="apply-mentoring_header">
@@ -294,6 +312,12 @@ $(document).on('click', '.mento-item', function(event){
 							<span class="init-like">좋아요 수</span>
 						</button>
 					</div>			
+			`
+			+
+			meStr
+			+
+			`
+							</div>
 					</div>
 	      		</div>
 	      		<h1>\${mentoring.ment_title}</h1>

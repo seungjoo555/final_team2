@@ -163,6 +163,31 @@ public class MentorServiceImp implements MentorService {
 		
 		return true;
 	}
+	
+	@Override
+	public boolean updateMentoring(MetoringVO mentoring, TotalCategoryVO toCt) {
+		if(!methods.checkString(mentoring.getMent_title())||
+		   !methods.checkString(mentoring.getMent_content())||
+		   !methods.checkString(mentoring.getMent_duration()+"")||
+		   !methods.checkString(mentoring.getMent_me_id())) {
+			
+			return false;
+		}
+		
+		
+		if(!mentorDAO.updateMentoring(mentoring)) {
+			return false;
+		}
+		
+		//toCt.setToCt_table_pk(mentoring.getMent_num()+"");
+		/*
+		if(!mentorDAO.insertTotalCategory(toCt)) {
+			return false;
+		}
+		*/
+		return true;
+	}
+
 
 	@Override
 	public ArrayList<MentorInfoVO> getMentorInfoList(Criteria cri) {
@@ -232,6 +257,15 @@ public class MentorServiceImp implements MentorService {
 		return mentorDAO.updateMentorInfoForDenied(mentorInfoVO,me_id);
 		
 	}
+
+	@Override
+	public boolean deleteMentoring(Integer mentNum) {
+		if(mentNum <= 0) {
+			return false;
+		}
+		return mentorDAO.deleteMentoring(mentNum);
+	}
+
 
 
 
