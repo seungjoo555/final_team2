@@ -137,19 +137,20 @@ public class MentorController {
 		
 		MentorInfoVO mentorInfo = mentorService.getMentorInfo(user.getMe_id());
 		
-		if(mentorInfo.getMentIf_state()==0 || mentorInfo.getMentIf_state() == 1) {
-			model.addAttribute("msg","이미 멘토 신청을 완료한 계정입니다.");
-			model.addAttribute("url","/");
-			return "message";
-		}
-		
-		if(mentorInfo.getMentIf_state()==-1) {
-			model.addAttribute("msg","멘토 신청 거절 이력이 있습니다.");
-			model.addAttribute("url","/mentor/insert");
-			model.addAttribute("confirm", true);
-			model.addAttribute("confirmMsg","멘토신청을 다시 하시겠습니까?");
-			model.addAttribute("confirmUrl","/mentor/update");
-			return "message";
+		if(mentorInfo != null) {
+			if(mentorInfo.getMentIf_state()==0 || mentorInfo.getMentIf_state() == 1) {
+				model.addAttribute("msg","이미 멘토 신청을 완료한 계정입니다.");
+				model.addAttribute("url","/");
+				return "message";
+			}
+			if(mentorInfo.getMentIf_state()==-1) {
+				model.addAttribute("msg","멘토 신청 거절 이력이 있습니다.");
+				model.addAttribute("url","/mentor/insert");
+				model.addAttribute("confirm", true);
+				model.addAttribute("confirmMsg","멘토신청을 다시 하시겠습니까?");
+				model.addAttribute("confirmUrl","/mentor/update");
+				return "message";
+			}
 		}
 		
 		ArrayList<MentorJobVO> jobList = mentorService.getJobList();
