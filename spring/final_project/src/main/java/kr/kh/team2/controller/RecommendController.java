@@ -169,6 +169,9 @@ public class RecommendController {
 		
 		// 공고 번호 가져오기
 		Integer ment_num = requestBody.get("ment_num");
+		System.out.println("========================");
+		System.out.println(ment_num);
+		System.out.println("========================");
 		
 		// 추천 정보 생성
 	    RecommendVO recommendVo = new RecommendVO();
@@ -199,7 +202,8 @@ public class RecommendController {
 	    }
 	    
 	    RecommendVO reco_ment_count = recommendService.getRecoMentoringCount(ment_num);
-	    map.put("reco_ment_count", reco_ment_count.getReco_ment_count());
+	    Integer recoMentCount = reco_ment_count != null ? reco_ment_count.getReco_ment_count() : 0;
+	    map.put("reco_ment_count", recoMentCount);
 	    
 		return map;
 	}
