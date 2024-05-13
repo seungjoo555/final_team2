@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
+import kr.kh.team2.model.vo.common.RecommendVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
@@ -25,6 +26,7 @@ import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.CriteriaMentor;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.MentorService;
+import kr.kh.team2.service.RecommendService;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -33,6 +35,9 @@ public class MentorController {
 	
 	@Autowired
 	MentorService mentorService;
+	
+	@Autowired
+	RecommendService recommendService;
 	
 	@GetMapping("/mentor/list")
 	public String mentorList(Model model) {
@@ -137,19 +142,20 @@ public class MentorController {
 		
 		MentorInfoVO mentorInfo = mentorService.getMentorInfo(user.getMe_id());
 		
-		if(mentorInfo.getMentIf_state()==0 || mentorInfo.getMentIf_state() == 1) {
-			model.addAttribute("msg","이미 멘토 신청을 완료한 계정입니다.");
-			model.addAttribute("url","/");
-			return "message";
-		}
-		
-		if(mentorInfo.getMentIf_state()==-1) {
-			model.addAttribute("msg","멘토 신청 거절 이력이 있습니다.");
-			model.addAttribute("url","/mentor/insert");
-			model.addAttribute("confirm", true);
-			model.addAttribute("confirmMsg","멘토신청을 다시 하시겠습니까?");
-			model.addAttribute("confirmUrl","/mentor/update");
-			return "message";
+		if(mentorInfo != null) {
+			if(mentorInfo.getMentIf_state()==0 || mentorInfo.getMentIf_state() == 1) {
+				model.addAttribute("msg","이미 멘토 신청을 완료한 계정입니다.");
+				model.addAttribute("url","/");
+				return "message";
+			}
+			if(mentorInfo.getMentIf_state()==-1) {
+				model.addAttribute("msg","멘토 신청 거절 이력이 있습니다.");
+				model.addAttribute("url","/mentor/insert");
+				model.addAttribute("confirm", true);
+				model.addAttribute("confirmMsg","멘토신청을 다시 하시겠습니까?");
+				model.addAttribute("confirmUrl","/mentor/update");
+				return "message";
+			}
 		}
 		
 		ArrayList<MentorJobVO> jobList = mentorService.getJobList();
