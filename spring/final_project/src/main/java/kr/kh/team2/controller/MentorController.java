@@ -116,6 +116,11 @@ public class MentorController {
 		return map;
 	}
 	
+	@GetMapping("/mentoring/apply/detail")
+	public String mentoringApplyDetail(Model model, HttpSession session) {
+		return "/mentor/mentoringapplydetail";
+	}
+	
 	@GetMapping("/mentor/apply")
 	public String mentorApply() {
 		
