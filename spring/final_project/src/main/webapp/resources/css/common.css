@@ -114,7 +114,6 @@ header .d-flex {
 
 /* Dropdown Button */
 .dropbtn-lecture {
-  background-color: #4CAF50;
   color: white;
   padding: 16px;
   font-size: 16px;
@@ -123,9 +122,10 @@ header .d-flex {
 }
 
 /* Dropdown button on hover & focus */
+/*
 .dropbtn-lecture:hover, .dropbtn-lecture:focus {
   background-color: #3e8e41;
-}
+}*/
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content-lecture {
@@ -156,9 +156,10 @@ header .d-flex {
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
+/*
 .dropdown-lecture:hover .dropbtn-lecture {
   background-color: #3e8e41;
-}
+}*/
 
 /* Submenu Button */
 .subbtn-lecture {

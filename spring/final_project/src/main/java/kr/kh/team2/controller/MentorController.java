@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
+import kr.kh.team2.model.vo.common.RecommendVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
@@ -25,6 +26,7 @@ import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.CriteriaMentor;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.MentorService;
+import kr.kh.team2.service.RecommendService;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -33,6 +35,9 @@ public class MentorController {
 	
 	@Autowired
 	MentorService mentorService;
+	
+	@Autowired
+	RecommendService recommendService;
 	
 	@GetMapping("/mentor/list")
 	public String mentorList(Model model) {
