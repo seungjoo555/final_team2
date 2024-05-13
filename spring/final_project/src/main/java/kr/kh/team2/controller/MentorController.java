@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.RecommendVO;
+import kr.kh.team2.model.vo.common.ReportVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
@@ -27,6 +28,7 @@ import kr.kh.team2.pagination.CriteriaMentor;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.MentorService;
 import kr.kh.team2.service.RecommendService;
+import kr.kh.team2.service.ReportService;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -38,6 +40,8 @@ public class MentorController {
 	
 	@Autowired
 	RecommendService recommendService;
+	@Autowired
+	ReportService reportService;
 	
 	@GetMapping("/mentor/list")
 	public String mentorList(Model model) {
@@ -68,13 +72,18 @@ public class MentorController {
 	
 	@ResponseBody
 	@PostMapping("/mentor/detail")
-	public Map<String, Object> mentorDetailPost(@RequestParam("ment_num")int ment_num) {
+	public Map<String, Object> mentorDetailPost(@RequestParam("ment_num")int ment_num, HttpSession session) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		//멘토링 정보 받아오기
 		MetoringVO mentoring = mentorService.getMentoring(ment_num);
 		//멘토 정보 받아오기
 		MentorInfoVO mentorInfo = mentorService.getMentor(mentoring.getMent_me_id());
+		//멘토링 신고 여부 불러오기
+		boolean istrue = reportService.getReportIsTrue(Integer.toString(ment_num), "mentoring", user.getMe_id());
 		
+		
+		map.put("istrue",istrue);
 		map.put("mentoring",mentoring);
 		map.put("mentor", mentorInfo);
 		
@@ -85,7 +94,6 @@ public class MentorController {
 	@GetMapping("/mentoring/apply")
 	public Map<String, Object> mentorApply(@RequestParam("ment_num")int ment_num) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("ment_num :: "+ment_num);
 		MetoringVO mentoring = mentorService.getMentoring(ment_num);
 		map.put("mentoring",mentoring);
 		return map;

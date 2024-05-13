@@ -443,9 +443,6 @@ $(document).on('click', '.btn-batch-processing', function(){
 $(document).on('click', '.btn-admin-report-process', function(){
 	let set_state =  $(".state-select :selected").val();
 	console.log("변경 상태 : " + set_state);
-	//let set_me_id = $('.report-meid').attr("value");
-	//var tdList = $(".td-list").val();
-	//console.log(...tdList);
 	
 	var checkBox = $("input[name=check-report]:checked");
 	

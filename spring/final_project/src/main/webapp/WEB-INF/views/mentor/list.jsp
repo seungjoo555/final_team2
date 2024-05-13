@@ -266,7 +266,7 @@ $(document).on('click', '.mento-item', function(event){
 			},
 			dataType :"json", 
 			success : function (data){
-				displayMentoringDetail(data.mentoring, data.mentor);
+				displayMentoringDetail(data.mentoring, data.mentor, data.istrue);
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
 			}
@@ -274,7 +274,7 @@ $(document).on('click', '.mento-item', function(event){
 	}	//getMentoring(ment_num); end
 	
 	/* 멘토링 모집 글 상세 출력 */
-	function displayMentoringDetail(mentoring, mentor) {
+	function displayMentoringDetail(mentoring, mentor, istrue) {
 		let str="";
 		
 		if(mentoring == null || mentor == null){
@@ -306,6 +306,7 @@ $(document).on('click', '.mento-item', function(event){
 				`
 			meStr +=
 				`
+				<input type="hidden" class="report-isture" value="\${istrue}">
 				<div class="btn-apply-box"><button type="button" class="btn-apply" value="\${mentoring.ment_num}">신청하기</button></div>
 				`
 		}
@@ -415,6 +416,12 @@ $(document).on('click', '.report-btn', function(){
 		}
 	}
 	
+	//만약 신고내역이 이미 있다면
+	if($(".report-isture").val() =='false'){
+		alert("이미 신고한 게시글입니다.");
+		return;
+	}
+	
    $(".modal-report").css('display','block');
 	let ment_num = $('.btn-apply').val();
    //출력
@@ -505,7 +512,7 @@ $(document).on('click', '.btn-report-insert', function(){
 	
 	$.ajax({
 		async : true, //비동기 : true(비동기), false(동기)
-		url : '<c:url value="/reportr"/>', 
+		url : '<c:url value="/report"/>', 
 		type : 'post', 
 		data : JSON.stringify(ReportVO), 
 		contentType : "application/json; charset=utf-8",

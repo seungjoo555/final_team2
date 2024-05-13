@@ -200,6 +200,7 @@ $(document).on("click", ".btn-update", function(){
 		success : function (data){
 			if(data.result){
 				alert("멤버 정보가 변경 " + "되었습니다.");
+				location.href = '<c:url value="/admin/managemember"/>';	
 			}else{
 				alert("멤버 정보를 변경하지 못했습니다.");
 			}
@@ -214,12 +215,11 @@ $(document).on("click", ".btn-update", function(){
 	
 })
 //멤버 정보 삭제 버튼 이벤트
-//참조 무결성 해결 필요
 $(document).on("click", ".btn-delete", function(){
 	let tr = $(this).parent().parent();
 	let td = tr.children();
 	
-	if(confirm("해당 유저 "+member.me_id+"를 삭제하시겠습니까? 삭제 후 취소할 수 없습니다.") == false)
+	if(confirm("해당 유저 "+td.eq(1).data("me_id")+"를 삭제하시겠습니까? 삭제 후 취소할 수 없습니다.") == false)
 		return;
 	
 	$.ajax({
@@ -233,6 +233,7 @@ $(document).on("click", ".btn-delete", function(){
 		success : function (data){
 			if(data.result){
 				alert("멤버 정보가 삭제되었습니다.");
+				location.href = '<c:url value="/admin/managemember"/>';	
 			}else{
 				alert("멤버 정보를 삭제하지 못했습니다.");
 			}
@@ -307,6 +308,7 @@ $(document).on('click', '.btn-admin-member-process', function(){
 		success : function (data){
 			if(data.result){
 				alert("선택된 멤버들의 정보가 변경 되었습니다.");
+				location.href = '<c:url value="/admin/managemember"/>';	
 			}else{
 				alert("선택된 멤버들의 정보가 변경되지 못했습니다.");
 			}
@@ -352,6 +354,7 @@ $(document).on('click', '.btn-batch-delete', function(){
 		success : function (data){
 			if(data.result){
 				alert("선택된 멤버 정보를 삭제했습니다.");
+				location.href = '<c:url value="/admin/managemember"/>';	
 			}else{
 				alert("선택된 멤버 정보를 삭제하지 못했습니다.");
 			}

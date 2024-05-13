@@ -26,6 +26,8 @@ public interface ReportService {
 
 	void reportStateProcess(String repo_target, String repo_table, String state);
 
+	boolean getReportIsTrue(String string, String string2, String me_id);
+
 
 
 
