@@ -55,7 +55,14 @@
 </div>
 <div class="cd-floating__price cd-floating__price--dis">
 	<p class="cd-price__discount-rate"><!-- 할인율 --></p>
-	<p>이런 유익한 강의가?! 단돈 ${lecture.lect_price}원!!!</p>
+	<c:choose>
+		<c:when test="${lecture.lect_price != 0}">
+			<p>이런 유익한 강의가?! 단돈 ${lecture.lect_price}원!!!</p>
+		</c:when>
+		<c:otherwise>
+			<p>이런 유익한 강의가! 무료라고?!!!</p>
+		</c:otherwise>
+	</c:choose>
 	<del class="cd-price__reg-price"><!-- 원 가격 --></del>
 </div>
 <a class="btn btn-success col-12" href="<c:url value="#"/>">신청하기</a>

@@ -31,4 +31,6 @@ public interface LectureService {
 
 	ArrayList<ProgrammingLanguageVO> getProgrammingLanguageList();
 
+	boolean insertLecture(LectureVO lecture, MemberVO user, String progCtList, String progLangList);
+
 }

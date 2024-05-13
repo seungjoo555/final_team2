@@ -91,14 +91,15 @@ public class LectureController {
 		log.info(progCtList);
 		log.info(progLangList);
 		//강의 글 등록
-		//boolean res1 = lectureService.insertLecture(lecture);
+		boolean res = lectureService.insertLecture(lecture, user, progCtList, progLangList);
 		
-		
-		
-		
-		
-		
-		
+		if(res) {
+			model.addAttribute("msg", "강의를 등록했습니다.");
+			model.addAttribute("url", "/lecture/list"); 
+		} else {
+			model.addAttribute("msg", "강의를 등록하지 못했습니다.");
+			model.addAttribute("url", "/lecture/insert");
+		}
 		return "message";
 	}
 	
