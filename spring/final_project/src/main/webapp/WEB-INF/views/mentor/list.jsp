@@ -266,7 +266,7 @@ $(document).on('click', '.mento-item', function(event){
 			},
 			dataType :"json", 
 			success : function (data){
-				displayMentoringDetail(data.mentoring, data.mentor, data.istrue);
+				displayMentoringDetail(data.mentoring, data.mentor, data.istrue, data.reco_ment_count);
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
 			}
@@ -274,10 +274,12 @@ $(document).on('click', '.mento-item', function(event){
 	}	//getMentoring(ment_num); end
 	
 	/* 멘토링 모집 글 상세 출력 */
-	function displayMentoringDetail(mentoring, mentor, istrue) {
+
+	function displayMentoringDetail(mentoring, mentor, istrue, reco_ment_count) {
+
 		let str="";
 		
-		if(mentoring == null || mentor == null){
+		if(mentoring == null || mentor == null || reco_ment_count == null){
 			str += `<h1>등록되지 않은 멘토링 정보입니다.<h1>`;
 		}
 		
@@ -306,6 +308,7 @@ $(document).on('click', '.mento-item', function(event){
 				`
 			meStr +=
 				`
+
 				<input type="hidden" class="report-isture" value="\${istrue}">
 				<div class="btn-apply-box"><button type="button" class="btn-apply" value="\${mentoring.ment_num}">신청하기</button></div>
 				`
@@ -336,11 +339,11 @@ $(document).on('click', '.mento-item', function(event){
 							
 						</div>
 						<div class="like-btn-box">
-							<input type="hidden" class="reco_ment_num">
-							<input type="hidden" class="reco_ment_count">
+							<input type="hidden" class="reco_ment_count" value="\${reco_ment_count.reco_ment_count}">
 							<button type="button" id="btnUp" data-state="1" class="like-btn btn-up">
 								<img src="<c:url value="/resources/img/like_icon.svg" />" alt="라이크아이콘" width="24" class="like-icon">
-								<span class="init-like">좋아요 수</span>
+								<span class="init-like">\${reco_ment_count.reco_ment_count}</span>
+
 							</button>
 						</div>			
 					</div>
@@ -761,11 +764,12 @@ $(document).on('click', '.btn-up', function(){
 		dataType : "json", 
 		success : function(data) {
 			let result = data.result;
-			console.log(result);
 			if (result === 1) {
                 alert('좋아요를 눌렀습니다.');
+                updatevote(1);
             } else if (result === 0) {
                 alert('좋아요를 취소했습니다.');
+                updatevote(-1);
             } else {
                 alert('알 수 없는 상태입니다.');
             }
@@ -776,11 +780,29 @@ $(document).on('click', '.btn-up', function(){
 	
 });
 
-
-
+function updatevote(action, data) {
+	let ment_num = $('.btn-apply').val();
+	let reco_ment_count = $(".reco_ment_count").val();
+	let recommend = {
+			ment_num : ment_num,
+			reco_ment_count : reco_ment_count
+	}
+	
+	$.ajax({
+		url : '<c:url value="/mentoring/recommend"/>',
+		method : "get",
+		data : recommend,
+		success: function (data){
+			
+			let count = parseInt(data.reco_ment_count);
+			$('.init-like').text(count);
+			
+		}, 
+		error : function(a, b, c){
+			console.log("실패");
+		}
+	});
+}
 </script>
-
-
-
 </body>
 </html>

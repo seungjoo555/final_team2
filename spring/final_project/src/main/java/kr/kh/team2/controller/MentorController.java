@@ -82,10 +82,14 @@ public class MentorController {
 		//멘토링 신고 여부 불러오기
 		boolean istrue = reportService.getReportIsTrue(Integer.toString(ment_num), "mentoring", user.getMe_id());
 		
-		
+		// 좋아요수 
+		Integer mentNum = ment_num;
+		RecommendVO reco_ment_count = recommendService.getRecoMentoringCount(mentNum);
+    
 		map.put("istrue",istrue);
 		map.put("mentoring",mentoring);
 		map.put("mentor", mentorInfo);
+		map.put("reco_ment_count", reco_ment_count);
 		
 		return map;
 	}
