@@ -181,7 +181,7 @@ public class MentorController {
 		}
 		if(res) {
 			model.addAttribute("msg","멘토 신청을 완료하였습니다.");
-			model.addAttribute("url","/mentor/mentorcom");
+			model.addAttribute("url","/mentor/complete");
 		}else {
 			model.addAttribute("msg","멘토 신청을 완료하지 못했습니다.");
 			model.addAttribute("url","/");
@@ -211,8 +211,10 @@ public class MentorController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		String me_id = user.getMe_id();
 		MentorInfoVO dbMentor = mentorService.getMentorInfo(me_id);
+		
 		if(!user.getMe_id().equals(dbMentor.getMentIf_me_id())) {
-			
+			model.addAttribute("msg","권한 외 접근입니다.");
+			model.addAttribute("url","/");
 			return "message";
 		}
 		
