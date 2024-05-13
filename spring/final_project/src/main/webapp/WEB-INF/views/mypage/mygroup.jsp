@@ -107,7 +107,7 @@
 							<div class="apply-totalcontainer">
 								<c:forEach items="${groupApplyList}" var="applylist">
 									<c:if test="${applylist.goap_state == 0 }">
-										<a href="<c:url value="/group/applydetail?num=${applylist.recu_num}"/>" class="apply-item-container">
+										<a href="<c:url value="/group/apply/detail?num=${applylist.recu_num}"/>" class="apply-item-container">
 											<li class="apply-item">
 												<div class="apply-list-item-category">
 													<c:if test="${applylist.goap_state == 0}">
@@ -153,7 +153,7 @@
 										</a>
 									</c:if>
 									<c:if test="${applylist.goap_state == 1}">
-										<a href="<c:url value="/group/applydetail?num=${applylist.recu_num}"/>" class="apply-item-container">
+										<a href="<c:url value="/group/apply/detail?num=${applylist.recu_num}"/>" class="apply-item-container">
 											<li class="apply-item">
 												<div class="apply-list-item-category">
 													<c:if test="${applylist.goap_state == 0}">
@@ -199,7 +199,7 @@
 										</a>									
 									</c:if>
 									<c:if test="${applylist.goap_state == 2}">
-										<a href="<c:url value="/group/applydetail?num=${applylist.recu_num}"/>" class="apply-item-container">
+										<a href="<c:url value="/group/apply/detail?num=${applylist.recu_num}"/>" class="apply-item-container">
 											<li class="apply-item">
 												<div class="apply-list-item-category">
 													<c:if test="${applylist.goap_state == 0}">
