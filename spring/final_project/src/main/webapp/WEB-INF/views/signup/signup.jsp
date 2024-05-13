@@ -15,7 +15,7 @@
 <body class="center">
 <div class="container">
 	<h1>회원가입</h1>
-	<h5 class="sub">어쩌고저쩌고</h5>
+	<h5 class="sub">본인 정보를 입력해주세요.</h5>
 	
 	<form action="<c:url value="/signup"/>" method="post" class="signup-form" id="signup-form">
 		<div class="id-input">
@@ -58,7 +58,7 @@
 		<div class="phone-input">
 			<label for="phone">전화번호</label>
 			<div class="input-bg">
-				<input type="text" name="phone" id="phone" placeholder="전화번호를 입력하세요.">
+				<input type="text" name="phone" id="phone" placeholder="010-xxxx-xxxx형태로 입력하세요.">
 			</div>
 			<label id="phone-error" class="error" for="phone"></label>
 		</div>
