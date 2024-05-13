@@ -35,6 +35,7 @@
 		background-color: #DAFBD8;
 		border : none;
 		border-radius : 5px;
+		margin-bottom : 25px;
 	}
 	
 	.login-btn:hover{
@@ -91,7 +92,8 @@
 		    </div>
 			<button class="login-btn" type="submit">로그인</button>
 			<div class="login-links">
-			    <p style="margin-top: 50px;">
+				<a href="<c:url value='/signup'/>">회원가입</a>
+			    <p style="margin-top: 25px;">
 			        <a href="<c:url value="/login/findid"/>">아이디 찾기</a> | <a href="<c:url value="/login/findpw"/>">비밀번호 찾기</a>
 			    </p>
 		    </div>
