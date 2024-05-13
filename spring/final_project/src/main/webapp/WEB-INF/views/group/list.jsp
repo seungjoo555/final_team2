@@ -95,7 +95,13 @@
 			}else if(group.recu_state == 1){
 				state = "모집 중";
 			}
-
+			let title = "";
+			if(group.recu_topic.length > 12){
+				title = group.recu_topic.substr(0, 13) + "...";
+			}else{
+				title = group.recu_topic;
+			}
+			
 			let dateString = convertDate(group.recu_due);
 			
 			str +=
@@ -113,7 +119,7 @@
 							</div>
 							<div class="group-list-item-content">
 								<!-- 그룹 모집 제목 -->
-								<h3 class="group-list-item-title">\${group.recu_topic }</h3>
+								<h3 class="group-list-item-title">\${group.recu_topic}</h3>
 								<!-- 분야 리스트 -->
 								<div class="group-list-item-contentList">
 									\${group.recu_required }

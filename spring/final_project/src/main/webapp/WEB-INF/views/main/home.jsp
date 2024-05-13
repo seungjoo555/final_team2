@@ -41,7 +41,7 @@
 							</div>
 							<div class="group-list-item-content">
 								<!-- 그룹 모집 제목 -->
-								<h3 class="group-list-item-title">${group.recu_topic }</h3>
+								<h3 class="group-list-item-title">${group.recu_topic}</h3>
 								<!-- 분야 리스트 -->
 								<div class="group-list-item-contentList">
 									${group.recu_required }

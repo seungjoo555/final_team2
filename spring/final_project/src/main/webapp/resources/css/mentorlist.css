@@ -33,6 +33,13 @@
 .mento-list-item-content h3{height: 100px; }
 .mento-list-item-content div{height: 40px;}
 
+.mento-list-item-title{
+	white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden
+ }
 /* 구분선 */
 .box-border-line{display:flex; justify-content:center;}
 .border-line{ border: 1px solid black; height: 1px; width: 220px; margin: 5px;}
