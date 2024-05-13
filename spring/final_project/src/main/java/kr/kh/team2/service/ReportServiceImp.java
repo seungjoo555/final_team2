@@ -131,4 +131,18 @@ public class ReportServiceImp implements ReportService{
 		reportDAO.updateReportState(repo_table, repo_target, state);
 	}
 
+	/** 신고 여부를 가져오는 서비스*/
+	@Override
+	public boolean getReportIsTrue(String repo_target, String repo_table, String me_id) {
+		if(!methods.checkString(repo_table) || !methods.checkString(repo_target) || !methods.checkString(me_id)) 
+			return false;
+		
+		ReportVO report = reportDAO.selectReportIsTrue(repo_table, repo_target, me_id);
+		 System.out.println("report :: "+ report);
+		if(report != null) {
+			return false;
+		}
+		return true;
+	}
+
 }

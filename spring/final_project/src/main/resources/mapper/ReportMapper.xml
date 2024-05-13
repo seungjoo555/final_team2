@@ -73,4 +73,8 @@
 	select * from report 
 	where repo_table = #{repo_table} and repo_target = #{repo_target}
 </select>
+<select id="selectReportIsTrue"  resultType="ReportVO">
+	select * from report 
+	where repo_table = #{repo_table} and repo_target = #{repo_target} and repo_me_id = #{me_id}
+</select>
 </mapper>
