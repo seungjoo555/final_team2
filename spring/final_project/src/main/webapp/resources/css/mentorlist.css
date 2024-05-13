@@ -23,6 +23,13 @@
 	width:250px; height:300px; border: 1px solid black; border-radius: 30px; list-style : none;
 	display: inline-block; margin: 10px; padding: 20px;   text-decoration: none; 
 }
+ .memberNickname{
+ 	width : 100px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+ }
+
 .mento-item:hover{
  	text-decoration: none; cursor: pointer;
 }
