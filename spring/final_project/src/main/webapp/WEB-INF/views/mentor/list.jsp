@@ -282,6 +282,7 @@ $(document).on('click', '.mento-item', function(event){
 		}
 		
 		//본인 글일 경우 신고를 숨기고 삭제, 수정 버튼 추가
+		//모집완료일 경우 신청버튼 숨기기 & 본인 글일 경우 모집종료 버튼 추가<?
 		let meStr = '', reportStr = '';
 		if(mentor.mentIf_me_id == $("[name=user-meId]").val()){
 			meStr += 

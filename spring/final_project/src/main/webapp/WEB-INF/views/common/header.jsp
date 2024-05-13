@@ -78,6 +78,7 @@
 									<a href="<c:url value="/admin/managecommunity"/>">커뮤니티 게시판 관리</a>
 									<a href="<c:url value="/admin/managemember"/>">멤버 관리</a>
 									<a href="<c:url value="/admin/managementor"/>">멘토 관리</a>
+									<a href="<c:url value="/admin/report"/>">신고 관리</a>
 								</c:if>
 							</div>
 						</div>
