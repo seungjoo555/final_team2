@@ -2,8 +2,11 @@ package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team2.dao.LectureDAO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
@@ -11,15 +14,39 @@ import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
 import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.lecture.LectureFileVO;
 import kr.kh.team2.model.vo.lecture.LectureVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
+import kr.kh.team2.utils.UploadFileUtils;
 
 @Service
 public class LectureServiceImp implements LectureService{
 
 	@Autowired
 	LectureDAO lectureDao;
+	
+	@Resource
+	String uploadPath;
+
+	private void uploadFile(int lect_num, MultipartFile file) {
+		if(file == null || file.getOriginalFilename().length() == 0)
+			return;
+		try {
+			String fileOriName = file.getOriginalFilename();
+			//첨부파일 업로드 후 경로를 가져옴
+			String fileName = 
+				UploadFileUtils.uploadFile(
+						uploadPath, 
+						fileOriName, 
+						file.getBytes());
+			LectureFileVO fileVO = new LectureFileVO(lect_num, fileName, fileOriName);
+			//DB에 첨부파일 정보를 추가
+			lectureDao.insertFile(fileVO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private boolean checkString(String str) {
 		return str != null && str.length() != 0;

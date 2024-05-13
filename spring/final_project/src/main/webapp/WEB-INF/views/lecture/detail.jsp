@@ -71,7 +71,7 @@
 	<hr>
 	<section>
 		<div class="form-row content">
-			<div style="min-height: 400px" class="form-control second-box" id="lect_content">${lecture.lect_intro}</div>
+			<div style="min-height: 400px; border: 1px solid #f2f2f2" class="second-box" id="lect_content">${lecture.lect_intro}</div>
 		</div>
 	</section>
 </div>
