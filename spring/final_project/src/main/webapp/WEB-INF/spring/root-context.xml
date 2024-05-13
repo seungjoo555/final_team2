@@ -20,7 +20,7 @@
 		<property name="url"
 		          value="jdbc:log4jdbc:mysql://localhost:3306/final_team2?useSSL=false&amp;serverTimezone=Asia/Seoul"/>
 	    <property name="username" value="root"></property>
-	    <property name="password" value="skdus078S"></property>
+	    <property name="password" value="root"></property>
 	</bean>  
 
 	<!-- mapper 정보 -->
