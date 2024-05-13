@@ -179,7 +179,7 @@ public class MentorController {
 		}
 		if(res) {
 			model.addAttribute("msg","멘토 신청을 완료하였습니다.");
-			model.addAttribute("url","/mentor/mentorcom");
+			model.addAttribute("url","/mentor/complete");
 		}else {
 			model.addAttribute("msg","멘토 신청을 완료하지 못했습니다.");
 			model.addAttribute("url","/");
