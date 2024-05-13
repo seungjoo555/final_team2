@@ -149,36 +149,26 @@ let flag = false;
 	    // 새로운 타이머 시작
 	    sendAuth();
 	}
-			
 	
-	function sendAuth(){
-		flag = true;
-		let me_id = $('.mem-id').val();
+	function ableInput(){
 		$('.send-auth').hide();
 		$('.verify-auth').css("display","inline-block");
 		$('.auth-key').attr("disabled",false);
 		$('.auth-key').css("background-color","white");
 		$('.auth-key').css("border","1px solid black");
-		
-		$.ajax({
-			async : true,
-			url :"<c:url value='/signup/sendAuth'/>",
-			type : 'get',
-			data : {me_id: me_id},
-			success : function(data){
-				if(data=="true"){
-					alert("인증번호가 발송되었습니다.")
-
-				}else if(data=="false"){
-					alert('메일 발송에 실패하였습니다. 다시 시도해주세요.')
-				}
-				
-			},error : function(jqXHR, textStatus, errorThrown){
-				
-			}
-		})
-		
-		//타이머
+		flag = true;
+	}
+	
+	function disableInput(){
+		$('.send-auth').show();
+		$('.verify-auth').hide();
+		$('.auth-key').attr("disabled",true);
+		$('.auth-key').css("background-color","#EBEBEB");
+		$('.auth-key').css("border","");
+		flag = false;
+	}
+	
+	function makeTimer(){
 		var duration = 180;
             timer = setInterval(function(){
                 var minutes = parseInt(duration / 60, 10);
@@ -194,6 +184,52 @@ let flag = false;
 
                 }
             }, 1000); // 1초마다 갱신
+	}
+			
+	
+	function sendAuth(){
+		let me_id = $('.mem-id').val();
+		
+		$.ajax({
+			async : true,
+			url :"<c:url value='/signup/sendAuth'/>",
+			type : 'get',
+			data : {me_id: me_id},
+			success : function(data){
+				console.log("data :: " + data);
+				switch(data){
+				case "true" : 
+					    alert("인증번호가 발송되었습니다.");
+					    ableInput();
+					    makeTimer();
+					    break;
+				case "false" : 
+						alert('메일 발송에 실패하였습니다. 다시 시도해주세요.');
+						disableInput();
+					    break;
+				case "-1" : 
+						alert("로그인 후 진행해주세요.");
+						disableInput();
+						location.replace("<c:url value='/login'/>"); break;
+				case "-2" : 
+						alert("권한 외 접근입니다."); 
+						disableInput();
+						location.replace("<c:url value='/'/>");
+						break;
+				case "-3" : 
+						alert("이미 이메일 인증을 완료한 계정입니다."); 
+						disableInput();
+						location.replace("<c:url value='/'/>");
+						break;
+				}
+				
+			},error : function(jqXHR, textStatus, errorThrown){
+				
+			}
+		})
+		
+		console.log("fl :: "+flag);
+		
 	}
 	
 	<!-- 인증 버튼 클릭 이벤트-->

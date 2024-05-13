@@ -71,16 +71,45 @@ public class SignupController {
 	}
 	
 	@GetMapping("/signup/verify")
-	public String signupVerify(){
+	public String signupVerify(HttpSession session, Model model){
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		
+		if(user==null) {
+			model.addAttribute("msg","로그인 후 진행해주세요.");
+			model.addAttribute("url","/login");
+			return "message";
+		}
+		
+		if(user.getMe_verify()==1) {
+			model.addAttribute("msg","이미 이메일인증을 완료한 계정입니다.");
+			model.addAttribute("url","/");
+			return "message";
+		}
 		
 		return "/signup/verify";
 	}
 	
 	@ResponseBody
 	@GetMapping("/signup/sendAuth")
-	public String sendVerifyMail(@RequestParam String me_id) {
+	public String sendVerifyMail(@RequestParam String me_id,HttpSession session) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		boolean res;
 		
-		boolean res = memberService.sendVerifyMail(me_id);
+		if(user == null) {
+			return "-1";
+		}
+		
+		if(!user.getMe_id().equals(me_id)) {
+			return "-2";
+		}
+		
+		if(user.getMe_verify()==1) {
+			return "-3";
+			
+		}
+		
+		
+		res = memberService.sendVerifyMail(me_id);
 		
 		return res + "";
 	}

@@ -115,6 +115,7 @@ public class LoginController {
 		
 		if(dbMember !=null) {
 			model.addAttribute("dbMember",dbMember);
+			model.addAttribute("event","true");
 			return "/login/authentication";
 		}
 		
@@ -125,8 +126,13 @@ public class LoginController {
 	}
 	
 	@GetMapping("/login/authentication")
-	public String authentication() {
-		
+	public String authentication(String eventStr,Model model) {
+		boolean event = Boolean.parseBoolean(eventStr);
+		if(!event) {
+			model.addAttribute("msg","잘못된 접근입니다.");
+			model.addAttribute("url","/");
+			return "message";
+		}
 		return "/login/authentication";
 	}
 	
@@ -153,7 +159,21 @@ public class LoginController {
 	}
 	
 	@GetMapping("/login/changepwtemp")
-	public String changePwTemp() {
+	public String changePwTemp(HttpSession session, Model model) {
+		
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		
+		if(user == null) {
+			model.addAttribute("msg","로그인 후 이용해주세요.");
+			model.addAttribute("url","/login");
+			return "message";
+		}
+		
+		if(user.getMe_temppw()==0) {
+			model.addAttribute("msg","잘못된 접근입니다.");
+			model.addAttribute("url","/");
+			return "message";
+		}
 		
 		return "/login/changepwtemp";
 	}

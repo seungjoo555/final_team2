@@ -122,9 +122,20 @@
 			<p>인증 코드가 오지 않았나요?</p>
 			<p class="resend-btn">인증코드 다시 받기</p>
 		</div>
+		<input type="hidden" value ="${event}" name="event" class="event">
 	</div>
 </div>
 <script type="text/javascript">
+eventCheck();
+console.log($('.event').val());
+function eventCheck(){
+	if($('.event').val()!="true"){
+		$('.event').val("false");
+	}
+	
+}
+
+
 var timer;
 let flag = false;
 	<!--인증메일 전송이벤트 -->
@@ -143,6 +154,7 @@ let flag = false;
 	});
 	
 	function resendAuth(){
+		
 		// 타이머 초기화
 	    clearInterval(timer);
 	    $('.timer').text('');
@@ -150,17 +162,47 @@ let flag = false;
 	    // 새로운 타이머 시작
 	    sendAuth();
 	}
-			
 	
-	function sendAuth(){
-		flag = true;
-		let me_id = $('.mem-id').val();
+	function ableInput(){
 		$('.send-auth').hide();
 		$('.verify-auth').css("display","inline-block");
 		$('.auth-key').attr("disabled",false);
 		$('.auth-key').css("background-color","white");
 		$('.auth-key').css("border","1px solid black");
-		
+		flag = true;
+	}
+	
+	function disableInput(){
+		$('.send-auth').show();
+		$('.verify-auth').hide();
+		$('.auth-key').attr("disabled",true);
+		$('.auth-key').css("background-color","#EBEBEB");
+		$('.auth-key').css("border","");
+		flag = false;
+	}
+	
+	function makeTimer(){
+		var duration = 180;
+        timer = setInterval(function(){
+            var minutes = parseInt(duration / 60, 10);
+            var seconds = parseInt(duration % 60, 10);
+
+            
+            $('.timer').text("유효시간 : "+ minutes + ":" + (seconds < 10 ? "0" + seconds : seconds));
+            if (--duration < 0) {
+                clearInterval(timer);
+                $('.timer').text('유효시간이 만료되었습니다. 다시받기 버튼을 클릭해주세요.')
+                //타이머종료시 입력불가
+                $('.auth-key').attr("disabled",true);
+
+            }
+        }, 1000); // 1초마다 갱신
+	}
+			
+	
+	function sendAuth(){
+		let me_id = $('.mem-id').val();
+
 		$.ajax({
 			async : true,
 			url :"<c:url value='/login/auth/mailsend'/>",
@@ -169,9 +211,12 @@ let flag = false;
 			success : function(data){
 				if(data=="true"){
 					alert("인증번호(임시 비밀번호)가 발송되었습니다.")
+					ableInput();
+					makeTimer();
 
 				}else if(data=="false"){
 					alert('메일 발송에 실패하였습니다. 다시 시도해주세요.')
+					disableInput();
 				}
 				
 			},error : function(jqXHR, textStatus, errorThrown){
@@ -179,22 +224,6 @@ let flag = false;
 			}
 		})
 		
-		//타이머
-		var duration = 180;
-            timer = setInterval(function(){
-                var minutes = parseInt(duration / 60, 10);
-                var seconds = parseInt(duration % 60, 10);
-
-                
-                $('.timer').text("유효시간 : "+ minutes + ":" + (seconds < 10 ? "0" + seconds : seconds));
-                if (--duration < 0) {
-                    clearInterval(timer);
-                    $('.timer').text('유효시간이 만료되었습니다. 다시받기 버튼을 클릭해주세요.')
-                    //타이머종료시 입력불가
-                    $('.auth-key').attr("disabled",true);
-
-                }
-            }, 1000); // 1초마다 갱신
 	}
 	
 	<!-- 인증 버튼 클릭 이벤트-->
