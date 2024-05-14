@@ -18,6 +18,7 @@
     	<!-- ========================== mentor ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.member.MentorJobVO" alias="MentorJobVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.member.MetoringVO" alias="MetoringVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.member.MentoringApplyVO" alias="MentoringApplyVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.member.MentorInfoVO" alias="MentorInfoVO"/>
 		
 		<!-- ========================== group ========================== -->
