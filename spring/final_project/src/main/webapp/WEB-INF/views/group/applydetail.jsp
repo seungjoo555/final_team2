@@ -46,7 +46,7 @@
 		})
 		
 		$('.group-apply-update-btn').click(function(){
-			location.href='<c:url value="/group/applyupdate?num=${goap.goap_recu_num}"/>';
+			location.href='<c:url value="/group/apply/update?num=${goap.goap_recu_num}"/>';
 		})
 	</script>
 </body>

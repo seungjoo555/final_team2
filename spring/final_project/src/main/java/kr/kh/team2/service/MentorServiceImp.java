@@ -266,6 +266,11 @@ public class MentorServiceImp implements MentorService {
 		return mentorDAO.deleteMentoring(mentNum);
 	}
 
+	@Override
+	public MentoringApplyVO getMentoringApply(int num, MemberVO user) {
+		return mentorDAO.selectMentoringApply(num, user);
+	}
+
 
 
 
