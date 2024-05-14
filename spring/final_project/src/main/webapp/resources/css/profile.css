@@ -352,11 +352,22 @@
 
 /* 멘토링 관련 스타일 */
 
-.mentoring-item {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
+.mentoring-item-container {
+	width:250px; 
+	height:320px; 
+	border: 1px solid black; 
+	border-radius: 30px; 
+	list-style : none;
+	display: inline-block; 
+	margin: 10px 20px 10px 10px; 
+	padding: 20px;   
+	text-decoration: none; 
+	color: black;
+}
+
+.mentoring-item-container:hover {
+	color: black;
+	text-decoration: none;
 }
 
 .mentoring-item-category {
@@ -383,19 +394,6 @@
     overflow-y: hidden;
     gap: 20px; /* 각 그룹 사이의 간격을 조정합니다. */
     padding-bottom: 20px;
-}
-
-.mentoring-item {
-	width:250px; 
-	height:320px; 
-	border: 1px solid black; 
-	border-radius: 30px; 
-	list-style : none;
-	margin: 10px; 
-	padding: 20px;   
-	text-decoration: none; 
-	flex: 0 0 auto; /* 요소들이 컨테이너의 크기를 따르도록 합니다. */
-    margin-right: 20px
 }
 
 .mentoring-apply-state {
