@@ -27,9 +27,7 @@
 									<div class="item-project">프로젝트</div>
 								</c:if>
 								<!-- 상호평가 내용 -->
-								<div class="mutual-item-category" >
-									<div class="item-category">${mure.mure_content}</div>
-								</div>  
+								<div class="mutual-item-category" >${mure.mure_content}</div>
 							</li>
 						</c:forEach>
 					</c:otherwise>
@@ -46,8 +44,8 @@
 			<ul class="study-apply-list">
 				<c:choose>
 					<c:when test="${empty groupList}">
-						<ul class="study-list">
-							<li class="study-list-title" style="font-weight: 700">내가 생성한 그룹</li>
+						<ul class="study-no-list">
+							<li class="study-list-no-title" style="font-weight: 700">내가 생성한 그룹</li>
 							<li class="study-list-content">내가 생성한 그룹이 존재하지 않습니다.</li>
 						</ul>
 					</c:when>
@@ -261,7 +259,7 @@
 			<ul class="mentoring-list">
 				<c:choose>
 					<c:when test="${empty mentoringList}">
-						<li>나의 멘토링이 존재하지 않습니다.</li>
+						<li class="study-list-no-content">나의 멘토링이 존재하지 않습니다.</li>
 					</c:when>
 					<c:otherwise>
 						<c:forEach items="${mentoringList}" var="ment">		
