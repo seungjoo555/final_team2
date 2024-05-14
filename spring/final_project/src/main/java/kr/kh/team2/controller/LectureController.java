@@ -16,6 +16,7 @@ import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
 import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.lecture.LectureFileVO;
 import kr.kh.team2.model.vo.lecture.LectureVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -88,7 +89,7 @@ public class LectureController {
 			LectureVO lecture, HttpSession session, MultipartFile[] file) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		//강의 글 등록
-		boolean res = lectureService.insertLecture(lecture, user, progCtList, progLangList);
+		boolean res = lectureService.insertLecture(lecture, user, progCtList, progLangList, file);
 		
 		if(res) {
 			model.addAttribute("msg", "강의를 등록했습니다.");
@@ -111,10 +112,14 @@ public class LectureController {
 		String table = "lecture";
 		ArrayList<TotalCategoryVO> totalCategory = lectureService.getCategory(lectNum, table);
 		ArrayList<TotalLanguageVO> totalLanguage = lectureService.getLanguage(lectNum, table);
+		//첨부된 강의파일 가져오기
+		ArrayList<LectureFileVO> fileList = lectureService.getFileList(lectNum);
+		
 		model.addAttribute("lecture", lecture);
 		model.addAttribute("writer", writer);
 		model.addAttribute("totalCategory", totalCategory);
 		model.addAttribute("totalLanguage", totalLanguage);
+		model.addAttribute("fileList", fileList);
 		model.addAttribute("title", "강의 상세");
 		return "/lecture/detail";
 	}

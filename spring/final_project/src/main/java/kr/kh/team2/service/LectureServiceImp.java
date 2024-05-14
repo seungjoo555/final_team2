@@ -48,6 +48,16 @@ public class LectureServiceImp implements LectureService{
 		}
 	}
 	
+	private void deleteFile(LectureFileVO file) {
+		if(file == null) {
+			return;
+		}
+		//서버에서 삭제
+		UploadFileUtils.delteFile(uploadPath, file.getLectFi_path());
+		//DB에서 삭제
+		lectureDao.deleteFile(file.getLectFi_num());
+	}
+	
 	private boolean checkString(String str) {
 		return str != null && str.length() != 0;
 	}
@@ -122,7 +132,8 @@ public class LectureServiceImp implements LectureService{
 	}
 
 	@Override
-	public boolean insertLecture(LectureVO lecture, MemberVO user, String progCtList, String progLangList) {
+	public boolean insertLecture(LectureVO lecture, MemberVO user,
+								String progCtList, String progLangList, MultipartFile[] file) {
 		if(user == null || lecture == null) {
 			return false;
 		}
@@ -166,7 +177,21 @@ public class LectureServiceImp implements LectureService{
 				System.out.println("언어 등록 실패");
 			}
 		}
+		
+		if(file == null || file.length == 0) {
+			return true;
+		}
+		
+		for(MultipartFile tmp : file) {
+			uploadFile(lecture.getLect_num(), tmp);
+		}
+		
 		return true;
+	}
+
+	@Override
+	public ArrayList<LectureFileVO> getFileList(int lectNum) {
+		return lectureDao.selectFileList(lectNum);
 	}
 
 }

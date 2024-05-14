@@ -9,6 +9,7 @@ import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
 import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.lecture.LectureFileVO;
 import kr.kh.team2.model.vo.lecture.LectureVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -38,5 +39,11 @@ public interface LectureDAO {
 	boolean insertTotalCate(@Param("toCate")TotalCategoryVO totalCateVo);
 
 	boolean insertTotalLang(@Param("toLang")TotalLanguageVO totalLangVo);
+
+	void insertFile(@Param("fi")LectureFileVO fileVO);
+
+	void deleteFile(@Param("fi_num")int lectFi_num);
+
+	ArrayList<LectureFileVO> selectFileList(@Param("lect_num")int lectNum);
 
 }

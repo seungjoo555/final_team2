@@ -132,4 +132,20 @@
 		insert into total_language(toLg_lang_num, toLg_table_name, toLg_table_pk) VALUES (#{toLang.toLg_lang_num}, #{toLang.toLg_table_name}, #{toLang.toLg_table_pk});
 	</insert>
 	
+	<!-- 강의파일 업로드 -->
+	<insert id="insertFile">
+		insert into lecture_file(lectFi_lect_num, lectFi_path, lectFi_ori_name)
+		values(#{fi.lectFi_lect_num},#{fi.lectFi_path},#{fi.lectFi_ori_name})
+	</insert>
+	
+	<!-- 강의파일 불러오기 -->
+	<select id="selectFileList" resultType="LectureFileVO">
+		select * from lecture_file where lectFi_lect_num = #{lect_num}
+	</select>
+	
+	<!-- 파일 삭제 -->
+	<delete id="deleteFile">
+		delete from lecture_file where lectFi_num = #{fi_num}
+	</delete>
+	
 </mapper>
