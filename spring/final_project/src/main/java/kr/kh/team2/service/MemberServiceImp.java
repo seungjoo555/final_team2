@@ -1,7 +1,9 @@
 package kr.kh.team2.service;
 
-import javax.mail.internet.MimeMessage;
 import java.util.ArrayList;
+
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -12,6 +14,7 @@ import kr.kh.team2.dao.MemberDAO;
 import kr.kh.team2.model.dto.ChangePwTempDTO;
 import kr.kh.team2.model.dto.LoginDTO;
 import kr.kh.team2.model.dto.SignupDTO;
+import kr.kh.team2.model.dto.SnsSignupDTO;
 import kr.kh.team2.model.vo.member.MeVerifyVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -388,6 +391,46 @@ public class MemberServiceImp implements MemberService {
 			cri = new Criteria(1, 10);
 		}
 		return memberDao.selectAdminMemberTotalCount(cri);
+	}
+
+	@Override
+	public MemberVO loginSns(String sns, String id) {
+		MemberVO user = memberDao.selectMemberSns(sns,id);
+		
+		return user;
+		
+	}
+
+	@Override
+	public boolean signupSns(SnsSignupDTO ssd) {
+		
+		return memberDao.insertMemberSns(ssd);
+		
+		
+		
+	}
+
+	@Override
+	public int idCheckSns(String email,String sns) {
+		
+		MemberVO user = memberDao.findMemberById(email);
+		
+		
+		//2 = signup
+		if(user == null) {
+			return 2;
+		}
+		//1 = login
+		if(user.getMe_type().equals(sns)) {
+			return 1;
+		}
+		//3 = 내가 시도하는 sns로그인 외의 방법으로 만들어진 이메일 계정
+		return 3;
+
+		
+		
+		
+		
 	}
 	
 	
