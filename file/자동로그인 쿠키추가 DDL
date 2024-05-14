@@ -1,0 +1,3 @@
+alter table `member`
+add column `me_cookie` varchar(255) null,
+add column `me_cookie_limit` datetime null
