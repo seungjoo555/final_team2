@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+.apply-title {
+	font-weight: 700;
+}
+
+.sub-box {
+	display: flex;	
+	margin-top: 50px;
+}
+
+.mentoring-detail {
+	margin-left: auto;
+	color: #000;
+	text-decoration: none;
+}
+
+.mentoring-detail {
+	color: #000;
+	text-decoration: none;
+}
+
+.mentoring-name {
+	font-weight: 700;
+	width: 100px;
+    text-align: start;
+    line-height: 3;
+}
+
+.mentoring-name-item {
+	border-radius: 5px;
+    padding: 20px;
+    border: 1px solid #ced4da;
+    width: 100%;
+    height: 50px;
+}
+
+.apply-container {
+	font-weight: 700;
+	width: 100px;
+    text-align: start;
+    line-height: 3;
+}
+
+.form-control {
+	border-radius: 5px;
+}
+
+.form-control[disabled] {
+	background-color: #fff;
+}
+
+.form-control.second-box {
+	text-align: start;
+	height: 400px;
+}
+
+.note-editor.note-frame .note-editing-area .note-editable[contenteditable=false] {
+	background-color: #fff;	
+}
+
+.form-row-content {
+	display: block;
+	margin: 50px 0;	
+}
+
+.button-area {
+  margin: 70px 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mentoring-apply-detail-back-btn {
+  outline: none;
+  border-radius: 5px;
+  height: 50px;
+  width: 100px;
+}
+
+.mentoring-apply-update-btn {
+  outline: none;
+  background-color: #E6F5E5;
+  border-radius: 5px;
+  height: 50px;
+  width: 100px;
+  margin-left: 20px;
+}

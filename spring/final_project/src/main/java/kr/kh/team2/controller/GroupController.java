@@ -762,7 +762,7 @@ public class GroupController {
   }
 
   
-  @GetMapping("/group/applydetail")
+  @GetMapping("/group/apply/detail")
   public String grouopApplyDetail(Model model, HttpSession session,Integer num) {
 	  MemberVO user = (MemberVO)session.getAttribute("user");
 	  
@@ -782,7 +782,7 @@ public class GroupController {
 	  return "/group/applydetail";
   }
  
-  @GetMapping("/group/applyupdate")
+  @GetMapping("/group/apply/update")
   public String groupApplyUpdate(Model model, HttpSession session, Integer num) {
 	  MemberVO user = (MemberVO)session.getAttribute("user");
 	  

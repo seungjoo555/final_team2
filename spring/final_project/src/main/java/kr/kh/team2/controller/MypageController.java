@@ -43,7 +43,6 @@ public class MypageController {
 	@GetMapping("/mypage/profile")
 	public String mypageProfile(Model model, String me_id) {
 		MemberVO member = memberService.getMember(me_id);
-		System.out.println(member);
 		model.addAttribute("member", member);
 		return "/mypage/profile";
 	}
@@ -63,7 +62,6 @@ public class MypageController {
 		// 내가 만든 스터디 리스트 가져오기
 		ArrayList<GroupVO> groupList = groupService.getStudyGroupList(me_id);
 		model.addAttribute("groupList", groupList);
-		System.out.println(groupList);
 		
 		// groupList에서 recu_num 가져오기
 		// 모집 공고에 등록된 분야 가져오기
@@ -74,7 +72,6 @@ public class MypageController {
 		
 		for(GroupVO group : groupList) {
 			int recu_num = group.getRecu_num();
-			System.out.println("recu_num : " + recu_num);
 			
 			ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table1);
 			ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table1);
@@ -88,7 +85,6 @@ public class MypageController {
 		// 내가 지원한 스터디 리스트 가져오기
 		ArrayList<GroupVO> groupApplyList = groupService.getStudyApplyList(me_id);
 		model.addAttribute("groupApplyList", groupApplyList);
-		System.out.println(groupApplyList);
 		
 		// groupList에서 recu_num 가져오기
 		// 모집 공고에 등록된 분야 가져오기
@@ -97,7 +93,6 @@ public class MypageController {
 		ArrayList<TotalLanguageVO> totalLanguage2 = new ArrayList<TotalLanguageVO>();
 		for(GroupVO group : groupApplyList) {
 			int recu_num = group.getRecu_num();
-			System.out.println("recu_num : " + recu_num);
 			
 			MemberVO groupKing = groupService.getGroupKing(recu_num);
 			model.addAttribute("groupKing", groupKing.getMe_nickname());
@@ -119,7 +114,6 @@ public class MypageController {
 		// 멘토링 가져오기
 		ArrayList<MetoringVO> mentoringList = mentorService.getMentoringList(me_id);
 		model.addAttribute("mentoringList", mentoringList);
-		System.out.println(mentoringList);
 		
 		// mentoringList에서 ment_num 가져오기
 		// 멘토링 공고에 등록된 분야 가져오기
