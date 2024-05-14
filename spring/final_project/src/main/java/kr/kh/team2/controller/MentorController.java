@@ -149,6 +149,33 @@ public class MentorController {
 		return "/mentor/mentoringapplydetail";
 	}
 	
+	@GetMapping("mentoring/apply/update") 
+	public String mentoringApplyUpdate(Model model, HttpSession session, int num) {
+		// num == mentAp_num
+		
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		//멘토링 정보 받아오기
+		MetoringVO mentoring = mentorService.getMentoring(num);
+		if(mentoring == null) {
+			return "redirect:/";
+		}
+		
+		MentoringApplyVO mentoringAp = mentorService.getMentoringApply(num, user);
+		
+		model.addAttribute("mentoring", mentoring);
+		model.addAttribute("mentoringAp", mentoringAp);
+		
+		return "/mentor/mentoringapplyupdate";
+	}
+	
+	@PostMapping("mentoring/apply/update") 
+	public String mentoringApplyUpdatePost(Model model, HttpSession session, int num) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		return "/mentor/mentoringapplydetail";
+	}
+	
 	@GetMapping("/mentor/apply")
 	public String mentorApply() {
 		

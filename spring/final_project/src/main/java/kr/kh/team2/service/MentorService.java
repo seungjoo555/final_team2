@@ -6,6 +6,7 @@ import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.dto.MentorInfoDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
+import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MentoringApplyVO;
@@ -57,7 +58,9 @@ public interface MentorService {
 
 	boolean deleteMentoring(Integer mentNum);
 
-	MentoringApplyVO getMentoringApply(int num, MemberVO user);
+	MentoringApplyVO getMentoringApply(int mentAp_num, MemberVO user);
+
+	ArrayList<MentoringApplyVO> getMentoringApplyList(int num, String me_id);
 
 
 

@@ -18,7 +18,7 @@
 	<input type="hidden" name="mentAp_num" value="${mentoringAp.mentAp_num}">
 	<div class="mentoring-title-container">
 		<div class="mentoring-name">멘토링 명</div>
-		<input type="text" class="mentoring-name-item" value="${mentoring.ment_title}">
+		<input type="text" class="mentoring-name-item" value="${mentoring.ment_title}" readonly>
 	</div>
 	<div class="form-row-content">
 		<div class="apply-container">지원서 내용</div>
@@ -31,5 +31,14 @@
 		</c:if>
 	</div>
 	
+	<script type="text/javascript">
+		$('.mentoring-apply-detail-back-btn').click(function() {
+			location.href='<c:url value="/mypage/mygroup?me_id=${user.me_id}"/>'
+		})
+		
+		$('.mentoring-apply-update-btn').click(function(){
+			location.href='<c:url value="/mentoring/apply/update?num=${mentoring.ment_num}"/>';
+		})
+	</script>
 </body>
 </html>

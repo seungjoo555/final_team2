@@ -10,6 +10,7 @@ import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.dto.MentorInfoDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
+import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MentoringApplyVO;
@@ -269,6 +270,15 @@ public class MentorServiceImp implements MentorService {
 	@Override
 	public MentoringApplyVO getMentoringApply(int num, MemberVO user) {
 		return mentorDAO.selectMentoringApply(num, user);
+	}
+
+	@Override
+	public ArrayList<MentoringApplyVO> getMentoringApplyList(int ment_num, String me_id) {
+		if(ment_num <= 0 || me_id == null) {
+			return null;
+		}
+		
+		return mentorDAO.selectMentoringApplyList(ment_num, me_id);
 	}
 
 
