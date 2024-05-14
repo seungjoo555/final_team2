@@ -668,12 +668,20 @@ public class GroupController {
 		//신고 유형 정보 가져오기
 		ArrayList<ReportContentVO> contentList = reportService.getReportContentList();
 		
+		//그룹 신고 여부 불러오기
+		boolean istrue = true;
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user != null) {
+			istrue = reportService.getReportIsTrue(Integer.toString(num), "recruit", user.getMe_id());
+		}
+		
 		// 좋아요수 
 		Integer recu_num = num;
 		RecommendVO reco_recu_count = recommendService.getRecuRecoCount(recu_num);
 		
 		//화면에 전송
 		model.addAttribute("recruit", recruit);
+		model.addAttribute("istrue", istrue);
 		model.addAttribute("groupKing", groupKing.getMe_nickname());
 		model.addAttribute("groupKing_me_id", groupKing.getMe_id());
 		model.addAttribute("totalCategory", totalCategory);

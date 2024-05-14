@@ -48,6 +48,7 @@ public class MentorController {
 		
 		ArrayList<MentorJobVO> jobList = mentorService.getJobList();
 		model.addAttribute("jobList",jobList);
+		model.addAttribute("title", "멘토");
 		
 		return "/mentor/list";
 	}
@@ -74,17 +75,23 @@ public class MentorController {
 	@PostMapping("/mentor/detail")
 	public Map<String, Object> mentorDetailPost(@RequestParam("ment_num")int ment_num, HttpSession session) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		MemberVO user = (MemberVO)session.getAttribute("user");
 		//멘토링 정보 받아오기
 		MetoringVO mentoring = mentorService.getMentoring(ment_num);
 		//멘토 정보 받아오기
 		MentorInfoVO mentorInfo = mentorService.getMentor(mentoring.getMent_me_id());
 		//멘토링 신고 여부 불러오기
-		boolean istrue = reportService.getReportIsTrue(Integer.toString(ment_num), "mentoring", user.getMe_id());
-		System.out.println(istrue);
+
+		boolean istrue = true;
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user != null) {
+			istrue = reportService.getReportIsTrue(Integer.toString(ment_num), "mentoring", user.getMe_id());
+		}
+
+
 		//멘토링 신청 정보 받아오기
 		MentoringApplyVO mentoringAp = mentorService.getMentoringApply(ment_num, user);
 		System.out.println(mentoringAp);
+
 		
 		// 좋아요수 
 		Integer mentNum = ment_num;

@@ -7,17 +7,20 @@
 <head>
 <meta charset="UTF-8">
 <title>멘토링 리스트</title>
-</head>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
 <link rel="stylesheet" href="<c:url value="/resources/css/mentorlist.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/css/mentoringdetail.css"/>">
 <link rel="stylesheet" href="<c:url value="/resources/css/report.css"/>">
+</head>
 <body>
 <div class="container">
 <input type="hidden" name="user-meId" value="${user.me_id}">
 	<!-- 검색창 -->
 	<div class="menu-bar">
 		<div class="mentor mentor-insert">
-			<c:if test="${user.me_ma_auth == '일반'}">
+			<c:if test="${user.me_ma_auth != '멘토'}">
 				<a class="btn-outline-success mentor-insert" href="<c:url value="/mentor/apply"/>">멘토 신청하기</a>
 			</c:if>
 			<c:if test="${user.me_ma_auth == '멘토'}">
@@ -337,10 +340,8 @@ $(document).on('click', '.mento-item', function(event){
 			reportStr
 			+
 			`
-							
 						</div>
 						<div class="like-btn-box">
-							
 							<input type="hidden" class="ment_num" value="\${mentoring.ment_num}">
 							<input type="hidden" class="reco_ment_count" value="\${reco_ment_count.reco_ment_count}">
 							<button type="button" id="btnUp" data-state="1" class="like-btn btn-up">

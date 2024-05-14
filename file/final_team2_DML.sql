@@ -1,4 +1,4 @@
-use final_team2;
+memberuse final_team2;
 
 INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('웹 개발');
 INSERT INTO `final_team2`.`programming_category` (`progCt_name`) VALUES ('프론트엔드');
@@ -113,6 +113,9 @@ INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_
 		  ("dkdlel@final.com", "dkdlel1234", "텐텐먹고쑥쑥", "최유리", "010-4658-4214", "서울시 강남구 도곡동", "이용중", "일반"),
           ("abcde@final.com", "abcde1234", "투털이박성훈", "김병구", "010-2483-0419", "서울시 마포구 연희동", "이용중", "일반"),
 		  ("user@naver.com", "$2a$10$lQRMm/SAJ.9AJ6FjsP8BkekX8eTcv2xzIe5rgmyLz2RXDcxEWdn2O", "user123", "최유리", "010-4651-4214", "서울시 강남구 도곡동", "이용중", "일반");
+/* 일반 유저 정보 추가 : 인증O */
+INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth, me_verify)
+    VALUES("mentor@naver.com", "$2a$10$YdjIQrL/8qlGCEYFlJUo1.NBPZ0eRpvCEU3gdEI.XTq5uMUFF1Jby", "mentor", "김멘토", "010-1111-1111", "서울시 강남구 역삼동", "이용중", "일반", 1);
           
 /* 멘토 유저 정보 추가 */
 INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth)

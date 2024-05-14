@@ -20,19 +20,25 @@
 		<div class="recruit_userAndDate">
 			<img class="basic-profile" value="${groupKing_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
 			<a href="<c:url value="/mypage/profile?me_id=${groupKing_me_id}"/>" class="recruit_user">${groupKing}</a>
-			<div class="report-btn-box">
-				<button class="report-btn">
-					<img src="<c:url value="/resources/img/siren_icon.svg" />" alt="사이렌아이콘" width="24" class="siren-icon">
-				</button>
+			<div class="btn-box">
+				<!-- 본인 글일 경우 신고기능 비활성화 -->
+				<c:if test="${groupKing_me_id != user.me_id}">
+					<div class="report-btn-box">
+						<input type="hidden" class="report-isture" value="${istrue}">
+						<button class="report-btn">
+							<img src="<c:url value="/resources/img/siren_icon.svg" />" alt="사이렌아이콘" width="24" class="siren-icon">
+						</button>
+					</div>
+				</c:if>
+				<div class="like-btn-box">
+					<input type="hidden" class="reco_recu_num" value="${recruit.recu_num}">
+					<input type="hidden" class="reco_recu_count" value="${reco_recu_count.reco_recu_count}">
+					<button type="button" id="btnUp" data-state="1" class="like-btn btn-up">
+						<img src="<c:url value="/resources/img/like_icon.svg" />" alt="라이크아이콘" width="24" class="like-icon">
+						<span class="init-like">${reco_recu_count.reco_recu_count}</span>
+					</button>
+				</div>				
 			</div>
-			<div class="like-btn-box">
-				<input type="hidden" class="reco_recu_num" value="${recruit.recu_num}">
-				<input type="hidden" class="reco_recu_count" value="${reco_recu_count.reco_recu_count}">
-				<button type="button" id="btnUp" data-state="1" class="like-btn btn-up">
-					<img src="<c:url value="/resources/img/like_icon.svg" />" alt="라이크아이콘" width="24" class="like-icon">
-					<span class="init-like">${reco_recu_count.reco_recu_count}</span>
-				</button>
-			</div>				
 			<!-- <div class="recruit_regDate">날짜</div> -->
 		</div>
 		<hr>		
@@ -166,6 +172,12 @@ $(document).on('click', '.report-btn', function(){
 		}
 	}
 	
+	//만약 신고내역이 이미 있다면
+	if($(".report-isture").val() =='false'){
+		alert("이미 신고한 게시글입니다.");
+		return;
+	}
+	
 	//스크롤 비활성화
 	$("body").css('overflow','hidden');
 	$("#modal-report").css('display','block');
@@ -203,6 +215,7 @@ $(document).on('click', '.btn-report-insert', function(){
 				alert("해당 모집글을 신고했습니다.");
 			    $(".report-modal").css('display','none');
 			   	$("body").css('overflow','visible');
+			   	location.href = '<c:url value="/group/detail"/>';			
 			}else{
 				alert("모집글을 신고하지 못했습니다.");
 			}
