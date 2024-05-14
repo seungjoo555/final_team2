@@ -22,6 +22,8 @@ ERD CLOUD 수정사항
 	
     이거만 있으면 되고,
     그 아래에 있을 FK_group_member_TO_mutual_review_2 제약조건은 삭제해야함
+    
+    3. group_calendar와 group_post 테이블 외래키 조건에도 마찬가지로 적용함.
 */
 
 DROP TABLE IF EXISTS `member`;
@@ -112,7 +114,7 @@ DROP TABLE IF EXISTS `mutual_review`;
 
 CREATE TABLE `mutual_review` (
 	`mure_num`	int auto_increment primary key	NOT NULL,
-	`mure_content`	text	NULL,
+	`mure_content`	text	NOT NULL,
 	`mure_rate`	int default 5	NOT NULL,
 	`mure_me_id`	varchar(50)	NOT NULL,
 	`mure_target_id`	varchar(50)	NOT NULL,
@@ -236,6 +238,7 @@ CREATE TABLE `mentoring_apply` (
 	`mentAp_ment_num`	int	NOT NULL,
 	`mentAp_me_id`	varchar(50)	NOT NULL,
 	`mentAp_content`	text	NOT NULL,
+    `mentAp_contact` varchar(100)	NOT NULL,
 	`mentAp_state`	int default 0	NOT NULL
 );
 
@@ -258,7 +261,7 @@ CREATE TABLE `member_auth` (
 DROP TABLE IF EXISTS `group_calendar`;
 
 CREATE TABLE `group_calendar` (
-	`gocal_ num`	int primary key auto_increment	NOT NULL,
+	`gocal_num`	int primary key auto_increment	NOT NULL,
 	`gocal_title`	varchar(30)	NOT NULL,
 	`gocal_startdate`	date	NOT NULL,
 	`gocal_enddate`	date	NULL,
@@ -463,19 +466,12 @@ REFERENCES `group` (
 )
 ON DELETE CASCADE;
 
-ALTER TABLE `group_post` ADD CONSTRAINT `FK_group_member_TO_group_post_1` FOREIGN KEY (
-	`gopo_gome_me_id`
-)
-REFERENCES `group_member` (
-	`gome_me_id`
-)
-ON DELETE CASCADE;
 
-ALTER TABLE `group_post` ADD CONSTRAINT `FK_group_member_TO_group_post_2` FOREIGN KEY (
-	`gopo_gome_go_num`
+ALTER TABLE `group_post` ADD CONSTRAINT `FK_group_member_TO_group_post_1` FOREIGN KEY (
+	`gopo_gome_me_id`, `gopo_gome_go_num`
 )
 REFERENCES `group_member` (
-	`gome_go_num`
+	`gome_me_id`, `gome_go_num`
 )
 ON DELETE CASCADE;
 
@@ -564,18 +560,10 @@ REFERENCES `member` (
 );
 
 ALTER TABLE `group_calendar` ADD CONSTRAINT `FK_group_member_TO_group_calendar_1` FOREIGN KEY (
-	`gocal_me_id`
+	`gocal_me_id`, `gocal_go_num`
 )
 REFERENCES `group_member` (
-	`gome_me_id`
-)
-ON DELETE CASCADE;
-
-ALTER TABLE `group_calendar` ADD CONSTRAINT `FK_group_member_TO_group_calendar_2` FOREIGN KEY (
-	`gocal_go_num`
-)
-REFERENCES `group_member` (
-	`gome_go_num`
+	`gome_me_id`, `gome_go_num`
 )
 ON DELETE CASCADE;
 

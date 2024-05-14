@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.MentorDAO;
+import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.model.dto.MentorInfoDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
+import kr.kh.team2.model.vo.member.MentoringApplyVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.CriteriaMentor;
@@ -67,17 +70,45 @@ public class MentorServiceImp implements MentorService {
 	}
 
 	@Override
-	public boolean checkMentor(String me_id) {
+	public MentorInfoVO checkMentor(String me_id) {
 		
 		MentorInfoVO dbMentor = mentorDAO.selectMentorInfo(me_id);
-		if(dbMentor==null) {
-			return true;
-		}
-		return false;
+		
+		return dbMentor;
 		
 	}
 
 	@Override
+	public MetoringVO getMentoring(int ment_num) {
+		if(ment_num <= 0) {
+			return null;
+		}
+		return mentorDAO.selectMentoring(ment_num);
+	}
+
+	@Override
+	public MentorInfoVO getMentor(String ment_me_id) {
+		return mentorDAO.selectMentorInfo(ment_me_id);
+	}
+
+	@Override
+	public boolean insertMentoringApply(MentoringApplyVO mentoApVO,  MemberVO user) {
+		if(	user == null	|| !methods.checkString(user.getMe_id())) {
+			return false;}
+		//회원 아이디 
+		mentoApVO.setMentAp_me_id(user.getMe_id());
+		if(mentoApVO == null || !methods.checkString(mentoApVO.getMentAp_me_id()) 
+			|| !methods.checkString(mentoApVO.getMentAp_contact())
+			|| !methods.checkString(mentoApVO.getMentAp_content())
+			) {
+			return false;
+		}
+		if(getMentoring(mentoApVO.getMentAp_ment_num()) == null) {
+			return false;
+		}
+		return mentorDAO.insertMentoringApply(mentoApVO);
+	}
+	
 	public ArrayList<MetoringVO> getMentoringList(String me_id) {
 
 		return mentorDAO.selectMentoringList(me_id);
@@ -132,6 +163,116 @@ public class MentorServiceImp implements MentorService {
 		
 		return true;
 	}
+	
+	@Override
+	public boolean updateMentoring(MetoringVO mentoring, TotalCategoryVO toCt) {
+		if(!methods.checkString(mentoring.getMent_title())||
+		   !methods.checkString(mentoring.getMent_content())||
+		   !methods.checkString(mentoring.getMent_duration()+"")||
+		   !methods.checkString(mentoring.getMent_me_id())) {
+			
+			return false;
+		}
+		
+		
+		if(!mentorDAO.updateMentoring(mentoring)) {
+			return false;
+		}
+		
+		//toCt.setToCt_table_pk(mentoring.getMent_num()+"");
+		/*
+		if(!mentorDAO.insertTotalCategory(toCt)) {
+			return false;
+		}
+		*/
+		return true;
+	}
+
+
+	@Override
+	public ArrayList<MentorInfoVO> getMentorInfoList(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 10);
+		}
+
+		return mentorDAO.selectMentorInfoList(cri);
+	}
+
+	@Override
+	public int getMentorInfoTotalCount(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 10);
+		}
+		return mentorDAO.selectMentorInfoTotalCount(cri);
+	}
+
+	@Override
+	public boolean mentorMultiRequest(MentorInfoDTO mentorInfoDTO) {
+		boolean resMentorInfo = false;
+		boolean resMentorInfoMember = false;
+		if(mentorInfoDTO.getBtnType().equals("accept")) {
+			for(String me_id : mentorInfoDTO.getCheckedIds()) {
+				resMentorInfo = mentorDAO.mentorInfoAccept(me_id);
+				resMentorInfoMember = mentorDAO.updateMemberMentorInfo(me_id);
+			}
+			return resMentorInfo&&resMentorInfoMember;
+		}
+		else if(mentorInfoDTO.getBtnType().equals("deny")) {
+			for(String me_id : mentorInfoDTO.getCheckedIds()) {
+				resMentorInfo = mentorDAO.mentorInfoDeny(me_id);
+			}
+			return resMentorInfo;
+		}
+		return false;
+		
+	}
+
+	@Override
+	public boolean mentorRequest(String mentIf_me_id, String btnType) {
+		boolean resMentorInfo = false;
+		boolean resMentorInfoMember = false;
+		if(btnType.equals("accept")) {
+			resMentorInfo = mentorDAO.mentorInfoAccept(mentIf_me_id);
+			resMentorInfoMember = mentorDAO.updateMemberMentorInfo(mentIf_me_id);
+			return resMentorInfo&&resMentorInfoMember;
+		}else if(btnType.equals("deny")) {
+			resMentorInfo = mentorDAO.mentorInfoDeny(mentIf_me_id);
+			return resMentorInfo;
+		}
+		return false;
+		
+		
+	}
+
+	@Override
+	public boolean updateMentorInfoForDenied(MentorInfoVO mentorInfoVO, String me_id) {
+		if(!methods.checkString(mentorInfoVO.getMentIf_me_id())||
+				   !methods.checkString(mentorInfoVO.getMentIf_bank())||
+				   !methods.checkString(mentorInfoVO.getMentIf_account())||
+				   !methods.checkString(mentorInfoVO.getMentIf_ment_job())||
+				   !methods.checkString(mentorInfoVO.getMentIf_portfolio())) {
+					return false;
+			}
+		
+		return mentorDAO.updateMentorInfoForDenied(mentorInfoVO,me_id);
+		
+	}
+
+	@Override
+	public boolean deleteMentoring(Integer mentNum) {
+		if(mentNum <= 0) {
+			return false;
+		}
+		return mentorDAO.deleteMentoring(mentNum);
+	}
+
+	@Override
+	public MentoringApplyVO getMentoringApply(int num, MemberVO user) {
+		return mentorDAO.selectMentoringApply(num, user);
+	}
+
+
+
 
 
 }

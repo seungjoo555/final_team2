@@ -1,12 +1,8 @@
 package kr.kh.team2.pagination;
 
-import java.util.ArrayList;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import kr.kh.team2.model.vo.member.MentorJobVO;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Data
 @NoArgsConstructor
 public class Criteria {

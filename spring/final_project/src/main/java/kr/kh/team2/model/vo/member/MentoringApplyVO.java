@@ -10,5 +10,6 @@ public class MentoringApplyVO {
     private int mentAp_ment_num;
     private String mentAp_me_id;
     private String mentAp_content;
+    private String mentAp_contact;
     private int mentAp_state;
 }

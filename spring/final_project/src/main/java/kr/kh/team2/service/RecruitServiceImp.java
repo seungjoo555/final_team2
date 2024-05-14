@@ -98,7 +98,6 @@ public class RecruitServiceImp implements RecruitService {
 			totalCateVo.setToCt_progCt_num(ct);
 			totalCateVo.setToCt_table_name("recruit");
 			totalCateVo.setToCt_table_pk(""+recu_num);
-			System.out.println(totalCateVo + "공고번호" + recu_num);
 			boolean res = recruitDao.insertTotalCate(totalCateVo);
 			
 			if(!res) {
@@ -124,7 +123,6 @@ public class RecruitServiceImp implements RecruitService {
 			totalLangVo.setToLg_lang_num(ct);
 			totalLangVo.setToLg_table_name("recruit");
 			totalLangVo.setToLg_table_pk(""+recu_num);
-			System.out.println(totalLangVo + "공고번호" + recu_num);
 			boolean res = recruitDao.insertTotalLang(totalLangVo);
 			
 			if(!res) {

@@ -29,6 +29,11 @@ public class MemberVO {
     private int me_prefertime;
     private int me_onoff;
     private String me_intro;
+    private String me_cookie;
+    private Date me_cookie_limit;
+    private int me_temppw;
+    private boolean autoLogin;
+    private int me_verify;
     
 	public MemberVO(SignupDTO signupDto) {
 		this.me_id = signupDto.getId();

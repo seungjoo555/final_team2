@@ -65,18 +65,18 @@
 </head>
 <body>
 	<div class="findid-container">
-		<form action="<c:url value="/findid"/>" method="post" class="findid-form">
+		<form action="<c:url value="/login/findid"/>" method="post" class="findid-form">
 		<div class="h-wrap">
 			<h2>아이디 찾기</h2>
 			<p>가입한 이름과 전화번호 작성하면 회원님의 아이디를 찾을 수 있습니다.</p>
 		</div>
 			<div class="findid-form-group">
 				<label for="name">이름</label>
-				<input type="text" class="form-control find-name" id="name" name="name">
+				<input type="text" class="form-control find-name" id="name" name="me_name">
 			</div>
 			<div class="findid-form-group">
 				<label for="phone">전화번호</label>
-				<input type="text" class="form-control find-phone" id="phone" name="phone">
+				<input type="text" class="form-control find-phone" id="phone" name="me_phone">
 			</div>
 			<div class="findid-warnning">
 		      	<p class="warn-msg">&nbsp</p>

@@ -177,11 +177,11 @@
 	margin: 30px 0 100px 0;
 	width: 100%; 
 	display: flex;
-    flex-wrap: nowrap; 		/* 요소들이 한 줄에 모두 표시 */
-    overflow-x: auto; 		/* 요소들이 넘치는 경우 가로 스크롤을 추가 */
-    white-space: nowrap;
-    gap: 20px; 				/* 각 그룹 사이의 간격을 조정. */
-    padding-bottom: 20px;
+  flex-wrap: nowrap; 		/* 요소들이 한 줄에 모두 표시 */
+  overflow-x: auto; 		/* 요소들이 넘치는 경우 가로 스크롤을 추가 */
+  white-space: nowrap;
+  gap: 20px; 				/* 각 그룹 사이의 간격을 조정. */
+  padding-bottom: 20px;
 }
 
 .mutual-item {
@@ -220,6 +220,7 @@
     padding: 10px;
     box-sizing: border-box;   /* 패딩을 포함하여 박스 크기 계산 */
 }
+
 /* 스터디 / 프로젝트 목록 관련 스타일 */
 
 .study-list-title {
@@ -243,17 +244,20 @@
 
 .study-no-list {
 	margin-bottom: 50px;
+
+.study-list {
+ 	overflow-x: auto; /* 가로 스크롤 가능하도록 설정 */
 }
 
 .study-list {
 	margin: 30px 0 100px 0;
 	width: 100%; 
 	display: flex;
-    flex-wrap: nowrap; 		/* 요소들이 한 줄에 모두 표시 */
-    overflow-x: auto; 		/* 요소들이 넘치는 경우 가로 스크롤을 추가 */
-    white-space: nowrap;
-    gap: 20px; 				/* 각 그룹 사이의 간격을 조정. */
-    padding-bottom: 20px;
+  flex-wrap: nowrap; 		/* 요소들이 한 줄에 모두 표시 */
+  overflow-x: auto; 		/* 요소들이 넘치는 경우 가로 스크롤을 추가 */
+  white-space: nowrap;
+  gap: 20px; 				/* 각 그룹 사이의 간격을 조정. */
+  padding-bottom: 20px;
 }
 
 .study-item-container {
@@ -383,11 +387,11 @@
 	font-style: italic;
 	margin: 20px 0 100px 0;
 }
-}
 
 .apply-list-content {
 	font-style: italic;
 	margin: 20px 0 100px 0;
+
 }
 
 .apply-list-item-memberInfo > div{
