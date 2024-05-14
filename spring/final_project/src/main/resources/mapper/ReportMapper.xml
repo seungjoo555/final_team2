@@ -3,12 +3,78 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.kh.team2.dao.ReportDAO">
-<select id="selectReportContentList" resultType="ReportContentVO">
-	select * from report_content
-</select>
+
+	<!-- =============================== INSERT =============================== -->
 <insert id="insertReport">
 	insert into 
 	report(repo_repo_content, repo_repo_state, repo_me_id, repo_detail, repo_date, repo_table, repo_target) 
 	values(#{report.repo_repo_content}, "대기중", #{report.repo_me_id}, #{report.repo_detail}, #{report.repo_date}, #{report.repo_table}, #{report.repo_target})
 </insert>
+	<!-- =============================== DELETE =============================== -->
+	
+	<!-- =============================== UPDATE =============================== -->	
+<update id="updateReportState">
+	update report set repo_repo_state = #{state}
+	where repo_table = #{repo_table} and repo_target  = #{repo_target}
+</update>
+	
+	<!-- =============================== SELECT =============================== -->	
+<select id="selectReportContentList" resultType="ReportContentVO">
+	select * from report_content
+</select>
+<select id="selectReportSimpleList" resultType="ReportSimpleDTO">
+	select repo_repo_state,  repo_table, repo_target, count(repo_target) as repo_count 
+	from report
+	<choose>
+		<when test='cri.type != "all" and cri.search != "대기중"'>
+			where
+				repo_table = #{cri.type}
+		</when>
+		<when test='cri.type == "all" and cri.search == "대기중"'>
+			where
+				repo_repo_state = #{cri.search}
+		</when>
+		<when test='cri.type != "all" and cri.search == "대기중"'>
+			where
+				repo_repo_state = #{cri.search}
+				and
+				repo_table = #{cri.type}
+		</when>
+	</choose>
+	group by repo_table, repo_target, repo_repo_state
+	limit #{cri.pageStart}, #{cri.perPageNum}
+</select>
+<select id="selectReportSimpleTotalCount" resultType="int">
+	select count(r.repo_target)
+		from (
+			select repo_repo_state, repo_table, repo_target, count(repo_target) as repo_count 
+				from report
+				<choose>
+					<when test='cri.type != "all" and cri.search != "대기중"'>
+						where
+						repo_table = #{cri.type}
+					</when>
+					<when test='cri.type == "all" and cri.search == "대기중"'>
+						where
+						repo_repo_state = #{cri.search}
+					</when>
+					<when test='cri.type != "all" and cri.search == "대기중"'>
+						where
+						repo_repo_state = #{cri.search}
+						and
+						repo_table = #{cri.type}
+					</when>
+				</choose>
+				group by repo_table, repo_target, repo_repo_state
+		)
+		as r
+</select>
+<select id="selectReportList" resultType="ReportVO"> 
+	select * from report 
+	where repo_table = #{repo_table} and repo_target = #{repo_target}
+</select>
+<select id="selectReportIsTrue"  resultType="ReportVO">
+	select * from report 
+	where repo_table = #{repo_table} and repo_target = #{repo_target} and repo_me_id = #{me_id}
+</select>
 </mapper>

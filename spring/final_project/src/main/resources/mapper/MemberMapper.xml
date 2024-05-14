@@ -22,6 +22,11 @@
 		delete from me_verify where mv_me_id = #{me_id}
 	</delete>
 	
+	<!-- 멤버 정보 삭제 -->
+	<delete id="deleteMemberVO">
+		delete from member where me_id = #{me_id}
+	</delete>
+	
 	<!-- =============================== UPDATE =============================== -->	
 	
 	<update id="updateProfile">
@@ -29,7 +34,7 @@
 		where me_id = #{me_id}
 	</update>
 	
-	  <update id="updateMemberCookie">
+	<update id="updateMemberCookie">
 	  	update member set 
 	  		me_cookie = #{user.me_cookie},
 	  		me_cookie_limit = #{user.me_cookie_limit}
@@ -59,6 +64,17 @@
 		where
 			me_id = #{member.me_id}
 	</update>
+
+	<update id="updateMemberState">
+		update member set me_ms_state = #{me_ms_state}
+		where me_id = #{me_id}
+	</update>
+	<!-- 회원 정보 변경(상태, 권한) -->
+	<update id="updateMember">
+		update member set me_ma_auth = #{me.me_ma_auth}, me_ms_state = #{me.me_ms_state}
+		where me_id = #{me.me_id}
+	</update>
+
 	<!-- =============================== SELECT =============================== -->	
 	
 	<select id="findMemberById" resultType="MemberVO">
@@ -96,6 +112,52 @@
 		where mv_me_id = #{mv.mv_me_id} and mv_code = #{mv.mv_code}
 			  and mv_createtime <= NOW() and mv_exptime >= NOW()
 		]]>
+  </select>
+  
+	<!-- 회원 상태 리스트 가져오기 -->
+	<select id="selectMemberStateList" resultType="String">
+		select ms_state from member_state
+	</select>
+	
+	<!-- 관리자 제외한 회원 전체 리스트 가져오기 -->
+	<select id="selectAdminMemberList" resultType="MemberVO">
+		select * from member 
+		where me_ma_auth != "관리자"
+		<choose>
+			<when test='cri.type == "all" '>
+				and me_id like concat('%', #{cri.search}, '%')
+			</when>
+			<when test='cri.type == "auth"'>
+				and me_ma_auth like concat('%', #{cri.search}, '%')
+			</when>
+			<when test='cri.type == "state"'>
+				and me_ms_state like concat('%', #{cri.search}, '%')
+			</when>
+		</choose>
+		limit #{cri.pageStart}, #{cri.perPageNum}
+		
+	</select>
+	
+	<!-- 관리자 제외한 회원 전체 개수 -->
+	<select id="selectAdminMemberTotalCount"  resultType="int">
+		select count(*) from member 
+			where me_ma_auth != "관리자"
+			<choose>
+				<when test='cri.type == "all" '>
+					and me_id like concat('%', #{cri.search}, '%')
+				</when>
+				<when test='cri.type == "auth"'>
+					and me_ma_auth like concat('%', #{cri.search}, '%')
+				</when>
+				<when test='cri.type == "state"'>
+					and me_ms_state like concat('%', #{cri.search}, '%')
+				</when>
+			</choose>
+	</select>
+	
+	<!-- 관리자 제외한 회원 권한 리스트 가져오기 -->
+	<select id="selectMemberAuthList" resultType="String">
+		select ma_auth from member_auth where ma_auth != "관리자"
 	</select>
 
 </mapper>

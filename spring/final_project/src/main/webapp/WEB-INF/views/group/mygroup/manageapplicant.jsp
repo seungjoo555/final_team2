@@ -27,15 +27,12 @@
 				<div class="float-left">지원자 관리페이지</div>
 			</div>
 			<div class="applicant-query">
-				<form>
-					<input type="radio" id="all" name="type" value="all" checked>
-					<label for="all">전체</label>
-					<input type="radio" id="not-passed" value="not-passed" name="type">
-					<label for="not-passed">미처리 신청만</label>
-					<input type="radio" id="canceled" value="canceled" name="type">
+				<input type="radio" id="all" name="type" value="all" checked>
+				<label for="all">전체</label>
+				<input type="radio" id="not-passed" value="not-passed" name="type">
+				<label for="not-passed">미처리 신청만</label>
+				<input type="radio" id="canceled" value="canceled" name="type">
 				<label for="canceled">거절된 신청만</label>
-				
-				</form>
 			</div>
 			<div class="applicant-list-bg">
 				
@@ -101,7 +98,8 @@ function displayApplicantList(list){
 				</td>
 				<td><div class="id">\${apply.goap_me_id}<div></td>
 				<td class="text-center content">
-					<a href="#">\${apply.goap_content }</a>
+					<c:url var = 'url2' value = '/group/applydetail'/>
+					<a href="${url2}?num=\${apply.goap_num}">\${apply.goap_content}</a>
 				</td class="content">
 			`;
 			
@@ -213,12 +211,20 @@ $("[name=type]").click(function(){
 <!-- 지원 수락 -->
 <script type="text/javascript">
 	$(document).on('click', '.apply-confirm-btn', function(){
+		if(!${group.go_update}){
+			alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+			return;
+		}
+		
 		let num = $(this).data('num')
 		$.ajax({
 			async : true, //비동기 : true(비동기), false(동기)
 			url : "<c:url value="/group/manage/applicant/insert"/>", 
 			type : 'post', 
-			data : {num : num}, 
+			data : {
+				num : ${group.go_num},
+				apNum : num
+			}, 
 			dataType :"json", 
 			success : function (data){
 					if(data.data == 'ok'){
@@ -238,12 +244,20 @@ $("[name=type]").click(function(){
 <!-- 지원 거절 -->
 <script type="text/javascript">
 	$(document).on('click', '.apply-deny-btn', function(){
+		if(!${group.go_update}){
+			alert('그룹이 얼려진 상태입니다. 리더가 그룹 얼리기를 해제한 후 이용할 수 있습니다.')
+			return;
+		}
+		
 		let num = $(this).data('num')
 		$.ajax({
 			async : true, //비동기 : true(비동기), false(동기)
 			url : "<c:url value="/group/manage/applicant/cancel"/>", 
 			type : 'post', 
-			data : {num : num}, 
+			data : {
+				num : ${group.go_num},
+				apNum : num
+			}, 
 			dataType :"json", 
 			success : function (data){
 					if(data.data == 'ok'){

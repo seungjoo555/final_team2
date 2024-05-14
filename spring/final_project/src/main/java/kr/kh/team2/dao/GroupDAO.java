@@ -1,18 +1,22 @@
 package kr.kh.team2.dao;
 
 import java.util.ArrayList;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
-import kr.kh.team2.pagination.Criteria;
+
+import kr.kh.team2.model.dto.MutualReviewDTO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
+import kr.kh.team2.model.vo.group.GroupMemberVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
+import kr.kh.team2.model.vo.group.MutualReviewVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
-import kr.kh.team2.model.vo.member.MetoringVO;
+import kr.kh.team2.pagination.Criteria;
 
 @Service
 public interface GroupDAO {
@@ -69,6 +73,7 @@ public interface GroupDAO {
 
 	ArrayList<GroupVO> countGroupListById(@Param("me_id") String me_id);
 
+	String selectGroupLeaderID(@Param("recu_num")int recu_num);
 	ArrayList<GroupCalendarVO> getCalendar(@Param("num")int num);
 
 	boolean insertGroupCal(@Param("num")int num, @Param("newSche")GroupCalendarVO newSch, @Param("user")MemberVO user);
@@ -89,7 +94,7 @@ public interface GroupDAO {
 	
 	boolean updateGoap_stateCanceled(@Param("num")int num);
 
-	ArrayList<GroupApplyVO> getGroupMember(@Param("num")int num, @Param("cri")Criteria cri);
+	ArrayList<GroupMemberVO> getGroupMember(@Param("num")int num, @Param("cri")Criteria cri);
 	
 	int getGroupMemberTotalCount(@Param("num")int num);
 
@@ -98,5 +103,40 @@ public interface GroupDAO {
 	boolean updateGroupTimer(@Param("num")int num);
 
 	boolean deleteGroupByGoNum(@Param("num")int num);
+
+
+	boolean insertGroupApply(@Param("group")GroupVO group, @Param("recu_num")int recu_num, @Param("goap")GroupApplyVO goapVo, @Param("user")MemberVO user);
+
+	ArrayList<GroupVO> selectGroupListByGoNum(@Param("num")int num);
+
+	GroupApplyVO selectGroupApply(@Param("num")Integer num, @Param("user")MemberVO user);
+
+	boolean updateGroupApply(@Param("goap")GroupApplyVO goap, @Param("user")MemberVO user);
+
+	boolean updateGroupApply(@Param("goapVo")GroupApplyVO goapVo, @Param("goap")GroupApplyVO goap, @Param("user")MemberVO user);
+
+	ArrayList<GroupMemberVO> getGroupMemberByGoNum(@Param("num")int num);
+
+	boolean updateGomeStateTo0(@Param("num")int num, @Param("id")String id);
+	
+	boolean updateGomeStateTo1(@Param("num")int num, @Param("id")String id);
+
+	boolean updateGoUpdate(@Param("num")int num, @Param("freeze")boolean freeze);
+
+	boolean getGoUpdate(@Param("num")int num);
+
+	ArrayList<GroupMemberVO> getNotReviewedMember(@Param("num")int num, @Param("cri")Criteria cri);
+
+	int getNotReviewedMemberTotalCount(@Param("num")int num, @Param("id")String id);
+
+	ArrayList<MutualReviewVO> getReviewedMember(@Param("num")int num,  @Param("cri")Criteria cri);
+
+	int getReviewedMemberTotalCount(@Param("num")int num,  @Param("id")String id);
+
+	boolean insertMutualReview(@Param("review")MutualReviewDTO mutualReviewDto);
+
+	Object isReviewedMember(@Param("review")MutualReviewDTO mutualReviewDto);
+
+	boolean updateMeDgree(@Param("id")String target_id, @Param("degree")float degree);
 
 }

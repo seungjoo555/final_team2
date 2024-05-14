@@ -100,8 +100,8 @@ INSERT INTO `final_team2`.`search_menu` (`sear_progCt_num`, `sear_lang_num`) VAL
 INSERT INTO `final_team2`.`search_menu` (`sear_progCt_num`, `sear_lang_num`) VALUES ('7', '28');
 INSERT INTO `final_team2`.`search_menu` (`sear_progCt_num`, `sear_lang_num`) VALUES ('7', '29');
 
-INSERT INTO member_state(ms_state) VALUES("이용중"),("기간정지"), ("영구정지"), ("탈퇴");
-INSERT INTO member_auth(ma_auth) VALUES("관리자"),("멘토"), ("일반");
+INSERT INTO member_state(ms_state) VALUES("이용중"), ("영구정지"), ("탈퇴");
+INSERT INTO member_auth(ma_auth) VALUES("관리자"),("부관리자"),("멘토"), ("일반");
 
 /* 운영자 정보 추가 */
 INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth)
@@ -121,7 +121,7 @@ INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_
 SELECT * FROM final_team2.member;   
 
 /* 신고 처리 상태 */
-INSERT INTO report_state(repo_state) VALUES("대기중"), ("승인"), ("반려");
+INSERT INTO report_state(repo_state) VALUES("대기중"), ("처리완료"), ("반려");
 
 /* 신고 사유 */
 INSERT INTO report_content(repo_content) 
@@ -277,7 +277,7 @@ INSERT INTO `recruit`(recu_go_num,recu_content,recu_due,recu_state,recu_type,rec
 					  "2024-04-09",0,0,"학원 방과후 스터디하실분~","방과후 스터디","3","java, jsp, github, java script","",0,1);
 
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
-			VALUES(1,1,"지원합니다. 저는 프로젝트에서 프론트엔드를 맡을 수 있습니다.",0,"qwert@final.com");
+			VALUES(1,1,"지원합니다. 저는 프로젝트에서 프론트엔드를 맡을 수 있습니다.",1,"qwert@final.com");
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
 			VALUES(2,2,"스프링스터디에 지원합니다.",0,"asdfg@final.com");
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
@@ -285,7 +285,7 @@ INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
 			VALUES(1,1,"그룹 지원 2",0,"user@naver.com");
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
-			VALUES(1,1,"그룹 지원 3",0,"dkdlel@final.com");
+			VALUES(1,1,"그룹 지원 3",-1,"dkdlel@final.com");
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
 			VALUES(1,1,"그룹 지원 4",0,"abcde@final.com");
 INSERT INTO `group_apply`(goap_go_num,goap_recu_num,goap_content,goap_state,goap_me_id)
@@ -358,5 +358,200 @@ INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_mem
 INSERT INTO `group_calendar`(gocal_title,gocal_startdate,gocal_enddate,gocal_memo,gocal_me_id,gocal_go_num)
 		    VALUES("d-day0","2023-07-20","2023-04-20","d-day0 memo", "qwert@final.com",1);
             
-            
-            
+/*참조무결성*/
+ALTER TABLE `final_team2`.`member` 
+DROP FOREIGN KEY `FK_member_auth_TO_member_1`,
+DROP FOREIGN KEY `FK_member_state_TO_member_1`;
+ALTER TABLE `final_team2`.`member` 
+ADD CONSTRAINT `FK_member_auth_TO_member_1`
+  FOREIGN KEY (`me_ma_auth`)
+  REFERENCES `final_team2`.`member_auth` (`ma_auth`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_member_state_TO_member_1`
+  FOREIGN KEY (`me_ms_state`)
+  REFERENCES `final_team2`.`member_state` (`ms_state`)
+  ON DELETE CASCADE;   
+  
+ALTER TABLE `final_team2`.`group_member` 
+DROP FOREIGN KEY `FK_member_TO_group_member_1`;
+ALTER TABLE `final_team2`.`group_member` 
+ADD CONSTRAINT `FK_member_TO_group_member_1`
+  FOREIGN KEY (`gome_me_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`lecture` 
+DROP FOREIGN KEY `FK_mentor_info_TO_lecture_1`;
+ALTER TABLE `final_team2`.`lecture` 
+ADD CONSTRAINT `FK_mentor_info_TO_lecture_1`
+  FOREIGN KEY (`lect_mentIf_me_id`)
+  REFERENCES `final_team2`.`mentor_info` (`mentIf_me_id`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`lecture_file` 
+DROP FOREIGN KEY `FK_lecture_TO_lecture_file_1`;
+ALTER TABLE `final_team2`.`lecture_file` 
+ADD CONSTRAINT `FK_lecture_TO_lecture_file_1`
+  FOREIGN KEY (`lectFi_lect_num`)
+  REFERENCES `final_team2`.`lecture` (`lect_num`)
+  ON DELETE CASCADE
+  ON UPDATE RESTRICT;
+ALTER TABLE `final_team2`.`lecture_register` 
+DROP FOREIGN KEY `FK_lecture_TO_lecture_register_1`,
+DROP FOREIGN KEY `FK_member_TO_lecture_register_1`;
+ALTER TABLE `final_team2`.`lecture_register` 
+ADD CONSTRAINT `FK_lecture_TO_lecture_register_1`
+  FOREIGN KEY (`lectRg_lect_num`)
+  REFERENCES `final_team2`.`lecture` (`lect_num`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_member_TO_lecture_register_1`
+  FOREIGN KEY (`lectRg_me_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`lecture_review` 
+DROP FOREIGN KEY `FK_lecture_TO_lecture_review_1`,
+DROP FOREIGN KEY `FK_member_TO_lecture_review_1`;
+ALTER TABLE `final_team2`.`lecture_review` 
+ADD CONSTRAINT `FK_lecture_TO_lecture_review_1`
+  FOREIGN KEY (`lectRv_lect_num`)
+  REFERENCES `final_team2`.`lecture` (`lect_num`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_member_TO_lecture_review_1`
+  FOREIGN KEY (`lectRv_me_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE;
+  ALTER TABLE `final_team2`.`me_verify` 
+DROP FOREIGN KEY `FK_member_TO_me_verify_1`;
+ALTER TABLE `final_team2`.`me_verify` 
+ADD CONSTRAINT `FK_member_TO_me_verify_1`
+  FOREIGN KEY (`mv_me_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`mentor_info` 
+DROP FOREIGN KEY `FK_member_TO_mentor_info_1`,
+DROP FOREIGN KEY `FK_mentor_job_TO_mentor_info_1`;
+ALTER TABLE `final_team2`.`mentor_info` 
+ADD CONSTRAINT `FK_member_TO_mentor_info_1`
+  FOREIGN KEY (`mentIf_me_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_mentor_job_TO_mentor_info_1`
+  FOREIGN KEY (`mentIf_ment_job`)
+  REFERENCES `final_team2`.`mentor_job` (`ment_job`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`mentoring` 
+DROP FOREIGN KEY `FK_mentor_info_TO_mentoring_1`;
+ALTER TABLE `final_team2`.`mentoring` 
+ADD CONSTRAINT `FK_mentor_info_TO_mentoring_1`
+  FOREIGN KEY (`ment_me_id`)
+  REFERENCES `final_team2`.`mentor_info` (`mentIf_me_id`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`mentoring_apply` 
+DROP FOREIGN KEY `FK_member_TO_mentoring_apply_1`,
+DROP FOREIGN KEY `FK_mentoring_TO_mentoring_apply_1`;
+ALTER TABLE `final_team2`.`mentoring_apply` 
+ADD CONSTRAINT `FK_member_TO_mentoring_apply_1`
+  FOREIGN KEY (`mentAp_me_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_mentoring_TO_mentoring_apply_1`
+  FOREIGN KEY (`mentAp_ment_num`)
+  REFERENCES `final_team2`.`mentoring` (`ment_num`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`mentoring_review` 
+DROP FOREIGN KEY `FK_mentoring_apply_TO_mentoring_review_1`,
+DROP FOREIGN KEY `FK_mentoring_TO_mentoring_review_1`;
+ALTER TABLE `final_team2`.`mentoring_review` 
+ADD CONSTRAINT `FK_mentoring_apply_TO_mentoring_review_1`
+  FOREIGN KEY (`mentRv_mentAp_num`)
+  REFERENCES `final_team2`.`mentoring_apply` (`mentAp_num`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_mentoring_TO_mentoring_review_1`
+  FOREIGN KEY (`mentRv_ment_num`)
+  REFERENCES `final_team2`.`mentoring` (`ment_num`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`mutual_review` 
+DROP FOREIGN KEY `FK_member_TO_mutual_review_1`;
+ALTER TABLE `final_team2`.`mutual_review` 
+ADD CONSTRAINT `FK_member_TO_mutual_review_1`
+  FOREIGN KEY (`mure_target_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`post` 
+DROP FOREIGN KEY `FK_board_TO_post_1`,
+DROP FOREIGN KEY `FK_member_TO_post_1`;
+ALTER TABLE `final_team2`.`post` 
+ADD CONSTRAINT `FK_board_TO_post_1`
+  FOREIGN KEY (`post_board_num`)
+  REFERENCES `final_team2`.`board` (`board_num`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_member_TO_post_1`
+  FOREIGN KEY (`post_me_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`recommend` 
+DROP FOREIGN KEY `FK_member_TO_recommend_1`;
+ALTER TABLE `final_team2`.`recommend` 
+ADD CONSTRAINT `FK_member_TO_recommend_1`
+  FOREIGN KEY (`reco_me_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`report` 
+DROP FOREIGN KEY `FK_member_TO_report_1`,
+DROP FOREIGN KEY `FK_report_content_TO_report_1`,
+DROP FOREIGN KEY `FK_report_state_TO_report_1`;
+ALTER TABLE `final_team2`.`report` 
+ADD CONSTRAINT `FK_member_TO_report_1`
+  FOREIGN KEY (`repo_me_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_report_content_TO_report_1`
+  FOREIGN KEY (`repo_repo_content`)
+  REFERENCES `final_team2`.`report_content` (`repo_content`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_report_state_TO_report_1`
+  FOREIGN KEY (`repo_repo_state`)
+  REFERENCES `final_team2`.`report_state` (`repo_state`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`search_menu` 
+DROP FOREIGN KEY `FK_programming_category_TO_search_menu_1`,
+DROP FOREIGN KEY `FK_programming_language_TO_search_menu_1`;
+ALTER TABLE `final_team2`.`search_menu` 
+ADD CONSTRAINT `FK_programming_category_TO_search_menu_1`
+  FOREIGN KEY (`sear_progCt_num`)
+  REFERENCES `final_team2`.`programming_category` (`progCt_num`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_programming_language_TO_search_menu_1`
+  FOREIGN KEY (`sear_lang_num`)
+  REFERENCES `final_team2`.`programming_language` (`lang_num`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`total_category` 
+DROP FOREIGN KEY `FK_programming_category_TO_total_category_1`;
+ALTER TABLE `final_team2`.`total_category` 
+ADD CONSTRAINT `FK_programming_category_TO_total_category_1`
+  FOREIGN KEY (`toCt_progCt_num`)
+  REFERENCES `final_team2`.`programming_category` (`progCt_num`)
+  ON DELETE CASCADE;
+  ALTER TABLE `final_team2`.`comment` 
+DROP FOREIGN KEY `FK_member_TO_comment_1`,
+DROP FOREIGN KEY `FK_post_TO_comment_1`;
+ALTER TABLE `final_team2`.`comment` 
+ADD CONSTRAINT `FK_member_TO_comment_1`
+  FOREIGN KEY (`cmmt_me_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_post_TO_comment_1`
+  FOREIGN KEY (`cmmt_post_num`)
+  REFERENCES `final_team2`.`post` (`post_num`)
+  ON DELETE CASCADE;
+ALTER TABLE `final_team2`.`group_apply` 
+DROP FOREIGN KEY `FK_member_TO_group_apply_1`,
+DROP FOREIGN KEY `FK_recruit_TO_group_apply_1`;
+ALTER TABLE `final_team2`.`group_apply` 
+ADD CONSTRAINT `FK_member_TO_group_apply_1`
+  FOREIGN KEY (`goap_me_id`)
+  REFERENCES `final_team2`.`member` (`me_id`)
+  ON DELETE CASCADE,
+ADD CONSTRAINT `FK_recruit_TO_group_apply_1`
+  FOREIGN KEY (`goap_recu_num`)
+  REFERENCES `final_team2`.`recruit` (`recu_num`)
+  ON DELETE CASCADE;
+

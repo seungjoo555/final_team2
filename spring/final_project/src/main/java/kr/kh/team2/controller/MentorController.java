@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
+import kr.kh.team2.model.vo.common.RecommendVO;
+import kr.kh.team2.model.vo.common.ReportVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
@@ -25,6 +27,8 @@ import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.CriteriaMentor;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.MentorService;
+import kr.kh.team2.service.RecommendService;
+import kr.kh.team2.service.ReportService;
 import lombok.extern.log4j.Log4j;
 
 @Controller
@@ -33,6 +37,11 @@ public class MentorController {
 	
 	@Autowired
 	MentorService mentorService;
+	
+	@Autowired
+	RecommendService recommendService;
+	@Autowired
+	ReportService reportService;
 	
 	@GetMapping("/mentor/list")
 	public String mentorList(Model model) {
@@ -63,15 +72,24 @@ public class MentorController {
 	
 	@ResponseBody
 	@PostMapping("/mentor/detail")
-	public Map<String, Object> mentorDetailPost(@RequestParam("ment_num")int ment_num) {
+	public Map<String, Object> mentorDetailPost(@RequestParam("ment_num")int ment_num, HttpSession session) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		MemberVO user = (MemberVO)session.getAttribute("user");
 		//멘토링 정보 받아오기
 		MetoringVO mentoring = mentorService.getMentoring(ment_num);
 		//멘토 정보 받아오기
 		MentorInfoVO mentorInfo = mentorService.getMentor(mentoring.getMent_me_id());
+		//멘토링 신고 여부 불러오기
+		boolean istrue = reportService.getReportIsTrue(Integer.toString(ment_num), "mentoring", user.getMe_id());
 		
+		// 좋아요수 
+		Integer mentNum = ment_num;
+		RecommendVO reco_ment_count = recommendService.getRecoMentoringCount(mentNum);
+    
+		map.put("istrue",istrue);
 		map.put("mentoring",mentoring);
 		map.put("mentor", mentorInfo);
+		map.put("reco_ment_count", reco_ment_count);
 		
 		return map;
 	}
@@ -80,7 +98,6 @@ public class MentorController {
 	@GetMapping("/mentoring/apply")
 	public Map<String, Object> mentorApply(@RequestParam("ment_num")int ment_num) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("ment_num :: "+ment_num);
 		MetoringVO mentoring = mentorService.getMentoring(ment_num);
 		map.put("mentoring",mentoring);
 		return map;
@@ -161,10 +178,9 @@ public class MentorController {
 				model.addAttribute("confirmUrl","/mentor/update");
 			}
 		
-		
 		return "message";
-
 	}
+
 	
 	@PostMapping("/mentor/insert")
 	public String mentorInsertPost(Model model, HttpSession session, MentorInfoVO mentorInfoVO) {
@@ -282,6 +298,60 @@ public class MentorController {
 		
 		
 		return "";
+	}
+	
+	@GetMapping("/mentor/mentoring/update")
+	public String mentoringUpdate(Model model, Integer mentNum,  HttpSession session) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		MentorInfoVO mentIf = mentorService.getMentorInfo(user.getMe_id());
+		ArrayList<ProgrammingCategoryVO> progCt = mentorService.getProgrammingCategory();
+		
+		MetoringVO mentoring = mentorService.getMentoring(mentNum);
+		
+		
+		model.addAttribute("progCtList",progCt);
+		model.addAttribute("mentIf",mentIf);
+		model.addAttribute("mentoring",mentoring);
+		
+		
+		return "/mentor/mentoringupdate";
+	}
+	
+	@PostMapping("/mentor/mentoring/update")
+	public String mentoringUpdatetPost(Model model, HttpSession session, MetoringVO mentoring, TotalCategoryVO toCt) {
+		
+		toCt.setToCt_table_name("mentoring");
+		System.out.println(mentoring);
+		boolean res = mentorService.updateMentoring(mentoring,toCt);
+		
+		if(res) {
+			model.addAttribute("msg","멘토링 글을 수정했습니다.");
+			model.addAttribute("url","/mentor/list");
+			return "message";
+		}
+		
+		
+		model.addAttribute("msg","멘토링 글을 수정하지 못했습니다.");
+		model.addAttribute("url","");
+		return "message";
+	}
+	
+	@GetMapping("/mentor/mentoring/delete")
+	public String mentoringDelete(Model model, Integer mentNum,  HttpSession session) {
+		
+		
+		boolean res = mentorService.deleteMentoring(mentNum);
+		
+		if(res) {
+			model.addAttribute("msg","멘토링 글을 삭제했습니다.");
+			model.addAttribute("url","/mentor/list");
+			return "message";
+		}
+		
+		
+		model.addAttribute("msg","멘토링 글을 삭제하지 못했습니다.");
+		model.addAttribute("url","/mentor/list");
+		return "message";
 	}
 
 }

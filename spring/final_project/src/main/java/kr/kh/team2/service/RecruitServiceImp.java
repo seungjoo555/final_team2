@@ -12,7 +12,6 @@ import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
-import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
@@ -99,7 +98,6 @@ public class RecruitServiceImp implements RecruitService {
 			totalCateVo.setToCt_progCt_num(ct);
 			totalCateVo.setToCt_table_name("recruit");
 			totalCateVo.setToCt_table_pk(""+recu_num);
-			System.out.println(totalCateVo + "공고번호" + recu_num);
 			boolean res = recruitDao.insertTotalCate(totalCateVo);
 			
 			if(!res) {
@@ -125,7 +123,6 @@ public class RecruitServiceImp implements RecruitService {
 			totalLangVo.setToLg_lang_num(ct);
 			totalLangVo.setToLg_table_name("recruit");
 			totalLangVo.setToLg_table_pk(""+recu_num);
-			System.out.println(totalLangVo + "공고번호" + recu_num);
 			boolean res = recruitDao.insertTotalLang(totalLangVo);
 			
 			if(!res) {
@@ -145,5 +142,9 @@ public class RecruitServiceImp implements RecruitService {
 	public ArrayList<ProgrammingLanguageVO> getProgrammingLanguageList() {
 		return recruitDao.selectProgrammingLanguageList();
 	}
+
+
+
+	
 
 }

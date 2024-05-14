@@ -2,20 +2,21 @@ package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.GroupDAO;
+import kr.kh.team2.model.dto.MutualReviewDTO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.group.GroupCalendarVO;
+import kr.kh.team2.model.vo.group.GroupMemberVO;
 import kr.kh.team2.model.vo.group.GroupPostVO;
 import kr.kh.team2.model.vo.group.GroupVO;
+import kr.kh.team2.model.vo.group.MutualReviewVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MemberVO;
-import kr.kh.team2.model.vo.member.MetoringVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.utils.Methods;
 
@@ -137,6 +138,12 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("groupNum is 0");
 			return false;
 		}
+		
+		if(!groupDao.getGoUpdate(groupNum)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
 		return groupDao.updateGoTime(groupNum);
 	}
 
@@ -215,6 +222,11 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("not group member");
 			return false;
 		}else {
+			if(!groupDao.getGoUpdate(goNum)) {
+				System.out.println("frozen group");
+				return false;
+			}
+			
 			return groupDao.insertGroupPost(goNum, writer, content);
 		}
 		
@@ -306,6 +318,10 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("null user");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
 		
 		GroupVO tmp = getGroupByGoNum(num);
 		
@@ -347,6 +363,10 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("null user");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
 		
 		// 로그인 한 유저가 멤버인지 확인함(후에 writer로 변경)
 		if(!isGroupMember(user, num)) {
@@ -368,6 +388,11 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("null user");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
 		
 		// 로그인 한 유저가 멤버인지 확인함
 		if(!isGroupMember(user, num)) {
@@ -407,6 +432,26 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
+	public ArrayList<GroupVO> getGroupListByRecuNum(int num) {
+		if(num == 0) {
+			return null;
+		}	
+		return groupDao.selectGroupListByGoNum(num);
+	}
+
+	@Override
+	public boolean insertGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, MemberVO user) {
+		if(recu_num == 0) {
+			return false;
+		}
+		
+		if(group == null || goapVo == null || user == null) {
+			return false;
+		}
+		
+		return groupDao.insertGroupApply(group, recu_num, goapVo, user);
+	}
+	
 	public int getApplicantTotalCount(int num) {
 		if(num == 0) {
 			System.out.println("goNum is 0");
@@ -417,9 +462,15 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public boolean insertGroupMember(MemberVO user, int num) {
-		if(num == 0) {
+	public boolean insertGroupMember(MemberVO user, int num, int apNum) {
+		if(num == 0 || apNum == 0) {
 			System.out.println("num is 0");
+			System.out.println("num: "+num);
+			System.out.println("apNum: "+apNum);
+			return false;
+		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
 			return false;
 		}
 		
@@ -430,21 +481,25 @@ public class GroupServiceImp implements GroupService{
 			return false;
 		}
 		
-		GroupApplyVO application = groupDao.getApplicationByGoap_num(num);
+		GroupApplyVO application = groupDao.getApplicationByGoap_num(apNum);
 		
 		if(application == null) {
 			System.out.println("no application");
 			return false;
 		}
 		
-		return groupDao.updateGoap_stateSigned(num) 
+		return groupDao.updateGoap_stateSigned(apNum) 
 				&& groupDao.insertGroupMember(application.getGoap_go_num(), application.getGoap_me_id());
 	}
 
 	@Override
-	public boolean cancelApply(MemberVO user, int num) {
+	public boolean cancelApply(MemberVO user, int num, int apNum) {
 		if(num == 0) {
 			System.out.println("num is 0");
+			return false;
+		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
 			return false;
 		}
 		
@@ -455,18 +510,18 @@ public class GroupServiceImp implements GroupService{
 			return false;
 		}
 		
-		GroupApplyVO application = groupDao.getApplicationByGoap_num(num);
+		GroupApplyVO application = groupDao.getApplicationByGoap_num(apNum);
 		
 		if(application == null) {
 			System.out.println("no application");
 			return false;
 		}
 		
-		return groupDao.updateGoap_stateCanceled(num);
+		return groupDao.updateGoap_stateCanceled(apNum);
 	}
 
 	@Override
-	public ArrayList<GroupApplyVO> getGroupMember(int num, Criteria cri) {
+	public ArrayList<GroupMemberVO> getGroupMember(int num, Criteria cri) {
 		if(num == 0) {
 			System.out.println("goNum is 0");
 			return null;
@@ -499,6 +554,11 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("invalid id");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
 		
 		MemberVO user = new MemberVO(id);
 		
@@ -520,6 +580,11 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("invalid id");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
 		
 		MemberVO user = new MemberVO(id);
 		
@@ -541,6 +606,11 @@ public class GroupServiceImp implements GroupService{
 			System.out.println("null user");
 			return false;
 		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
 		
 		GroupVO tmp = getGroupByGoNum(num);
 		
@@ -574,5 +644,195 @@ public class GroupServiceImp implements GroupService{
 		return groupDao.deleteGroupByGoNum(num);
 	}
 
+
+	@Override
+	public GroupApplyVO getGroupApply(Integer num, MemberVO user) {
+		if(num == 0 || user == null) {
+			return null;
+		}	
+		return groupDao.selectGroupApply(num, user);
+	}
+
+	@Override
+	public boolean updateGroupApply(GroupVO group, int recu_num, GroupApplyVO goapVo, MemberVO user) {
+		if(group == null || recu_num == 0 || goapVo == null || user == null) {
+			return false;
+		}
+		
+		// 작성자가 맞는지 확인
+		GroupApplyVO goap = groupDao.selectGroupApply(recu_num, user);
+		
+		if(goap == null || !goap.getGoap_me_id().equals(user.getMe_id())) {
+			return false;
+		}
+		
+		boolean res = groupDao.updateGroupApply(goapVo, goap, user);
+		
+		if(!res) {
+			return false;
+		}
+			
+		return true;
+	}
+
+
+  @Override
+	public boolean changeGroupLeader(int num, String id, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		if(!methods.checkString(id)) {
+			System.out.println("invalid id");
+			return false;
+		}
+		if(!groupDao.getGoUpdate(num)) {
+			System.out.println("frozen group");
+			return false;
+		}
+		
+		
+		GroupVO tmpGroup = getGroupByGoNum(num);
+		
+		if(!tmpGroup.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		MemberVO tmpMember = new MemberVO(id);
+		
+		if(!isGroupMember(tmpMember, num)) {
+			System.out.println("not group member user id");
+			return false;
+		}
+		
+		return groupDao.updateGomeStateTo0(num, user.getMe_id()) && groupDao.updateGomeStateTo1(num, id);
+	}
+
+	@Override
+	public boolean updateGoUpdate(int num, boolean freeze, MemberVO user) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return false;
+		}
+		if(user == null) {
+			System.out.println("null user");
+			return false;
+		}
+		
+		GroupVO tmpGroup = getGroupByGoNum(num);
+		
+		if(!tmpGroup.getLeader().equals(user.getMe_id())) {
+			System.out.println("not group leader user");
+			return false;
+		}
+		
+		return groupDao.updateGoUpdate(num, freeze);
+	}
+
+	@Override
+	public ArrayList<GroupMemberVO> getNotReviewedMember(int num, Criteria cri) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return null;
+		}
+		if(cri == null) {
+			System.out.println("null cri");
+			return null;
+		}
+		
+		return groupDao.getNotReviewedMember(num, cri);
+	}
+
+	@Override
+	public int getNotReviewedMemberTotalCount(int num, String id) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return -1;
+		}
+		if(!methods.checkString(id)) {
+			System.out.println("invalid id");
+			return -1;
+		}
+		
+		return groupDao.getNotReviewedMemberTotalCount(num, id);
+	}
+
+	@Override
+	public ArrayList<MutualReviewVO> getReviewedMember(int num, Criteria cri) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return null;
+		}
+		if(cri == null) {
+			System.out.println("null cri");
+			return null;
+		}
+		
+		return groupDao.getReviewedMember(num, cri);
+	}
+
+	@Override
+	public int getReviewedMemberTotalCount(int num, String id) {
+		if(num == 0) {
+			System.out.println("goNum is 0");
+			return -1;
+		}
+		if(!methods.checkString(id)) {
+			System.out.println("invalid id");
+			return -1;
+		}
+		
+		return groupDao.getReviewedMemberTotalCount(num, id);
+	}
+
+	/** 그룹 리더 아이디를 가져오는 서비스*/
+	@Override
+	public String getGroupLeaderID(int recu_num) {
+		if(recu_num <= 0) {
+			return null;
+		}
+		return groupDao.selectGroupLeaderID(recu_num);
+	}
+
+	@Override
+	public boolean insertMutualReview(MutualReviewDTO mutualReviewDto, MemberVO user) {
+		if(mutualReviewDto == null) {
+			System.out.println("null DTO");
+			return false;
+		}
+		if(groupDao.isGroupMember(user.getMe_id(), mutualReviewDto.getNum()) == null) {
+			System.out.println("not group member");
+			return false;
+		}
+		
+		// 매너온도 계산
+		float degree;
+		int rate = mutualReviewDto.getRate();
+		
+		if(rate>5) {
+			// 5점 이상이면 매너 온도 상승
+			degree = rate / 2;
+		}else {
+			// 5점 이하면 매너 온도 하락
+			degree = -(rate / 2);
+		}
+		
+		return groupDao.insertMutualReview(mutualReviewDto) && groupDao.updateMeDgree(mutualReviewDto.getTarget_id(), degree);
+	}
+
+	@Override
+	public Object isReviewedMember(MutualReviewDTO mutualReviewDto) {
+		if(mutualReviewDto == null) {
+			System.out.println("null DTO");
+			return false;
+		}
+		
+		return groupDao.isReviewedMember(mutualReviewDto);
+	}
 	
 }

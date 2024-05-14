@@ -26,7 +26,24 @@
 header{
 	width: 100%; min-width: 1200px;
 }
+
+.navbar-brand {
+	position: relative;	
+}
+
+.second-logo {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	display: none;
+}
+
+.navbar-brand:hover .second-logo {
+	display: block;
+}
+
 header h1{ width: 150px; }
+
 header img{ width: 150px; }
 header .navbar { background-color: #E6F5E5; margin: 0; padding: 0; height: 80px;}
 header .navbar>.container-fluid {
@@ -97,7 +114,6 @@ header .d-flex {
 
 /* Dropdown Button */
 .dropbtn-lecture {
-  background-color: #4CAF50;
   color: white;
   padding: 16px;
   font-size: 16px;
@@ -106,9 +122,10 @@ header .d-flex {
 }
 
 /* Dropdown button on hover & focus */
+/*
 .dropbtn-lecture:hover, .dropbtn-lecture:focus {
   background-color: #3e8e41;
-}
+}*/
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content-lecture {
@@ -139,9 +156,10 @@ header .d-flex {
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
+/*
 .dropdown-lecture:hover .dropbtn-lecture {
   background-color: #3e8e41;
-}
+}*/
 
 /* Submenu Button */
 .subbtn-lecture {

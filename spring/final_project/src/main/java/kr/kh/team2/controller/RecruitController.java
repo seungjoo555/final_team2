@@ -44,7 +44,6 @@ public class RecruitController {
 	}
 	
 	@PostMapping("/group/grouprecruit")
-
 	public String RecruitInsertPost(Model model, String progCtList, String progLangList, GroupVO group ,RecruitVO recruit, HttpSession session) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		

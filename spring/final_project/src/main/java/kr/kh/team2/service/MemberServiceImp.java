@@ -1,7 +1,7 @@
 package kr.kh.team2.service;
 
 import javax.mail.internet.MimeMessage;
-
+import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -14,6 +14,7 @@ import kr.kh.team2.model.dto.LoginDTO;
 import kr.kh.team2.model.dto.SignupDTO;
 import kr.kh.team2.model.vo.member.MeVerifyVO;
 import kr.kh.team2.model.vo.member.MemberVO;
+import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.utils.Methods;
 
 
@@ -44,8 +45,7 @@ public class MemberServiceImp implements MemberService {
 			|| !methods.checkString(signupDto.getNickname())
 			|| !methods.checkString(signupDto.getName())
 			|| !methods.checkString(signupDto.getPhone())
-			|| !methods.checkString(signupDto.getAdd1())
-			|| !methods.checkString(signupDto.getAdd2())) {
+			|| !methods.checkString(signupDto.getAdd1())) {
 			System.out.println("null String");
 			System.out.println("signupDto : "+signupDto);
 			return null;
@@ -101,6 +101,7 @@ public class MemberServiceImp implements MemberService {
 		if(me_id == null) {
 			return null;
 		}
+		System.out.println(memberDao.selectMember(me_id));
 		return memberDao.selectMember(me_id);
 	}
 
@@ -109,6 +110,7 @@ public class MemberServiceImp implements MemberService {
 		if(me_id == null) {
 			return false;
 		}
+		System.out.println(memberDao.updateProfile(me_id, member));
 		return memberDao.updateProfile(me_id, member);
 	}
 
@@ -338,6 +340,54 @@ public class MemberServiceImp implements MemberService {
 		}
 		
 		return false;
+  }
+  
+	public ArrayList<String> getMemberStateList() {
+		return memberDao.selectMemberStateList();
+	}
+
+	@Override
+	public boolean updateMemberState(String set_me_id, String set_state) {
+		if(!methods.checkString(set_state)||!methods.checkString(set_me_id)) {
+			return false;
+		}
+		return memberDao.updateMemberState(set_me_id, set_state);
+	}
+
+	@Override
+	public ArrayList<MemberVO> getAdminMemberList(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 10);
+		}
+		
+		return memberDao.selectAdminMemberList(cri);
+	}
+
+	@Override
+	public ArrayList<String> getMemberAuthList() {
+		return memberDao.selectMemberAuthList();
+	}
+
+	@Override
+	public boolean updateMember(MemberVO member) {
+		if(member == null || !methods.checkString(member.getMe_id())|| !methods.checkString(member.getMe_ma_auth())|| !methods.checkString(member.getMe_ms_state()))
+		return false;
+		return memberDao.updateMember(member);
+	}
+
+	@Override
+	public boolean deleteMember(String me_id) {
+		if(!methods.checkString(me_id))
+			return false;
+		return memberDao.deleteMemberVO(me_id);
+	}
+
+	@Override
+	public int getAdminMemberTotalCount(Criteria cri) {
+		if(cri == null) {
+			cri = new Criteria(1, 10);
+		}
+		return memberDao.selectAdminMemberTotalCount(cri);
 	}
 	
 	

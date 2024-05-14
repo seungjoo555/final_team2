@@ -6,7 +6,8 @@
 <form action="<c:url value="/lecture/list"/>" method="get">
 	<div class="input-group mb-3">
 		<input type="hidden" name="type" value="all">
-		<input type="text" name="search" class="form-control" placeholder="검색어" value="${pm.cri.search}">
+		<input type="text" name="search" class="form-control" placeholder="전체검색창" value="${pm.cri.search}">
+		<button class="btn btn-outline-success">검색</button>
 	</div>
 </form>
 
@@ -28,12 +29,12 @@
 						<c:param name="page" value="${pm.cri.page}"/>
 						<c:param name="type" value="${pm.cri.type}"/>
 						<c:param name="search" value="${pm.cri.search}"/>
-						<c:param name="boNum" value="${lecture.lect_num}"/>
+						<c:param name="lectNum" value="${lecture.lect_num}"/>
 					</c:url>
 					<a href="${url}">${lecture.lect_name}</a>
 				</td>
 				<td>
-					<c:url value="/board/list" var="url">
+					<c:url value="/lecture/list" var="url">
 						<c:param name="type" value="writer"/>
 						<c:param name="search" value="${lecture.lect_mentIf_me_id}"/>
 					</c:url>
@@ -79,6 +80,7 @@
 		</li>
 	</c:if>
 </ul>
-<c:if test="${user }">
+
+<c:if test="${user.me_ma_auth == '멘토'}">
 	<a class="btn btn-outline-success" href="<c:url value="/lecture/insert"/>">강의 등록하기</a>
 </c:if>
