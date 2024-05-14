@@ -13,6 +13,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.kh.team2.model.vo.common.TotalCategoryVO;
+import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.group.GroupVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.lecture.LectureVO;
 import kr.kh.team2.model.vo.member.MetoringVO;
@@ -46,11 +49,23 @@ public class HomeController {
 		//추천순 강의 리스트
 		ArrayList<LectureVO> lectureList = lectureService.getAllLectureList(cri);
 		
+		//모임 - 모집분야, 사용언어
+		String table1 = "recruit";
+		ArrayList<TotalCategoryVO> totalCategory = new ArrayList<TotalCategoryVO>();
+		ArrayList<TotalLanguageVO> totalLanguage = new ArrayList<TotalLanguageVO>();
 		
-		System.out.println(hotGroupList);
-		System.out.println(mentoingList);
-		System.out.println(lectureList);
-		
+		for(RecruitVO group : hotGroupList) {
+			int recu_num = group.getRecu_num();
+			System.out.println("recu_num : " + recu_num);
+			
+			ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table1);
+			ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table1);
+			
+			totalCategory.addAll(Category);
+			totalLanguage.addAll(Language);			
+		}
+		model.addAttribute("totalCategory", totalCategory);
+		model.addAttribute("totalLanguage", totalLanguage);
 		model.addAttribute("hotGroupList", hotGroupList );
 		model.addAttribute("mentoingList", mentoingList );
 		model.addAttribute("lectureList", lectureList );

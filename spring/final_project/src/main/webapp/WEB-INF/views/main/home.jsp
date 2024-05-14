@@ -43,12 +43,24 @@
 								<!-- 그룹 모집 제목 -->
 								<h3 class="group-list-item-title">${group.recu_topic}</h3>
 								<!-- 분야 리스트 -->
-								<div class="group-list-item-contentList">
-									${group.recu_required }
+								<div class="cate-container" onmousedown="startDragging(event)" onmouseup="stopDragging(event)" onmousemove="dragging(event)">
+									<c:forEach items="${totalCategory}" var="cate">
+										<c:if test="${group.recu_num == cate.toCt_table_pk}">
+											<ul class="cate-list">
+												<li class="cate-list-item">${cate.toCt_progCt_name}</li>
+											</ul>
+										</c:if>
+									</c:forEach>
 								</div>
 								<!-- 사용언어 -->
-								<div class="group-list-item-languageList">
-									${group.recu_preferred }
+								<div class="lang-container" onmousedown="startDragging(event)" onmouseup="stopDragging(event)" onmousemove="dragging(event)">
+									<c:forEach items="${totalLanguage}" var="lang">
+										<c:if test="${group.recu_num == lang.toLg_table_pk}">
+											<ul class="lang-list">
+												<li class="lang-list-item">${lang.toLg_lang_name}</li>
+											</ul>
+										</c:if>
+									</c:forEach>
 								</div>
 							</div>
 							<!-- 구분선 -->
@@ -154,7 +166,43 @@
 	</div>
 </div>
 
+<script type="text/javascript">
 
+$(document).ready(function() {
+	$('.cate-container').on('click', function(event) {
+		event.preventDefault();
+	});
+});
+
+let isDragging = false;
+let startPosition = 0;
+let startScrollPosition = 0;
+
+function startDragging(event) {
+    isDragging = true;
+    startPosition = event.clientX;
+    startScrollPosition = event.currentTarget.scrollLeft;
+    event.currentTarget.style.cursor = 'grabbing'; /* 드래그 중일 때의 커서 모양 설정 */
+}
+
+function stopDragging(event) {
+    isDragging = false;
+    event.currentTarget.style.cursor = 'grab'; /* 드래그 종료 후 커서 모양 설정 */
+}
+
+function dragging(event) {
+    if (isDragging) {
+        const deltaX = event.clientX - startPosition;
+        event.currentTarget.scrollLeft = startScrollPosition - deltaX;
+    }
+}
+
+$(document).ready(function() {
+	$('.lang-container').on('click', function(event) {
+		event.preventDefault();
+	});
+});
+</script>
 
 </body>
 </html>
