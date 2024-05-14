@@ -337,10 +337,8 @@ $(document).on('click', '.mento-item', function(event){
 			reportStr
 			+
 			`
-							
 						</div>
 						<div class="like-btn-box">
-							
 							<input type="hidden" class="ment_num" value="\${mentoring.ment_num}">
 							<input type="hidden" class="reco_ment_count" value="\${reco_ment_count.reco_ment_count}">
 							<button type="button" id="btnUp" data-state="1" class="like-btn btn-up">
