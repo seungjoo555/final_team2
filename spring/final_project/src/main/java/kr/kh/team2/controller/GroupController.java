@@ -68,9 +68,8 @@ public class GroupController {
 		ArrayList<GroupVO> list = groupService.getGroupListById(user.getMe_id(), cri);
 		
 		int totalCount = groupService.getMyGroupTotalCount(user.getMe_id());
-		
 		PageMaker pm = new PageMaker(10, cri, totalCount);
-		
+
 		map.put("list", list);
 		map.put("pm", pm);
 		
@@ -644,9 +643,32 @@ public class GroupController {
 		cri.setPerPageNum(20);	//20개
 		//그룹 리스트 가져오기
 		ArrayList<RecruitVO> groupList = groupService.getGroupList(cri);
-		System.out.println("cri : " + cri);
 		int totalCount = groupService.getGroupTotalCount(cri);
 		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		//그룹 세부 정보 가져오기
+		String table_name = "recruit";
+		
+		//모집분야
+		ArrayList<TotalCategoryVO> totalCategory = new ArrayList<TotalCategoryVO>();
+		//사용언어
+		ArrayList<TotalLanguageVO> totalLanguage = new ArrayList<TotalLanguageVO>();
+
+		System.out.println("totalCategory : " + totalCategory);
+		for(RecruitVO group : groupList) {
+			//그룹 번호
+			int recu_num = group.getRecu_num();
+			
+			ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table_name);
+			ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table_name);
+			
+			totalCategory.addAll(Category);
+			totalLanguage.addAll(Language);			
+		}
+		
+		
+		map.put("totalCategory", totalCategory);
+		map.put("totalLanguage", totalLanguage);
 		map.put("list", groupList);
 		map.put("pm", pm);
 		return map;
