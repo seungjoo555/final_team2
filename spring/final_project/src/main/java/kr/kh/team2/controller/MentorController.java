@@ -138,6 +138,9 @@ public class MentorController {
 		if(mentorInfo.getMentIf_state()==-1) {
 			return "denied";
 		}
+		if(user.getMe_temppw()==1) {
+			return "needchange";
+		}
 		return "false";
 	}
 	
@@ -154,27 +157,30 @@ public class MentorController {
 		
 		MentorInfoVO mentorInfo = mentorService.getMentorInfo(user.getMe_id());
 		
-		if(mentorInfo != null) {
-			if(mentorInfo.getMentIf_state()==0 || mentorInfo.getMentIf_state() == 1) {
-				model.addAttribute("msg","이미 멘토 신청을 완료한 계정입니다.");
-				model.addAttribute("url","/");
-				return "message";
-			}
-			if(mentorInfo.getMentIf_state()==-1) {
+		if(mentorInfo==null) {
+			ArrayList<MentorJobVO> jobList = mentorService.getJobList();
+			model.addAttribute("jobList",jobList);
+		
+			return "/mentor/mentorinsert";
+			
+		}
+		
+		if(mentorInfo.getMentIf_state()==0 || mentorInfo.getMentIf_state() == 1) {
+			model.addAttribute("msg","이미 멘토 신청을 완료한 계정입니다.");
+			model.addAttribute("url","/");
+			
+		}
+		else if(mentorInfo.getMentIf_state()==-1) {
 				model.addAttribute("msg","멘토 신청 거절 이력이 있습니다.");
 				model.addAttribute("url","/mentor/insert");
 				model.addAttribute("confirm", true);
 				model.addAttribute("confirmMsg","멘토신청을 다시 하시겠습니까?");
 				model.addAttribute("confirmUrl","/mentor/update");
-				return "message";
 			}
-		}
 		
-		ArrayList<MentorJobVO> jobList = mentorService.getJobList();
-		model.addAttribute("jobList",jobList);
-	
-		return "/mentor/mentorinsert";
+		return "message";
 	}
+
 	
 	@PostMapping("/mentor/insert")
 	public String mentorInsertPost(Model model, HttpSession session, MentorInfoVO mentorInfoVO) {
@@ -221,8 +227,10 @@ public class MentorController {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		String me_id = user.getMe_id();
 		MentorInfoVO dbMentor = mentorService.getMentorInfo(me_id);
+		
 		if(!user.getMe_id().equals(dbMentor.getMentIf_me_id())) {
-			
+			model.addAttribute("msg","권한 외 접근입니다.");
+			model.addAttribute("url","/");
 			return "message";
 		}
 		

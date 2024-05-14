@@ -5,8 +5,9 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class LoginDTO {
-	private String id;
-	private String pw;
-	private boolean autoLogin;
+public class ChangePwTempDTO {
+	private String me_id;
+	private String me_pw;
+	private int me_temppw;
+
 }

@@ -14,6 +14,7 @@
     
 		<!-- ========================== member ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.member.MemberVO" alias="MemberVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.member.MeVerifyVO" alias="MeVerifyVO"/>
     
     	<!-- ========================== mentor ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.member.MentorJobVO" alias="MentorJobVO"/>
