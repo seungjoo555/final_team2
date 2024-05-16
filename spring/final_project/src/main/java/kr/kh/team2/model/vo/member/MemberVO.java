@@ -22,7 +22,7 @@ public class MemberVO {
     private int me_reportcount;
     private int me_login;
     private Date me_date;
-    private int me_type;
+    private String me_type;
     private float me_degree;
     private String me_interests;
     private String me_preferloc;

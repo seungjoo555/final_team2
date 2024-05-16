@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <style type="text/css">
 	
 	.manage-mentor-container{
@@ -37,20 +39,48 @@
 		width : 240px;
 		height : 40px;
 	}
+	
+	.accept-list-wrap{
+		margin-top : 25px;
+	}
 	.accept-list-wrap ul {
-		display: flex;
 		font-size: 16px;
 		margin-left : 35px;
-		margin-top : 30px;
 	}
 	
-	.mentor-info-instance *{
-		margin-right : 35px;
+
+	
+	.mentor-info-instance {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    padding: 10px 0; /* 각 요소의 위아래 패딩 추가 */
+}
+
+	/* 각 영역의 가로 길이 설정 */
+	.ment-id-wrap {
+	    width: 300px;
 	}
 	
-	.mentor-info-click-box{
-		display : flex;
+	.ment-job-wrap {
+	    width: 300px;
 	}
+	
+	.ment-content-wrap {
+	    width: 555px;
+	}
+	
+	/* 각 영역의 세로 높이 설정 */
+	.mentor-info-instance * {
+	    height: 30px;
+	    display: flex;
+	    align-items: center; /* 세로 중앙 정렬 */
+	}
+	
+	/* 체크박스의 마진 설정 */
+	.mentor-info-checkbox {
+	    margin-right: 20px; /* 체크박스 오른쪽 마진 추가 */
+	}
+	
 	
 	.mentor-info-instance:hover{
 		background-color: #4F4F4F;
@@ -168,6 +198,13 @@
 		margin-top : 50px;
 	}
 	
+	.mentor-info-instance {
+    display: flex;
+}
+	
+	.mentor-info-click-box{
+		display : flex;
+	}
 	
 </style>
 </head>
@@ -294,15 +331,23 @@
 				subContent = mentIf_intro;
 			}
 			str += `<ul class="mentor-info-instance">
+					 <div class="ment-instance-wrap"> 
 						<input type="checkbox" class="mentor-info-checkbox" value="\${mentorInfo.mentIf_me_id}">
-						<li>
-							<a href="<c:url value='/mypage/profile?me_id=\${mentorInfo.mentIf_me_id}'/>" class="mentor-info mentor-id" >`+subId+`</a>
-						</li>
+						<div class="ment-id-wrap">
+							<li>
+								<a href="<c:url value='/mypage/profile?me_id=\${mentorInfo.mentIf_me_id}'/>" class="mentor-info mentor-id" >`+subId+`</a>
+							</li>
+						</div>
 						<div class="mentor-info-click-box">
 							<input type="hidden" class="hiddenId" value="\${mentorInfo.mentIf_me_id}">
-							<li class="mentor-info mentor-work">\${mentorInfo.mentIf_ment_job}</li>
-					        <li class="mentor-info mentor-content">`+subContent+`</li>
+							<div class="ment-job-wrap">
+								<li class="mentor-info mentor-work">\${mentorInfo.mentIf_ment_job}</li>
+							</div>
+							<div class="ment-content-wrap">
+					        	<li class="mentor-info mentor-content">`+subContent+`</li>
+					        </div>
 					    <div>
+					 </div>
 			        </ul>
 			        `;
 		}
@@ -331,7 +376,10 @@
 	
 	<!--mentorInfo detail 출력-->
 	function displayMentorInfo(mentorInfo){
+		 $('body').css('overflow', 'hidden');
+		 $('.box-pagination .page-item').removeClass('active');
 		//자기소개가 null일 때 처리
+		
 		if(mentorInfo.mentIf_intro===null || mentorInfo.mentIf_intro.trim().length===0){
 			mentorInfo.mentIf_intro = "등록된 자기소개가 없습니다.";
 		}
@@ -368,7 +416,7 @@
 	       		<div class="mentorInfo-print-group">
 					<label for="mentorInfo-intro">자기소개</label>
 					<br>
-					<textarea readonly class="mentorInfo-intro">\${mentorInfo.mentIf_intro}</textarea>
+					<textarea readonly name="ment-intro" class="mentorInfo-intro">\${mentorInfo.mentIf_intro}</textarea>
 				</div>
 			</div>
 			<div class="mentorInfo-detail-button-group">
@@ -377,6 +425,13 @@
 			</div>
       	`
       	$('.mentorInfo-detail-wrap').html(str);
+		$('[name=ment-intro]').summernote({
+			tabsize: 2,
+			height: 200,
+			width : 938,
+			toolbar: []
+		});
+		$('[name=ment-intro]').summernote('disable');
 		
 	}
 	
@@ -410,8 +465,15 @@
 		});
 	})
 	
+	<!--모달창 닫기-->
 	$('.modalCloseBtn').click(function(){
+		$('body').css('overflow', '');
 		$('.modalWrap').css('display','none')
+	    $('.box-pagination .page-link').each(function () {
+	        if ($(this).data('page') == cri.page) {
+	            $(this).parent().addClass('active');
+	        }
+	    });
 	})
 	window.onclick = function(event) {
 	  var modalWrap = document.getElementById('modalWrap');
@@ -513,6 +575,7 @@
 	    });
 		
 	})
+
 	
 </script>
 </body>
