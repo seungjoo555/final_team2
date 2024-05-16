@@ -33,4 +33,6 @@ public interface LectureService {
 
 	boolean insertLecture(LectureVO lecture, MemberVO user, String progCtList, String progLangList);
 
+	ArrayList<LectureVO> getHotLectureList();
+
 }

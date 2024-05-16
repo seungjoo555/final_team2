@@ -1,6 +1,7 @@
 package kr.kh.team2.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -58,5 +59,11 @@ public interface MentorDAO {
 	boolean deleteMentoring(@Param("ment_num")Integer mentNum);
 
 	MentoringApplyVO selectMentoringApply(@Param("ment_num")int num, @Param("user")MemberVO user);
+
+	ArrayList<MetoringVO> selectAllMentoring();
+
+	Date selectDue(@Param("ment_num")String reco_target);
+
+	MetoringVO selectMentoringIF(@Param("ment_num")int ment_num);
 
 }

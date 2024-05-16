@@ -735,10 +735,8 @@ function updatevote(action, data) {
 		method : "get",
 		data : recommend,
 		success: function (data){
-			
 			let count = parseInt(data.reco_ment_count);
 			$('.init-like').text(count);
-			
 		}, 
 		error : function(a, b, c){
 			console.log("실패");

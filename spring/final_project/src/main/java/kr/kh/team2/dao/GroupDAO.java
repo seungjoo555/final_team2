@@ -1,6 +1,7 @@
 package kr.kh.team2.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
@@ -138,5 +139,11 @@ public interface GroupDAO {
 	Object isReviewedMember(@Param("review")MutualReviewDTO mutualReviewDto);
 
 	boolean updateMeDgree(@Param("id")String target_id, @Param("degree")float degree);
+
+	ArrayList<RecruitVO> selectRecruitList();
+
+	RecruitVO selectHotGroupList(@Param("reco_target")String reco_target);
+
+	Date selectDue(@Param("reco_target")String reco_target);
 
 }
