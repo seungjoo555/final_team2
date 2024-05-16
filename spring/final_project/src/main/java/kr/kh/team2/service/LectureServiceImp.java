@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team2.dao.LectureDAO;
 import kr.kh.team2.dao.RecommendDAO;
@@ -15,10 +18,12 @@ import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
 import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
+import kr.kh.team2.model.vo.lecture.LectureFileVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.lecture.LectureVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
+import kr.kh.team2.utils.UploadFileUtils;
 
 @Service
 public class LectureServiceImp implements LectureService{
@@ -27,6 +32,39 @@ public class LectureServiceImp implements LectureService{
 	LectureDAO lectureDao;
 	@Autowired
 	RecommendDAO recommendDAO;
+	
+	@Resource
+	String uploadPath;
+
+	private void uploadFile(int lect_num, MultipartFile file) {
+		if(file == null || file.getOriginalFilename().length() == 0)
+			return;
+		try {
+			String fileOriName = file.getOriginalFilename();
+			//첨부파일 업로드 후 경로를 가져옴
+			String fileName = 
+				UploadFileUtils.uploadFile(
+						uploadPath, 
+						fileOriName, 
+						file.getBytes());
+			LectureFileVO fileVO = new LectureFileVO(lect_num, fileName, fileOriName);
+			System.out.println(fileVO);
+			//DB에 첨부파일 정보를 추가
+			lectureDao.insertFile(fileVO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void deleteFile(LectureFileVO file) {
+		if(file == null) {
+			return;
+		}
+		//서버에서 삭제
+		UploadFileUtils.delteFile(uploadPath, file.getLectFi_path());
+		//DB에서 삭제
+		lectureDao.deleteFile(file.getLectFi_num());
+	}
 	
 	private boolean checkString(String str) {
 		return str != null && str.length() != 0;
@@ -102,7 +140,8 @@ public class LectureServiceImp implements LectureService{
 	}
 
 	@Override
-	public boolean insertLecture(LectureVO lecture, MemberVO user, String progCtList, String progLangList) {
+	public boolean insertLecture(LectureVO lecture, MemberVO user,
+								String progCtList, String progLangList, MultipartFile[] file) {
 		if(user == null || lecture == null) {
 			return false;
 		}
@@ -146,6 +185,16 @@ public class LectureServiceImp implements LectureService{
 				System.out.println("언어 등록 실패");
 			}
 		}
+		
+		if(file == null || file.length == 0) {
+			System.out.println("파일 없음");
+			return true;
+		}
+		
+		for(MultipartFile tmp : file) {
+			uploadFile(lecture.getLect_num(), tmp);
+		}
+		
 		return true;
 	}
 	/** 추천 순 강의 리스트 가져오는 서비스 */
@@ -196,6 +245,11 @@ public class LectureServiceImp implements LectureService{
 		}
 		
 		return hotList;
+	}
+
+	@Override
+	public ArrayList<LectureFileVO> getFileList(int lectNum) {
+		return lectureDao.selectFileList(lectNum);
 	}
 
 }

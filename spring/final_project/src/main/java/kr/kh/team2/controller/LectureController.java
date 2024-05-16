@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
@@ -17,8 +18,7 @@ import kr.kh.team2.model.vo.common.ReportVO;
 import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
-import kr.kh.team2.model.vo.group.GroupVO;
-import kr.kh.team2.model.vo.group.RecruitVO;
+import kr.kh.team2.model.vo.lecture.LectureFileVO;
 import kr.kh.team2.model.vo.lecture.LectureVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -90,13 +90,13 @@ public class LectureController {
 	
 	//강의 등록하기
 	@PostMapping("/lecture/insert")
-	public String lectureInsertPost(Model model, String progCtList, String progLangList ,LectureVO lecture, HttpSession session) {
+	public String lectureInsertPost(Model model, String progCtList, String progLangList ,
+			LectureVO lecture, HttpSession session, MultipartFile[] file) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
 		log.info(lecture);
-		log.info(progCtList);
-		log.info(progLangList);
+		log.info(file);
 		//강의 글 등록
-		boolean res = lectureService.insertLecture(lecture, user, progCtList, progLangList);
+		boolean res = lectureService.insertLecture(lecture, user, progCtList, progLangList, file);
 		
 		if(res) {
 			model.addAttribute("msg", "강의를 등록했습니다.");
@@ -119,6 +119,8 @@ public class LectureController {
 		String table = "lecture";
 		ArrayList<TotalCategoryVO> totalCategory = lectureService.getCategory(lectNum, table);
 		ArrayList<TotalLanguageVO> totalLanguage = lectureService.getLanguage(lectNum, table);
+		//첨부된 강의파일 가져오기
+		ArrayList<LectureFileVO> fileList = lectureService.getFileList(lectNum);
 		
 		//신고 유형 정보 가져오기
 		ArrayList<ReportContentVO> contentList = reportService.getReportContentList();
@@ -134,6 +136,7 @@ public class LectureController {
 		model.addAttribute("istrue", istrue);
 		model.addAttribute("totalCategory", totalCategory);
 		model.addAttribute("totalLanguage", totalLanguage);
+		model.addAttribute("fileList", fileList);
 		model.addAttribute("contentList", contentList);
 		model.addAttribute("title", "강의 상세");
 		return "/lecture/detail";
