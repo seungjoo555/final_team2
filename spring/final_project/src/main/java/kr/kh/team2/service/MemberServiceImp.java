@@ -15,6 +15,7 @@ import kr.kh.team2.model.dto.ChangePwTempDTO;
 import kr.kh.team2.model.dto.LoginDTO;
 import kr.kh.team2.model.dto.SignupDTO;
 import kr.kh.team2.model.dto.SnsSignupDTO;
+import kr.kh.team2.model.dto.SignupDetailDTO;
 import kr.kh.team2.model.vo.member.MeVerifyVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -405,9 +406,6 @@ public class MemberServiceImp implements MemberService {
 	public boolean signupSns(SnsSignupDTO ssd) {
 		
 		return memberDao.insertMemberSns(ssd);
-		
-		
-		
 	}
 
 	@Override
@@ -427,11 +425,19 @@ public class MemberServiceImp implements MemberService {
 		//3 = 내가 시도하는 sns로그인 외의 방법으로 만들어진 이메일 계정
 		return 3;
 
+  }
+  
+	public boolean updateMemberDetail(String me_id, SignupDetailDTO signupDetailDto) {
+		if(me_id == null) {
+			System.out.println("null id");
+			return false;
+		}
+		if(signupDetailDto == null) {
+			System.out.println("null detail");
+			return false;
+		}
 		
-		
-		
-		
+		return memberDao.updateMemberDetail(me_id, signupDetailDto);
 	}
-	
 	
 }

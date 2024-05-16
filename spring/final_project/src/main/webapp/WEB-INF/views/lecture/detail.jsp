@@ -6,6 +6,7 @@
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="<c:url value="/resources/css/lecture.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/report.css"/>">
+	<link rel="stylesheet" href="<c:url value="/resources/css/report.css"/>">
 </head>
 <body>
 
@@ -20,7 +21,17 @@
 	<div class="lecture_userAndDate">
 		<img class="basic-profile" value="${writer.me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
 		<a href="<c:url value="/mypage/profile?me_id=${writer.me_id}"/>" class="lecture_user">${writer.me_nickname}</a>
-		<div class="report-btn-box"><button class="report-btn">신고</button></div>
+		<div class="btn-box">
+			<!-- 본인 글일 경우 신고기능 비활성화 -->
+			<c:if test="${writer.me_id != user.me_id}">
+				<div class="report-btn-box">
+					<input type="hidden" class="report-isture" value="${istrue}">
+					<button class="report-btn">
+						<img src="<c:url value="/resources/img/siren_icon.svg" />" alt="사이렌아이콘" width="24" class="siren-icon">
+					</button>
+				</div>
+			</c:if>
+		</div>
 		<!-- <div class="lecture_regDate">날짜</div> -->
 	</div>
 	<hr>		
@@ -71,10 +82,137 @@
 	<hr>
 	<section>
 		<div class="form-row content">
-			<div style="min-height: 400px" class="form-control second-box" id="lect_content">${lecture.lect_intro}</div>
+			<div style="min-height: 400px; border: 1px solid #f2f2f2" class="second-box" id="lect_content">${lecture.lect_intro}</div>
 		</div>
 	</section>
 </div>
+<div>
+	<c:choose>
+		<c:when test="${fileList.size() != 0}">
+			<label>첨부파일</label>
+			<c:forEach items="${fileList}" var="file">
+				<a href="<c:url value="/download/${file.lectFi_path}"/>"
+					class="form-control" download="${file.lectFi_ori_name}">${file.lectFi_ori_name}</a>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<div>첨부파일 없음</div>
+		</c:otherwise>
+	</c:choose>
+</div>
+
+
+
+<!--------------------------- 신고화면 --------------------------->
+   <div id="modal-report" class="modal-report report-modal" style="display:none;">
+		<div id="dimmed-report" class="dimmed-report report-dimmend"></div>
+		<div class="report-container">
+			<div class="report-box">
+			<div class="report-header">
+		     		<div class="header-title"><h1>신고하기</h1></div>
+		     	</div>
+			<form action="<c:url value="/report/group"/>"  method="post" class="form-report">
+				<div class="report-body">
+						<div class="report-form-group">
+							<label for="report-content">신고유형</label>
+							<select class="input-box-input report-content" id="report-content" name="report-content">
+								<c:forEach var="content" items="${contentList }">
+									<option value="${content.repo_content }">${content.repo_content }</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="report-form-group">
+							<label for="report-detail">신고내용</label>
+							<textarea class="form-control report-detail" id="report-detail" name="report-detail"></textarea>
+						</div>
+				</div>
+				<div class="report-footer">
+					<div class="btn-report-box">
+						<button type="button" class="btn-report-insert"class="btn-report-insert">신고하기</button>
+					</div>
+				</div>
+			</form>
+			</div>
+		</div>
+   </div>
+
+
+<!-- 신고 이벤트 -->
+<script type="text/javascript">
+
+/* 신고 팝업 */
+$(document).on('click', '.report-btn', function(){
+	if(${user == null}){
+		if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?") == true){
+			location.href = '<c:url value="/login"/>';			
+		}else{
+			return false;
+		}
+	}
+	
+	//만약 신고내역이 이미 있다면
+	if($(".report-isture").val() =='false'){
+		alert("이미 신고한 게시글입니다.");
+		return;
+	}
+	
+	//스크롤 비활성화
+	$("body").css('overflow','hidden');
+	$("#modal-report").css('display','block');
+})
+
+/* 그룹 모집글 신고하기 */
+$(document).on('click', '.btn-report-insert', function(){
+	
+	//서버에 보낼 데이터 생성
+	let ReportVO = {
+		repo_repo_content : $("select[name=report-content] option:selected").val(),
+		repo_detail :  $("#report-detail").val(),
+		repo_table : "lecture",
+		repo_target : ${lecture.lect_num}
+	}
+	console.log(ReportVO);
+	//null 체크
+	if(ReportVO.repo_repo_content.length == 0 || ReportVO.repo_detail.length == 0){
+		alert("신고 사유를 입력하세요.");
+		return;
+	}
+	
+	if(confirm("정말 신고하시겠습니까?") == false)
+		return;
+	
+	$.ajax({
+		async : true, //비동기 : true(비동기), false(동기)
+		url : '<c:url value="/report"/>', 
+		type : 'post', 
+		data : JSON.stringify(ReportVO), 
+		contentType : "application/json; charset=utf-8",
+		dataType : "json", 
+		success : function (data){
+			if(data.result){
+				alert("해당 강의를 신고했습니다.");
+			    $(".report-modal").css('display','none');
+			   	$("body").css('overflow','visible');
+			   	location.href = '<c:url value="/lecture/detail?page=1&type=all&search=&lectNum=${lecture.lect_num}"/>';			
+			}else{
+				alert("강의글을 신고하지 못했습니다.");
+			}
+			
+		}, 
+		error : function(jqXHR, textStatus, errorThrown){	//errorThrown얘는 거의 비어있음(굳이 체크 안하기로)
+			console.log(jqXHR);
+			console.log(textStatus);
+		}
+	});
+	
+})
+
+/* dimmed 클릭 시 창 없애기 */
+$(document).on('click', '#dimmed-report', function(){
+   $("#modal-report").css('display','none');
+   $("body").css('overflow','visible');
+})
+</script>
 	
 </body>
 </html>

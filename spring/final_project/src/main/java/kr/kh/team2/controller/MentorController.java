@@ -48,6 +48,7 @@ public class MentorController {
 		
 		ArrayList<MentorJobVO> jobList = mentorService.getJobList();
 		model.addAttribute("jobList",jobList);
+		model.addAttribute("title", "멘토");
 		
 		return "/mentor/list";
 	}
@@ -74,13 +75,23 @@ public class MentorController {
 	@PostMapping("/mentor/detail")
 	public Map<String, Object> mentorDetailPost(@RequestParam("ment_num")int ment_num, HttpSession session) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		MemberVO user = (MemberVO)session.getAttribute("user");
 		//멘토링 정보 받아오기
 		MetoringVO mentoring = mentorService.getMentoring(ment_num);
 		//멘토 정보 받아오기
 		MentorInfoVO mentorInfo = mentorService.getMentor(mentoring.getMent_me_id());
 		//멘토링 신고 여부 불러오기
-		boolean istrue = reportService.getReportIsTrue(Integer.toString(ment_num), "mentoring", user.getMe_id());
+
+		boolean istrue = true;
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user != null) {
+			istrue = reportService.getReportIsTrue(Integer.toString(ment_num), "mentoring", user.getMe_id());
+		}
+
+
+		//멘토링 신청 정보 받아오기
+		MentoringApplyVO mentoringAp = mentorService.getMentoringApply(ment_num, user);
+		System.out.println(mentoringAp);
+
 		
 		// 좋아요수 
 		Integer mentNum = ment_num;
@@ -90,6 +101,7 @@ public class MentorController {
 		map.put("mentoring",mentoring);
 		map.put("mentor", mentorInfo);
 		map.put("reco_ment_count", reco_ment_count);
+		map.put("mentoringAp", mentoringAp);
 		
 		return map;
 	}
@@ -114,6 +126,27 @@ public class MentorController {
 		//페이지 이동하기
 		map.put("result", res);
 		return map;
+	}
+	
+	@GetMapping("/mentoring/apply/detail")
+	public String mentoringApplyDetail(Model model, HttpSession session, int num) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		//멘토링 정보 받아오기
+		MetoringVO mentoring = mentorService.getMentoring(num);
+		if(mentoring == null) {
+			return "redirect:/";
+		}
+		
+		// 멘토링 지원 정보 받아오기
+		// 멘토링 지원 정보 받을 때 - 멘토링지원 멘토링 번호(mentAp_ment_num) = num 인 것과 멘토링 지원자 아이디 : user.getMe_id();
+		// 멘토링 지원 정보 받을 때 - 멘토링지원 번호(mentAp_num) = num 인 것과 멘토링 지원자 아이디 : user.getMe_id();
+		MentoringApplyVO mentoringAp = mentorService.getMentoringApply(num, user);
+		
+		model.addAttribute("mentoring", mentoring);
+		model.addAttribute("mentoringAp", mentoringAp);
+		
+		return "/mentor/mentoringapplydetail";
 	}
 	
 	@GetMapping("/mentor/apply")

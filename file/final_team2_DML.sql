@@ -104,8 +104,8 @@ INSERT INTO member_state(ms_state) VALUES("이용중"), ("영구정지"), ("탈�
 INSERT INTO member_auth(ma_auth) VALUES("관리자"),("부관리자"),("멘토"), ("일반");
 
 /* 운영자 정보 추가 */
-INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth)
-	VALUES("admin", "$2a$10$9sW/WB0Wyz2VGvii9Odp6uTA6Y6RSZtQWoOaFowKXz6jD68a0SwCG", "운영자", "운영자", "010-1234-5678", "서울시 강남구 역삼동", "이용중", "관리자");
+INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth, me_verify)
+	VALUES("admin", "$2a$10$9sW/WB0Wyz2VGvii9Odp6uTA6Y6RSZtQWoOaFowKXz6jD68a0SwCG", "운영자", "운영자", "010-1234-5678", "서울시 강남구 역삼동", "이용중", "관리자", 1);
     
 /* 일반 유저 정보 추가 */
 INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth)
@@ -113,6 +113,9 @@ INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_
 		  ("dkdlel@final.com", "dkdlel1234", "텐텐먹고쑥쑥", "최유리", "010-4658-4214", "서울시 강남구 도곡동", "이용중", "일반"),
           ("abcde@final.com", "abcde1234", "투털이박성훈", "김병구", "010-2483-0419", "서울시 마포구 연희동", "이용중", "일반"),
 		  ("user@naver.com", "$2a$10$lQRMm/SAJ.9AJ6FjsP8BkekX8eTcv2xzIe5rgmyLz2RXDcxEWdn2O", "user123", "최유리", "010-4651-4214", "서울시 강남구 도곡동", "이용중", "일반");
+/* 일반 유저 정보 추가 : 인증O */
+INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth, me_verify)
+    VALUES("mentor@naver.com", "$2a$10$YdjIQrL/8qlGCEYFlJUo1.NBPZ0eRpvCEU3gdEI.XTq5uMUFF1Jby", "mentor", "김멘토", "010-1111-1111", "서울시 강남구 역삼동", "이용중", "일반", 1);
           
 /* 멘토 유저 정보 추가 */
 INSERT INTO member(me_id, me_pw, me_nickname, me_name, me_phone, me_address, me_ms_state, me_ma_auth)

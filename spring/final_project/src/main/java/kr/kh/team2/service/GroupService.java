@@ -121,6 +121,8 @@ public interface GroupService {
 
 	ArrayList<MutualReviewVO> getReviewedMember(int num, Criteria cri);
 
+	ArrayList<RecruitVO> getHotGroupList();
+
 
 
 }

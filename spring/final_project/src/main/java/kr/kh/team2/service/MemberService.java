@@ -7,6 +7,7 @@ import kr.kh.team2.model.dto.ChangePwTempDTO;
 import kr.kh.team2.model.dto.LoginDTO;
 import kr.kh.team2.model.dto.SignupDTO;
 import kr.kh.team2.model.dto.SnsSignupDTO;
+import kr.kh.team2.model.dto.SignupDetailDTO;
 import kr.kh.team2.model.vo.member.MeVerifyVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -63,5 +64,7 @@ public interface MemberService {
 	boolean signupSns(SnsSignupDTO ssd);
 
 	int idCheckSns(String email,String sns);
+
+	boolean updateMemberDetail(String me_id, SignupDetailDTO signupDetailDto);
 
 }

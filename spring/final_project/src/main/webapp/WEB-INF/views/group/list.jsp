@@ -11,6 +11,7 @@
 
 </head>
 <link rel="stylesheet" href="<c:url value="/resources/css/grouplist.css"/>">
+
 <body>
 <div class="container">
 	<!-- 메뉴바 -->
@@ -63,7 +64,7 @@
 			//서버에서 보낸 데이터의 타입
 			dataType :"json", 
 			success : function (data){
-				displayGroupList(data.list);
+				displayGroupList(data.list, data.totalCategory, data.totalLanguage);
 				displayGroupPagination(data.pm);
 			}, 
 			error : function(jqXHR, textStatus, errorThrown){
@@ -73,7 +74,7 @@
 	
 	
 	//리스트 출력
-	function displayGroupList(list){
+	function displayGroupList(list,totalCategory,totalLanguage){
 		let str = '';
 		
 		if(list == null || list.length == 0){
@@ -104,6 +105,33 @@
 			
 			let dateString = convertDate(group.recu_due);
 			
+			//모집분야 str
+			let cateStr = '';
+			for(cate of totalCategory){
+				if(cate.toCt_table_pk == group.recu_num){
+					cateStr +=
+						`
+						<ul class="cate-list">
+							<li class="cate-list-item">\${cate.toCt_progCt_name}</li>
+						</ul>
+						`
+				}
+			}
+			
+			//사용언어 str
+			let langStr = '';
+			for(lang of totalLanguage){
+				if(lang.toLg_table_pk == group.recu_num){
+					langStr +=
+						`
+						<ul class="lang-list">
+							<li class="lang-list-item">\${lang.toLg_lang_name}</li>
+						</ul>
+						`
+				}
+			}
+			
+			
 			str +=
 				`
 					<!-- 게시글 정보 링크 -->
@@ -120,13 +148,22 @@
 							<div class="group-list-item-content">
 								<!-- 그룹 모집 제목 -->
 								<h3 class="group-list-item-title">\${group.recu_topic}</h3>
-								<!-- 분야 리스트 -->
-								<div class="group-list-item-contentList">
-									\${group.recu_required }
+								
+								<!-- 모집 분야 리스트 -->
+								<div class="cate-container" onmousedown="startDragging(event)" onmouseup="stopDragging(event)" onmousemove="dragging(event)">
+								`
+								+
+								cateStr
+								+
+								`
 								</div>
-								<!-- 사용언어 -->
-								<div class="group-list-item-languageList">
-									\${group.recu_preferred }
+								<!-- 사용 언어 리스트 -->
+								<div class="lang-container" onmousedown="startDragging(event)" onmouseup="stopDragging(event)" onmousemove="dragging(event)">
+								`
+								+
+								langStr
+								+
+								`
 								</div>
 							</div>
 							<!-- 구분선 -->
@@ -227,6 +264,40 @@
 	  return `\${year}.\${month}.\${date}`;
 	}
 
+	
+	//모집분야, 사용언어 이벤트
+	$(document).ready(function() {
+		$('.cate-container').on('click', function(event) {
+			event.preventDefault();
+		});
+	});
+	$(document).ready(function() {
+		$('.lang-container').on('click', function(event) {
+			event.preventDefault();
+		});
+	});
+	let isDragging = false;
+    let startPosition = 0;
+    let startScrollPosition = 0;
+
+    function startDragging(event) {
+        isDragging = true;
+        startPosition = event.clientX;
+        startScrollPosition = event.currentTarget.scrollLeft;
+        event.currentTarget.style.cursor = 'grabbing'; /* 드래그 중일 때의 커서 모양 설정 */
+    }
+
+    function stopDragging(event) {
+        isDragging = false;
+        event.currentTarget.style.cursor = 'grab'; /* 드래그 종료 후 커서 모양 설정 */
+    }
+
+    function dragging(event) {
+        if (isDragging) {
+            const deltaX = event.clientX - startPosition;
+            event.currentTarget.scrollLeft = startScrollPosition - deltaX;
+        }
+    }
 	
 </script>
 

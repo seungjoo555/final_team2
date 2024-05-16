@@ -68,9 +68,8 @@ public class GroupController {
 		ArrayList<GroupVO> list = groupService.getGroupListById(user.getMe_id(), cri);
 		
 		int totalCount = groupService.getMyGroupTotalCount(user.getMe_id());
-		
 		PageMaker pm = new PageMaker(10, cri, totalCount);
-		
+
 		map.put("list", list);
 		map.put("pm", pm);
 		
@@ -644,9 +643,32 @@ public class GroupController {
 		cri.setPerPageNum(20);	//20개
 		//그룹 리스트 가져오기
 		ArrayList<RecruitVO> groupList = groupService.getGroupList(cri);
-		System.out.println("cri : " + cri);
 		int totalCount = groupService.getGroupTotalCount(cri);
 		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		//그룹 세부 정보 가져오기
+		String table_name = "recruit";
+		
+		//모집분야
+		ArrayList<TotalCategoryVO> totalCategory = new ArrayList<TotalCategoryVO>();
+		//사용언어
+		ArrayList<TotalLanguageVO> totalLanguage = new ArrayList<TotalLanguageVO>();
+
+		System.out.println("totalCategory : " + totalCategory);
+		for(RecruitVO group : groupList) {
+			//그룹 번호
+			int recu_num = group.getRecu_num();
+			
+			ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table_name);
+			ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table_name);
+			
+			totalCategory.addAll(Category);
+			totalLanguage.addAll(Language);			
+		}
+		
+		
+		map.put("totalCategory", totalCategory);
+		map.put("totalLanguage", totalLanguage);
 		map.put("list", groupList);
 		map.put("pm", pm);
 		return map;
@@ -668,12 +690,20 @@ public class GroupController {
 		//신고 유형 정보 가져오기
 		ArrayList<ReportContentVO> contentList = reportService.getReportContentList();
 		
+		//그룹 신고 여부 불러오기
+		boolean istrue = true;
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user != null) {
+			istrue = reportService.getReportIsTrue(Integer.toString(num), "recruit", user.getMe_id());
+		}
+		
 		// 좋아요수 
 		Integer recu_num = num;
 		RecommendVO reco_recu_count = recommendService.getRecuRecoCount(recu_num);
 		
 		//화면에 전송
 		model.addAttribute("recruit", recruit);
+		model.addAttribute("istrue", istrue);
 		model.addAttribute("groupKing", groupKing.getMe_nickname());
 		model.addAttribute("groupKing_me_id", groupKing.getMe_id());
 		model.addAttribute("totalCategory", totalCategory);
@@ -754,7 +784,7 @@ public class GroupController {
   }
 
   
-  @GetMapping("/group/applydetail")
+  @GetMapping("/group/apply/detail")
   public String grouopApplyDetail(Model model, HttpSession session,Integer num) {
 	  MemberVO user = (MemberVO)session.getAttribute("user");
 	  
@@ -774,7 +804,7 @@ public class GroupController {
 	  return "/group/applydetail";
   }
  
-  @GetMapping("/group/applyupdate")
+  @GetMapping("/group/apply/update")
   public String groupApplyUpdate(Model model, HttpSession session, Integer num) {
 	  MemberVO user = (MemberVO)session.getAttribute("user");
 	  
