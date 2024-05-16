@@ -80,8 +80,9 @@
 										모집완료
 									</c:if>
 									<c:if test="${group.recu_state == 1}">
-										모집 중
+										모집중
 									</c:if>
+										
 								</div>
 							</div>
 						</li>
@@ -121,9 +122,9 @@
 								<div class="memberNickname">${mentoing.ment_me_nickname } </div>
 								<div class="mentoSituation">
 									<c:if test="${mentoing.ment_state == 1}">
-										모집 중
+										모집중
 									</c:if>
-									<c:if test="${mentoing.ment_state == -1}">
+									<c:if test="${mentoing.ment_state == 0}">
 										모집완료
 									</c:if>
 								</div>

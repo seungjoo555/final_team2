@@ -124,7 +124,7 @@
 			let stateStr = '';
 			if(mentoing.ment_state == 1){
 				stateStr += `<div class="mentoSituation">모집중</div>`
-			}else if(mentoing.ment_state == -1){
+			}else if(mentoing.ment_state == 0){
 				stateStr += `<div class="mentoSituation">모집완료</div>`
 			}
 			
