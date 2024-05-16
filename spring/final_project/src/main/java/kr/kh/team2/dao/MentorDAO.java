@@ -59,6 +59,8 @@ public interface MentorDAO {
 	boolean deleteMentoring(@Param("ment_num")Integer mentNum);
 
 	MentoringApplyVO selectMentoringApply(@Param("ment_num")int num, @Param("user")MemberVO user);
+	
+	boolean updateMentoringApply(@Param("mentAp")MentoringApplyVO mentoringAp, @Param("user")MemberVO user);
 
 	ArrayList<MetoringVO> selectAllMentoring();
 

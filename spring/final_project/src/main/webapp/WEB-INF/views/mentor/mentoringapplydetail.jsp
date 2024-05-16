@@ -22,7 +22,7 @@
 	</div>
 	<div class="mentoring-contact-container">
 		<label for="mentAp_contact" class="mentoring-contact">연락처</label>
-		<input type="text" class="mentoring-contact-item" id="mentAp_contact" name="mentAp_contact" value="${mentoringAp.mentAp_contact}">
+		<input type="text" class="mentoring-contact-item" id="mentAp_contact" name="mentAp_contact" value="${mentoringAp.mentAp_contact}" readonly>
 	</div>
 	<div class="form-row-content">
 	

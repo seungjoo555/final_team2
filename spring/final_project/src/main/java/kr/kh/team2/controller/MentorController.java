@@ -149,6 +149,53 @@ public class MentorController {
 		return "/mentor/mentoringapplydetail";
 	}
 	
+	@GetMapping("mentoring/apply/update") 
+	public String mentoringApplyUpdate(Model model, HttpSession session, int num) {
+		// num == mentAp_ment_num
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		//멘토링 정보 받아오기
+		MetoringVO mentoring = mentorService.getMentoring(num);
+		if(mentoring == null) {
+			return "redirect:/";
+		}
+		
+		MentoringApplyVO mentoringAp = mentorService.getMentoringApply(num, user);
+		
+		model.addAttribute("mentoring", mentoring);
+		model.addAttribute("mentoringAp", mentoringAp);
+		
+		return "/mentor/mentoringapplyupdate";
+	}
+	
+	@PostMapping("mentoring/apply/update") 
+	public String mentoringApplyUpdatePost(Model model, HttpSession session, int num, @RequestParam String mentAp_contact, @RequestParam String mentAp_content) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		
+		//멘토링 정보 받아오기
+		MetoringVO mentoring = mentorService.getMentoring(num);
+		if(mentoring == null) {
+			return "redirect:/";
+		}
+		
+		MentoringApplyVO mentoringAp = mentorService.getMentoringApply(num, user);
+		
+		mentoringAp.setMentAp_contact(mentAp_contact);
+	    mentoringAp.setMentAp_content(mentAp_content);
+		
+		boolean res = mentorService.updateMentoringApply(mentoringAp, user);
+		
+		if(res) {
+			model.addAttribute("msg", "지원서를 수정했습니다.");
+		  	model.addAttribute("url", "/mentoring/apply/detail?num=" + num);
+		} else {
+			model.addAttribute("msg", "지원서를 수정하지 못했습니다.");
+			model.addAttribute("url", "/mentoring/apply/update?num=" + num ); 
+		}
+		
+		return "message";
+	}
+	
 	@GetMapping("/mentor/apply")
 	public String mentorApply() {
 		
