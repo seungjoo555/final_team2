@@ -20,7 +20,7 @@ public class MetoringVO {
     //멘토 닉네임
     private String ment_me_nickname;
     //멘토 경력
-    private String ment_mentIf_exp;
+    private int ment_mentIf_exp;
     //멘토 직무
     private String ment_mentIf_job;
     //멘토링 허용여부
