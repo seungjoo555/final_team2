@@ -43,6 +43,7 @@
 		
 		<!-- ========================== recommend ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.common.RecommendVO" alias="RecommendVO"/>
+		<typeAlias type="kr.kh.team2.model.dto.RecommendCountDTO" alias="RecommendCountDTO"/>
 		
 		<!-- ========================== community ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.community.BoardVO" alias="BoardVO"/>

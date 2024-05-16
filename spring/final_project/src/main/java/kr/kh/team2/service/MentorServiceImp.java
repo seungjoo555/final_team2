@@ -271,6 +271,15 @@ public class MentorServiceImp implements MentorService {
 		return mentorDAO.selectMentoringApply(num, user);
 	}
 
+	/** 추천 리스트 가져오기 */
+	@Override
+	public ArrayList<MetoringVO> getHotMentorList() {
+		//전체 멘토링 글 가져오기
+		ArrayList<MetoringVO> allList = mentorDAO.selectAllMentoring();
+		
+		return null;
+	}
+
 
 
 

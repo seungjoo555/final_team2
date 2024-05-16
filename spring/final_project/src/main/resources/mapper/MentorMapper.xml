@@ -193,4 +193,8 @@
 		FROM mentoring_apply
 		WHERE mentAp_ment_num = #{ment_num} AND mentAp_me_id = #{user.me_id}
 	</select>
+	
+	<select id="selectAllMentoring" resultType="MetoringVO">
+	
+	</select>
 </mapper>

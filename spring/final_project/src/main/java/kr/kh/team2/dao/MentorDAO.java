@@ -59,4 +59,6 @@ public interface MentorDAO {
 
 	MentoringApplyVO selectMentoringApply(@Param("ment_num")int num, @Param("user")MemberVO user);
 
+	ArrayList<MetoringVO> selectAllMentoring();
+
 }

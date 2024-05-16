@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.kh.team2.model.vo.common.RecommendVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupVO;
@@ -42,10 +43,12 @@ public class HomeController {
 		Criteria cri = new Criteria(1, 4);
 		CriteriaMentor criM = new CriteriaMentor(1, 4);
 		
-		//추천순 리스트 
-		ArrayList<RecruitVO> hotGroupList = groupService.getGroupList(cri);
+		//추천순 그룹모집공고 리스트 
+		ArrayList<RecruitVO> hotGroupList = groupService.getHotGroupList();
+		
 		//추천순 멘토링 리스트
 		ArrayList<MetoringVO> mentoingList = mentorService.getMentorList(criM);
+		ArrayList<MetoringVO> hotMentoingList = mentorService.getHotMentorList();
 		//추천순 강의 리스트
 		ArrayList<LectureVO> lectureList = lectureService.getAllLectureList(cri);
 		

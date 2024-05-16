@@ -19,6 +19,9 @@
 		<h2>HOT 스터디/프로젝트</h2>
 		<div class="box-group-list">
 			<ul class="group-list">
+				<c:if test="${hotGroupList == null }">
+					<h3>등록된 스터디/프로젝트가 없습니다.</h3>
+				</c:if>
 				<c:forEach items="${hotGroupList}" var="group">
 					<a class="group-item" href="<c:url value="/group/detail?num=${group.recu_num}"/>">
 						<li>

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Param;
 
+import kr.kh.team2.model.dto.RecommendCountDTO;
 import kr.kh.team2.model.vo.common.RecommendVO;
+import kr.kh.team2.model.vo.group.RecruitVO;
 
 public interface RecommendDAO {
 
@@ -25,6 +27,8 @@ public interface RecommendDAO {
 	boolean updateMentoringRecommend(@Param("recommend")RecommendVO reco);
 
 	RecommendVO selectRecoMentoringCount(@Param("ment_num")Integer ment_num);
+
+	RecommendCountDTO selectRecommendCountList(@Param("reco_table")String reco_table,  @Param("reco_target")String reco_target);
 
 
 }
