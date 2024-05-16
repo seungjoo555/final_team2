@@ -288,12 +288,17 @@
 		
 		
 	/* ======================================= managemember.jsp ============================================ */
-	/* applicantmanage의 style을 주로 이용함. */
+	
+	/* manageapplicant의 style을 주로 이용함. */
 
 	.member-list-bg>*{width: 90%; margin: 0px auto; text-align: center; padding: 10px;}
 	
 	.member-list-th tr th{width: calc(80% / 3);}
 	.member-list-th tr th:last-child{width: 20%;}
+	
+	/* modal의 나머지 속성은 .manage-group_container의 속성을 따름 */
+	.mutual-review-modal{width: 500px;}
+	.mutual-review-modal .modal-body{width: 80%;}
 	
 	.apply-manage-btn-group .member-warn-btn{background-color: yellow; margin-right: 5px;}
 	.apply-manage-btn-group .member-ban-btn{background-color: red; margin:auto 10px auto 0;}
