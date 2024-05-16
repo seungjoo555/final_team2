@@ -119,6 +119,14 @@
 		select * from programming_language
 	</select>
 	
+	<select id="selectHotLectureList" resultType="LectureVO">
+		select * from lecture
+	</select>
+	
+	<select id="selectDue" resultType="date">
+		select lect_update from lecture where lect_num = #{lect_num}
+	</select>
+	
 	<insert id="insertLecture" useGeneratedKeys="true" keyProperty="lecture.lect_num">
 		insert into lecture(lect_mentIf_me_id, lect_name, lect_intro, lect_price, lect_posting, lect_update)
 		values(#{lecture.lect_mentIf_me_id},#{lecture.lect_name},#{lecture.lect_intro},#{lecture.lect_price},now(),now())

@@ -6,9 +6,9 @@
 
 	<!-- =============================== INSERT =============================== -->
 	<insert id="insertMentorInfo">
-		insert into mentor_info(mentif_me_id,mentif_exp,mentif_portfolio,mentif_bank,mentif_account,mentif_date,mentif_state,mentif_ment_job) 
+		insert into mentor_info(mentif_me_id,mentif_exp,mentif_portfolio,mentif_bank,mentif_account,mentif_date,mentif_state,mentif_ment_job,mentif_intro) 
 		values(#{mt_info.mentIf_me_id},#{mt_info.mentIf_exp},#{mt_info.mentIf_portfolio},#{mt_info.mentIf_bank},#{mt_info.mentIf_account},
-			   now(),0,#{mt_info.mentIf_ment_job})
+			   now(),0,#{mt_info.mentIf_ment_job},#{mt_info.mentIf_intro})
 	</insert>
 	
 	<insert id="insertMentoringApply">
@@ -18,7 +18,7 @@
 	
 	<insert id="insertMentoring" useGeneratedKeys="true" keyProperty="ment.ment_num">
 		insert into mentoring(ment_title,ment_duration,ment_content,ment_me_id,ment_state)
-					values(#{ment.ment_title},#{ment.ment_duration},#{ment.ment_content},#{ment.ment_me_id},0)
+					values(#{ment.ment_title},#{ment.ment_duration},#{ment.ment_content},#{ment.ment_me_id},1)
 	</insert>
 	
 	<insert id="insertTotalCategory">
@@ -28,6 +28,10 @@
 
 	
 	<!-- =============================== DELETE =============================== -->
+	
+	<delete id="deleteMentoring">
+		delete from mentoring where ment_num = #{ment_num}
+	</delete>
 	
 	<!-- =============================== UPDATE =============================== -->	
 	
@@ -70,6 +74,15 @@
 		where
 		mentIf_me_id = #{me_id}
 	
+	</update>
+	<update id="updateMentoring">
+		update mentoring
+		set
+			ment_title = #{ment.ment_title},
+			ment_duration = #{ment.ment_duration},
+			ment_content = #{ment.ment_content}
+		where 
+			ment_num = #{ment.ment_num}
 	</update>
 	
 	<!-- =============================== SELECT =============================== -->	
@@ -175,4 +188,27 @@
 		select * from programming_category
 	</select>
 
+	<select id="selectMentoringApply" resultType="MentoringApplyVO">
+		SELECT * 
+		FROM mentoring_apply
+		WHERE mentAp_ment_num = #{ment_num} AND mentAp_me_id = #{user.me_id}
+	</select>
+	
+	<select id="selectAllMentoring" resultType="MetoringVO">
+		select * from mentoring;
+	</select>
+	
+	<select id="selectDue" resultType="date">
+		select ment_duration from mentoring where ment_num = #{ment_num}
+	</select>
+	
+	<select id="selectMentoringIF" resultType="MetoringVO">
+       select mentoring.*, me_nickname as ment_me_nickname, mentIf_exp as ment_mentIf_exp, mentIf_ment_job as ment_mentIf_job
+       from mentoring
+		join
+			`member` on me_id = ment_me_id
+		join
+			mentor_info on mentIf_me_id = ment_me_id
+		where ment_num = #{ment_num}
+	</select>
 </mapper>

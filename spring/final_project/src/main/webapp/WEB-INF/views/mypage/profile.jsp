@@ -22,7 +22,7 @@
 		</div>
 		<div class="degree-box">
 			<div class="profile-degree">${member.me_degree }</div>		
-			<progress class="degree-bar" id="degree-bar" value="36.5" min="0" max="100"></progress>
+			<progress class="degree-bar" id="degree-bar" value="${member.me_degree}" min="0" max="100"></progress>
 		</div>
 	</div>
 	<div class="profile">

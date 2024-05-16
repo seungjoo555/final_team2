@@ -23,4 +23,6 @@ public interface ReportDAO {
 
 	void updateReportState(@Param("repo_table")String repo_table,  @Param("repo_target")String repo_target,@Param("state") String state);
 
+	ReportVO selectReportIsTrue(@Param("repo_table")String repo_table, @Param("repo_target")String repo_target, @Param("me_id")String me_id);
+
 }

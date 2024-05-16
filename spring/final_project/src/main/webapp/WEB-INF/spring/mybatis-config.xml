@@ -14,10 +14,12 @@
     
 		<!-- ========================== member ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.member.MemberVO" alias="MemberVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.member.MeVerifyVO" alias="MeVerifyVO"/>
     
     	<!-- ========================== mentor ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.member.MentorJobVO" alias="MentorJobVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.member.MetoringVO" alias="MetoringVO"/>
+		<typeAlias type="kr.kh.team2.model.vo.member.MentoringApplyVO" alias="MentoringApplyVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.member.MentorInfoVO" alias="MentorInfoVO"/>
 		
 		<!-- ========================== group ========================== -->
@@ -37,6 +39,10 @@
 		<typeAlias type="kr.kh.team2.model.vo.common.ReportContentVO" alias="ReportContentVO"/>
 		<typeAlias type="kr.kh.team2.model.vo.common.ReportVO" alias="ReportVO"/>
 		<typeAlias type="kr.kh.team2.model.dto.ReportSimpleDTO" alias="ReportSimpleDTO"/>
+		
+		<!-- ========================== recommend ========================== -->
+		<typeAlias type="kr.kh.team2.model.vo.common.RecommendVO" alias="RecommendVO"/>
+		<typeAlias type="kr.kh.team2.model.dto.RecommendCountDTO" alias="RecommendCountDTO"/>
 		
 		<!-- ========================== community ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.community.BoardVO" alias="BoardVO"/>

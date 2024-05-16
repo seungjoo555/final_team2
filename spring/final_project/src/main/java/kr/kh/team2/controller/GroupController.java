@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.dto.MutualReviewDTO;
+import kr.kh.team2.model.vo.common.RecommendVO;
 import kr.kh.team2.model.vo.common.ReportContentVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
@@ -32,6 +33,7 @@ import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.GroupService;
+import kr.kh.team2.service.RecommendService;
 import kr.kh.team2.service.ReportService;
 import lombok.extern.log4j.Log4j;
 
@@ -43,6 +45,8 @@ public class GroupController {
 	GroupService groupService;
 	@Autowired
 	ReportService reportService;
+	@Autowired
+	RecommendService recommendService;
 	
 	// ================================ mygroup ================================
 
@@ -64,9 +68,8 @@ public class GroupController {
 		ArrayList<GroupVO> list = groupService.getGroupListById(user.getMe_id(), cri);
 		
 		int totalCount = groupService.getMyGroupTotalCount(user.getMe_id());
-		
 		PageMaker pm = new PageMaker(10, cri, totalCount);
-		
+
 		map.put("list", list);
 		map.put("pm", pm);
 		
@@ -640,16 +643,39 @@ public class GroupController {
 		cri.setPerPageNum(20);	//20개
 		//그룹 리스트 가져오기
 		ArrayList<RecruitVO> groupList = groupService.getGroupList(cri);
-		System.out.println("cri : " + cri);
 		int totalCount = groupService.getGroupTotalCount(cri);
 		PageMaker pm = new PageMaker(10, cri, totalCount);
+		
+		//그룹 세부 정보 가져오기
+		String table_name = "recruit";
+		
+		//모집분야
+		ArrayList<TotalCategoryVO> totalCategory = new ArrayList<TotalCategoryVO>();
+		//사용언어
+		ArrayList<TotalLanguageVO> totalLanguage = new ArrayList<TotalLanguageVO>();
+
+		System.out.println("totalCategory : " + totalCategory);
+		for(RecruitVO group : groupList) {
+			//그룹 번호
+			int recu_num = group.getRecu_num();
+			
+			ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table_name);
+			ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table_name);
+			
+			totalCategory.addAll(Category);
+			totalLanguage.addAll(Language);			
+		}
+		
+		
+		map.put("totalCategory", totalCategory);
+		map.put("totalLanguage", totalLanguage);
 		map.put("list", groupList);
 		map.put("pm", pm);
 		return map;
 	}
 	
   @GetMapping("/group/detail")
-	public String postDetail(Model model, int num) {
+	public String postDetail(HttpSession session, Model model, int num) {
 		//모집공고를 가져옴
 		RecruitVO recruit = groupService.getRecruit(num);
 		if(recruit == null) {
@@ -663,13 +689,27 @@ public class GroupController {
 		ArrayList<TotalLanguageVO> totalLanguage = groupService.getLanguage(num, table);
 		//신고 유형 정보 가져오기
 		ArrayList<ReportContentVO> contentList = reportService.getReportContentList();
+		
+		//그룹 신고 여부 불러오기
+		boolean istrue = true;
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user != null) {
+			istrue = reportService.getReportIsTrue(Integer.toString(num), "recruit", user.getMe_id());
+		}
+		
+		// 좋아요수 
+		Integer recu_num = num;
+		RecommendVO reco_recu_count = recommendService.getRecuRecoCount(recu_num);
+		
 		//화면에 전송
 		model.addAttribute("recruit", recruit);
+		model.addAttribute("istrue", istrue);
 		model.addAttribute("groupKing", groupKing.getMe_nickname());
 		model.addAttribute("groupKing_me_id", groupKing.getMe_id());
 		model.addAttribute("totalCategory", totalCategory);
 		model.addAttribute("totalLanguage", totalLanguage);
 		model.addAttribute("contentList", contentList);
+		model.addAttribute("reco_recu_count", reco_recu_count);
 		return "/group/detail";
 	}
   
@@ -699,13 +739,11 @@ public class GroupController {
 	  
 	  // 그룹 번호랑 공고의 그룹 번호가 같은 거 select
 	  ArrayList<GroupVO> groups = groupService.getGroupListByRecuNum(recruit.getRecu_go_num());
-	  System.out.println("컨트롤러 goap 1 : " + goap);
 	  boolean apply = false;
 	  
 	  for (GroupVO group : groups) {
 		  // 그룹 번호와 공고 그룹 번호 같은 경우
 		  if (group.getGo_num() == recruit.getRecu_go_num()) {
-			  System.out.println("컨트롤러 goap 2 : " + goap);
 			  
 			  if(goap == null || goap.getGoap_me_id() == null) {
 				  boolean res = groupService.insertGroupApply(group, recruit.getRecu_num(), goapVo, user);
@@ -726,11 +764,8 @@ public class GroupController {
 				  if(alreadyApply) {
 					  model.addAttribute("msg", "이미 지원한 그룹입니다.");
 					  model.addAttribute("url", "/group/detail?num=" + num);
-					  System.out.println("2중지원 안된다");
 					  return "message";
 				  } else {
-					  System.out.println("컨트롤러 goap 4 : " + goap);
-					  System.out.println("2중지원 아니다.");
 					  boolean res = groupService.insertGroupApply(group, recruit.getRecu_num(), goapVo, user);
 				  }
 			  }
@@ -749,7 +784,7 @@ public class GroupController {
   }
 
   
-  @GetMapping("group/applydetail")
+  @GetMapping("/group/apply/detail")
   public String grouopApplyDetail(Model model, HttpSession session,Integer num) {
 	  MemberVO user = (MemberVO)session.getAttribute("user");
 	  
@@ -769,7 +804,7 @@ public class GroupController {
 	  return "/group/applydetail";
   }
  
-  @GetMapping("group/applyupdate")
+  @GetMapping("/group/apply/update")
   public String groupApplyUpdate(Model model, HttpSession session, Integer num) {
 	  MemberVO user = (MemberVO)session.getAttribute("user");
 	  
@@ -789,7 +824,7 @@ public class GroupController {
 	  return "/group/applyupdate";
   }
   
-  @PostMapping("group/applyupdate")
+  @PostMapping("/group/applyupdate")
   public String groupApplyUpdatePost(Model model, HttpSession session, GroupApplyVO goapVo, Integer num) {
 	  MemberVO user = (MemberVO)session.getAttribute("user");
 	  
@@ -821,7 +856,8 @@ public class GroupController {
 		model.addAttribute("msg", "지원서를 수정하지 못했습니다.");
 		model.addAttribute("url", "/group/apply?num=" + num ); 
 	  }
-	  
 	  return "message";
   }
+  
+
 }

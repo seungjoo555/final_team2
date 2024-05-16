@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
+import kr.kh.team2.model.vo.common.ReportContentVO;
+import kr.kh.team2.model.vo.common.ReportVO;
 import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
@@ -22,6 +24,7 @@ import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.LectureService;
+import kr.kh.team2.service.ReportService;
 import lombok.extern.log4j.Log4j;
 
 @Log4j
@@ -30,6 +33,8 @@ public class LectureController {
 
 	@Autowired
 	LectureService lectureService;
+	@Autowired
+	ReportService reportService;
 	
 	@GetMapping("/lecture/list")
 	public String lectureList(Model model, Criteria cri, SearchMenuVO search) {
@@ -105,7 +110,7 @@ public class LectureController {
 	
 	//강의글 상세 조회
 	@GetMapping("/lecture/detail")
-	public String lectureDetail(Model model, Criteria cri, SearchMenuVO search, int lectNum) {
+	public String lectureDetail(Model model, Criteria cri, SearchMenuVO search, int lectNum, HttpSession session) {
 		cri.setPerPageNum(5);
 		LectureVO lecture = lectureService.getLecture(lectNum);
 		//강의를 올린 멘토 아이디 닉네임 가져오기
@@ -117,11 +122,22 @@ public class LectureController {
 		//첨부된 강의파일 가져오기
 		ArrayList<LectureFileVO> fileList = lectureService.getFileList(lectNum);
 		
+		//신고 유형 정보 가져오기
+		ArrayList<ReportContentVO> contentList = reportService.getReportContentList();
+		//강의 신고 여부 불러오기
+		boolean istrue = true;
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user != null) {
+			istrue = reportService.getReportIsTrue(Integer.toString(lectNum), "lecture", user.getMe_id());
+		}
+				
 		model.addAttribute("lecture", lecture);
 		model.addAttribute("writer", writer);
+		model.addAttribute("istrue", istrue);
 		model.addAttribute("totalCategory", totalCategory);
 		model.addAttribute("totalLanguage", totalLanguage);
 		model.addAttribute("fileList", fileList);
+		model.addAttribute("contentList", contentList);
 		model.addAttribute("title", "강의 상세");
 		return "/lecture/detail";
 	}

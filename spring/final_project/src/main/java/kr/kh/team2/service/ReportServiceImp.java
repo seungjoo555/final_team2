@@ -131,4 +131,20 @@ public class ReportServiceImp implements ReportService{
 		reportDAO.updateReportState(repo_table, repo_target, state);
 	}
 
+	/** 신고 여부를 가져오는 서비스 : true=신고가능, false=신고불가능 */
+	@Override
+	public boolean getReportIsTrue(String repo_target, String repo_table, String me_id) {
+		if(!methods.checkString(repo_table) || !methods.checkString(repo_target) || !methods.checkString(me_id)) 
+			return false;	//신고불가능
+		
+		ReportVO report = reportDAO.selectReportIsTrue(repo_table, repo_target, me_id);
+		
+		//만약 신고여부가 있다면 
+		if(report != null) {
+			//신고 불가능
+			return false;
+		}
+		return true;
+	}
+
 }

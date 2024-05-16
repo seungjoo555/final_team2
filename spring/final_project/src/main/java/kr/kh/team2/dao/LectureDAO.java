@@ -1,6 +1,7 @@
 package kr.kh.team2.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -45,5 +46,9 @@ public interface LectureDAO {
 	void deleteFile(@Param("fi_num")int lectFi_num);
 
 	ArrayList<LectureFileVO> selectFileList(@Param("lect_num")int lectNum);
+  
+	ArrayList<LectureVO> selectHotLectureList();
+
+	Date selectDue(@Param("lect_num")String reco_target);
 
 }

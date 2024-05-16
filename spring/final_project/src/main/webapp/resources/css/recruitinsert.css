@@ -1,6 +1,15 @@
 @charset "UTF-8";
 
 
+.btn-box{
+	display: flex;
+	margin-left: auto;	
+}
+
+.like-btn {
+	background-color: #fff;
+}
+
 .recruit_topic {
   margin-top: 40px;
   font-weight: 800;

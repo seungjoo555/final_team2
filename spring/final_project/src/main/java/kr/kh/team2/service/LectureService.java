@@ -38,4 +38,6 @@ public interface LectureService {
 
 	ArrayList<LectureFileVO> getFileList(int lectNum);
 
+	ArrayList<LectureVO> getHotLectureList();
+
 }

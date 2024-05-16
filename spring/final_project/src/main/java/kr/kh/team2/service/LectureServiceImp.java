@@ -1,6 +1,8 @@
 package kr.kh.team2.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.annotation.Resource;
 
@@ -9,12 +11,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import kr.kh.team2.dao.LectureDAO;
+import kr.kh.team2.dao.RecommendDAO;
+import kr.kh.team2.model.dto.RecommendCountDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
 import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.lecture.LectureFileVO;
+import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.lecture.LectureVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -25,6 +30,8 @@ public class LectureServiceImp implements LectureService{
 
 	@Autowired
 	LectureDAO lectureDao;
+	@Autowired
+	RecommendDAO recommendDAO;
 	
 	@Resource
 	String uploadPath;
@@ -189,6 +196,55 @@ public class LectureServiceImp implements LectureService{
 		}
 		
 		return true;
+	}
+	/** 추천 순 강의 리스트 가져오는 서비스 */
+	@Override
+	public ArrayList<LectureVO> getHotLectureList() {
+		//그룹 전체 리스트 가져오기
+		ArrayList<LectureVO> AllList = lectureDao.selectHotLectureList();
+		if(AllList == null) {
+			return null;
+		}
+		
+		//추천 리스트 가져오기
+		ArrayList<RecommendCountDTO> list = new ArrayList<RecommendCountDTO>();
+		
+		for(LectureVO i : AllList) {
+			RecommendCountDTO recruitCount = recommendDAO.selectRecommendCountList("lecture", Integer.toString(i.getLect_num()));
+			recruitCount.setReco_table("recruit");
+			recruitCount.setReco_target(Integer.toString(i.getLect_num()));
+			recruitCount.setRecu_due(lectureDao.selectDue(recruitCount.getReco_target()));
+			System.out.println(recruitCount);
+			list.add(recruitCount);
+		}
+		
+		//추천순으로 자르기
+		Collections.sort(list, new Comparator<RecommendCountDTO>() {
+			@Override
+			public int compare(RecommendCountDTO o1, RecommendCountDTO o2) {
+				//만약 추천수가 같다면
+				if(o2.getCount() - o1.getCount() == 0) {
+					//최신순으로 정렬
+					return o2.getRecu_due().compareTo(o1.getRecu_due());
+				}
+				return o2.getCount() - o1.getCount();
+			}
+		});
+		
+		//추천순으로 그룹 가져오기
+		ArrayList<LectureVO> hotList = new ArrayList<LectureVO>();
+		
+		if(list.size() > 4) {
+			for(int i=0; i<4; i++) {
+				hotList.add(lectureDao.selectLecture(Integer.parseInt(list.get(i).getReco_target()))) ;
+			}
+		}else {
+			for(int i=0; i<list.size(); i++) {
+				hotList.add(lectureDao.selectLecture(Integer.parseInt(list.get(i).getReco_target()))) ;
+			}
+		}
+		
+		return hotList;
 	}
 
 	@Override

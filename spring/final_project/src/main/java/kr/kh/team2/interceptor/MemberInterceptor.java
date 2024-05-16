@@ -37,7 +37,27 @@ public class MemberInterceptor extends HandlerInterceptorAdapter {
 		    	  response.getWriter().write("<script>if(confirm('로그인이 필요한 서비스입니다. 로그인페이지로 이동하시겠습니까?')){location.href='" + request.getContextPath() + "/login'};</script>");
 		    	  return false;
 		      }
-		  }
+		}
+		
+		if(user != null && user.getMe_temppw()==1) {
+			if(isAjaxRequest(request)) {
+				response.setHeader("Temp_User", "true");
+			}else {
+				response.setContentType("text/html;charset=UTF-8");
+		        response.getWriter().write("<script>alert('임시 비밀번호를 변경하셔야 사이트 이용이 가능합니다.');location.href='" + request.getContextPath() + "/login/changepwtemp';</script>");
+		        return false;
+			}
+		}
+		
+		if(user != null && user.getMe_verify()==0) {
+			if(isAjaxRequest(request)) {
+				response.setHeader("NonVerified_User", "true");
+			}else {
+				response.setContentType("text/html;charset=UTF-8");
+		        response.getWriter().write("<script>alert('이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.');location.href='" + request.getContextPath() + "/signup/verify';</script>");
+		        return false;
+			}
+		}
 		
 		return true;
 	}
