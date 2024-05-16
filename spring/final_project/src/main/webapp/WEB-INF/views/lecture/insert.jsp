@@ -8,7 +8,8 @@
 <script type="text/javascript" src="<c:url value="/resources/js/multi.dropdown.js"/>"></script>
 </head>
 <body>
-	<form action="<c:url value="/lecture/insert"/>" method="post" class="insert-form" enctype="multipart/form-data">
+	<form action="<c:url value="/lecture/insert"/>" method="post"
+		class="insert-form">
 		<div class="first-container">
 			<h5>1. 강의 기본 정보 설정</h5>
 			<hr>
@@ -83,10 +84,6 @@
 					<textarea rows="10" class="form-control second-box"
 						id="lect_intro" name="lect_intro"></textarea>
 				</div>
-				<div class="form-group">
-				    <input type="file" class="form-control" name="file" id="fileInput" multiple>
-				</div>
-				<div id="fileList"></div>
 				<div class="button-area">
 					<button type="button" class="cancel-button">취소</button>
 					<button type="submit" class="write-button">작성하기</button>
@@ -161,152 +158,6 @@
 			}
 		}
 		
-	</script>
-	<script type="text/javascript">
-	//서버에 전송하기 전에 제목, 내용 글자수 확인
-	$("form").submit(function(){
-		let title = $("[name=bo_title]").val();
-		if(title.length == 0){
-			alert("제목은 1글자 이상 입력해야 합니다.");
-			$("[name=bo_title]").focus();
-			return false;
-		}
-		let content = $("[name=bo_content]").val();
-		if(content.length == 0){
-			alert("내용은 1글자 이상 입력해야 합니다.");
-			$("[name=bo_content]").focus();
-			return false;
-		}
-	});
-	
-	$('[name=bo_content]').summernote({
-		placeholder : 'Hello Bootstrap 5',
-		tabsize : 2,
-		height: 400,
-		callbacks: {
-	 		// 이미지를 업로드할 경우 이벤트를 발생
-		   	onImageUpload: function(files, editor, welEditable) {
-		   		sendFile(files[0], this);
-			},
-			// 미디어(이미지 포함)을 삭제할 경우 이벤트를 발생
-			onMediaDelete: function ($target, editor, $editable) {
-				//이미지 경로를 추출
-		    	var deletedImageUrl = $target
-		    	.attr('src')
-		        .replace("<c:url value='/download'/>","");
-				//해당 이미지를 서버에서 삭제해달라고 요청(ajax로)
-		     	removeImg(deletedImageUrl)
-			}
-		}
-	});
-	
-	function sendFile(file, editor) {
-		data = new FormData();
-		data.append("file", file);
-		//첨부파일을 ajax로 보내는 예제		
-		$.ajax({
-			data: data,
-	    	type: "post",
-	    	url: '<c:url value="/img/upload"/>',
-	 		cache : false,
-	    	contentType : false,	
-	    	processData : false,
-	    	success : function(data){
-	    		console.log(data);
-	    		$(editor).summernote('editor.insertImage', "<c:url value='/download'/>"+data.url);
-	    	}
-		});
-	}
-	//업로드된 이미지를 삭제하는 함수
-	function removeImg(imageName){
-		data = new FormData()
-		data.append('file', imageName)
-		$.ajax({
-	    	data: data,
-	      	type: 'POST',
-	      	url: '<c:url value="/img/delete"/>',
-	      	contentType: false,
-	      	processData: false,
-	      	success : function(data){
-	    		console.log(data);
-	      }
-	  })
-	}
-	
-	const dataTransfer = new DataTransfer();
-	
-	$("#fileInput").change(function(){
-	    let fileArr = document.getElementById("fileInput").files;
-	    let fileList = document.getElementById('fileList');
-	    
-	    if(fileArr != null && fileArr.length > 0){
-	
-	        // Add new files to dataTransfer
-	        for(let i = 0; i < fileArr.length; i++){
-	            dataTransfer.items.add(fileArr[i]);
-	        }
-	    }
-	    
-	    fileList.innerHTML = '';
-	    
-	    for (let i = 0; i < dataTransfer.files.length; i++) {
-	        let listItem = document.createElement('div');
-	    	let deleteButton = document.createElement('button');
-	    	deleteButton.type = "button";
-	    	deleteButton.setAttribute('data-index', i); // 삭제할 파일의 인덱스 저장
-	        
-	        // 파일 이름 표시
-	        listItem.textContent = dataTransfer.files[i].name;
-	        // 삭제 버튼 생성 및 속성 설정
-	        deleteButton.textContent = '삭제';
-	        deleteButton.classList.add('remove_button');
-	        
-	        
-	        listItem.appendChild(deleteButton);
-	        fileList.appendChild(listItem);
-	    }
-	
-	    // Update file input with new files
-	    document.getElementById("fileInput").files = dataTransfer.files;
-	    console.log("dataTransfer =>", dataTransfer.files);
-	    console.log("input Files =>", document.getElementById("fileInput").files);
-	    
-	});
-	
-	$("#fileList").on("click", ".remove_button", function(event){
-		let fileList = document.getElementById('fileList');
-		
-	    if(event.target.className=='remove_button'){
-	        //console.log(event.target.dataset.index )
-	        targetFile = event.target.dataset.index;
-	        console.log(targetFile);
-	    	dataTransfer.items.remove(targetFile);
-	    	//fileList.removeChild(fileList.childNodes[targetFile]);
-	    }
-	    
-	    fileList.innerHTML = ''; // 이전 목록 지우기
-	    
-	    for (let i = 0; i < dataTransfer.files.length; i++) {
-	    	let listItem = document.createElement('div');
-	    	let deleteButton = document.createElement('button');
-	    	deleteButton.type = "button";
-	    	deleteButton.setAttribute('data-index', i); // 삭제할 파일의 인덱스 저장
-	        // 파일 이름 표시
-	        listItem.textContent = dataTransfer.files[i].name;
-	        // 삭제 버튼 생성 및 속성 설정
-	        deleteButton.textContent = '삭제';
-	        deleteButton.classList.add('remove_button'); // file-del 클래스 추가
-	        
-	        listItem.appendChild(deleteButton);
-	        fileList.appendChild(listItem);
-	    }
-	
-	    // Update file input with new files
-	    document.getElementById("fileInput").files = dataTransfer.files;
-	    console.log("dataTransfer =>", dataTransfer.files);
-	    console.log("input Files =>", document.getElementById("fileInput").files);
-	    
-	});
 	</script>
 </body>
 </html>

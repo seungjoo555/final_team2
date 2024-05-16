@@ -13,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import kr.kh.team2.model.vo.common.RecommendVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.group.GroupVO;
@@ -43,13 +42,12 @@ public class HomeController {
 		Criteria cri = new Criteria(1, 4);
 		CriteriaMentor criM = new CriteriaMentor(1, 4);
 		
-		//추천순 그룹모집공고 리스트 
-		ArrayList<RecruitVO> hotGroupList = groupService.getHotGroupList();
-		
+		//추천순 리스트 
+		ArrayList<RecruitVO> hotGroupList = groupService.getGroupList(cri);
 		//추천순 멘토링 리스트
-		ArrayList<MetoringVO> hotMentoingList = mentorService.getHotMentorList();
+		ArrayList<MetoringVO> mentoingList = mentorService.getMentorList(criM);
 		//추천순 강의 리스트
-		ArrayList<LectureVO> hotLectureList = lectureService.getHotLectureList();
+		ArrayList<LectureVO> lectureList = lectureService.getAllLectureList(cri);
 		
 		//모임 - 모집분야, 사용언어
 		String table1 = "recruit";
@@ -69,8 +67,8 @@ public class HomeController {
 		model.addAttribute("totalCategory", totalCategory);
 		model.addAttribute("totalLanguage", totalLanguage);
 		model.addAttribute("hotGroupList", hotGroupList );
-		model.addAttribute("hotMentoingList", hotMentoingList );
-		model.addAttribute("hotLectureList", hotLectureList );
+		model.addAttribute("mentoingList", mentoingList );
+		model.addAttribute("lectureList", lectureList );
 		
 		return "/main/home";
 	}

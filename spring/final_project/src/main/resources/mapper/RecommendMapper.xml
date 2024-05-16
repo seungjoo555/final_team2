@@ -32,12 +32,6 @@
 		FROM recommend 
 		WHERE reco_target = #{ment_num} AND reco_state = 1 AND reco_table = 'mentoring'
 	</select>
-	
-	<select id="selectRecommendCountList" resultType="RecommendCountDTO">
-		Select count(*) as count, reco_table, reco_target
-		from recommend
-		where reco_table = #{reco_table} and reco_target = #{reco_target} and reco_state = 1
-	</select>
 
 	<insert id="insertRecuRecommend">
 		INSERT INTO recommend (reco_me_id, reco_state, reco_table, reco_target)

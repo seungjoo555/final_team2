@@ -64,6 +64,5 @@ public interface MemberDAO {
 	MemberVO selectMemberSns(@Param("sns")String sns, @Param("id")String id);
 
 	boolean updateMemberDetail(@Param("id")String me_id, @Param("dto")SignupDetailDTO signupDetailDto);
-
-
+  
 }

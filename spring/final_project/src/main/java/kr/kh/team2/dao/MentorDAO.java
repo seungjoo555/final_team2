@@ -30,6 +30,7 @@ public interface MentorDAO {
 	MetoringVO selectMentoring(@Param("ment_num")int ment_num);
 
 	boolean insertMentoringApply(@Param("mentAp")MentoringApplyVO mentoApVO);
+	
 	ArrayList<MetoringVO> selectMentoringList(@Param("me_id") String me_id);
 
 	ArrayList<TotalCategoryVO> selectMentoCategory(@Param("ment_num")int ment_num, @Param("table")String table2);
