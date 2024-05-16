@@ -596,15 +596,15 @@ function displayMentoringApply(mentoring){
 				      	<form action="<c:url value="/mentor/list"/>" method="post" class="form-apply">
 							<input type="hidden" value="\${mentoring.ment_num}" id="mentAp_ment_num" name="mentAp_ment_num">
 				      		<div class="mentor-apply-form-group">
-								<label for="id">멘토링 명</label>
+								<label for="mentorNickname">멘토링 명</label>
 								<input type="text" readonly class="form-control apply-mentorNickname" value="\${mentoring.ment_title}" id="mentorNickname" name="mentorNickname">
 							</div>
 				      		<div class="mentor-apply-form-group">
-								<label for="id">연락처</label>
+								<label for="mentAp_contact">연락처</label>
 								<input type="text" class="form-control apply-contact" id="mentAp_contact" name="mentAp_contact">
 							</div>
 				      		<div class="mentor-apply-form-group">
-								<label for="id">신청내용</label>
+								<label for="mentAp_content">신청내용</label>
 								<textarea rows="11" class="form-control h-25 apply-content" id="mentAp_content" name="mentAp_content"></textarea>
 							</div>
 				      	</form>
