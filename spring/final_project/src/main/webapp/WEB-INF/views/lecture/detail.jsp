@@ -82,10 +82,25 @@
 	<hr>
 	<section>
 		<div class="form-row content">
-			<div style="min-height: 400px" class="form-control second-box" id="lect_content">${lecture.lect_intro}</div>
+			<div style="min-height: 400px; border: 1px solid #f2f2f2" class="second-box" id="lect_content">${lecture.lect_intro}</div>
 		</div>
 	</section>
 </div>
+<div>
+	<c:choose>
+		<c:when test="${fileList.size() != 0}">
+			<label>첨부파일</label>
+			<c:forEach items="${fileList}" var="file">
+				<a href="<c:url value="/download/${file.lectFi_path}"/>"
+					class="form-control" download="${file.lectFi_ori_name}">${file.lectFi_ori_name}</a>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<div>첨부파일 없음</div>
+		</c:otherwise>
+	</c:choose>
+</div>
+
 
 
 <!--------------------------- 신고화면 --------------------------->
