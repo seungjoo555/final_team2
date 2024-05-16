@@ -467,22 +467,21 @@ function displayReport(mentoring, contentList){
 		`
 		<div class="report-header">
 	     		<div class="header-title"><h1>신고하기</h1></div>
-	     		
-	     	</div>
+     	</div>
 		<div class="report-body">
 			<form action="<c:url value="/report/mentor"/>"  method="post" class="form-report">
 				<input type="hidden" id="ment_num" value="\${mentoring.ment_num}">
 				<div class="report-form-group">
-					<label for="report-content">신고유형</label>
 					<select class="input-box-input report-content" id="report-content" name="report-content">
+						<option value="" selected disabled hidden>신고유형을 선택해주세요</option>
 		`
 		+ cList +
 		`
 					</select>
 				</div>
-				<div class="report-form-group">
+				<div class="report-form-group-input">
 					<label for="report-detail">신고내용</label>
-					<textarea class="form-control report-detail" id="report-detail" name="report-detail"></textarea>
+					<textarea class="form-control h-10 report-detail" id="report-detail" name="report-detail"></textarea>
 				</div>
 			</form>
 		</div>
