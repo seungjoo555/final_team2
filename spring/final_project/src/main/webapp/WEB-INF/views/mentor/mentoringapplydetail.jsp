@@ -17,7 +17,7 @@
 	<input type="hidden" name="num" value="${mentoring.ment_num}">
 	<input type="hidden" name="mentAp_num" value="${mentoringAp.mentAp_num}">
 	<div class="mentoring-title-container">
-		<div class="mentoring-name">멘토링 명</div>
+		<label class="mentoring-name">멘토링 명</label>
 		<input type="text" class="mentoring-name-item" value="${mentoring.ment_title}" readonly>
 	</div>
 	<div class="mentoring-contact-container">
@@ -26,7 +26,7 @@
 	</div>
 	<div class="form-row-content">
 	
-		<div class="apply-container">지원서 내용</div>
+		<label class="apply-container">지원서 내용</label>
 		<textarea rows="10" class="form-control second-box" disabled>${mentoringAp.mentAp_content}</textarea>
 	</div>
 	<div class="button-area">
