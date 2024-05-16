@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class MeVerifyVO {
 	private String mv_me_id;
     private String mv_code;
-    private Date mv_durate;
+    private Date mv_createTime;
+    private Date mv_expTime;
 }

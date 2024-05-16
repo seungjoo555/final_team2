@@ -34,4 +34,8 @@
 		select * from programming_language
 	</select>
 	
+	<select id="selectTopic" resultType="String">
+		select recu_topic from recruit where recu_num = #{recu_num}
+	</select>
+	
 </mapper>

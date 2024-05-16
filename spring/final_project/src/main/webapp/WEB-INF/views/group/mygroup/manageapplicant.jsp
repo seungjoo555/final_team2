@@ -27,15 +27,12 @@
 				<div class="float-left">지원자 관리페이지</div>
 			</div>
 			<div class="applicant-query">
-				<form>
-					<input type="radio" id="all" name="type" value="all" checked>
-					<label for="all">전체</label>
-					<input type="radio" id="not-passed" value="not-passed" name="type">
-					<label for="not-passed">미처리 신청만</label>
-					<input type="radio" id="canceled" value="canceled" name="type">
+				<input type="radio" id="all" name="type" value="all" checked>
+				<label for="all">전체</label>
+				<input type="radio" id="not-passed" value="not-passed" name="type">
+				<label for="not-passed">미처리 신청만</label>
+				<input type="radio" id="canceled" value="canceled" name="type">
 				<label for="canceled">거절된 신청만</label>
-				
-				</form>
 			</div>
 			<div class="applicant-list-bg">
 				
@@ -102,7 +99,7 @@ function displayApplicantList(list){
 				<td><div class="id">\${apply.goap_me_id}<div></td>
 				<td class="text-center content">
 					<c:url var = 'url2' value = '/group/applydetail'/>
-					<a href="{url2}?num=\${apply.goap_num}">\${apply.goap_content }</a>
+					<a href="${url2}?num=\${apply.goap_num}">\${apply.goap_content}</a>
 				</td class="content">
 			`;
 			

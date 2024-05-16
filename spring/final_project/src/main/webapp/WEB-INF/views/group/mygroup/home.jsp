@@ -188,6 +188,12 @@
 		      			</li>
 	      			</c:if>
 	      			<li>
+	      				<c:url var = 'url4' value = '/group/review'>
+	      					<c:param name = 'num' value = "${group.go_num }"/>
+	      				</c:url>
+	      				<a href="${url4}">상호평가</a>
+	      			</li>
+	      			<li>
 	      				<a onclick="quitGroup()" style="color: red">그룹 탈퇴</a>
 	      			</li>
 	      		</ul>

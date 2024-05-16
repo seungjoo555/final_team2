@@ -14,6 +14,7 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/download/**" location="file:///D:/uploads/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -42,6 +43,14 @@
 	<beans:bean id="menuInterceptor" class="kr.kh.team2.interceptor.MenuInterceptor"/>
 	<!-- MemberInterceptor를 등록 -->
 	<beans:bean id="memberInterceptor" class="kr.kh.team2.interceptor.MemberInterceptor"/>
+	<!-- AutoLoginInterceptor -->
+	<beans:bean id="autoLoginInterceptor" 
+		class="kr.kh.team2.interceptor.AutoLoginInterceptor"/>
+	<!-- AdminInterceptor -->
+	<beans:bean id="adminInterceptor" 
+		class="kr.kh.team2.interceptor.AdminInterceptor"/>
+	<beans:bean id="ajaxInterceptor" 
+		class="kr.kh.team2.interceptor.AjaxInterceptor"/>
 
 	<!-- 인터셉터 맵핑 -->
 	<interceptors>
@@ -53,15 +62,43 @@
 			<mapping path="/**"/>
 			<beans:ref bean="menuInterceptor"/>
 		</interceptor>
+		<!-- admin -->
+		<interceptor>
+			<mapping path="/admin/**"/>
+			<beans:ref bean="adminInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/signup/sendAuth"/>
+			<mapping path="/signup/checkverify"/>
+			<mapping path="/login/auth/mailsend"/>
+			<beans:ref bean="ajaxInterceptor"/>
+		</interceptor>
 		<!-- MemberInceptor가 실행된 URL 지정 -->
 		<interceptor>
 			<mapping path="/mentor/check"/>
 			<mapping path="/mentor/insert"/>
 			<mapping path="/mentor/update"/>
 			<mapping path="/group/grouprecruit"/>
+			<mapping path="/group/apply"/>
+			<mapping path="/group/applydetail"/>
+			<mapping path="/group/applyupdate"/>
 			<mapping path="/mentor/mentoring/insert"/>
+			<mapping path="/mypage/mygroup"/>
 			<beans:ref bean="memberInterceptor"/>
 		</interceptor>	
+		<interceptor>
+			<mapping path="/*"/>
+			<beans:ref bean="autoLoginInterceptor"/>
+		</interceptor>
 	</interceptors>	
+
+	<beans:bean id="multipartResolver" 
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 업로드 최대 크기 10Mb -->
+		<beans:property name="maxUploadSize" value="10485760"/>
+	</beans:bean>
+	<beans:bean id="uploadPath" class="java.lang.String">
+		<beans:constructor-arg value="D:\\uploads"/>
+	</beans:bean>
 
 </beans:beans>

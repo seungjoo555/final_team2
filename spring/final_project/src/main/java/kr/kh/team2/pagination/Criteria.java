@@ -2,6 +2,7 @@ package kr.kh.team2.pagination;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 @Data
 @NoArgsConstructor
 public class Criteria {

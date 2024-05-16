@@ -11,5 +11,6 @@ public class GroupMemberVO {
     private int gome_type;
     private int gome_warn;
     
-    String nickname;
+    private String nickname;
+    private String mure_content = null; // 상호평가에서 필요
 }

@@ -28,5 +28,7 @@ public interface RecruitDAO {
 
 	boolean insertGroupMember(@Param("me_id")String me_id, @Param("go_num")int go_num);
 
+	String selectTopic(@Param("recu_num")int recu_num);
+
 
 }

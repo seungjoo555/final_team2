@@ -1,0 +1,5 @@
+//멘토정보 테이블에 계좌번호 속성(mentif_account) 없으면 등록
+
+
+ALTER TABLE `MENTOR_INFO`
+ADD `mentIf_account` varchar(30);

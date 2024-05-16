@@ -206,7 +206,7 @@
 		</div>
 	</div>
 	<div class="mentor-button-group">
-		<button type="button" class="multi-accept" value="accept">허가</button>
+		<button type="button" class="multi-accept" value="accept">수락</button>
 		<button type="button" class="multi-deny" value="deny">거절</button>
 	</div>
 	<div class="box-pagination">
@@ -372,7 +372,7 @@
 				</div>
 			</div>
 			<div class="mentorInfo-detail-button-group">
-				<button type="button" class="request-button button-accept" data-me_id="\${mentorInfo.mentIf_me_id}" value="accept">허가</button>
+				<button type="button" class="request-button button-accept" data-me_id="\${mentorInfo.mentIf_me_id}" value="accept">수락</button>
 				<button type="button" class="request-button button-deny" data-me_id="\${mentorInfo.mentIf_me_id}"  value="deny">거절</button>
 			</div>
       	`
@@ -380,7 +380,7 @@
 		
 	}
 	
-	<!--디테일 - 허가/거절 버튼 클릭 이벤트-->
+	<!--디테일 - 수락/거절 버튼 클릭 이벤트-->
 	$(document).on('click','.request-button',function(){
 		let btnType ="";
 		let mentIf_me_id = $(this).data('me_id');
@@ -467,7 +467,7 @@
 		
 	})
 	
-	<!--일괄 허가/거절 이벤트-->
+	<!--일괄 수락/거절 이벤트-->
 	$('.mentor-button-group>button').click(function(){
 		let checkedIds = [];
 		let btnType = "";
