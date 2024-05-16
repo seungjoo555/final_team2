@@ -12,6 +12,7 @@ import kr.kh.team2.dao.MemberDAO;
 import kr.kh.team2.model.dto.ChangePwTempDTO;
 import kr.kh.team2.model.dto.LoginDTO;
 import kr.kh.team2.model.dto.SignupDTO;
+import kr.kh.team2.model.dto.SignupDetailDTO;
 import kr.kh.team2.model.vo.member.MeVerifyVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -388,6 +389,20 @@ public class MemberServiceImp implements MemberService {
 			cri = new Criteria(1, 10);
 		}
 		return memberDao.selectAdminMemberTotalCount(cri);
+	}
+
+	@Override
+	public boolean updateMemberDetail(String me_id, SignupDetailDTO signupDetailDto) {
+		if(me_id == null) {
+			System.out.println("null id");
+			return false;
+		}
+		if(signupDetailDto == null) {
+			System.out.println("null detail");
+			return false;
+		}
+		
+		return memberDao.updateMemberDetail(me_id, signupDetailDto);
 	}
 	
 	
