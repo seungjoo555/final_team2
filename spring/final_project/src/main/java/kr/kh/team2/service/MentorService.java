@@ -59,4 +59,7 @@ public interface MentorService {
 
 	MentoringApplyVO getMentoringApply(int num, MemberVO user);
 
+
+
+
 }
