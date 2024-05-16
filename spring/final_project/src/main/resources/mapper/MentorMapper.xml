@@ -158,6 +158,8 @@
 		from mentor_info
 		where
 			mentIf_ment_job like concat("%",#{cri.search},"%")
+			and
+			mentIf_state = 0;
 	</select>
 	
 	<select id="selectMentoring" resultType="MetoringVO">

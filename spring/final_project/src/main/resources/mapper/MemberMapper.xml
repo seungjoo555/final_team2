@@ -10,8 +10,14 @@
 
 	<insert id="insertMember">
 		INSERT INTO member(me_id, me_ms_state, me_ma_auth, me_pw, me_nickname, me_name, me_phone, me_address, me_type)
-			VALUE(#{member.me_id}, "이용중", "일반", #{member.me_pw}, #{member.me_nickname}, #{member.me_name}, #{member.me_phone}, #{member.me_address}, 0)
+			VALUE(#{member.me_id}, "이용중", "일반", #{member.me_pw}, #{member.me_nickname}, #{member.me_name}, #{member.me_phone}, #{member.me_address}, "일반")
 	</insert>	
+	
+	<insert id="insertMemberSns">
+		insert into member(me_id, me_ms_state, me_ma_auth, me_pw, me_nickname, me_name, me_phone, me_address, me_type, me_verify)
+			value(#{ssd.email},"이용중","일반",#{ssd.me_pw},#{ssd.nickname}, #{ssd.name}, #{ssd.phone}, #{ssd.address}, #{ssd.sns},1)
+	</insert>
+	
 	
 	<insert id="insertMemberVerify">
 		INSERT INTO me_verify value(#{mv.mv_me_id},#{mv.mv_code},DATE_ADD(NOW(), INTERVAL 3 MINUTE),now())
@@ -108,11 +114,11 @@
 	</select>
 	
 	<select id="idFind" resultType="String">
-		select me_id from member where me_name = #{me_name} and me_phone = #{me_phone}
+		select me_id from member where me_name = #{me_name} and me_phone = #{me_phone} and me_type = "일반"
 	</select>
 	
 	<select id="pwFind" resultType="MemberVO">
-		select * from member where me_id = #{me_id} and me_phone = #{me_phone}
+		select * from member where me_id = #{me_id} and me_phone = #{me_phone} and me_type ="일반"
 	</select>
 	
 	<select id="selectMemberByCookie" resultType="MemberVO">
@@ -175,6 +181,11 @@
 	<!-- 관리자 제외한 회원 권한 리스트 가져오기 -->
 	<select id="selectMemberAuthList" resultType="String">
 		select ma_auth from member_auth where ma_auth != "관리자"
+	</select>
+	
+	<!-- sns로그인 -->
+	<select id="selectMemberSns" resultType="MemberVO">
+		select * from member where me_id = #{id} and me_type = #{sns}
 	</select>
 
 </mapper>

@@ -51,7 +51,8 @@
 		class="kr.kh.team2.interceptor.AdminInterceptor"/>
 	<beans:bean id="ajaxInterceptor" 
 		class="kr.kh.team2.interceptor.AjaxInterceptor"/>
-
+	<beans:bean id="loginMemberInterceptor"
+		class="kr.kh.team2.interceptor.LoginMemberInterceptor"/>
 	<!-- 인터셉터 맵핑 -->
 	<interceptors>
 		<interceptor>
@@ -67,11 +68,19 @@
 			<mapping path="/admin/**"/>
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
+		<!-- ajax -->
 		<interceptor>
 			<mapping path="/signup/sendAuth"/>
 			<mapping path="/signup/checkverify"/>
 			<mapping path="/login/auth/mailsend"/>
 			<beans:ref bean="ajaxInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/login"/>
+			<mapping path="/signup"/>
+			<mapping path="/login/findid"/>
+			<mapping path="/login/findpw"/>
+			<beans:ref bean="loginMemberInterceptor"/>
 		</interceptor>
 		<!-- MemberInceptor가 실행된 URL 지정 -->
 		<interceptor>
