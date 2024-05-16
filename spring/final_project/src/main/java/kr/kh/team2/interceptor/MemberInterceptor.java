@@ -34,12 +34,12 @@ public class MemberInterceptor extends HandlerInterceptorAdapter {
 		    	  return false;
 		      }else {
 		    	  response.setContentType("text/html;charset=UTF-8");
-		    	  response.getWriter().write("<script>if(confirm('로그인이 필요한 서비스입니다. 로그인페이지로 이동하시겠습니까?')){location.href='" + request.getContextPath() + "/login'};</script>");
+		    	  response.getWriter().write("<script>if(confirm('로그인이 필요한 서비스입니다. 로그인페이지로 이동하시겠습니까?')){location.href='" + request.getContextPath() + "/login'} else {history.back()}; </script>");
 		    	  return false;
 		      }
 		}
 		
-		if(user != null && user.getMe_temppw()==1) {
+		if(user.getMe_temppw()==1) {
 			if(isAjaxRequest(request)) {
 				response.setHeader("Temp_User", "true");
 			}else {
@@ -49,7 +49,7 @@ public class MemberInterceptor extends HandlerInterceptorAdapter {
 			}
 		}
 		
-		if(user != null && user.getMe_verify()==0) {
+		if(user.getMe_verify()==0) {
 			if(isAjaxRequest(request)) {
 				response.setHeader("NonVerified_User", "true");
 			}else {
