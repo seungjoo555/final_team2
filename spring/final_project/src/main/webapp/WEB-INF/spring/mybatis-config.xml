@@ -33,8 +33,7 @@
 
 		<!-- ========================== lecture ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.lecture.LectureVO" alias="LectureVO"/>
-
-
+		<typeAlias type="kr.kh.team2.model.vo.lecture.LectureFileVO" alias="LectureFileVO"/>
 
 		<!-- ========================== report ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.common.ReportContentVO" alias="ReportContentVO"/>
@@ -43,6 +42,7 @@
 		
 		<!-- ========================== recommend ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.common.RecommendVO" alias="RecommendVO"/>
+		<typeAlias type="kr.kh.team2.model.dto.RecommendCountDTO" alias="RecommendCountDTO"/>
 		
 		<!-- ========================== community ========================== -->
 		<typeAlias type="kr.kh.team2.model.vo.community.BoardVO" alias="BoardVO"/>

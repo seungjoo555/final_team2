@@ -203,9 +203,29 @@
 		WHERE mentAp_ment_num = #{ment_num} AND mentAp_me_id = #{user.me_id}
 	</select>
 	
+
 	<select id="selectMentoringApplyList" resultType="MentoringApplyVO">
 		SELECT * 
 		FROM mentoring_apply
 		WHERE mentAp_ment_num = #{ment_num} AND mentAp_me_id = #{me_id};
+  </select>
+
+	<select id="selectAllMentoring" resultType="MetoringVO">
+		select * from mentoring;
 	</select>
+	
+	<select id="selectDue" resultType="date">
+		select ment_duration from mentoring where ment_num = #{ment_num}
+	</select>
+	
+	<select id="selectMentoringIF" resultType="MetoringVO">
+       select mentoring.*, me_nickname as ment_me_nickname, mentIf_exp as ment_mentIf_exp, mentIf_ment_job as ment_mentIf_job
+       from mentoring
+		join
+			`member` on me_id = ment_me_id
+		join
+			mentor_info on mentIf_me_id = ment_me_id
+		where ment_num = #{ment_num}
+	</select>
+    
 </mapper>

@@ -247,8 +247,11 @@ let flag = false;
 			success : function(data){
 				console.log(data);
 				if(data.res=="true"){
-					alert("이메일 인증이 완료되었습니다.");
-					location.replace("<c:url value='/'/>")
+					if(confirm("이메일 인증이 완료되었습니다. 상세 프로필을 작성하시겠습니까?")){
+						location.replace("<c:url value='/signup/detail'/>")
+					}else{
+						location.replace("<c:url value='/'/>")
+					};
 				}else if(data.res=="false"){
 					alert("인증번호를 다시 확인해주세요.");
 				}

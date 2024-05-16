@@ -64,6 +64,8 @@ public interface MentorService {
 
 	boolean updateMentoringApply(MentoringApplyVO mentoringAp, MemberVO user);
 
+	ArrayList<MetoringVO> getHotMentorList();
+
 
 
 
