@@ -14,7 +14,6 @@ import kr.kh.team2.model.dto.MentorInfoDTO;
 import kr.kh.team2.model.dto.RecommendCountDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
-import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
@@ -279,34 +278,6 @@ public class MentorServiceImp implements MentorService {
 		return mentorDAO.selectMentoringApply(num, user);
 	}
 
-	@Override
-	public ArrayList<MentoringApplyVO> getMentoringApplyList(int ment_num, String me_id) {
-		if(ment_num <= 0 || me_id == null) {
-			return null;
-		}
-		
-		return mentorDAO.selectMentoringApplyList(ment_num, me_id);
-	}
-
-	@Override
-	public boolean updateMentoringApply(MentoringApplyVO mentoringAp, MemberVO user) {
-		if(mentoringAp == null || user == null) {
-			return false;
-		}
-		
-		System.out.println("=========서비스 컨트롤러에서 넘어온 거  : " + mentoringAp);
-		
-		boolean res = mentorDAO.updateMentoringApply(mentoringAp, user);
-		System.out.println("=========값 넣은 후  : " + mentoringAp);
-		
-		if(!res) {
-			return false;
-		}
-		
-		
-		return true;
-  }
-  
 	/** 추천 리스트 가져오기 */
 	@Override
 	public ArrayList<MetoringVO> getHotMentorList() {
@@ -360,5 +331,9 @@ public class MentorServiceImp implements MentorService {
 		
 		return hotList;
 	}
+
+
+
+
 
 }

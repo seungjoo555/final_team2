@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
-import kr.kh.team2.model.vo.group.GroupApplyVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
@@ -60,10 +59,6 @@ public interface MentorDAO {
 	boolean deleteMentoring(@Param("ment_num")Integer mentNum);
 
 	MentoringApplyVO selectMentoringApply(@Param("ment_num")int num, @Param("user")MemberVO user);
-
-	ArrayList<MentoringApplyVO> selectMentoringApplyList(@Param("ment_num")int ment_num, @Param("me_id")String me_id);
-
-	boolean updateMentoringApply(@Param("mentAp")MentoringApplyVO mentoringAp, @Param("user")MemberVO user);
 
 	ArrayList<MetoringVO> selectAllMentoring();
 

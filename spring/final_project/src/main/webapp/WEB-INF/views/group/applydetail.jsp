@@ -42,7 +42,7 @@
 		$('.second-box').summernote('disable');
 		
 		$('.group-apply-back-btn').click(function() {
-			location.href='<c:url value="/mypage/mygroup?me_id=${user.me_id}"/>'
+			location.href='<c:url value="/group/detail?num=${goap.goap_recu_num}"/>'
 		})
 		
 		$('.group-apply-update-btn').click(function(){

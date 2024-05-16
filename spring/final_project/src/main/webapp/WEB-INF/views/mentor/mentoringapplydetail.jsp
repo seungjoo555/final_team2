@@ -17,16 +17,11 @@
 	<input type="hidden" name="num" value="${mentoring.ment_num}">
 	<input type="hidden" name="mentAp_num" value="${mentoringAp.mentAp_num}">
 	<div class="mentoring-title-container">
-		<label class="mentoring-name">멘토링 명</label>
-		<input type="text" class="mentoring-name-item" value="${mentoring.ment_title}" readonly>
-	</div>
-	<div class="mentoring-contact-container">
-		<label for="mentAp_contact" class="mentoring-contact">연락처</label>
-		<input type="text" class="mentoring-contact-item" id="mentAp_contact" name="mentAp_contact" value="${mentoringAp.mentAp_contact}">
+		<div class="mentoring-name">멘토링 명</div>
+		<input type="text" class="mentoring-name-item" value="${mentoring.ment_title}">
 	</div>
 	<div class="form-row-content">
-	
-		<label class="apply-container">지원서 내용</label>
+		<div class="apply-container">지원서 내용</div>
 		<textarea rows="10" class="form-control second-box" disabled>${mentoringAp.mentAp_content}</textarea>
 	</div>
 	<div class="button-area">
@@ -36,14 +31,5 @@
 		</c:if>
 	</div>
 	
-	<script type="text/javascript">
-		$('.mentoring-apply-detail-back-btn').click(function() {
-			location.href='<c:url value="/mypage/mygroup?me_id=${user.me_id}"/>'
-		})
-		
-		$('.mentoring-apply-update-btn').click(function(){
-			location.href='<c:url value="/mentoring/apply/update?num=${mentoring.ment_num}"/>';
-		})
-	</script>
 </body>
 </html>

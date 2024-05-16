@@ -35,21 +35,6 @@
     height: 50px;
 }
 
-.mentoring-contact {
-	font-weight: 700;
-	width: 100px;
-    text-align: start;
-    line-height: 3;
-}
-
-.mentoring-contact-item {
-	border-radius: 5px;
-    padding: 20px;
-    border: 1px solid #ced4da;
-    width: 100%;
-    height: 50px;
-}
-
 .apply-container {
 	font-weight: 700;
 	width: 100px;
