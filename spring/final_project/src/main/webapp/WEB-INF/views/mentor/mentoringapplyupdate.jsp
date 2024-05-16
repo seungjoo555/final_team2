@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- 심아진 바보 -->
 	<h3 class="apply-title">멘토링 지원서</h3>
 	<div class="sub-box">
 		<h5 class="sub-title">1. 지원서를 수정해 주세요.</h5>
