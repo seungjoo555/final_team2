@@ -332,8 +332,4 @@ public class MentorServiceImp implements MentorService {
 		return hotList;
 	}
 
-
-
-
-
 }

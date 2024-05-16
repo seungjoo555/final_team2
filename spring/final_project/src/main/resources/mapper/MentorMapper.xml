@@ -166,21 +166,21 @@
 		select * from mentoring where ment_num = #{ment_num}
 	</select>
 		
-  <select id="selectMentoringList" resultType="MetoringVO">
-    SELECT mentoring.*, mentor_info.mentIf_ment_job as ment_mentIf_job, mentor_info.mentIf_exp as ment_mentIf_exp, mentoring_apply.mentAp_state as mentAp_state, me_nickname as ment_me_nickname
-  FROM mentoring
-    JOIN mentor_info ON ment_me_id = mentIf_me_id
-      JOIN mentoring_apply ON ment_num = mentAp_ment_num
-      JOIN `member` ON me_id = ment_me_id
-  WHERE mentAp_me_id = #{me_id}
-  </select>
+	<select id="selectMentoringList" resultType="MetoringVO">
+		SELECT mentoring.*, mentor_info.mentIf_ment_job as ment_mentIf_job, mentor_info.mentIf_exp as ment_mentIf_exp, mentoring_apply.mentAp_state as mentAp_state, me_nickname as ment_me_nickname
+		FROM mentoring
+	  		JOIN mentor_info ON ment_me_id = mentIf_me_id
+	    	JOIN mentoring_apply ON ment_num = mentAp_ment_num
+	    	JOIN `member` ON me_id = ment_me_id
+		WHERE mentAp_me_id = #{me_id}
+	</select>
 
-  <select id="selectMentoCategory" resultType="TotalCategoryVO">
-    SELECT total_category.*, programming_category.progCt_name as toCt_progCt_name
-  FROM total_category
-    JOIN programming_category ON toCt_progCt_num = progCt_num
-  WHERE toCt_table_pk = #{ment_num} and toCt_table_name = #{table} 
-  </select>
+	<select id="selectMentoCategory" resultType="TotalCategoryVO">
+		SELECT total_category.*, programming_category.progCt_name as toCt_progCt_name
+		FROM total_category
+	  		JOIN programming_category ON toCt_progCt_num = progCt_num
+		WHERE toCt_table_pk = #{ment_num} and toCt_table_name = #{table} 
+	</select>
   
 	<select id="selectMetoring" resultType="MetoringVO">
 		select * from mentoring where ment_me_id = #{me_id}
