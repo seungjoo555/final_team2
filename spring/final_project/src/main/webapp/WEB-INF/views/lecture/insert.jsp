@@ -8,8 +8,7 @@
 <script type="text/javascript" src="<c:url value="/resources/js/multi.dropdown.js"/>"></script>
 </head>
 <body>
-	<form action="<c:url value="/lecture/insert"/>" method="post"
-		class="insert-form">
+	<form action="<c:url value="/lecture/insert"/>" method="post" class="insert-form" enctype="multipart/form-data">
 		<div class="first-container">
 			<h5>1. 강의 기본 정보 설정</h5>
 			<hr>

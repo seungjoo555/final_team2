@@ -88,6 +88,8 @@ public class LectureController {
 	public String lectureInsertPost(Model model, String progCtList, String progLangList ,
 			LectureVO lecture, HttpSession session, MultipartFile[] file) {
 		MemberVO user = (MemberVO)session.getAttribute("user");
+		log.info(lecture);
+		log.info(file);
 		//강의 글 등록
 		boolean res = lectureService.insertLecture(lecture, user, progCtList, progLangList, file);
 		

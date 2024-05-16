@@ -41,6 +41,7 @@ public class LectureServiceImp implements LectureService{
 						fileOriName, 
 						file.getBytes());
 			LectureFileVO fileVO = new LectureFileVO(lect_num, fileName, fileOriName);
+			System.out.println(fileVO);
 			//DB에 첨부파일 정보를 추가
 			lectureDao.insertFile(fileVO);
 		} catch (Exception e) {
@@ -179,6 +180,7 @@ public class LectureServiceImp implements LectureService{
 		}
 		
 		if(file == null || file.length == 0) {
+			System.out.println("파일 없음");
 			return true;
 		}
 		
