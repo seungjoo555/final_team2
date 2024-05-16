@@ -62,4 +62,6 @@ public interface MentorDAO {
 
 	ArrayList<MentoringApplyVO> selectMentoringApplyList(@Param("ment_num")int ment_num, @Param("me_id")String me_id);
 
+	boolean updateMentoringApply(@Param("mentAp")MentoringApplyVO mentoringAp, @Param("user")MemberVO user);
+
 }

@@ -14,15 +14,19 @@
 		<a href="<c:url value="/mentor/detail?num=${mentoring.ment_num}"/>" class="mentoring-detail">공고 보기</a>
 	</div>
 	<hr>
-	<!-- <form action="<c:url value="/mentoring/apply/update"/>" method="post" class="mentoring-apply-form">-->
-		<input type="hidden" name="ment_num" value="${mentoring.ment_num}">
+	<form action="<c:url value="/mentoring/apply/update"/>" method="post" class="mentoring-apply-update-form">
+		<input type="hidden" name="num" value="${mentoring.ment_num}">
 		<input type="hidden" name="mentAp_num" value="${mentoringAp.mentAp_num}">
 		<div class="mentoring-title-container">
-			<div class="mentoring-name">멘토링 명</div>
-			<input type="text" class="mentoring-name-item" value="${mentoring.ment_title}" readonly>
+			<label for ="ment_title" class="mentoring-name">멘토링 명</label>
+			<input type="text" class="mentoring-name-item" id="ment_title" value="${mentoring.ment_title}" readonly>
+		</div>
+		<div class="mentoring-contact-container">
+			<label for="mentAp_contact" class="mentoring-contact">연락처</label>
+			<input type="text" class="mentoring-contact-item" id="mentAp_contact" name="mentAp_contact" value="${mentoringAp.mentAp_contact}">
 		</div>
 		<div class="form-row-content">
-			<div class="apply-container">지원서 내용</div>
+			<label for="mentAp_content" class="apply-container">지원서 내용</label>
 			<textarea rows="10" class="form-control second-box" id="mentAp_content" name="mentAp_content">${mentoringAp.mentAp_content}</textarea>
 		</div>
 		<div class="button-area">
@@ -31,7 +35,7 @@
 			<button class="mentoring-apply-update-btn">수정하기</button>
 		</c:if>
 	</div>
-	<!--</form>-->
+	</form>
 	<script type="text/javascript">
 		$('.mentoring-apply-update-cancel-btn').click(function() {
 			location.href='<c:url value="/mentoring/apply/detail?num=${mentoring.ment_num}"/>'
@@ -46,7 +50,7 @@
 		
 		<!-- 작성하기 버튼 클릭 이벤트-->
 		$('.mentoring-apply-update-btn').click(function(){
-			if(!mentAp_content.value) {
+			if(!mentAp_content.value || !mentAp_contact.value) {
 				alert('모든 항목은 필수 입력 사항입니다.');
 				return false;
 			}

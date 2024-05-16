@@ -20,7 +20,12 @@
 		<div class="mentoring-name">멘토링 명</div>
 		<input type="text" class="mentoring-name-item" value="${mentoring.ment_title}" readonly>
 	</div>
+	<div class="mentoring-contact-container">
+		<label for="mentAp_contact" class="mentoring-contact">연락처</label>
+		<input type="text" class="mentoring-contact-item" id="mentAp_contact" name="mentAp_contact" value="${mentoringAp.mentAp_contact}">
+	</div>
 	<div class="form-row-content">
+	
 		<div class="apply-container">지원서 내용</div>
 		<textarea rows="10" class="form-control second-box" disabled>${mentoringAp.mentAp_content}</textarea>
 	</div>

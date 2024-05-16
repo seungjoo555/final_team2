@@ -85,6 +85,15 @@
 			ment_num = #{ment.ment_num}
 	</update>
 	
+	<update id="updateMentoringApply">
+		update mentoring_apply
+		set
+			mentAp_content = #{mentAp.mentAp_content},
+			mentAp_contact = #{mentAp.mentAp_contact}
+		where
+			mentAp_num = #{mentAp.mentAp_num} and mentAp_me_id = #{user.me_id}
+	</update>
+	
 	<!-- =============================== SELECT =============================== -->	
 	<select id="selectMentorList" resultType="MetoringVO">
         select mentoring.*, me_nickname as ment_me_nickname, mentIf_exp as ment_mentIf_exp, mentIf_ment_job as ment_mentIf_job

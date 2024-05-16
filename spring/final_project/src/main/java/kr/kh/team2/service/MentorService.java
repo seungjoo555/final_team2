@@ -62,6 +62,8 @@ public interface MentorService {
 
 	ArrayList<MentoringApplyVO> getMentoringApplyList(int num, String me_id);
 
+	boolean updateMentoringApply(MentoringApplyVO mentoringAp, MemberVO user);
+
 
 
 

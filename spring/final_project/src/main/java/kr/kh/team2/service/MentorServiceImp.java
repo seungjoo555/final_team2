@@ -281,6 +281,25 @@ public class MentorServiceImp implements MentorService {
 		return mentorDAO.selectMentoringApplyList(ment_num, me_id);
 	}
 
+	@Override
+	public boolean updateMentoringApply(MentoringApplyVO mentoringAp, MemberVO user) {
+		if(mentoringAp == null || user == null) {
+			return false;
+		}
+		
+		System.out.println("=========서비스 컨트롤러에서 넘어온 거  : " + mentoringAp);
+		
+		boolean res = mentorDAO.updateMentoringApply(mentoringAp, user);
+		System.out.println("=========값 넣은 후  : " + mentoringAp);
+		
+		if(!res) {
+			return false;
+		}
+		
+		
+		return true;
+	}
+
 
 
 
