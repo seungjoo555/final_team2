@@ -74,24 +74,7 @@
 		update member set me_ma_auth = #{me.me_ma_auth}, me_ms_state = #{me.me_ms_state}
 		where me_id = #{me.me_id}
 	</update>
-	
-	<update id="updateMemberDetail">
-		update member
-			set me_interests = #{dto.interest}, me_preferloc = #{dto.location}, me_prefertime = #{dto.time}, me_intro = #{dto.intro},
-			<choose>
-				<when test='dto.onoff == "online"'>
-					me_onoff = 0
-				</when>
-				<when test='dto.onoff == "offline"'>
-					me_onoff = 1
-				</when>
-				<otherwise>
-					me_onoff = 2
-				</otherwise>
-			</choose>
-		
-		WHERE me_id = #{id}
-	</update>
+
 	<!-- =============================== SELECT =============================== -->	
 	
 	<select id="findMemberById" resultType="MemberVO">

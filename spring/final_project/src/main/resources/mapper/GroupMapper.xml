@@ -5,9 +5,7 @@
 <mapper namespace="kr.kh.team2.dao.GroupDAO">
 	
 	<!-- =============================== SELECT =============================== -->
-	<select id="selectRecruitList" resultType="RecruitVO">
-	 	select * from recruit;
-	</select>
+	
 
  	<select id="selectGroupList" resultType="RecruitVO">
         select recruit.*, me_nickname as recu_gome_me_nickname 
@@ -291,20 +289,6 @@
 	<select id="isReviewedMember" resultType="MutualReviewVO">
 		SELECT * FROM mutual_review 
 			WHERE mure_me_id = #{review.user_id} AND mure_target_id = #{review.target_id} AND mure_go_num = #{review.num}
-	</select>
-	
-	<select id="selectHotGroupList" resultType="RecruitVO">
-	 select recruit.*, me_nickname as recu_gome_me_nickname
-	 from recruit
-	 	join
-			group_member on gome_go_num = recu_go_num
-		join
-			`member` on gome_me_id = me_id
-	 	where recu_num = #{reco_target} and gome_type = 1
-	</select>
-	
-	<select id="selectDue"  resultType="date">
-		select recu_due from recruit where recu_num = #{reco_target}
 	</select>
 	
 	<!-- =============================== DELETE =============================== -->

@@ -51,14 +51,15 @@
 			</div>
 			
 			<!-- 모달창 -->
-			<div id="modal" class="modal" style="display:none;">
+			<div id="modal" class="modal mutual-review-modal" style="display:none;">
 		      <div id="dimmed" class="dimmed apply-mentoring-dimmend"></div>
-		      <div class="manage-group_container mutual-review-modal">
-		      	<button class="cancle-btn">&times;</button>	
+		      <div class="manage-group_container">
+		      	<button class="cancle-btn">X</button>	
 	      		
 	      		<!-- Modal Header -->
 		        <div class="modal-header">
 		          <h4 class="modal-title">사용자 평가</h4>
+		          <button type="button" class="close" onclick="initModal('insertModal', g_arg)">&times;</button>
 		        </div>
 		        
 		        <!-- Modal body -->

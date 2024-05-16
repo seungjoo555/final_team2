@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.kh.team2.model.dto.SignupDTO;
-import kr.kh.team2.model.dto.SignupDetailDTO;
 import kr.kh.team2.model.vo.member.MeVerifyVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.service.MemberService;
@@ -141,24 +140,9 @@ public class SignupController {
 		return "/signup/detail";
 	}
 	
-	@GetMapping("/signup/detail")
-	public String signUpDetail() {
-		
-		return "/signup/detail";
-	}
-	
 	@PostMapping("/signup/detail")
-	public String signUpDetailPost(HttpSession session, Model model, SignupDetailDTO signupDetailDto) {
-		MemberVO user = (MemberVO) session.getAttribute("user");
+	public String signupDetailPost(){
 		
-		if(memberService.updateMemberDetail(user.getMe_id(), signupDetailDto)) {
-			session.setAttribute("user", user);
-			model.addAttribute("msg", "상세 정보를 저장했습니다.");
-			model.addAttribute("url", "/mypage/profile/?me_id=" + user.getMe_id());
-		}else {
-			model.addAttribute("msg", "상세 정보를 저장 하지 못했습니다");
-			model.addAttribute("url", "/signup/detail");
-		}
-		return "message";
+		return "/signup/complete";
 	}
 }

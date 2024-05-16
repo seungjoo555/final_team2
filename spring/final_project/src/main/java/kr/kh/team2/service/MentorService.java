@@ -59,8 +59,6 @@ public interface MentorService {
 
 	MentoringApplyVO getMentoringApply(int num, MemberVO user);
 
-	ArrayList<MetoringVO> getHotMentorList();
-
 
 
 
