@@ -47,10 +47,9 @@ public class HomeController {
 		ArrayList<RecruitVO> hotGroupList = groupService.getHotGroupList();
 		
 		//추천순 멘토링 리스트
-		//ArrayList<MetoringVO> mentoingList = mentorService.getMentorList(criM);
 		ArrayList<MetoringVO> hotMentoingList = mentorService.getHotMentorList();
 		//추천순 강의 리스트
-		ArrayList<LectureVO> lectureList = lectureService.getAllLectureList(cri);
+		ArrayList<LectureVO> hotLectureList = lectureService.getHotLectureList();
 		
 		//모임 - 모집분야, 사용언어
 		String table1 = "recruit";
@@ -71,7 +70,7 @@ public class HomeController {
 		model.addAttribute("totalLanguage", totalLanguage);
 		model.addAttribute("hotGroupList", hotGroupList );
 		model.addAttribute("hotMentoingList", hotMentoingList );
-		model.addAttribute("lectureList", lectureList );
+		model.addAttribute("hotLectureList", hotLectureList );
 		
 		return "/main/home";
 	}

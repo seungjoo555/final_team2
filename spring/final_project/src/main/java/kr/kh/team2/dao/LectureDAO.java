@@ -1,6 +1,7 @@
 package kr.kh.team2.dao;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -38,5 +39,9 @@ public interface LectureDAO {
 	boolean insertTotalCate(@Param("toCate")TotalCategoryVO totalCateVo);
 
 	boolean insertTotalLang(@Param("toLang")TotalLanguageVO totalLangVo);
+
+	ArrayList<LectureVO> selectHotLectureList();
+
+	Date selectDue(@Param("lect_num")String reco_target);
 
 }

@@ -144,7 +144,10 @@
 				</tr>
 			</thead>
 			<tbody>
-		<c:forEach items="${lectureList}" var="lecture">
+			<c:if test="${hotLectureList == null }">
+				<h3>등록된 강의가 없습니다.</h3>
+			</c:if>
+		<c:forEach items="${hotLectureList}" var="lecture">
 			<tr>
 				<td>
 					<c:url value="/lecture/detail" var="url">
