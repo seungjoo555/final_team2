@@ -1,15 +1,20 @@
 package kr.kh.team2.service;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.MentorDAO;
+import kr.kh.team2.dao.RecommendDAO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.dto.MentorInfoDTO;
+import kr.kh.team2.model.dto.RecommendCountDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
+import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MentoringApplyVO;
@@ -23,6 +28,8 @@ public class MentorServiceImp implements MentorService {
 	
 	@Autowired
 	MentorDAO mentorDAO;
+	@Autowired
+	RecommendDAO recommendDAO;
 	
 	Methods methods = new Methods();
 	
@@ -277,7 +284,52 @@ public class MentorServiceImp implements MentorService {
 		//전체 멘토링 글 가져오기
 		ArrayList<MetoringVO> allList = mentorDAO.selectAllMentoring();
 		
-		return null;
+		if(allList == null) {
+			return null;
+		}
+		
+		//추천 리스트 가져오기
+		ArrayList<RecommendCountDTO> list = new ArrayList<RecommendCountDTO>();
+		
+		for(MetoringVO i : allList) {
+			RecommendCountDTO recruitCount = recommendDAO.selectRecommendCountList("mentoring", Integer.toString(i.getMent_num()));
+			recruitCount.setReco_table("mentoring");
+			recruitCount.setReco_target(Integer.toString(i.getMent_num()));
+			recruitCount.setRecu_due(mentorDAO.selectDue(recruitCount.getReco_target()));
+			System.out.println(recruitCount);
+			list.add(recruitCount);
+		}
+		
+		//추천순으로 자르기
+		Collections.sort(list, new Comparator<RecommendCountDTO>() {
+			@Override
+			public int compare(RecommendCountDTO o1, RecommendCountDTO o2) {
+				//만약 추천수가 같다면
+				if(o2.getCount() - o1.getCount() == 0) {
+					//최신순으로 정렬
+					return o2.getRecu_due().compareTo(o1.getRecu_due());
+				}
+				return o2.getCount() - o1.getCount();
+			}
+		});
+		
+		//추천순으로 멘토링 가져오기
+		ArrayList<MetoringVO> hotList = new ArrayList<MetoringVO>();
+		
+		System.out.println("list :: "+list);
+		if(list.size() > 4) {
+			for(int i=0; i<4; i++) {
+				hotList.add(mentorDAO.selectMentoringIF(Integer.parseInt(list.get(i).getReco_target())));
+			}
+		}else {
+			for(int i=0; i<list.size(); i++) {
+				hotList.add(mentorDAO.selectMentoringIF(Integer.parseInt(list.get(i).getReco_target())));
+			}
+		}
+		
+		System.out.println("hotList :: "+hotList);
+		
+		return hotList;
 	}
 
 

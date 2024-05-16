@@ -91,7 +91,10 @@
 		<h2>추천 멘토</h2>
 		<div class="box-mento-list">
 			<ul class="mento-list">
-				<c:forEach items="${mentoingList }" var="mentoing">
+				<c:if test="${hotMentoingList == null }">
+					<h3>등록된 멘토링 모집글이 없습니다.</h3>
+				</c:if>
+				<c:forEach items="${hotMentoingList }" var="mentoing">
 					<a class="mento-item" data-num="${mentoing.ment_num}">
 						<li>
 							<!--그룹 모집 내용-->

@@ -883,6 +883,10 @@ public class GroupServiceImp implements GroupService{
 			for(int i=0; i<4; i++) {
 				hotList.add(groupDao.selectHotGroupList(list.get(i).getReco_target())) ;
 			}
+		}else {
+			for(int i=0; i<list.size(); i++) {
+				hotList.add(groupDao.selectHotGroupList(list.get(i).getReco_target())) ;
+			}
 		}
 		
 		return hotList;

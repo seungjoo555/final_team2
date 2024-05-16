@@ -294,8 +294,13 @@
 	</select>
 	
 	<select id="selectHotGroupList" resultType="RecruitVO">
-	 select * from recruit
-	 	where recu_num = #{reco_target}
+	 select recruit.*, me_nickname as recu_gome_me_nickname
+	 from recruit
+	 	join
+			group_member on gome_go_num = recu_go_num
+		join
+			`member` on gome_me_id = me_id
+	 	where recu_num = #{reco_target} and gome_type = 1
 	</select>
 	
 	<select id="selectDue"  resultType="date">
