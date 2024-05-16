@@ -57,8 +57,13 @@ public class LoginController {
 	
 	@RequestMapping(value ="/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session, Model model) {
-		//자동로그인 해제
 		MemberVO user = (MemberVO) session.getAttribute("user");
+		if(user == null) {
+			model.addAttribute("msg","이미 로그아웃된 계정입니다.");
+			model.addAttribute("url","/");
+			return "message";
+		}
+		//자동로그인 해제
 		user.setMe_cookie(null);
 		user.setMe_cookie_limit(null);
 		memberService.updateMemberCookie(user);
