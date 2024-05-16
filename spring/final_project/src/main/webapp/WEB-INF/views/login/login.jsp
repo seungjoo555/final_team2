@@ -350,7 +350,7 @@
 			    	<h2>SNS 가입을 위한 추가 정보</h2>
 	                <!-- 모달 내용 -->
 	                <div class="input-wrap">
-	                	<label for="nickname">닉네임(중복체크 필수)</label>
+	                	<label for="nickname">닉네임(중복확인 필수)</label>
 		                <input type="text" id="nickname" placeholder="닉네임">
 		                <button type="button" class="check-duplicate" >중복확인</button>
 		                <span id="nickname-error"></span>
