@@ -2,6 +2,7 @@
 body{width:100%; overflow : visible; 
   height: 100%;}
 *{box-sizing: border-box;}
+h1{font-weight: bold;}
 
 .select-box{width: 150px;}
 .count-report{margin: 0 10px;}
@@ -13,6 +14,14 @@ body{width:100%; overflow : visible;
 .check-label{
 	display: flex; height:100%; vertical-align:middle;
 	align-items: center;  justify-content: center;
+}
+.report-detail-btn{
+	background-color: white; border: 1px solid #808080; 
+	border-radius: 5px; padding: 2px 5px; 
+}
+.btn-batch-processing{
+	background-color: white; border: 1px solid #808080; 
+	border-radius: 5px; padding: 2px 5px;
 }
 
 

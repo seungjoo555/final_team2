@@ -59,13 +59,17 @@ public class HomeController {
 		if(hotGroupList != null) {
 			for(RecruitVO group : hotGroupList) {
 				int recu_num = group.getRecu_num();
-				System.out.println("recu_num : " + recu_num);
 				
 				ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table1);
 				ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table1);
 				
-				totalCategory.addAll(Category);
-				totalLanguage.addAll(Language);			
+				if(Category != null) {
+					totalCategory.addAll(Category);
+				}
+				if(Language != null) {
+					totalLanguage.addAll(Language);			
+				}
+				
 			}
 		}
 	
