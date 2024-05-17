@@ -405,6 +405,15 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean signupSns(SnsSignupDTO ssd) {
 		
+		if(!methods.checkString(ssd.getEmail())||!methods.checkString(ssd.getAddress())||
+				!methods.checkString(ssd.getName())||!methods.checkString(ssd.getNickname())||
+				!methods.checkString(ssd.getSns())||!methods.checkString(ssd.getPhone())||
+				ssd.getAddress().length()>100) {
+			
+			return false;
+			
+		}
+		
 		return memberDao.insertMemberSns(ssd);
 	}
 

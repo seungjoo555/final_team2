@@ -9,13 +9,13 @@
 	<!-- =============================== INSERT =============================== -->
 
 	<insert id="insertMember">
-		INSERT INTO member(me_id, me_ms_state, me_ma_auth, me_pw, me_nickname, me_name, me_phone, me_address, me_type)
-			VALUE(#{member.me_id}, "이용중", "일반", #{member.me_pw}, #{member.me_nickname}, #{member.me_name}, #{member.me_phone}, #{member.me_address}, "일반")
+		INSERT INTO member(me_id, me_ms_state, me_ma_auth, me_pw, me_nickname, me_name, me_phone, me_address, me_type, me_postcode)
+			VALUE(#{member.me_id}, "이용중", "일반", #{member.me_pw}, #{member.me_nickname}, #{member.me_name}, #{member.me_phone}, #{member.me_address}, "일반", #{member.me_postcode})
 	</insert>	
 	
 	<insert id="insertMemberSns">
-		insert into member(me_id, me_ms_state, me_ma_auth, me_pw, me_nickname, me_name, me_phone, me_address, me_type, me_verify)
-			value(#{ssd.email},"이용중","일반",#{ssd.me_pw},#{ssd.nickname}, #{ssd.name}, #{ssd.phone}, #{ssd.address}, #{ssd.sns},1)
+		insert into member(me_id, me_ms_state, me_ma_auth, me_pw, me_nickname, me_name, me_phone, me_address, me_type, me_verify,me_postcode)
+			value(#{ssd.email},"이용중","일반",#{ssd.me_pw},#{ssd.nickname}, #{ssd.name}, #{ssd.phone}, #{ssd.address}, #{ssd.sns},1,#{ssd.postcode})
 	</insert>
 	
 	
