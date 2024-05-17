@@ -56,16 +56,19 @@ public class HomeController {
 		ArrayList<TotalCategoryVO> totalCategory = new ArrayList<TotalCategoryVO>();
 		ArrayList<TotalLanguageVO> totalLanguage = new ArrayList<TotalLanguageVO>();
 		
-		for(RecruitVO group : hotGroupList) {
-			int recu_num = group.getRecu_num();
-			System.out.println("recu_num : " + recu_num);
-			
-			ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table1);
-			ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table1);
-			
-			totalCategory.addAll(Category);
-			totalLanguage.addAll(Language);			
+		if(hotGroupList != null) {
+			for(RecruitVO group : hotGroupList) {
+				int recu_num = group.getRecu_num();
+				System.out.println("recu_num : " + recu_num);
+				
+				ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table1);
+				ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table1);
+				
+				totalCategory.addAll(Category);
+				totalLanguage.addAll(Language);			
+			}
 		}
+	
 		model.addAttribute("totalCategory", totalCategory);
 		model.addAttribute("totalLanguage", totalLanguage);
 		model.addAttribute("hotGroupList", hotGroupList );
