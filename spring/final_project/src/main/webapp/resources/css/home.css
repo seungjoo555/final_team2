@@ -1,3 +1,6 @@
 @charset "UTF-8";
 
-
+.box-banner{
+	margin-bottom: 20px; display: flex;
+    justify-content: center;
+}
