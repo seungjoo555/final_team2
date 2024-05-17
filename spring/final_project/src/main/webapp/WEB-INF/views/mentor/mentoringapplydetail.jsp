@@ -25,7 +25,6 @@
 		<input type="text" class="mentoring-contact-item" id="mentAp_contact" name="mentAp_contact" value="${mentoringAp.mentAp_contact}" readonly>
 	</div>
 	<div class="form-row-content">
-	
 		<label class="apply-container">지원서 내용</label>
 		<textarea rows="10" class="form-control second-box" disabled>${mentoringAp.mentAp_content}</textarea>
 	</div>
