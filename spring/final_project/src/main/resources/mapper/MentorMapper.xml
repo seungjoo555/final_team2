@@ -75,6 +75,7 @@
 		mentIf_me_id = #{me_id}
 	
 	</update>
+	
 	<update id="updateMentoring">
 		update mentoring
 		set
@@ -83,6 +84,15 @@
 			ment_content = #{ment.ment_content}
 		where 
 			ment_num = #{ment.ment_num}
+	</update>
+	
+	<update id="updateMentoringApply">
+		update mentoring_apply
+		set
+			mentAp_content = #{mentAp.mentAp_content},
+			mentAp_contact = #{mentAp.mentAp_contact}
+		where
+			mentAp_num = #{mentAp.mentAp_num} and mentAp_me_id = #{user.me_id}
 	</update>
 	
 	<!-- =============================== SELECT =============================== -->	

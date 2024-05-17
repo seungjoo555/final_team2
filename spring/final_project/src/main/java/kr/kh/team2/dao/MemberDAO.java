@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import org.apache.ibatis.annotations.Param;
 
 import kr.kh.team2.model.dto.ChangePwTempDTO;
-
-import kr.kh.team2.model.dto.SnsSignupDTO;
 import kr.kh.team2.model.dto.SignupDetailDTO;
+import kr.kh.team2.model.dto.SnsSignupDTO;
 import kr.kh.team2.model.vo.member.MeVerifyVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -64,6 +63,5 @@ public interface MemberDAO {
 	MemberVO selectMemberSns(@Param("sns")String sns, @Param("id")String id);
 
 	boolean updateMemberDetail(@Param("id")String me_id, @Param("dto")SignupDetailDTO signupDetailDto);
-
-
+  
 }

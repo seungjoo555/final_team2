@@ -58,10 +58,9 @@ public interface MentorService {
 	boolean deleteMentoring(Integer mentNum);
 
 	MentoringApplyVO getMentoringApply(int num, MemberVO user);
+	
+	boolean updateMentoringApply(MentoringApplyVO mentoringAp, MemberVO user);
 
 	ArrayList<MetoringVO> getHotMentorList();
-
-
-
 
 }

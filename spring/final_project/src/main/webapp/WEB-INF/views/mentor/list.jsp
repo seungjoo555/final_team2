@@ -124,7 +124,7 @@
 			let stateStr = '';
 			if(mentoing.ment_state == 1){
 				stateStr += `<div class="mentoSituation">모집중</div>`
-			}else if(mentoing.ment_state == 0){
+			}else if(mentoing.ment_state == -1){
 				stateStr += `<div class="mentoSituation">모집완료</div>`
 			}
 			
@@ -467,21 +467,22 @@ function displayReport(mentoring, contentList){
 		`
 		<div class="report-header">
 	     		<div class="header-title"><h1>신고하기</h1></div>
-     	</div>
+	     		
+	     	</div>
 		<div class="report-body">
 			<form action="<c:url value="/report/mentor"/>"  method="post" class="form-report">
 				<input type="hidden" id="ment_num" value="\${mentoring.ment_num}">
 				<div class="report-form-group">
+					<label for="report-content">신고유형</label>
 					<select class="input-box-input report-content" id="report-content" name="report-content">
-						<option value="" selected disabled hidden>신고유형을 선택해주세요</option>
 		`
 		+ cList +
 		`
 					</select>
 				</div>
-				<div class="report-form-group-input">
+				<div class="report-form-group">
 					<label for="report-detail">신고내용</label>
-					<textarea class="form-control h-10 report-detail" id="report-detail" name="report-detail"></textarea>
+					<textarea class="form-control report-detail" id="report-detail" name="report-detail"></textarea>
 				</div>
 			</form>
 		</div>
@@ -596,15 +597,15 @@ function displayMentoringApply(mentoring){
 				      	<form action="<c:url value="/mentor/list"/>" method="post" class="form-apply">
 							<input type="hidden" value="\${mentoring.ment_num}" id="mentAp_ment_num" name="mentAp_ment_num">
 				      		<div class="mentor-apply-form-group">
-								<label for="id">멘토링 명</label>
+								<label for="mentorNickname">멘토링 명</label>
 								<input type="text" readonly class="form-control apply-mentorNickname" value="\${mentoring.ment_title}" id="mentorNickname" name="mentorNickname">
 							</div>
 				      		<div class="mentor-apply-form-group">
-								<label for="id">연락처</label>
+								<label for="mentAp_contact">연락처</label>
 								<input type="text" class="form-control apply-contact" id="mentAp_contact" name="mentAp_contact">
 							</div>
 				      		<div class="mentor-apply-form-group">
-								<label for="id">신청내용</label>
+								<label for="mentAp_content">신청내용</label>
 								<textarea rows="11" class="form-control h-25 apply-content" id="mentAp_content" name="mentAp_content"></textarea>
 							</div>
 				      	</form>
@@ -734,8 +735,10 @@ function updatevote(action, data) {
 		method : "get",
 		data : recommend,
 		success: function (data){
+			
 			let count = parseInt(data.reco_ment_count);
 			$('.init-like').text(count);
+			
 		}, 
 		error : function(a, b, c){
 			console.log("실패");

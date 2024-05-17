@@ -277,6 +277,23 @@ public class MentorServiceImp implements MentorService {
 	public MentoringApplyVO getMentoringApply(int num, MemberVO user) {
 		return mentorDAO.selectMentoringApply(num, user);
 	}
+	
+	@Override
+	public boolean updateMentoringApply(MentoringApplyVO mentoringAp, MemberVO user) {
+		if(mentoringAp == null || user == null) {
+			return false;
+		}
+		
+		boolean res = mentorDAO.updateMentoringApply(mentoringAp, user);
+		
+		if(!res) {
+			return false;
+		}
+		
+		
+		return true;
+	}
+	
 
 	/** 추천 리스트 가져오기 */
 	@Override
@@ -331,5 +348,9 @@ public class MentorServiceImp implements MentorService {
 		
 		return hotList;
 	}
+
+
+
+
 
 }
