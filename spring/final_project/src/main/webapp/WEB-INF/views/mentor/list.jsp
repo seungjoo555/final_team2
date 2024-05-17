@@ -21,10 +21,10 @@
 	<div class="menu-bar">
 		<div class="mentor mentor-insert">
 			<c:if test="${user.me_ma_auth != '멘토'}">
-				<a class="btn-outline-success mentor-insert" href="<c:url value="/mentor/apply"/>">멘토 신청하기</a>
+				<a class="btn-outline-success btn-mentor-insert" href="<c:url value="/mentor/apply"/>">멘토 신청하기</a>
 			</c:if>
 			<c:if test="${user.me_ma_auth == '멘토'}">
-				<a class="btn-outline-success mentor-mentoring-insert" href="<c:url value="/mentor/mentoring/insert"/>">멘토링 열기</a>
+				<a class="btn-outline-success btn-mentor-mentoring-insert" href="<c:url value="/mentor/mentoring/insert"/>">멘토링 열기</a>
 			</c:if>
 		</div>
 		<form action="<c:url value='/mentor/list'/>" method="get" id="searchForm" onsubmit="return false;">
