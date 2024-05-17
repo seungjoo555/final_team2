@@ -9,12 +9,11 @@ import org.springframework.stereotype.Service;
 
 import kr.kh.team2.dao.MentorDAO;
 import kr.kh.team2.dao.RecommendDAO;
-import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.dto.MentorInfoDTO;
 import kr.kh.team2.model.dto.RecommendCountDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
-import kr.kh.team2.model.vo.group.RecruitVO;
+import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MentoringApplyVO;

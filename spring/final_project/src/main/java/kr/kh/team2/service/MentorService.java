@@ -2,10 +2,10 @@ package kr.kh.team2.service;
 
 import java.util.ArrayList;
 
-import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.dto.MentorInfoDTO;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
+import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.model.vo.member.MentorInfoVO;
 import kr.kh.team2.model.vo.member.MentorJobVO;
 import kr.kh.team2.model.vo.member.MentoringApplyVO;
@@ -62,10 +62,5 @@ public interface MentorService {
 	boolean updateMentoringApply(MentoringApplyVO mentoringAp, MemberVO user);
 
 	ArrayList<MetoringVO> getHotMentorList();
-
-	ArrayList<MetoringVO> getHotMentorList();
-
-
-
 
 }
