@@ -112,3 +112,18 @@
 /* 멘토 정보 */
 .mento-list-item-memberInfo > div{display: inline-block; }
 .mentoSituation{display:flex; float: right;}
+
+
+/* 버튼 */
+.btn-apply{
+	background-color: white; border: 1px solid #808080; 
+	border-radius: 5px; padding: 2px 5px; 
+}
+.btn-apply-prev{
+	background-color: white; border: 1px solid #808080; 
+	border-radius: 5px; padding: 2px 5px; margin-right: 10px;
+}
+.btn-apply-insert{
+	background-color: white; border: 1px solid #808080; 
+	border-radius: 5px; padding: 2px 5px; 
+}

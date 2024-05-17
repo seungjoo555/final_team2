@@ -655,7 +655,7 @@ $(document).on('click', '.btn-apply-insert', function(){
 		dataType : "json", 
 		success : function (data){
 			if(data.result){
-				alert("멘토링을 신청했습니다.");
+				alert("멘토링을 신청했습니다.\n선정된 멘티는 개별적으로 연락됩니다.");
 				$("#modal").css('display','none');
 			   $("body").css('overflow','visible');
 				let cri = {
