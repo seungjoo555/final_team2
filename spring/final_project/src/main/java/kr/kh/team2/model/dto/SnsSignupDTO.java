@@ -15,4 +15,5 @@ public class SnsSignupDTO {
 	private String phone;
 	private String nickname;
 	private String address;
+	private int postcode;
 }

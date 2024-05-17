@@ -77,7 +77,7 @@
         top: 50%;
         transform: translate(-50%, -50%);
         width: 500px;
-        height: 500px;
+        height: 550px;
         background-color: white;
         border-radius: 10px;
         overflow: auto;
@@ -95,19 +95,25 @@
     
     #nickname{
     	width : 320px;
-    	height : 50px;
+    	height : 35px;
     	border-radius : 5px;
+    }
+    
+    #postcode{
+    	width : 100px;
+    	height : 35px;
+    	margin-bottom : 10px;
     }
     
     #address1 {
     	margin-bottom : 10px;
-    	width : 150px;
-    	height : 50px;
+    	width : 400px;
+    	height : 35px;
     }
     
     #address2{
     	width : 400px;
-    	height : 50px;
+    	height : 35px;
     }
     
 
@@ -140,7 +146,7 @@
 	
 	.check-duplicate{
 		width : 80px;
-		height : 50px; 
+		height : 35px; 
 		background-color: #DAFBD8;
 		
 	}
@@ -161,17 +167,31 @@
 	}
 	
 	#btn-extraInfo{
-		margin-top : 30px;
-		height : 50px;
+		margin-top : 20px;
+		height : 35px;
 		background-color: #DAFBD8;
 		border-radius : 5px;
 	}
 	
+	#nickname-error{
+		color:red;
+	}
+	
+	.btn-postcode{
+		width : 120px;
+		height:35px;
+		background-color : #DAFBD8;
+		margin-left : 5px;
+		border-radius : 5px;
+	}
 
 	
 
 </style>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/additional-methods.min.js"></script>
 </head>
 <body>
 	<div class="login-container">
@@ -358,7 +378,9 @@
 		            <div class ="input-wrap">
 		                <label for="nickname">주소</label>
 		                <br>
-	                	<input type="text" id="address1" placeholder="주소">
+		                <input type="text" id="postcode" name="postcode" readonly placeholder="우편번호">
+		                <button type="button" class="btn-postcode" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>
+	                	<input type="text" id="address1" readonly name="address1" placeholder="주소">
 	                	<input type="text" id="address2" placeholder ="상세주소">
 	            	</div>
 	             <button id="btn-extraInfo" class ="btn-extraInfo">입력완료</button>
@@ -428,6 +450,8 @@
 	    		return false;
 	    	}
 	    	
+	    	let postcode = $('#postcode').val();
+	    	
 	    	let address1 = $("#address1").val();
 	    	let address2 = $("#address2").val();
 	    	
@@ -438,21 +462,33 @@
 	    		return false;
 	    	}
 	    	
-	    	if(address.length >50){
-	    		alert("주소는 50글자를 넘을 수 없습니다.")
+	    	if(address.length >100){
+	    		alert("주소는 100글자를 넘길 수 없습니다.")
 	    		return false;
 	    	}
 	    	
 	    	let nickname = $('#nickname').val();
 	    	
+	    	let snsDto = {
+	    		sns : sns,
+	    		email : email,
+	    		phone : phone,
+	    		name : name,
+	    		nickname : nickname,
+	    		address : address,
+	    		postcode : postcode
+	    	}
+	    	
 	    	$.ajax({
 				async : false,
 				url : `<c:url value="/sns"/>/\${sns}/signup`, 
 				type : 'post', 
-				data : {sns, email, phone, name, nickname, address}, 
+				data : JSON.stringify(snsDto),
+				contentType : "application/json; charset=utf-8",
 				success : function (data){
 					if(data){
 						alert("회원가입이 완료되었습니다.")
+						location.replace("<c:url value='/'/>")
 					}else{
 						alert('회원가입에 실패했습니다.')
 					}
@@ -473,7 +509,49 @@
 	// 모달 창 닫기
 	function closeModal() {
 	    $('#myModal').css('display', 'none');
+	    $('body').css('overflow', '');
 	}
+	
+	//주소 api
+	function execPostCode() {
+         new daum.Postcode({
+             oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+ 
+                // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+ 
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+                // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                if(fullRoadAddr !== ''){
+                    fullRoadAddr += extraRoadAddr;
+                }
+ 
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+
+                
+                
+                $("[name=postcode]").val(data.zonecode);
+                $("[name=address1]").val(fullRoadAddr);
+                
+
+            }
+         }).open();
+     }
 	 
 </script>
 

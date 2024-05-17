@@ -17,6 +17,7 @@ public class MemberVO {
     private String me_name;
     private String me_phone;
     private int me_point;
+    private int me_postcode;
     private String me_address;
     private int me_failcount;
     private int me_reportcount;
@@ -41,6 +42,7 @@ public class MemberVO {
 		this.me_nickname = signupDto.getNickname();
 		this.me_name = signupDto.getName();
 		this.me_phone = signupDto.getPhone();
+		this.me_postcode= signupDto.getPostcode();
 		this.me_address = signupDto.getAdd1() + " " + signupDto.getAdd2();
 	}
 
