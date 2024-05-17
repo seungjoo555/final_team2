@@ -49,7 +49,7 @@
 		
 		$('.group-apply-update-cancel-btn').click(function() {
 			if(confirm("수정을 취소하고 이전으로 돌아가시겠습니까?")){
-				location.href='<c:url value="/group/applydetail?num=${recruit.recu_num}"/>';
+				location.href='<c:url value="/group/apply/detail?num=${recruit.recu_num}"/>';
 			}
 		})
 	</script>
