@@ -23,7 +23,7 @@
 		<h2>HOT 스터디/프로젝트</h2>
 		<div class="box-group-list">
 			<ul class="group-list">
-				<c:if test="${hotGroupList == null }">
+				<c:if test="${hotGroupList.isEmpty()}">
 					<h3>등록된 스터디/프로젝트가 없습니다.</h3>
 				</c:if>
 				<c:forEach items="${hotGroupList}" var="group">
@@ -96,7 +96,7 @@
 		<h2>추천 멘토</h2>
 		<div class="box-mento-list">
 			<ul class="mento-list">
-				<c:if test="${hotMentoingList == null }">
+				<c:if test="${hotMentoingList.isEmpty()}">
 					<h3>등록된 멘토링 모집글이 없습니다.</h3>
 				</c:if>
 				<c:forEach items="${hotMentoingList }" var="mentoing">
@@ -149,7 +149,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			<c:if test="${hotLectureList == null }">
+			<c:if test="${hotLectureList.isEmpty()}">
 				<h3>등록된 강의가 없습니다.</h3>
 			</c:if>
 		<c:forEach items="${hotLectureList}" var="lecture">
