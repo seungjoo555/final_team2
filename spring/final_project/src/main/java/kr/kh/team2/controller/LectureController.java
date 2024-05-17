@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
 import kr.kh.team2.model.vo.common.ReportContentVO;
-import kr.kh.team2.model.vo.common.ReportVO;
 import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
