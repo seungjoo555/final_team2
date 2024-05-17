@@ -196,6 +196,40 @@ public class MentorController {
 		return "message";
 	}
 	
+	@GetMapping("mentoring/detail")
+	public String mentoringDetail(Model model, HttpSession session, int num) {
+		
+		//멘토링 정보 받아오기
+		MetoringVO mentoring = mentorService.getMentoring(num);
+		//멘토 정보 받아오기
+		MentorInfoVO mentorInfo = mentorService.getMentor(mentoring.getMent_me_id());
+		//멘토링 신고 여부 불러오기
+
+		boolean istrue = true;
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		if(user != null) {
+			istrue = reportService.getReportIsTrue(Integer.toString(num), "mentoring", user.getMe_id());
+		}
+
+
+		//멘토링 신청 정보 받아오기
+		MentoringApplyVO mentoringAp = mentorService.getMentoringApply(num, user);
+		System.out.println(mentoringAp);
+
+		
+		// 좋아요수 
+		Integer mentNum = num;
+		RecommendVO reco_ment_count = recommendService.getRecoMentoringCount(mentNum);
+		
+		model.addAttribute("mentoring", mentoring);
+		model.addAttribute("mentorInfo", mentorInfo);
+		model.addAttribute("istrue", istrue);
+		model.addAttribute("mentoringAp", mentoringAp);
+		model.addAttribute("reco_ment_count", reco_ment_count);
+		
+		return "/mentor/mentoringdetail";
+	}
+	
 	@GetMapping("/mentor/apply")
 	public String mentorApply() {
 		
