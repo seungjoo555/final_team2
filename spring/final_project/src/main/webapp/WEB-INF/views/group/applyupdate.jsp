@@ -24,7 +24,18 @@
 	<hr>
 	<form action="<c:url value="/group/applyupdate"/>" method="post" class="group-apply-form">
 		<input type="hidden" name="num" value="${recruit.recu_num}">
+		<div class="recruit-title">
+			<c:if test="${recruit.recu_type == 0}">
+				<label class="study-title">스터디명</label>
+				<input type="text" class="study-title-item" value="${recruit.recu_topic}" readonly>
+			</c:if>
+			 <c:if test="${recruit.recu_type == 1}">
+				<label class="project-title">프로젝트명</label>
+				<input type="text" class="project-title-item" value="${recruit.recu_topic}" readonly>
+			</c:if>
+		</div>
 		<div class="form-row-content">
+			<label class="apply-container">지원서 내용</label>
 			<textarea rows="10" class="form-control second-box" id="goap_content" name="goap_content">${goap.goap_content}</textarea>
 		</div>
 		<div class="button-area">
