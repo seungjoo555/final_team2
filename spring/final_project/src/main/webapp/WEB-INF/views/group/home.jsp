@@ -219,15 +219,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 <!-- 메뉴 바 이벤트 -->
 <script type="text/javascript">
 	textChange('all');
