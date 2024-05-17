@@ -150,7 +150,6 @@
    <div id="modal" class="modal admin-member-process-modal" style="display:none;">
       <div id="dimmed" class="dimmed admin-member-process-dimmed"></div>
       <div class="admin-member-process-container">
-      
       	<div class="admin-report-process-box">
 	  	<div> <h1>멤버 정보 변경</h1> </div>
 	  	<input type="hidden" id="td-list" value="\${tdList}">
