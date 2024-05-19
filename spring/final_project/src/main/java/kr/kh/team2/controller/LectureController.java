@@ -1,15 +1,25 @@
 package kr.kh.team2.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.siot.IamportRestClient.IamportClient;
+import com.siot.IamportRestClient.exception.IamportResponseException;
+import com.siot.IamportRestClient.response.IamportResponse;
+import com.siot.IamportRestClient.response.Payment;
 
 import kr.kh.team2.model.vo.common.ProgrammingCategoryVO;
 import kr.kh.team2.model.vo.common.ProgrammingLanguageVO;
@@ -34,6 +44,11 @@ public class LectureController {
 	LectureService lectureService;
 	@Autowired
 	ReportService reportService;
+	
+    private String restApiKey="";
+    private String restApiSecret="";
+    
+	private final IamportClient iamportClient;
 	
 	@GetMapping("/lecture/list")
 	public String lectureList(Model model, Criteria cri, SearchMenuVO search) {
@@ -129,7 +144,7 @@ public class LectureController {
 		if(user != null) {
 			istrue = reportService.getReportIsTrue(Integer.toString(lectNum), "lecture", user.getMe_id());
 		}
-				
+		
 		model.addAttribute("lecture", lecture);
 		model.addAttribute("writer", writer);
 		model.addAttribute("istrue", istrue);
@@ -140,4 +155,18 @@ public class LectureController {
 		model.addAttribute("title", "강의 상세");
 		return "/lecture/detail";
 	}
+	
+	public LectureController() {
+        this.iamportClient = new IamportClient(restApiKey, restApiSecret);
+    }
+
+    @ResponseBody
+    @RequestMapping("/verify/{imp_uid}")
+    public IamportResponse<Payment> paymentByImpUid(@PathVariable("imp_uid") String imp_uid)
+            throws IamportResponseException, IOException {
+    	IamportResponse<Payment> payment = iamportClient.paymentByImpUid(imp_uid);
+    	System.out.println(payment);
+        return payment;
+    }
+	
 }

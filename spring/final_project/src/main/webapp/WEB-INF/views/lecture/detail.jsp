@@ -7,6 +7,32 @@
 	<link rel="stylesheet" href="<c:url value="/resources/css/lecture.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/report.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/report.css"/>">
+	<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script>
+        var IMP = window.IMP; 
+        IMP.init("imp07347810");
+        
+        function requestPay() {
+            IMP.request_pay({
+                pg: "html5_inicis",
+                pay_method: "card",
+                merchant_uid: "ORD20180131-0000011",   // 주문번호
+                name: "노르웨이 회전 의자",
+                amount: 100,                         // 숫자 타입
+                buyer_email: "gildong@gmail.com",
+                buyer_name: "홍길동",
+                buyer_tel: "010-4242-4242",
+                buyer_addr: "서울특별시 강남구 신사동",
+                buyer_postcode: "01181"
+            }, function (response) { // callback
+            	if ( response.success ) { //결제 성공
+            		console.log(response);
+            	} else {
+            		alert('결제실패 : ' + response.error_msg);
+            	}
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -76,7 +102,7 @@
 	</c:choose>
 	<del class="cd-price__reg-price"><!-- 원 가격 --></del>
 </div>
-<a class="btn btn-success col-12" href="<c:url value="#"/>">신청하기</a>
+<button class="btn btn-success col-12" onclick="requestPay()">신청하기</button>
 <div class="second-container">
 	<h4>강의 소개</h4>
 	<hr>

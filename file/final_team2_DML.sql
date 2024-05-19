@@ -172,9 +172,9 @@ SELECT * FROM final_team2.mentoring;
 
 
 INSERT INTO mentoring_apply(mentAp_ment_num, mentAp_me_id, mentAp_content, mentAp_contact, mentAp_state) VALUES
-(1, "admin", 			"admin test", 													010-1111-1111	,0),
-(2, "qwert@final.com", 	"자소서 첨삭 부탁드립니다. 썼던 자소서를 첨부하라고 하셔서 첨부합니다: www.xxx.xxx.com",'qwert@final.com' ,1),
-(3, "qwert@final.com", 	"면접 꿀팁 많이 주셨으면 좋겠습니다.", 										010-0000-1111	,-1);
+(1, "admin","admin test", "010-1111-1111", 0),
+(2, "qwert@final.com", "자소서 첨삭 부탁드립니다. 썼던 자소서를 첨부하라고 하셔서 첨부합니다: www.xxx.xxx.com",'qwert@final.com' ,1),
+(3, "qwert@final.com", "면접 꿀팁 많이 주셨으면 좋겠습니다.", "010-0000-1111", -1);
 
 SELECT * FROM final_team2.mentoring_apply;
 
