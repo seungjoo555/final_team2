@@ -85,3 +85,4 @@ cached-antora-playbook.yml
 target/
 test/resources/
 log4j.xml
+spring/final_project/src/main/resources/application.properties
