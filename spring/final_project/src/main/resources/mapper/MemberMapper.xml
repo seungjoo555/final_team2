@@ -10,7 +10,7 @@
 
 	<insert id="insertMember">
 		INSERT INTO member(me_id, me_ms_state, me_ma_auth, me_pw, me_nickname, me_name, me_phone, me_address, me_type)
-			VALUE(#{member.me_id}, "이용중", "일반", #{member.me_pw}, #{member.me_nickname}, #{member.me_name}, #{member.me_phone}, #{member.me_address}, "일반")
+			VALUE(#{member.me_id}, "이용중", "일반", #{member.me_pw}, #{member.me_nickname}, #{member.me_name}, #{member.me_phone}, #{member.me_address}, "1")
 	</insert>	
 	
 	<insert id="insertMemberSns">
