@@ -636,3 +636,18 @@ ALTER TABLE `recommend` ADD CONSTRAINT `FK_member_TO_recommend_1` FOREIGN KEY (
 REFERENCES `member` (
 	`me_id`
 );
+alter table `member`
+add column `me_cookie` varchar(255) null,
+add column `me_cookie_limit` datetime null;
+use `final_team`;
+
+alter table member
+add column `me_postcode` int not null default 0,
+change column `me_phone` `me_phone` varchar(20) not null,
+change column `me_address` `me_address` varchar(100) not null,
+CHANGE COLUMN `me_type` `me_type` VARCHAR(10) NOT NULL DEFAULT '일반';
+
+/*멘토정보 테이블에 계좌번호 속성(mentif_account) 없으면 등록*/
+ALTER TABLE `MENTOR_INFO`
+ADD `mentIf_account` varchar(30);
+

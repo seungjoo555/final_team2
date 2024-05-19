@@ -1,7 +1,65 @@
 @charset "UTF-8";
 /* 메뉴 창 전체 영역 */
-.menu-bar{display: flex; justify-content: center; fiex-direction:column;  align-items: center; margin: 30px 0px;}
+.menu-bar{display: block;  fiex-direction:column; 
+ align-items: center; margin: 20px 0px;}
 #searchForm{width: 100%; }
+
+/* 멘토/멘토링 신청 버튼 영역 */
+.mentor-insert{
+	width: 100%; display: flex; justify-content: flex-end; margin-bottom: 20px;
+}
+
+.btn-mentor-insert{
+	display:flex;align-content:center;
+	border: 2px solid #8fa78f;
+	width:120px; height:35px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 4px;
+	color: #8fa78f;
+    font-weight: bold;
+}
+
+.btn-mentor-insert:hover {
+    background-color: #8fa78f;
+    border:none;
+    text-decoration: none;
+}
+
+.btn-mentor-insert:active {
+    background-color: #8fa78f;
+    border:none;text-decoration: none;
+}
+.btn-mentor-mentoring-insert{
+	display:flex;align-content:center;
+	border: 2px solid #8fa78f;
+	width:120px; height:35px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin: 4px 2px;
+	cursor: pointer;
+	border-radius: 4px;
+	color: #8fa78f;
+    font-weight: bold;
+}
+
+.btn-mentor-mentoring-insert:hover {
+    background-color: #8fa78f;
+    border:none;
+    text-decoration: none;
+}
+
+.btn-mentor-mentoring-insert:active {
+    background-color: #8fa78f;
+    border:none;text-decoration: none;
+}
+
 	/* 검색 창 */
 #input-group{width:50%; margin: 0 auto;}
 #mento-totalsearch{ 
@@ -54,3 +112,18 @@
 /* 멘토 정보 */
 .mento-list-item-memberInfo > div{display: inline-block; }
 .mentoSituation{display:flex; float: right;}
+
+
+/* 버튼 */
+.btn-apply{
+	background-color: white; border: 1px solid #808080; 
+	border-radius: 5px; padding: 2px 5px; 
+}
+.btn-apply-prev{
+	background-color: white; border: 1px solid #808080; 
+	border-radius: 5px; padding: 2px 5px; margin-right: 10px;
+}
+.btn-apply-insert{
+	background-color: white; border: 1px solid #808080; 
+	border-radius: 5px; padding: 2px 5px; 
+}

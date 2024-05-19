@@ -21,10 +21,10 @@
 	<div class="menu-bar">
 		<div class="mentor mentor-insert">
 			<c:if test="${user.me_ma_auth != '멘토'}">
-				<a class="btn-outline-success mentor-insert" href="<c:url value="/mentor/apply"/>">멘토 신청하기</a>
+				<a class="btn-outline-success btn-mentor-insert" href="<c:url value="/mentor/apply"/>">멘토 신청하기</a>
 			</c:if>
 			<c:if test="${user.me_ma_auth == '멘토'}">
-				<a class="btn-outline-success mentor-mentoring-insert" href="<c:url value="/mentor/mentoring/insert"/>">멘토링 열기</a>
+				<a class="btn-outline-success btn-mentor-mentoring-insert" href="<c:url value="/mentor/mentoring/insert"/>">멘토링 열기</a>
 			</c:if>
 		</div>
 		<form action="<c:url value='/mentor/list'/>" method="get" id="searchForm" onsubmit="return false;">
@@ -660,7 +660,7 @@ $(document).on('click', '.btn-apply-insert', function(){
 		dataType : "json", 
 		success : function (data){
 			if(data.result){
-				alert("멘토링을 신청했습니다.");
+				alert("멘토링을 신청했습니다.\n선정된 멘티는 개별적으로 연락됩니다.");
 				$("#modal").css('display','none');
 			   $("body").css('overflow','visible');
 				let cri = {

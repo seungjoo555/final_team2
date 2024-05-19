@@ -16,7 +16,7 @@
  				group_member on gome_go_num = recu_go_num
 			join
 				`member` on gome_me_id = me_id
-			where  gome_type = 1
+			where  gome_type = 1 and recu_topic like concat('%', #{cri.search}, '%')
 				<choose>
 					<when test='cri.type == "study"'>
 						and recu_type = 0

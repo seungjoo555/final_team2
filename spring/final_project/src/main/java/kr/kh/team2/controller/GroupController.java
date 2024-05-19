@@ -631,7 +631,6 @@ public class GroupController {
 
 	@GetMapping("/group/list")
 	public String groupList(Model model) {
-
 		return "/group/list";
 	}
 	

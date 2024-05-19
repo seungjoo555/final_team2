@@ -16,14 +16,14 @@
 	
 	<div class="box-search-form">
 		<form action="<c:url value="/admin/managemember"/>" method="get" class="search-form">
-			<select name="type" class="form-control" name="type">
+			<select name="type" class="form-control-select" name="type">
 				<option value="all" <c:if test="${pm.cri.type == 'all'}">selected</c:if>>아이디</option>
 				<option value="auth" <c:if test="${pm.cri.type == 'auth'}">selected</c:if>>등급</option>
 				<option value="state" <c:if test="${pm.cri.type == 'state'}">selected</c:if>>상태</option>
 			</select>
 			<div class="box-search-input">
-				<input type="text" name="search" class="form-control" placeholder="검색어" value="${pm.cri.search}">
-				<button>
+				<input type="text" name="search" class="form-control-input" placeholder="검색어" value="${pm.cri.search}">
+				<button class="">
 					<img alt="검색" src="/team2/resources/img/search_icon.svg">
 				</button>
 			</div>
@@ -150,7 +150,6 @@
    <div id="modal" class="modal admin-member-process-modal" style="display:none;">
       <div id="dimmed" class="dimmed admin-member-process-dimmed"></div>
       <div class="admin-member-process-container">
-      
       	<div class="admin-report-process-box">
 	  	<div> <h1>멤버 정보 변경</h1> </div>
 	  	<input type="hidden" id="td-list" value="\${tdList}">
