@@ -11,7 +11,7 @@
 	<h3 class="apply-title">멘토링 지원서</h3>
 	<div class="sub-box">
 		<h5 class="sub-title">1. 지원서를 확인해 주세요.</h5>
-		<a href="<c:url value="/mentor/detail?num=${mentoring.ment_num}"/>" class="mentoring-detail">공고 보기</a>
+		<a href="<c:url value="/mentoring/detail?num=${mentoring.ment_num}"/>" class="mentoring-detail">공고 보기</a>
 	</div>
 	<hr>
 	<input type="hidden" name="num" value="${mentoring.ment_num}">
