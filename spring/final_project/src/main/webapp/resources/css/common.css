@@ -70,8 +70,9 @@ header .navbar>.container-fluid {
 }
 
 
-header .navbar-left{ width: 400px; display: flex; justify-content: space-around; margin:0;}
+header .navbar-left{ width: 850px; display: flex; justify-content: flex-start; margin:0;}
 header .navbar-left a{ font-size: 16px; color: #000000; padding: 0;}
+header .navbar-left li{margin-right: 20px;}
 
 header .navbar-right{ width: 150px; display: flex; justify-content: space-around; margin:0;}
 header .navbar-right a{ font-size: 14px; color: #000000; padding: 0; }
