@@ -5,8 +5,8 @@
 	<div class="p-4 text-center">
 		<div class="text-center">
 			<h1>
-				<a class="navbar-brand" href="<c:url value="/"/>"> <img
-					alt="LOGO" src="<c:url value="/resources/img/smo.png"/>">
+				<a class="navbar-brand" href="<c:url value="/"/>"> 
+					<img alt="LOGO" src="<c:url value="/resources/img/StudyMOim.png"/>" class="footer-logo">
 				</a>
 			</h1>
 			<p>
