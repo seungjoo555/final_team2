@@ -80,6 +80,7 @@
 		</div>
 		<button class="submit">가입하기</button>
 	</form>
+	<!--
 	<div class="simple-login">
 		<h5 class="sub">간편 회원가입</h5>
 		<div class="simple-login-btn-group">
@@ -87,6 +88,7 @@
 			<a href="#">2</a>
 		</div>
 	</div>
+	-->
 </div>
 
 <!-- 입력값 유효성 검사 -->
