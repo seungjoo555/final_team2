@@ -56,8 +56,8 @@
 				
 				</ul>
 			</div>
-			<!-- onsubmit="return false" -->
-			<form class="d-flex" action="<c:url value='/group/list'/>" method="get" >
+			<!--  onsubmit="return false" -->
+			<form class="d-flex" action="<c:url value='/group/list'/>" method="get">
 					<input type="hidden" name="page" value="1">
 					<input type="hidden" name="type" value="all">
 				<input class="form-control" type="text" placeholder="검색어를 입력하세요"
@@ -102,6 +102,13 @@
 
 <script type="text/javascript">
 $(document).on('click', '#totalsearch-btn', function(){
+	let cri = {
+			page : 1,
+			type : "all",
+		 	search : $("#totalsearch").val()
+	}
+	
+	
 })
 
 
