@@ -140,3 +140,10 @@ h1{font-size: 18px; margin: 10px 0;}
 	padding: 0 10px;
 }
 .btn-apply-box{display: flex; justify-content: flex-end; margin-left: auto;}
+
+/* 페이지네이션 */
+.page-item.active .page-link{
+	background-color: #8fa78f;
+    border-color: #8fa78f;
+	
+}

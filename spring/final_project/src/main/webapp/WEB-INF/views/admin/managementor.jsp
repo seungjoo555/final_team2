@@ -9,7 +9,16 @@
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <style type="text/css">
-	
+	/* 페이지네이션 */
+	.page-item.active .page-link{
+		background-color: #8fa78f;
+	    border-color: #8fa78f;
+		
+	}
+	.page-link {
+	  color: #8fa78f;
+	  }
+	  
 	.manage-mentor-container{
 		background-color : #F9F9F9;
 		box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
