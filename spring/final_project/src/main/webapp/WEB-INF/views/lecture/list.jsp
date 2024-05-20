@@ -16,14 +16,12 @@
 </style>
 
 <h1>강의 리스트</h1>
-<c:if test="${user.me_ma_auth == '멘토'}">
-	<a class="btn-outline-success lecture-insert-btn" href="<c:url value="/lecture/insert"/>">강의 등록</a>
-</c:if>
+
 <form action="<c:url value="/lecture/list"/>" method="get">
 	<div class="input-group mb-3">
 		<input type="hidden" name="type" value="all">
 		<input type="text" name="search" class="form-control" placeholder="전체검색창" value="${pm.cri.search}">
-		<button class="btn btn-outline-success">검색</button>
+		<button class="btn btn-outline-success search-btn">검색</button>
 	</div>
 </form>
 
@@ -98,5 +96,5 @@
 </ul>
 
 <c:if test="${user.me_ma_auth == '멘토'}">
-	<a class="btn btn-outline-success" href="<c:url value="/lecture/insert"/>">강의 등록하기</a>
+	<a class="btn btn-outline-success lecture-insert-btn" href="<c:url value="/lecture/insert"/>">강의 등록하기</a>
 </c:if>
