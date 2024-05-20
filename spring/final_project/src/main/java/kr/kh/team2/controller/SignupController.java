@@ -37,7 +37,6 @@ public class SignupController {
 	public Map<String, Object> idCheckDup(@RequestParam("id") String id){
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-//		System.out.println("id="+id);
 		boolean res = memberService.idCheck(id);
 		
 		map.put("result", res);
@@ -57,7 +56,6 @@ public class SignupController {
 	
 	@PostMapping("/signup")
 	public String signupPost(Model model, SignupDTO signupDto, HttpSession session){
-//		System.out.println("signupDto: "+signupDto);
 		MemberVO user = memberService.signUp(signupDto);
 		if(user!=null) {
 			session.setAttribute("user", user);

@@ -69,7 +69,6 @@ public class RecommendController {
 	public Map<String, Object> MentoringRecommend(HttpSession session, @RequestParam(name = "ment_num")Integer ment_num) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
-		System.out.println("get 요청 수신중");
 		// 로그인 여부 확인
 	    MemberVO user = (MemberVO) session.getAttribute("user");
 	    
@@ -169,9 +168,6 @@ public class RecommendController {
 		
 		// 공고 번호 가져오기
 		Integer ment_num = requestBody.get("ment_num");
-		System.out.println("========================");
-		System.out.println(ment_num);
-		System.out.println("========================");
 		
 		// 추천 정보 생성
 	    RecommendVO recommendVo = new RecommendVO();

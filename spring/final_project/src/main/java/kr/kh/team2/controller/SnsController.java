@@ -25,7 +25,6 @@ public class SnsController {
 	@ResponseBody
 	@PostMapping("/sns/{sns}/check/id")
 	public int snsCheckId(@PathVariable("sns")String sns, @RequestParam("email")String email) {
-		System.out.println(email);
 		
 		int res = memberService.idCheckSns(email,sns);
 		
@@ -39,8 +38,6 @@ public class SnsController {
 		
 		
 	}
-	
-
 	
 	@ResponseBody
 	@PostMapping("/sns/{sns}/signup")

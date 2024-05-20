@@ -180,17 +180,10 @@ public class MentorServiceImp implements MentorService {
 			return false;
 		}
 		
-		
 		if(!mentorDAO.updateMentoring(mentoring)) {
 			return false;
 		}
-		
-		//toCt.setToCt_table_pk(mentoring.getMent_num()+"");
-		/*
-		if(!mentorDAO.insertTotalCategory(toCt)) {
-			return false;
-		}
-		*/
+
 		return true;
 	}
 
@@ -312,7 +305,6 @@ public class MentorServiceImp implements MentorService {
 			recruitCount.setReco_table("mentoring");
 			recruitCount.setReco_target(Integer.toString(i.getMent_num()));
 			recruitCount.setRecu_due(mentorDAO.selectDue(recruitCount.getReco_target()));
-			System.out.println(recruitCount);
 			list.add(recruitCount);
 		}
 		
@@ -332,7 +324,6 @@ public class MentorServiceImp implements MentorService {
 		//추천순으로 멘토링 가져오기
 		ArrayList<MetoringVO> hotList = new ArrayList<MetoringVO>();
 		
-		System.out.println("list :: "+list);
 		if(list.size() > 4) {
 			for(int i=0; i<4; i++) {
 				hotList.add(mentorDAO.selectMentoringIF(Integer.parseInt(list.get(i).getReco_target())));
@@ -343,13 +334,7 @@ public class MentorServiceImp implements MentorService {
 			}
 		}
 		
-		System.out.println("hotList :: "+hotList);
-		
 		return hotList;
 	}
-
-
-
-
 
 }

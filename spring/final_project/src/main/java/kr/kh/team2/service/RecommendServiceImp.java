@@ -36,12 +36,6 @@ public class RecommendServiceImp implements RecommendService {
 			return false;
 		}
 		
-//		서버에서 좋아요 상태를 확인하여 반환하도록 수정
-//		RecommendVO existingRecommend = recommendDao.selectRecuRecommend(recommendVo);
-//	    if (existingRecommend != null) {
-//	        recommendVo.setReco_state(existingRecommend.getReco_state());
-//	    }
-	    
 		return recommendDao.insertRecuRecommend(recommendVo);
 	}
 

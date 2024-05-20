@@ -90,8 +90,6 @@ public class MentorController {
 
 		//멘토링 신청 정보 받아오기
 		MentoringApplyVO mentoringAp = mentorService.getMentoringApply(ment_num, user);
-		System.out.println(mentoringAp);
-
 		
 		// 좋아요수 
 		Integer mentNum = ment_num;
@@ -214,9 +212,7 @@ public class MentorController {
 
 		//멘토링 신청 정보 받아오기
 		MentoringApplyVO mentoringAp = mentorService.getMentoringApply(num, user);
-		System.out.println(mentoringAp);
 
-		
 		// 좋아요수 
 		Integer mentNum = num;
 		RecommendVO reco_ment_count = recommendService.getRecoMentoringCount(mentNum);
@@ -435,7 +431,6 @@ public class MentorController {
 	public String mentoringUpdatetPost(Model model, HttpSession session, MetoringVO mentoring, TotalCategoryVO toCt) {
 		
 		toCt.setToCt_table_name("mentoring");
-		System.out.println(mentoring);
 		boolean res = mentorService.updateMentoring(mentoring,toCt);
 		
 		if(res) {

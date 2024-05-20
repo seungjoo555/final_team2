@@ -50,9 +50,6 @@ public class RecruitServiceImp implements RecruitService {
 			return false;
 		}
 		
-		System.out.println(makeGroup);
-		System.out.println(group.getGo_num());
-		
 		int go_num = group.getGo_num();
 		
 		boolean makeGroupMember = recruitDao.insertGroupMember(user.getMe_id(), go_num);

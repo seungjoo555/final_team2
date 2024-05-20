@@ -653,7 +653,6 @@ public class GroupController {
 		//사용언어
 		ArrayList<TotalLanguageVO> totalLanguage = new ArrayList<TotalLanguageVO>();
 
-		System.out.println("totalCategory : " + totalCategory);
 		for(RecruitVO group : groupList) {
 			//그룹 번호
 			int recu_num = group.getRecu_num();

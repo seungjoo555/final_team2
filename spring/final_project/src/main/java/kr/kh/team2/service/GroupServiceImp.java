@@ -47,7 +47,6 @@ public class GroupServiceImp implements GroupService{
 		if(cri == null) {
 			cri = new Criteria(1, 20);
 		}
-		System.out.println("게시글 토탈 카운트"+groupDao.selectGroupTotalCount(cri));
 		return groupDao.selectGroupTotalCount(cri);
 	}
 
@@ -859,7 +858,6 @@ public class GroupServiceImp implements GroupService{
 			recruitCount.setReco_table("recruit");
 			recruitCount.setReco_target(Integer.toString(i.getRecu_num()));
 			recruitCount.setRecu_due(groupDao.selectDue(recruitCount.getReco_target()));
-			System.out.println(recruitCount);
 			list.add(recruitCount);
 		}
 		
