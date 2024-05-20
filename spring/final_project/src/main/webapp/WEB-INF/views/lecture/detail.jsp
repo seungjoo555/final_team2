@@ -13,23 +13,62 @@
         IMP.init("imp07347810");
         
         function requestPay() {
+        	if(${user == null}){
+        		if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?") == true){
+        			location.href = '<c:url value="/login"/>';
+        			return;
+        		}else{
+        			return false;
+        		}
+        	}
             IMP.request_pay({
-                pg: "html5_inicis",
+                pg: "kakaopay",
                 pay_method: "card",
-                merchant_uid: "ORD20180131-0000011",   // 주문번호
-                name: "노르웨이 회전 의자",
-                amount: 100,                         // 숫자 타입
-                buyer_email: "gildong@gmail.com",
-                buyer_name: "홍길동",
-                buyer_tel: "010-4242-4242",
-                buyer_addr: "서울특별시 강남구 신사동",
-                buyer_postcode: "01181"
+                merchant_uid: "${user.me_id}"+"test00000002",   // 주문번호
+                name: "${lecture.lect_name}",
+                amount: ${lecture.lect_price},                         // 숫자 타입
+                buyer_email: "${user.me_id}",
+                buyer_name: "${user.me_name}",
+                buyer_tel: "${user.me_phone}"
             }, function (response) { // callback
-            	if ( response.success ) { //결제 성공
-            		console.log(response);
-            	} else {
-            		alert('결제실패 : ' + response.error_msg);
+            	if(response.imp_uid == null){
+            		alert("이미 결제한 강의입니다.");
+            		return;
             	}
+            	let ornum = {
+            		imp_uid : response.imp_uid
+            	}
+            	$.ajax({
+                    type : "POST",
+                    url : '<c:url value="/verify"/>',
+                    data: ornum
+                }).done(function(data) {
+                    if(response.paid_amount == data.response.amount){
+                        //결제 성공 시 비즈니스 로직
+                    	$.ajax({
+            				type: "post",
+            				url: '<c:url value="/lecture/register"/>',
+            				data: {
+            					lectRg_lect_num : ${lecture.lect_num},
+            					lectRg_me_id : data.response.buyerEmail,
+            					lectRg_money : data.response.amount,
+            					lectRg_state : 1,
+            				},
+            				success : function (data){
+            					if(data.result){
+            						location.href='<c:url value=""/>';
+            					}else{
+            						alert('데이터베이스에 안들어감');
+            					}
+            				}, 
+            				error : function(jqXHR, textStatus, errorThrown){
+            					console.log(textStatus);
+            				}
+            			});
+                    } else {
+                        alert("결제 실패");
+                    }
+                });
             });
         }
     </script>

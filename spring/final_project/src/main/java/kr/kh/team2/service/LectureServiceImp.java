@@ -19,6 +19,7 @@ import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.lecture.LectureFileVO;
+import kr.kh.team2.model.vo.lecture.LectureRegisterVO;
 import kr.kh.team2.model.vo.group.RecruitVO;
 import kr.kh.team2.model.vo.lecture.LectureVO;
 import kr.kh.team2.model.vo.member.MemberVO;
@@ -250,6 +251,14 @@ public class LectureServiceImp implements LectureService{
 	@Override
 	public ArrayList<LectureFileVO> getFileList(int lectNum) {
 		return lectureDao.selectFileList(lectNum);
+	}
+
+	@Override
+	public boolean insertLectureRegister(LectureRegisterVO lectureRgVo) {
+		if(lectureRgVo == null) {
+			return false;
+		}
+		return lectureDao.insertLectureRegister(lectureRgVo);
 	}
 
 }
