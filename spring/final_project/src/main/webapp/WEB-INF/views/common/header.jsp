@@ -62,9 +62,8 @@
 						<div class="dropdown">
 							<a class="nav-link dropbtn">마이페이지</a>
 							<div class="dropdown-content">
-								<a href="<c:url value="/mypage/profile?me_id=${user.me_id}"/>">내정보</a>
+								<a href="<c:url value="/mypage/profile?me_id=${user.me_id}"/>">내 정보</a>
 								<a href="<c:url value="/mypage/mygroup?me_id=${user.me_id}"/>">그룹/프로젝트</a>
-								<a href="#">내 정보</a>
 								<a href="<c:url value="/mygroup/list"/>">나의 그룹</a>
 								<c:if test="${user.me_ma_auth.equals('관리자') == true}">
 									<a href="<c:url value="/admin/managemember"/>">멤버 관리</a>

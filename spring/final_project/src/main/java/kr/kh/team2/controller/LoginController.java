@@ -139,16 +139,16 @@ public class LoginController {
 		
 		MemberVO dbMember  = memberService.findPw(me_id,me_phone);
 		
-		String dbType = dbMember.getMe_type();
 		
+
 		
-		if(dbMember !=null && dbType.equals("일반")) {
+		if(dbMember !=null && dbMember.getMe_type().equals("일반")) {
 			model.addAttribute("dbMember",dbMember);
 			model.addAttribute("event","true");
 			return "/login/authentication";
 		}
-		if(dbMember != null && !dbType.equals("일반")) {
-			model.addAttribute("msg","회원님은 " + dbType + " 소셜 로그인 회원입니다. 해당 소셜로그인 페이지를 이용해주세요.");
+		if(dbMember != null && !dbMember.getMe_type().equals("일반")) {
+			model.addAttribute("msg","회원님은 " + dbMember.getMe_type() + " 소셜 로그인 회원입니다. 해당 소셜로그인 페이지를 이용해주세요.");
 			model.addAttribute("url","/login");
 			return "message";
 		}
