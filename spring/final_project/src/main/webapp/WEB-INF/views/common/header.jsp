@@ -9,6 +9,7 @@
 }
 </style>
 
+
 <header>
 	<nav class="navbar navbar-expand-sm navbar-light">
 		<div class="container-fluid">
@@ -61,7 +62,7 @@
 					<input type="hidden" name="type" value="all">
 				<input class="form-control" type="text" placeholder="검색어를 입력하세요"
 					name="search" id="totalsearch" value="${pm.cri.search}"> 
-				<button type="submit" class="btn btn-outline-dark" id="totalsearch-btn">
+				<button type="button" class="btn btn-outline-dark" id="totalsearch-btn">
 					<img alt="검색" src="<c:url value="/resources/img/search_icon.svg"/>">
 				</button>
 			</form>
@@ -99,5 +100,11 @@
 	</nav>
 </header>
 
+<script type="text/javascript">
+$(document).on('click', '#totalsearch-btn', function(){
+})
+
+
+</script>
 
 
