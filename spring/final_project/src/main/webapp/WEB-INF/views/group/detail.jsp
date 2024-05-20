@@ -172,6 +172,18 @@ $(document).on('click', '.report-btn', function(){
 		}
 	}
 	
+	if(${user.me_verify ==0}){
+		alert("이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/signup/verify"/>';
+		return false;
+	}
+	
+	if(${user.me_temppw==1}){
+		alert("임시 비밀번호를 변경하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/login/changepwtemp"/>';
+		return false;
+	}
+	
 	//만약 신고내역이 이미 있다면
 	if($(".report-isture").val() =='false'){
 		alert("이미 신고한 게시글입니다.");
@@ -245,6 +257,18 @@ $(document).on('click', '#dimmed-report', function(){
 			}else{
 				return false;
 			}
+		}
+		
+		if(${user.me_verify ==0}){
+			alert("이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.");
+			location.href = '<c:url value="/signup/verify"/>';
+			return false;
+		}
+		
+		if(${user.me_temppw==1}){
+			alert("임시 비밀번호를 변경하셔야 사이트 이용이 정상적으로 가능합니다.");
+			location.href = '<c:url value="/login/changepwtemp"/>';
+			return false;
 		}
 		
 		let recu_num = $(".reco_recu_num").val();
