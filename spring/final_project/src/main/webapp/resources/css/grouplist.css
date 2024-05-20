@@ -22,6 +22,15 @@
 	color: #8fa78f;
     font-weight: bold;
 }
+.page-item.active .page-link{
+	background-color: #8fa78f;
+    border-color: #8fa78f;
+	
+}
+.page-link {
+  color: #8fa78f;
+  }
+  
 
 .group-insert-btn:hover {
     background-color: #8fa78f;

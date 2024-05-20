@@ -27,6 +27,11 @@ body{width:100%; overflow : visible;
 
 /* 페이지 네이션 */
 .box-pagination{z-index:-1;}
+.page-item.active .page-link{
+	background-color: #8fa78f;
+    border-color: #8fa78f;
+	
+}
 
 /*테이블*/
 th{text-align: center;}

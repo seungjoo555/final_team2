@@ -127,3 +127,14 @@
 	background-color: white; border: 1px solid #808080; 
 	border-radius: 5px; padding: 2px 5px; 
 }
+
+/* 페이지네이션 */
+.page-item.active .page-link{
+	background-color: #8fa78f;
+    border-color: #8fa78f;
+	
+}
+.page-link {
+  color: #8fa78f;
+  }
+	  

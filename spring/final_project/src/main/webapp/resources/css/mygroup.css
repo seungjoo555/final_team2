@@ -6,6 +6,7 @@
 		margin: 50px 0;
 	}
 	
+	
 	.float-right{float: right;}
 	.float-left{float: left;}
 
@@ -304,5 +305,14 @@
 	.apply-manage-btn-group .member-ban-btn{background-color: red; margin:auto 10px auto 0;}
 	
 		
-		
+		/* 페이지네이션 */
+	.page-item.active .page-link{
+		background-color: #8fa78f;
+	    border-color: #8fa78f;
+	}
+	
+	.page-link {
+	  color: #8fa78f;
+	  }
+	  
 		
