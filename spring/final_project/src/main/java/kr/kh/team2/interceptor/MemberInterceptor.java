@@ -44,7 +44,7 @@ public class MemberInterceptor extends HandlerInterceptorAdapter {
 				response.setHeader("Temp_User", "true");
 			}else {
 				response.setContentType("text/html;charset=UTF-8");
-		        response.getWriter().write("<script>alert('임시 비밀번호를 변경하셔야 사이트 이용이 가능합니다.');location.href='" + request.getContextPath() + "/login/changepwtemp';</script>");
+		        response.getWriter().write("<script>alert('임시 비밀번호를 변경하셔야 사이트 이용이 정상적으로 가능합니다.');location.href='" + request.getContextPath() + "/login/changepwtemp';</script>");
 		        return false;
 			}
 		}
@@ -58,6 +58,8 @@ public class MemberInterceptor extends HandlerInterceptorAdapter {
 		        return false;
 			}
 		}
+		
+
 		
 		return true;
 	}
