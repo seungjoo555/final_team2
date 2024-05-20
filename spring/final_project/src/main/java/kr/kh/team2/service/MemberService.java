@@ -27,7 +27,7 @@ public interface MemberService {
 
 	boolean updateProfile(String me_id, MemberVO memberVo);
 
-	String findId(String me_name, String me_phone);
+	MemberVO findId(String me_name, String me_phone);
 
 	void updateMemberCookie(MemberVO user);
 
@@ -66,5 +66,8 @@ public interface MemberService {
 	int idCheckSns(String email,String sns);
 
 	boolean updateMemberDetail(String me_id, SignupDetailDTO signupDetailDto);
+
+	void updateMemberFailCount(MemberVO user);
+
 
 }
