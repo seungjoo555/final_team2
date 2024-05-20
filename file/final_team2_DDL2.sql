@@ -89,7 +89,7 @@ CREATE TABLE `recruit` (
 	`recu_due`	datetime	NOT NULL,
 	`recu_state`	int default 1	NOT NULL,
 	`recu_type`	int	NOT NULL,
-	`recu_topic`	varchar(20)	NOT NULL,
+	`recu_topic`	long NOT NULL,
 	`recu_target`	varchar(20)	NOT NULL,
 	`recu_count`	int default 0	NOT NULL,
 	`recu_required`	text not null	NOT NULL,
@@ -639,7 +639,6 @@ REFERENCES `member` (
 alter table `member`
 add column `me_cookie` varchar(255) null,
 add column `me_cookie_limit` datetime null;
-use `final_team`;
 
 alter table member
 add column `me_postcode` int not null default 0,
