@@ -24,7 +24,7 @@ public interface MemberDAO {
 
 	boolean updateProfile(@Param("me_id")String me_id, @Param("member")MemberVO member);
 
-	String idFind(@Param("me_name")String me_name, @Param("me_phone")String me_phone);
+	MemberVO idFind(@Param("me_name")String me_name, @Param("me_phone")String me_phone);
 
 	void updateMemberCookie(@Param("user")MemberVO user);
 
@@ -63,5 +63,7 @@ public interface MemberDAO {
 	MemberVO selectMemberSns(@Param("sns")String sns, @Param("id")String id);
 
 	boolean updateMemberDetail(@Param("id")String me_id, @Param("dto")SignupDetailDTO signupDetailDto);
+
+	void updateMemberFailCount(@Param("user")MemberVO user);
   
 }

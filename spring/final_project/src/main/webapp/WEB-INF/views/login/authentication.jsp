@@ -93,6 +93,11 @@
 </style>
 </head>
 <body>
+<c:if test="${not empty script}">
+        <script type="text/javascript">
+            ${script}
+        </script>
+</c:if>
 <div class="authentication-container">
 	<div class="form-wrap">
 		<div class="h-wrap">
