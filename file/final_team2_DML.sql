@@ -558,3 +558,6 @@ ADD CONSTRAINT `FK_recruit_TO_group_apply_1`
   REFERENCES `final_team2`.`recruit` (`recu_num`)
   ON DELETE CASCADE;
 
+
+ALTER TABLE `final_team2`.`mentor_info` 
+ADD COLUMN `mentIf_bank` VARCHAR(10) NOT NULL;
