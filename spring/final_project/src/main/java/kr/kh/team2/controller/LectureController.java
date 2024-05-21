@@ -2,15 +2,15 @@ package kr.kh.team2.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +28,7 @@ import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.lecture.LectureFileVO;
+import kr.kh.team2.model.vo.lecture.LectureRegisterVO;
 import kr.kh.team2.model.vo.lecture.LectureVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -131,6 +132,7 @@ public class LectureController {
 		MemberVO writer = lectureService.getLecture_Mento(lecture.getLect_mentIf_me_id());
 		//모집 공고에 등록된 분야, 언어 가져옴
 		String table = "lecture";
+		
 		ArrayList<TotalCategoryVO> totalCategory = lectureService.getCategory(lectNum, table);
 		ArrayList<TotalLanguageVO> totalLanguage = lectureService.getLanguage(lectNum, table);
 		//첨부된 강의파일 가져오기
@@ -145,6 +147,10 @@ public class LectureController {
 			istrue = reportService.getReportIsTrue(Integer.toString(lectNum), "lecture", user.getMe_id());
 		}
 		
+		//유저의 강의 결제 여부
+		LectureRegisterVO lectRg = lectureService.getLecturePayment(lectNum, user);
+		
+		model.addAttribute("payment", lectRg);
 		model.addAttribute("lecture", lecture);
 		model.addAttribute("writer", writer);
 		model.addAttribute("istrue", istrue);
@@ -156,13 +162,34 @@ public class LectureController {
 		return "/lecture/detail";
 	}
 	
+	//강의 결제 완료후 데이터베이스에 넣기
+	@ResponseBody
+	@PostMapping("/lecture/detail")
+	public Map<String, Object> lectureRegisterPost(LectureRegisterVO lectureRgVo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		boolean res = lectureService.insertLectureRegister(lectureRgVo);
+		
+		map.put("result", res);
+		return map;
+	}
+	
+	
+	
+	
+	@GetMapping("/lecture/register")
+	public String lecturePayment(Model model) {
+		model.addAttribute("title", "강의 구매 완료");
+		return "/lecture/register";
+	}
+	
+	
 	public LectureController() {
         this.iamportClient = new IamportClient(restApiKey, restApiSecret);
     }
 
     @ResponseBody
-    @RequestMapping("/verify/{imp_uid}")
-    public IamportResponse<Payment> paymentByImpUid(@PathVariable("imp_uid") String imp_uid)
+    @RequestMapping("/verify")
+    public IamportResponse<Payment> paymentByImpUid(String imp_uid)
             throws IamportResponseException, IOException {
     	IamportResponse<Payment> payment = iamportClient.paymentByImpUid(imp_uid);
     	System.out.println(payment);

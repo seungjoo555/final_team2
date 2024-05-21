@@ -10,6 +10,7 @@ import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.lecture.LectureFileVO;
+import kr.kh.team2.model.vo.lecture.LectureRegisterVO;
 import kr.kh.team2.model.vo.lecture.LectureVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -39,5 +40,9 @@ public interface LectureService {
 	ArrayList<LectureFileVO> getFileList(int lectNum);
 
 	ArrayList<LectureVO> getHotLectureList();
+
+	boolean insertLectureRegister(LectureRegisterVO lectureRgVo);
+
+	LectureRegisterVO getLecturePayment(int lectNum, MemberVO user);
 
 }

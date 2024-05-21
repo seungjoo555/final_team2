@@ -13,23 +13,62 @@
         IMP.init("imp07347810");
         
         function requestPay() {
+        	if(${user == null}){
+        		if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?") == true){
+        			location.href = '<c:url value="/login"/>';
+        			return;
+        		}else{
+        			return false;
+        		}
+        	}
             IMP.request_pay({
-                pg: "html5_inicis",
+                pg: "kakaopay",
                 pay_method: "card",
-                merchant_uid: "ORD20180131-0000011",   // 주문번호
-                name: "노르웨이 회전 의자",
-                amount: 100,                         // 숫자 타입
-                buyer_email: "gildong@gmail.com",
-                buyer_name: "홍길동",
-                buyer_tel: "010-4242-4242",
-                buyer_addr: "서울특별시 강남구 신사동",
-                buyer_postcode: "01181"
+                merchant_uid: "${user.me_id}"+"lecture"+"${lecture.lect_num}",   // 주문번호
+                name: "${lecture.lect_name}",
+                amount: ${lecture.lect_price},                         // 숫자 타입
+                buyer_email: "${user.me_id}",
+                buyer_name: "${user.me_name}",
+                buyer_tel: "${user.me_phone}"
             }, function (response) { // callback
-            	if ( response.success ) { //결제 성공
-            		console.log(response);
-            	} else {
-            		alert('결제실패 : ' + response.error_msg);
+            	if(response.imp_uid == null){
+            		alert("이미 구매한 강의입니다.");
+            		return;
             	}
+            	let ornum = {
+            		imp_uid : response.imp_uid
+            	}
+            	$.ajax({
+                    type : "POST",
+                    url : '<c:url value="/verify"/>',
+                    data: ornum
+                }).done(function(data) {
+                    if(response.paid_amount == data.response.amount){
+                        //결제 성공 시 비즈니스 로직
+                    	$.ajax({
+            				type: "post",
+            				url: '<c:url value="/lecture/detail"/>',
+            				data: {
+            					lectRg_lect_num : ${lecture.lect_num},
+            					lectRg_me_id : data.response.buyerEmail,
+            					lectRg_money : data.response.amount,
+            					lectRg_state : 1,
+            				},
+            				success : function (data){
+            					if(data.result){
+            						location.href='<c:url value="/lecture/register"/>';
+            					}else{
+            						alert('데이터베이스에 안들어감');
+            					}
+            				}, 
+            				error : function(jqXHR, textStatus, errorThrown){
+            					console.log(textStatus);
+            				}
+            			});
+                    } else {
+                        alert("결제 실패");
+                    }
+                });
             });
         }
     </script>
@@ -102,7 +141,9 @@
 	</c:choose>
 	<del class="cd-price__reg-price"><!-- 원 가격 --></del>
 </div>
-<button class="btn btn-success col-12" onclick="requestPay()">신청하기</button>
+<c:if test="${lecture.lect_price != 0}">
+	<button class="btn btn-success col-12" onclick="requestPay()">신청하기</button>
+</c:if>
 <div class="second-container">
 	<h4>강의 소개</h4>
 	<hr>
@@ -114,15 +155,26 @@
 </div>
 <div>
 	<c:choose>
-		<c:when test="${fileList.size() != 0}">
-			<label>첨부파일</label>
+		<c:when test="${fileList.size() != 0 && payment.lectRg_state == true}">
+			<h1>강의파일</h1>
 			<c:forEach items="${fileList}" var="file">
 				<a href="<c:url value="/download/${file.lectFi_path}"/>"
 					class="form-control" download="${file.lectFi_ori_name}">${file.lectFi_ori_name}</a>
 			</c:forEach>
 		</c:when>
+		<c:when test="${lecture.lect_price == 0}">
+			<h1>강의파일</h1>
+			<c:forEach items="${fileList}" var="file">
+				<a href="<c:url value="/download/${file.lectFi_path}"/>"
+					class="form-control" download="${file.lectFi_ori_name}">${file.lectFi_ori_name}</a>
+			</c:forEach>
+		</c:when>
+		<c:when test="${fileList.size() == 0}">
+			<h1>강의파일이 아직 없습니다.</h1>
+		</c:when>
 		<c:otherwise>
-			<div>첨부파일 없음</div>
+			<h1>강의 파일</h1>
+			<div>강의파일은 구매후 보입니다.</div>
 		</c:otherwise>
 	</c:choose>
 </div>

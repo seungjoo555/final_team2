@@ -156,4 +156,13 @@
 		delete from lecture_file where lectFi_num = #{fi_num}
 	</delete>
 	
+	<insert id="insertLectureRegister">
+		insert into lecture_register(lectRg_lect_num, lectRg_me_id, lectRg_money, lectRg_state)
+		values(#{lectRg.lectRg_lect_num}, #{lectRg.lectRg_me_id}, #{lectRg.lectRg_money}, #{lectRg.lectRg_state})
+	</insert>
+	
+	<select id="selectLecturePayment" resultType="LectureRegisterVO">
+		select * from lecture_register where lectRg_lect_num = #{lect_num} and lectRg_me_id = #{me_id}
+	</select>
+	
 </mapper>

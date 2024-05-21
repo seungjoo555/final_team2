@@ -11,6 +11,7 @@ import kr.kh.team2.model.vo.common.SearchMenuVO;
 import kr.kh.team2.model.vo.common.TotalCategoryVO;
 import kr.kh.team2.model.vo.common.TotalLanguageVO;
 import kr.kh.team2.model.vo.lecture.LectureFileVO;
+import kr.kh.team2.model.vo.lecture.LectureRegisterVO;
 import kr.kh.team2.model.vo.lecture.LectureVO;
 import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
@@ -50,5 +51,9 @@ public interface LectureDAO {
 	ArrayList<LectureVO> selectHotLectureList();
 
 	Date selectDue(@Param("lect_num")String reco_target);
+
+	boolean insertLectureRegister(@Param("lectRg")LectureRegisterVO lectureRgVo);
+
+	LectureRegisterVO selectLecturePayment(@Param("lect_num")int lectNum,@Param("me_id") String me_id);
 
 }
