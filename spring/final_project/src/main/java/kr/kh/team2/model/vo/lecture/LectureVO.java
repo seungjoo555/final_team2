@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 public class LectureVO {
 	private int lect_num;
     private String lect_mentIf_me_id;
+    private String lect_me_nickname;
     private String lect_name;
     private String lect_intro;
     private int lect_price;

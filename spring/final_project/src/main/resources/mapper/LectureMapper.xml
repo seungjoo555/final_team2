@@ -7,9 +7,11 @@
 	<!-- 강의 전체검색, 작성자 눌렀을떄 불러오기 -->
 	<select id="selectAllLectureList" resultType="LectureVO">
 		SELECT 
-		    *
+		    lecture.*, member.me_nickname as lect_me_nickname 
 		FROM
 		    lecture
+		    	join
+		    member on lect_mentIf_me_id = me_id
 		where
 			<choose>
 				<when test='cri.type == "all"'>
@@ -29,7 +31,13 @@
 	
 	<!-- 헤더에 강의 눌렀을 때 리스트 불러오기 -->
 	<select id="selectLectureList" resultType="LectureVO">
-		select * from lecture where
+		select
+			lecture.*, member.me_nickname as lect_me_nickname
+		from
+			lecture
+				join
+		    member on lect_mentIf_me_id = me_id
+		where
 			<if test='search.searchType == "cate"'>
 				lect_num in
 				(select toCt_table_pk from total_category where toCt_progCt_num = #{search.progCt_num} and toCt_table_name = 'lecture')

@@ -52,7 +52,7 @@
 						<c:param name="type" value="writer"/>
 						<c:param name="search" value="${lecture.lect_mentIf_me_id}"/>
 					</c:url>
-					<a href="${url}">${lecture.lect_mentIf_me_id}</a>
+					<a href="${url}">${lecture.lect_me_nickname}</a>
 				</td>
 				<td>${lecture.lect_price}</td>
 				<td>${lecture.lect_posting}</td>
