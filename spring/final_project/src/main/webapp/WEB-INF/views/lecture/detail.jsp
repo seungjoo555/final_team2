@@ -24,7 +24,7 @@
             IMP.request_pay({
                 pg: "kakaopay",
                 pay_method: "card",
-                merchant_uid: "${user.me_id}"+"test00000002",   // 주문번호
+                merchant_uid: "${user.me_id}"+"lecture"+"${lecture.lect_num}",   // 주문번호
                 name: "${lecture.lect_name}",
                 amount: ${lecture.lect_price},                         // 숫자 타입
                 buyer_email: "${user.me_id}",
@@ -47,7 +47,7 @@
                         //결제 성공 시 비즈니스 로직
                     	$.ajax({
             				type: "post",
-            				url: '<c:url value="/lecture/register"/>',
+            				url: '<c:url value="/lecture/detail"/>',
             				data: {
             					lectRg_lect_num : ${lecture.lect_num},
             					lectRg_me_id : data.response.buyerEmail,
@@ -56,7 +56,7 @@
             				},
             				success : function (data){
             					if(data.result){
-            						location.href='<c:url value=""/>';
+            						location.href='<c:url value="/lecture/register"/>';
             					}else{
             						alert('데이터베이스에 안들어감');
             					}

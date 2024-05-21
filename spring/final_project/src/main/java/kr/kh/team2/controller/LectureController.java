@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,8 +46,8 @@ public class LectureController {
 	@Autowired
 	ReportService reportService;
 	
-    private String restApiKey="2473831157636763";
-    private String restApiSecret="38DWiXlg2vLFTTwLrBLeFhBC8hGG34z1NuEZPirMdutqe8NKRoTq0dBfev2REgbgpYFsxrrkNjDsFZq1";
+    private String restApiKey="";
+    private String restApiSecret="";
     
 	private final IamportClient iamportClient;
 	
@@ -160,8 +159,9 @@ public class LectureController {
 	}
 	
 	//강의 결제 완료후 데이터베이스에 넣기
-	@PostMapping("/lecture/register")
-	public Map<String, Object> lectureRegisterPost(@RequestBody LectureRegisterVO lectureRgVo) {
+	@ResponseBody
+	@PostMapping("/lecture/detail")
+	public Map<String, Object> lectureRegisterPost(LectureRegisterVO lectureRgVo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		boolean res = lectureService.insertLectureRegister(lectureRgVo);
 		
@@ -172,7 +172,7 @@ public class LectureController {
 	
 	
 	
-	@GetMapping("/lecture/payment")
+	@GetMapping("/lecture/register")
 	public String lecturePayment(Model model) {
 		model.addAttribute("title", "강의 구매 완료");
 		return "/lecture/register";
