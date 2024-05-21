@@ -161,5 +161,8 @@
 		values(#{lectRg.lectRg_lect_num}, #{lectRg.lectRg_me_id}, #{lectRg.lectRg_money}, #{lectRg.lectRg_state})
 	</insert>
 	
+	<select id="selectLecturePayment" resultType="LectureRegisterVO">
+		select * from lecture_register where lectRg_lect_num = #{lect_num} and lectRg_me_id = #{me_id}
+	</select>
 	
 </mapper>

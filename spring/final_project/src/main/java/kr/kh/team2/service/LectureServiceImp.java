@@ -261,4 +261,12 @@ public class LectureServiceImp implements LectureService{
 		return lectureDao.insertLectureRegister(lectureRgVo);
 	}
 
+	@Override
+	public LectureRegisterVO getLecturePayment(int lectNum, MemberVO user) {
+		if(user == null) {
+			return null;
+		}
+		return lectureDao.selectLecturePayment(lectNum, user.getMe_id());
+	}
+
 }

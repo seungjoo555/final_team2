@@ -43,4 +43,6 @@ public interface LectureService {
 
 	boolean insertLectureRegister(LectureRegisterVO lectureRgVo);
 
+	LectureRegisterVO getLecturePayment(int lectNum, MemberVO user);
+
 }

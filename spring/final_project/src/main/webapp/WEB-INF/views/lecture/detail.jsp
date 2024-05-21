@@ -32,7 +32,7 @@
                 buyer_tel: "${user.me_phone}"
             }, function (response) { // callback
             	if(response.imp_uid == null){
-            		alert("이미 결제한 강의입니다.");
+            		alert("이미 구매한 강의입니다.");
             		return;
             	}
             	let ornum = {
@@ -141,7 +141,9 @@
 	</c:choose>
 	<del class="cd-price__reg-price"><!-- 원 가격 --></del>
 </div>
-<button class="btn btn-success col-12" onclick="requestPay()">신청하기</button>
+<c:if test="${lecture.lect_price != 0}">
+	<button class="btn btn-success col-12" onclick="requestPay()">신청하기</button>
+</c:if>
 <div class="second-container">
 	<h4>강의 소개</h4>
 	<hr>
@@ -153,15 +155,26 @@
 </div>
 <div>
 	<c:choose>
-		<c:when test="${fileList.size() != 0}">
-			<label>첨부파일</label>
+		<c:when test="${fileList.size() != 0 && payment.lectRg_state == true}">
+			<h1>강의파일</h1>
 			<c:forEach items="${fileList}" var="file">
 				<a href="<c:url value="/download/${file.lectFi_path}"/>"
 					class="form-control" download="${file.lectFi_ori_name}">${file.lectFi_ori_name}</a>
 			</c:forEach>
 		</c:when>
+		<c:when test="${lecture.lect_price == 0}">
+			<h1>강의파일</h1>
+			<c:forEach items="${fileList}" var="file">
+				<a href="<c:url value="/download/${file.lectFi_path}"/>"
+					class="form-control" download="${file.lectFi_ori_name}">${file.lectFi_ori_name}</a>
+			</c:forEach>
+		</c:when>
+		<c:when test="${fileList.size() == 0}">
+			<h1>강의파일이 아직 없습니다.</h1>
+		</c:when>
 		<c:otherwise>
-			<div>첨부파일 없음</div>
+			<h1>강의 파일</h1>
+			<div>강의파일은 구매후 보입니다.</div>
 		</c:otherwise>
 	</c:choose>
 </div>

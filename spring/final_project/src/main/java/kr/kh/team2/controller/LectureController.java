@@ -147,6 +147,10 @@ public class LectureController {
 			istrue = reportService.getReportIsTrue(Integer.toString(lectNum), "lecture", user.getMe_id());
 		}
 		
+		//유저의 강의 결제 여부
+		LectureRegisterVO lectRg = lectureService.getLecturePayment(lectNum, user);
+		
+		model.addAttribute("payment", lectRg);
 		model.addAttribute("lecture", lecture);
 		model.addAttribute("writer", writer);
 		model.addAttribute("istrue", istrue);

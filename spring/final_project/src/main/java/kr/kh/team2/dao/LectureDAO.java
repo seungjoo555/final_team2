@@ -54,4 +54,6 @@ public interface LectureDAO {
 
 	boolean insertLectureRegister(@Param("lectRg")LectureRegisterVO lectureRgVo);
 
+	LectureRegisterVO selectLecturePayment(@Param("lect_num")int lectNum,@Param("me_id") String me_id);
+
 }
