@@ -293,15 +293,16 @@ function displayMentoringDetail(mentoring, mentor, istrue, reco_ment_count) {
 	if(mentor.mentIf_me_id == $("[name=user-meId]").val()){
 		meStr += 
 			`
-			
+			<div class="btn-apply-box">
 			<button class="update-btn" >
-				<a class="btn-outline-success mentor-mentoring-update" 
+				<a class="mentor-mentoring-update" 
 				href="<c:url value="/mentor/mentoring/update?mentNum=\${mentoring.ment_num}"/>">수정</a>
 			</button>	
 			<button class="delete-btn">
-				<a class="btn-outline-success mentor-mentoring-delete" 
+				<a class="mentor-mentoring-delete" 
 					href="<c:url value="/mentor/mentoring/delete?mentNum=\${mentoring.ment_num}"/>">삭제</a>
 			</button>
+			</div>
 			`
 		
 	}else{
@@ -639,7 +640,7 @@ function displayMentoringApply(mentoring){
 		      	<div class="apply-mentoring_footer">
 					<div class="btn-apply-box">
 						<button type="button" class="btn-apply-prev">이전으로</button> 
-						<button type="button" class="btn-apply-insert"class="btn-apply-insert">신청하기</button>
+						<button type="button" class="btn-apply-insert">신청하기</button>
 					</div>
 				</div>
 		   `
