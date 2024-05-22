@@ -125,7 +125,7 @@ DROP TABLE IF EXISTS `group`;
 
 CREATE TABLE `group` (
 	`go_num`	int primary key auto_increment	NOT NULL,
-	`go_name`	varchar(20)	NOT NULL,
+	`go_name`	varchar(30)	NOT NULL,
 	`go_time`	bigint default 0	NULL,
 	`go_update`	boolean default 0	NOT NULL
 );
@@ -188,36 +188,6 @@ CREATE TABLE `lecture` (
 	`lect_price`	int	NOT NULL,
 	`lect_posting`	date	NOT NULL,
 	`lect_update`	date	NOT NULL
-);
-
-DROP TABLE IF EXISTS `board`;
-
-CREATE TABLE `board` (
-	`board_num`	int  auto_increment primary key	NOT NULL,
-	`board_name`	varchar(30)	NOT NULL
-);
-
-DROP TABLE IF EXISTS `post`;
-
-CREATE TABLE `post` (
-	`post_num`	int auto_increment primary key	NOT NULL,
-	`post_name`	varchar(100)	NOT NULL,
-	`post_content`	longtext	NOT NULL,
-	`post_view`	int	NOT NULL default 0,
-	`post_date`	datetime	NOT NULL,
-    `post_repoCount` int default 0 not null,
-	`post_board_num`	int	NOT NULL,
-	`post_me_id`	varchar(50)	NOT NULL
-);
-
-DROP TABLE IF EXISTS `comment`;
-
-CREATE TABLE `comment` (
-	`cmmt_num`	int auto_increment primary key	NOT NULL,
-	`cmmt_content`	text	NOT NULL,
-	`cmmt_repoCount`	int default 0	NOT NULL,
-	`cmmt_post_num`	int	NOT NULL,
-	`cmmt_me_id`	varchar(50)	NOT NULL
 );
 
 DROP TABLE IF EXISTS `mentoring`;
@@ -496,34 +466,6 @@ REFERENCES `mentor_info` (
 	`mentIf_me_id`
 );
 
-ALTER TABLE `post` ADD CONSTRAINT `FK_board_TO_post_1` FOREIGN KEY (
-	`post_board_num`
-)
-REFERENCES `board` (
-	`board_num`
-);
-
-ALTER TABLE `post` ADD CONSTRAINT `FK_member_TO_post_1` FOREIGN KEY (
-	`post_me_id`
-)
-REFERENCES `member` (
-	`me_id`
-);
-
-ALTER TABLE `comment` ADD CONSTRAINT `FK_post_TO_comment_1` FOREIGN KEY (
-	`cmmt_post_num`
-)
-REFERENCES `post` (
-	`post_num`
-);
-
-ALTER TABLE `comment` ADD CONSTRAINT `FK_member_TO_comment_1` FOREIGN KEY (
-	`cmmt_me_id`
-)
-REFERENCES `member` (
-	`me_id`
-);
-
 ALTER TABLE `mentoring` ADD CONSTRAINT `FK_mentor_info_TO_mentoring_1` FOREIGN KEY (
 	`ment_me_id`
 )
@@ -657,10 +599,6 @@ change column `me_phone` `me_phone` varchar(20) not null,
 change column `me_address` `me_address` varchar(100) not null,
 CHANGE COLUMN `me_type` `me_type` VARCHAR(10) NOT NULL DEFAULT '일반';
 
-/*멘토정보 테이블에 계좌번호 속성(mentif_account) 없으면 등록*/
-ALTER TABLE `MENTOR_INFO`
-ADD `mentIf_account` varchar(30);
-
 ALTER TABLE `final_team2`.`lecture_file` 
 CHANGE COLUMN `lectFi_choice` `lectFi_choice` TINYINT(1) NULL ,
 CHANGE COLUMN `lectFi_link` `lectFi_link` TINYINT(1) NULL ;
@@ -782,18 +720,7 @@ ADD CONSTRAINT `FK_member_TO_mutual_review_1`
   FOREIGN KEY (`mure_target_id`)
   REFERENCES `final_team2`.`member` (`me_id`)
   ON DELETE CASCADE;
-ALTER TABLE `final_team2`.`post` 
-DROP FOREIGN KEY `FK_board_TO_post_1`,
-DROP FOREIGN KEY `FK_member_TO_post_1`;
-ALTER TABLE `final_team2`.`post` 
-ADD CONSTRAINT `FK_board_TO_post_1`
-  FOREIGN KEY (`post_board_num`)
-  REFERENCES `final_team2`.`board` (`board_num`)
-  ON DELETE CASCADE,
-ADD CONSTRAINT `FK_member_TO_post_1`
-  FOREIGN KEY (`post_me_id`)
-  REFERENCES `final_team2`.`member` (`me_id`)
-  ON DELETE CASCADE;
+
 ALTER TABLE `final_team2`.`recommend` 
 DROP FOREIGN KEY `FK_member_TO_recommend_1`;
 ALTER TABLE `final_team2`.`recommend` 
@@ -837,18 +764,7 @@ ADD CONSTRAINT `FK_programming_category_TO_total_category_1`
   FOREIGN KEY (`toCt_progCt_num`)
   REFERENCES `final_team2`.`programming_category` (`progCt_num`)
   ON DELETE CASCADE;
-  ALTER TABLE `final_team2`.`comment` 
-DROP FOREIGN KEY `FK_member_TO_comment_1`,
-DROP FOREIGN KEY `FK_post_TO_comment_1`;
-ALTER TABLE `final_team2`.`comment` 
-ADD CONSTRAINT `FK_member_TO_comment_1`
-  FOREIGN KEY (`cmmt_me_id`)
-  REFERENCES `final_team2`.`member` (`me_id`)
-  ON DELETE CASCADE,
-ADD CONSTRAINT `FK_post_TO_comment_1`
-  FOREIGN KEY (`cmmt_post_num`)
-  REFERENCES `final_team2`.`post` (`post_num`)
-  ON DELETE CASCADE;
+
 ALTER TABLE `final_team2`.`group_apply` 
 DROP FOREIGN KEY `FK_member_TO_group_apply_1`,
 DROP FOREIGN KEY `FK_recruit_TO_group_apply_1`;
@@ -862,7 +778,4 @@ ADD CONSTRAINT `FK_recruit_TO_group_apply_1`
   REFERENCES `final_team2`.`recruit` (`recu_num`)
   ON DELETE CASCADE;
 
-
-ALTER TABLE `final_team2`.`mentor_info` 
-ADD COLUMN `mentIf_bank` VARCHAR(10) NOT NULL;
-
+select * from `member`;
