@@ -83,13 +83,15 @@
 
 $(document).on('click', '#dimmed-report', function(){
    $("#modal-report").css('display','none');
+   $("body").css('overflow','visible');
 })
 	   
 /* 신고 버튼 이벤트 */
 $('.report-btn').click(function(){
 	
 	$("#modal-report").css('display','block');
-	   
+	$("body").css('overflow','hidden');
+	
 	if(${user == null}){
 		if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?") == true){
 			location.href = '<c:url value="/login"/>';			

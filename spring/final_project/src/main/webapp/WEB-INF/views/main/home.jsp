@@ -20,7 +20,7 @@
 		<img alt="배너" src="<c:url value="/resources/img/banner.svg"/>">
 	</div>
 	<div class="box-group-hot">
-		<h2>HOT 스터디/프로젝트</h2>
+		<h3>HOT 스터디/프로젝트</h3>
 		<div class="box-group-list">
 			<ul class="group-list">
 				<c:if test="${hotGroupList.isEmpty()}">
@@ -93,7 +93,7 @@
 	</div>
 	
 	<div class="box-group-hot">
-		<h2>추천 멘토</h2>
+		<h3>추천 멘토</h3>
 		<div class="box-mento-list">
 			<ul class="mento-list">
 				<c:if test="${hotMentoingList.isEmpty()}">
@@ -137,7 +137,7 @@
 	</div>
 
 	<div class="box-group-hot">
-		<h2>인기 강의</h2>
+		<h3>인기 강의</h3>
 		<table class="table table-hover">
 			<thead>
 				<tr>
