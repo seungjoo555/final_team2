@@ -64,7 +64,7 @@
 
 <ul class="pagination justify-content-center">
 	<c:if test="${pm.prev}">
-		<c:url value="/board/list" var="url">
+		<c:url value="/lecture/list" var="url">
 			<c:param name="page" value="${pm.startPage - 1}"/>
 			<c:param name="type" value="${pm.cri.type}"/>
 			<c:param name="search" value="${pm.cri.search}"/>
@@ -74,7 +74,7 @@
 		</li>
 	</c:if>
 	<c:forEach begin="${pm.startPage }" end="${pm.endPage}" var="i">
-		<c:url value="/board/list" var="url">
+		<c:url value="/lecture/list" var="url">
 			<c:param name="page" value="${i}"/>
 			<c:param name="type" value="${pm.cri.type}"/>
 			<c:param name="search" value="${pm.cri.search}"/>
@@ -84,7 +84,7 @@
 		</li>
 	</c:forEach>
 	<c:if test="${pm.next}">
-		<c:url value="/board/list" var="url">
+		<c:url value="/lecture/list" var="url">
 			<c:param name="page" value="${pm.endPage + 1}"/>
 			<c:param name="type" value="${pm.cri.type}"/>
 			<c:param name="search" value="${pm.cri.search}"/>
