@@ -1,0 +1,22 @@
+INSERT INTO total_category (toCt_progCt_num, toCt_table_name, toCt_table_pk)
+VALUES
+(1, 'recruit', 3),
+(2, 'recruit', 4),
+(1, 'recruit', 5),
+(3, 'recruit', 6),
+(5, 'recruit', 7),
+(6, 'recruit', 8),
+(1, 'recruit', 9),
+(4, 'recruit', 10),
+(5, 'recruit', 11),
+(6, 'recruit', 12),
+(4, 'recruit', 13),
+(1, 'recruit', 14),
+(5, 'recruit', 15),
+(3, 'recruit', 16),
+(4, 'recruit', 17),
+(5, 'recruit', 18),
+(6, 'recruit', 19),
+(1, 'recruit', 20),
+(4, 'recruit', 21),
+(3, 'recruit', 22);
