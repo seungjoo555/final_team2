@@ -89,3 +89,26 @@ VALUES
 ('asd18@naver.com', 1, 'recruit', 6),
 ('asd19@naver.com', 1, 'recruit', 5),
 ('asd20@naver.com', 1, 'recruit', 4);
+
+INSERT INTO recommend (reco_me_id, reco_state, reco_table, reco_target)
+VALUES
+('asd1@naver.com', 1, 'mentor_info', 'asd20@naver.com'),
+('asd2@naver.com', 1, 'mentor_info', 'asd19@naver.com'),
+('asd3@naver.com', 1, 'mentor_info', 'asd18@naver.com'),
+('asd4@naver.com', 1, 'mentor_info', 'asd17@naver.com'),
+('asd5@naver.com', 1, 'mentor_info', 'asd16@naver.com'),
+('asd6@naver.com', 1, 'mentor_info', 'asd15@naver.com'),
+('asd7@naver.com', 1, 'mentor_info', 'asd14@naver.com'),
+('asd8@naver.com', 1, 'mentor_info', 'asd13@naver.com'),
+('asd9@naver.com', 1, 'mentor_info', 'asd12@naver.com'),
+('asd10@naver.com', 1, 'mentor_info', 'asd11@naver.com'),
+('asd11@naver.com', 1, 'mentor_info', 'asd10@naver.com'),
+('asd12@naver.com', 1, 'mentor_info', 'asd9@naver.com'),
+('asd13@naver.com', 1, 'mentor_info', 'asd8@naver.com'),
+('asd14@naver.com', 1, 'mentor_info', 'asd7@naver.com'),
+('asd15@naver.com', 1, 'mentor_info', 'asd6@naver.com'),
+('asd16@naver.com', 1, 'mentor_info', 'asd5@naver.com'),
+('asd17@naver.com', 1, 'mentor_info', 'asd4@naver.com'),
+('asd18@naver.com', 1, 'mentor_info', 'asd3@naver.com'),
+('asd19@naver.com', 1, 'mentor_info', 'asd2@naver.com'),
+('asd20@naver.com', 1, 'mentor_info', 'asd1@naver.com');
