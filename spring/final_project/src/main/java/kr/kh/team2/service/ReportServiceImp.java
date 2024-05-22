@@ -6,6 +6,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.kh.team2.dao.LectureDAO;
 import kr.kh.team2.dao.MentorDAO;
 import kr.kh.team2.dao.RecruitDAO;
 import kr.kh.team2.dao.ReportDAO;
@@ -25,6 +26,8 @@ public class ReportServiceImp implements ReportService{
 	RecruitDAO recruitDAO; 
 	@Autowired
 	MentorDAO mentorDAO; 
+	@Autowired
+	LectureDAO lectureDAO;
 	
 	Methods methods = new Methods();
 
@@ -101,7 +104,7 @@ public class ReportServiceImp implements ReportService{
 		}else if(reportSimpleDTO.getRepo_table().equals("mentoring")) {
 			target = mentorDAO.selectMentoring(Integer.parseInt(reportSimpleDTO.getRepo_target())).getMent_title();
 		}else if(reportSimpleDTO.getRepo_table().equals("lecture")) {
-			target = "강의 제목";
+			target = lectureDAO.selectLecture(Integer.parseInt(reportSimpleDTO.getRepo_target())).getLect_name();
 		}else if(reportSimpleDTO.getRepo_table().equals("member")) {
 			target =reportSimpleDTO.getRepo_target();
 		}
