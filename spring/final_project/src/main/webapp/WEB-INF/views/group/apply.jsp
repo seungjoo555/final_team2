@@ -55,7 +55,7 @@
 		}
 		
 		if(confirm("입력하신 내용으로 모집 공고를 올리시겠습니까?")) {
-			location.href='<c:url value="/group/applydetail?num=${recruit.recu_num}"/>';
+			location.href='<c:url value="/group/apply/detail?num=${recruit.recu_num}"/>';
 		} else {
 			return false;
 		}
