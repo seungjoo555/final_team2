@@ -123,6 +123,24 @@ public class LectureController {
 		return "message";
 	}
 	
+	@ResponseBody
+	@PostMapping("/img/upload")
+	public Map<String, Object> imgUpload(MultipartFile file){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String uploadPath = lectureService.uploadImg(file);
+		map.put("url", uploadPath);
+		return map;
+	}
+	
+	@ResponseBody
+	@PostMapping("/img/delete")
+	public Map<String, Object> imgDelete(String file){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		lectureService.deleteImg(file);
+		map.put("res", "삭제");
+		return map;
+	}
+	
 	//강의글 상세 조회
 	@GetMapping("/lecture/detail")
 	public String lectureDetail(Model model, Criteria cri, SearchMenuVO search, int lectNum, HttpSession session) {
@@ -173,15 +191,11 @@ public class LectureController {
 		return map;
 	}
 	
-	
-	
-	
 	@GetMapping("/lecture/register")
 	public String lecturePayment(Model model) {
 		model.addAttribute("title", "강의 구매 완료");
 		return "/lecture/register";
 	}
-	
 	
 	public LectureController() {
         this.iamportClient = new IamportClient(restApiKey, restApiSecret);
@@ -196,4 +210,33 @@ public class LectureController {
         return payment;
     }
 	
+    @GetMapping("/lecture/update")
+	public String boardUpdate(Model model, int lect_num) {
+		//게시글을 가져옴
+		LectureVO lecture = lectureService.getLecture(lect_num);
+		//첨부파일을 가져옴
+		ArrayList<LectureFileVO> fileList = lectureService.getFileList(lect_num);
+		
+		model.addAttribute("fileList", fileList);
+		model.addAttribute("lecture", lecture);
+		return "/lecture/update";
+	}
+    
+    @PostMapping("/lecture/update")
+    public String boardUpdatePost(Model model, LectureVO lecture, MultipartFile []file,
+			int [] delNums, HttpSession session) {
+    	MemberVO user = (MemberVO) session.getAttribute("user");
+    	boolean res = lectureService.updateLecture(lecture, user, file, delNums);
+    	
+    	if(res) {
+    		model.addAttribute("url", "/lecture/detail?lectNum="+lecture.getLect_num());
+    		model.addAttribute("msg", "강의를 수정했습니다");
+    	}else {
+    		model.addAttribute("url", "/lecture/detail?lectNum="+lecture.getLect_num());
+    		model.addAttribute("msg", "강의 수정에 실패했습니다.");
+    	}
+    	return "message";
+    }
+    
+    
 }
