@@ -66,3 +66,26 @@ VALUES
 ('부정확한 정보', '대기중', 'asd3@naver.com', '정보 오류', NOW(), '', 21),
 ('부적절한 콘텐츠', '대기중', 'asd2@naver.com', '부적절한 콘텐츠', NOW(), '', 22),
 ('기타', '대기중', 'asd1@naver.com', '기타 이유', NOW(), '', 23);
+
+INSERT INTO recommend (reco_me_id, reco_state, reco_table, reco_target)
+VALUES
+('asd1@naver.com', 1, 'recruit', 23),
+('asd2@naver.com', 1, 'recruit', 22),
+('asd3@naver.com', 1, 'recruit', 21),
+('asd4@naver.com', 1, 'recruit', 20),
+('asd5@naver.com', 1, 'recruit', 19),
+('asd6@naver.com', 1, 'recruit', 18),
+('asd7@naver.com', 1, 'recruit', 17),
+('asd8@naver.com', 1, 'recruit', 16),
+('asd9@naver.com', 1, 'recruit', 15),
+('asd10@naver.com', 1, 'recruit', 14),
+('asd11@naver.com', 1, 'recruit', 13),
+('asd12@naver.com', 1, 'recruit', 12),
+('asd13@naver.com', 1, 'recruit', 11),
+('asd14@naver.com', 1, 'recruit', 10),
+('asd15@naver.com', 1, 'recruit', 9),
+('asd16@naver.com', 1, 'recruit', 8),
+('asd17@naver.com', 1, 'recruit', 7),
+('asd18@naver.com', 1, 'recruit', 6),
+('asd19@naver.com', 1, 'recruit', 5),
+('asd20@naver.com', 1, 'recruit', 4);
