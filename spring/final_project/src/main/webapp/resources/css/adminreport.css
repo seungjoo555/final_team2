@@ -52,6 +52,23 @@ h1{font-weight: bold;}
 .header-title > h1{font-size: 20px; margin-left: 10px; font-weight: bold;}
 .btn-cancel{margin-right: 10px; font-size: 20px; font-weight: bold; background-color:transparent;}	
 .btn-cancel > button{background-color:transparent;}	
+.report-process-btn{
+	background-color: white;
+    border: 1px solid #808080;
+    border-radius: 5px;
+    padding: 2px 5px;
+}
+.box-btn-admin-report-process{
+	display: flex;
+    justify-content: flex-end;
+}
+.btn-admin-report-process{
+	background-color: white;
+    border: 1px solid #808080;
+    border-radius: 5px;
+    padding: 2px 5px;
+    margin-top: 15px;
+}
 	
 /* body */
 .amidn-report-body{ width:100%; height: 80%; }
