@@ -1,7 +1,0 @@
-use `final_team`;
-
-alter table member
-add column `me_postcode` int not null default 0,
-change column `me_phone` `me_phone` varchar(20) not null,
-change column `me_address` `me_address` varchar(100) not null,
-CHANGE COLUMN `me_type` `me_type` VARCHAR(10) NOT NULL DEFAULT '일반';
