@@ -185,4 +185,17 @@
 		select * from lecture_file where lectFi_num = #{lectFi_num}
 	</select>
 	
+	<select id="selectMyLecture" resultType="LectureVO">
+	select
+		lecture.*, member.me_nickname as lect_me_nickname
+	from
+		lecture
+			join
+		lecture_register on lect_num = lectRg_lect_num
+			join
+		member on lect_mentIf_me_id = me_id
+	where
+		lectRg_me_id = #{me_id};
+	</select>
+	
 </mapper>

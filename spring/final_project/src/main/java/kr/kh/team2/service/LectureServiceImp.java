@@ -312,4 +312,12 @@ public class LectureServiceImp implements LectureService{
 		return true;
 	}
 
+	@Override
+	public ArrayList<LectureVO> getMyLecture(MemberVO user) {
+		if(user == null) {
+			return null;
+		}
+		return lectureDao.selectMyLecture(user.getMe_id());
+	}
+
 }
