@@ -18,7 +18,9 @@
 		</a>
 		<div class="recruit_topic">${recruit.recu_topic}(${recruit.recu_state == 1 ? "모집중":"모집 완료"})</div>
 		<div class="recruit_userAndDate">
-			<img class="basic-profile" value="${groupKing_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+			<a href="<c:url value="/mypage/profile?me_id=${groupKing_me_id}"/>">
+				<img class="basic-profile" value="${groupKing_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+			</a>
 			<a href="<c:url value="/mypage/profile?me_id=${groupKing_me_id}"/>" class="recruit_user">${groupKing}</a>
 			<div class="btn-box">
 				<!-- 본인 글일 경우 신고기능 비활성화 -->

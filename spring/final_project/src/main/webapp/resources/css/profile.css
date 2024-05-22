@@ -163,7 +163,7 @@
 
 .border-line {
     border: 1px solid #ccc;
-    width: 90%;
+    width: 100%;
     margin: 5px auto;
 }
 
@@ -399,6 +399,13 @@
 	display: inline-block; 
 }
 
+ .member-nickname{
+ 	width : 100px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+ }
+
 /* 멘토링 관련 스타일 */
 
 .mentoring-item-container {
@@ -483,6 +490,13 @@
     margin: 0 15px 0 0;
     padding: 10px;
 }
+
+ .mentor-nickname{
+ 	width : 100px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+ }
 
 /* 스터디 지원자 리스트 모달 */
 
