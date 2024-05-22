@@ -141,7 +141,7 @@
 	</c:choose>
 	<del class="cd-price__reg-price"><!-- 원 가격 --></del>
 </div>
-<c:if test="${lecture.lect_price != 0}">
+<c:if test="${lecture.lect_price != 0 && user.me_id != lecture.lect_mentIf_me_id}">
 	<button class="btn btn-success col-12" onclick="requestPay()">신청하기</button>
 </c:if>
 <div class="second-container">
@@ -177,6 +177,9 @@
 			<div>강의파일은 구매후 보입니다.</div>
 		</c:otherwise>
 	</c:choose>
+	<c:if test="${user.me_id == lecture.lect_mentIf_me_id}">
+		<a href="<c:url value="/lecture/update?lect_num=${lecture.lect_num}"/>" class="btn btn-outline-warning">수정</a>
+	</c:if>
 </div>
 
 

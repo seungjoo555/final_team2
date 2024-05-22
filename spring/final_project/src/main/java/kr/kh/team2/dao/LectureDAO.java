@@ -56,4 +56,8 @@ public interface LectureDAO {
 
 	LectureRegisterVO selectLecturePayment(@Param("lect_num")int lectNum,@Param("me_id") String me_id);
 
+	boolean updateLecture(@Param("lecture") LectureVO lecture);
+
+	LectureFileVO selectFile(@Param("lectFi_num") int tmp);
+
 }

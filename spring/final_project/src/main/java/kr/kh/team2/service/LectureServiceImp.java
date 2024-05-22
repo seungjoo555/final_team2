@@ -269,4 +269,47 @@ public class LectureServiceImp implements LectureService{
 		return lectureDao.selectLecturePayment(lectNum, user.getMe_id());
 	}
 
+	@Override
+	public String uploadImg(MultipartFile file) {
+		if(file == null || file.getOriginalFilename().length() == 0)
+			return null;
+		try {
+			return UploadFileUtils.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public void deleteImg(String file) {
+		System.out.println(file);
+		UploadFileUtils.delteFile(uploadPath, file);
+	}
+
+	@Override
+	public boolean updateLecture(LectureVO lecture, MemberVO user, MultipartFile[] file, int[] delNums) {
+		if(lecture == null || !checkString(lecture.getLect_name()) || !checkString(lecture.getLect_intro())) return false;
+		if(user == null) return false;
+		LectureVO dbLecture = lectureDao.selectLecture(lecture.getLect_num());
+		if(dbLecture == null || !dbLecture.getLect_mentIf_me_id().equals(user.getMe_id())) return false;
+		//강의 수정
+		boolean res = lectureDao.updateLecture(lecture);
+		if(!res) return false;
+		//첨부파일 수정
+		//새 첨부파일 추가
+		if(file != null) {
+			for(MultipartFile tmp : file) {
+				uploadFile(lecture.getLect_num(), tmp);
+			}
+		}
+		//삭제할 첨부파일
+		if(delNums == null) return true;
+		for(int tmp : delNums) {
+			LectureFileVO fileVo = lectureDao.selectFile(tmp);
+			deleteFile(fileVo);
+		}
+		return true;
+	}
+
 }
