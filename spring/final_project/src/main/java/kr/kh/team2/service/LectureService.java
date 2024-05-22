@@ -17,7 +17,7 @@ import kr.kh.team2.pagination.Criteria;
 
 public interface LectureService {
 
-	ArrayList<LectureVO> getAllLectureList(Criteria cri);
+	ArrayList<LectureVO> getAllLectureList(Criteria cri, SearchMenuVO search);
 
 	ArrayList<LectureVO> getLectureList(Criteria cri, SearchMenuVO search);
 

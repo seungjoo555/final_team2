@@ -18,7 +18,7 @@ import kr.kh.team2.pagination.Criteria;
 
 public interface LectureDAO {
 
-	ArrayList<LectureVO> selectAllLectureList(@Param("cri") Criteria cri);
+	ArrayList<LectureVO> selectAllLectureList(@Param("cri") Criteria cri, @Param("search")SearchMenuVO search);
 
 	ArrayList<LectureVO> selectLectureList(@Param("cri") Criteria cri, @Param("search") SearchMenuVO search);
 

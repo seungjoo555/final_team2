@@ -51,6 +51,7 @@
 					<c:url value="/lecture/list" var="url">
 						<c:param name="type" value="writer"/>
 						<c:param name="search" value="${lecture.lect_mentIf_me_id}"/>
+						<c:param name="searchType" value="all"/>
 					</c:url>
 					<a href="${url}">${lecture.lect_me_nickname}</a>
 				</td>
@@ -64,30 +65,39 @@
 
 <ul class="pagination justify-content-center">
 	<c:if test="${pm.prev}">
-		<c:url value="/board/list" var="url">
+		<c:url value="/lecture/list" var="url">
 			<c:param name="page" value="${pm.startPage - 1}"/>
 			<c:param name="type" value="${pm.cri.type}"/>
 			<c:param name="search" value="${pm.cri.search}"/>
+			<c:param name="progCt_num" value="${search.progCt_num}"/>
+			<c:param name="lang_num" value="${search.lang_num}"/>
+			<c:param name="searchType" value="${search.searchType}"/>
 		</c:url>
 		<li class="page-item">
 			<a class="page-link" href="${url}">이전</a>
 		</li>
 	</c:if>
 	<c:forEach begin="${pm.startPage }" end="${pm.endPage}" var="i">
-		<c:url value="/board/list" var="url">
+		<c:url value="/lecture/list" var="url">
 			<c:param name="page" value="${i}"/>
 			<c:param name="type" value="${pm.cri.type}"/>
 			<c:param name="search" value="${pm.cri.search}"/>
+			<c:param name="progCt_num" value="${search.progCt_num}"/>
+			<c:param name="lang_num" value="${search.lang_num}"/>
+			<c:param name="searchType" value="${search.searchType}"/>
 		</c:url>
 		<li class="page-item <c:if test="${pm.cri.page == i}">active</c:if>">
 			<a class="page-link" href="${url}">${i}</a>
 		</li>
 	</c:forEach>
 	<c:if test="${pm.next}">
-		<c:url value="/board/list" var="url">
+		<c:url value="/lecture/list" var="url">
 			<c:param name="page" value="${pm.endPage + 1}"/>
 			<c:param name="type" value="${pm.cri.type}"/>
 			<c:param name="search" value="${pm.cri.search}"/>
+			<c:param name="progCt_num" value="${search.progCt_num}"/>
+			<c:param name="lang_num" value="${search.lang_num}"/>
+			<c:param name="searchType" value="${search.searchType}"/>
 		</c:url>
 		<li class="page-item">
 			<a class="page-link" href="${url}">다음</a>

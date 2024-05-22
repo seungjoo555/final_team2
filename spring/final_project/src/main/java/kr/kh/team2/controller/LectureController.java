@@ -53,43 +53,46 @@ public class LectureController {
 	
 	@GetMapping("/lecture/list")
 	public String lectureList(Model model, Criteria cri, SearchMenuVO search) {
-		cri.setPerPageNum(5);
-		ArrayList<LectureVO> list = lectureService.getAllLectureList(cri);
+		cri.setPerPageNum(2);
+		ArrayList<LectureVO> list = lectureService.getAllLectureList(cri, search);
 		int lectureCount = lectureService.getLectureCount(cri, search);
 		PageMaker pm = new PageMaker(3, cri, lectureCount);
 		model.addAttribute("list", list);
 		model.addAttribute("pm", pm);
+		model.addAttribute("search", search);
 		model.addAttribute("title", "강의글 목록");
 		return "/lecture/list";
 	}
 	
-	//강의 하위메뉴 분야 선택했을때 동작
-	@GetMapping("/lecture/list/cate")
-	public String lectureListCate(Model model, Criteria cri, SearchMenuVO search) {
-		cri.setPerPageNum(5);
-		search.setSearchType("cate");
-		ArrayList<LectureVO> list = lectureService.getLectureList(cri, search);
-		int lectureCount = lectureService.getLectureCount(cri, search);
-		PageMaker pm = new PageMaker(3, cri, lectureCount);
-		model.addAttribute("list", list);
-		model.addAttribute("pm", pm);
-		model.addAttribute("title", "강의글 목록");
-		return "/lecture/list";
-	}
+//	//강의 하위메뉴 분야 선택했을때 동작
+//	@GetMapping("/lecture/list/cate")
+//	public String lectureListCate(Model model, Criteria cri, SearchMenuVO search) {
+//		cri.setPerPageNum(2);
+//		search.setSearchType("cate");
+//		ArrayList<LectureVO> list = lectureService.getLectureList(cri, search);
+//		int lectureCount = lectureService.getLectureCount(cri, search);
+//		PageMaker pm = new PageMaker(3, cri, lectureCount);
+//		model.addAttribute("list", list);
+//		model.addAttribute("pm", pm);
+//		model.addAttribute("search", search);
+//		model.addAttribute("title", "강의글 목록");
+//		return "/lecture/list";
+//	}
 	
-	//강의 하위메뉴 언어 선택했을때 동작
-	@GetMapping("/lecture/list/lang")
-	public String lectureListLang(Model model, Criteria cri, SearchMenuVO search) {
-		cri.setPerPageNum(5);
-		search.setSearchType("lang");
-		ArrayList<LectureVO> list = lectureService.getLectureList(cri, search);
-		int lectureCount = lectureService.getLectureCount(cri, search);
-		PageMaker pm = new PageMaker(3, cri, lectureCount);
-		model.addAttribute("list", list);
-		model.addAttribute("pm", pm);
-		model.addAttribute("title", "강의글 목록");
-		return "/lecture/list";
-	}
+//	//강의 하위메뉴 언어 선택했을때 동작
+//	@GetMapping("/lecture/list/lang")
+//	public String lectureListLang(Model model, Criteria cri, SearchMenuVO search) {
+//		cri.setPerPageNum(2);
+//		search.setSearchType("lang");
+//		ArrayList<LectureVO> list = lectureService.getLectureList(cri, search);
+//		int lectureCount = lectureService.getLectureCount(cri, search);
+//		PageMaker pm = new PageMaker(3, cri, lectureCount);
+//		model.addAttribute("list", list);
+//		model.addAttribute("pm", pm);
+//		model.addAttribute("search", search);
+//		model.addAttribute("title", "강의글 목록");
+//		return "/lecture/list";
+//	}
 	
 	@GetMapping("/lecture/myList")
 	public String lectureMyList(Model model, HttpSession session) {
