@@ -45,4 +45,10 @@ public interface LectureService {
 
 	LectureRegisterVO getLecturePayment(int lectNum, MemberVO user);
 
+	String uploadImg(MultipartFile file);
+
+	void deleteImg(String file);
+
+	boolean updateLecture(LectureVO lecture, MemberVO user, MultipartFile[] file, int[] delNums);
+
 }

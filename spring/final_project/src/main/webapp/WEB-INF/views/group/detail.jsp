@@ -116,7 +116,7 @@
 		<hr>
 		<section>
 			<div class="form-row content">
-				<textarea rows="15" class="form-control second-box" id="recu_content">${recruit.recu_content}</textarea>
+				<div style="min-height: 400px; border: 1px solid #f2f2f2" class="second-box" id="recu_content">${recruit.recu_content}</div>
 			</div>
 		</section>
 	</div>

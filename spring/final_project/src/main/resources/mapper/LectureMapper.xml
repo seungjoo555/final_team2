@@ -173,4 +173,16 @@
 		select * from lecture_register where lectRg_lect_num = #{lect_num} and lectRg_me_id = #{me_id}
 	</select>
 	
+	<update id="updateLecture">
+		update lecture set
+			lect_intro = #{lecture.lect_intro},
+			lect_update = now()
+		where
+			lect_num = #{lecture.lect_num}
+	</update>
+	
+	<select id="selectFile" resultType="LectureFileVO">
+		select * from lecture_file where lectFi_num = #{lectFi_num}
+	</select>
+	
 </mapper>
