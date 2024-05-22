@@ -20,6 +20,7 @@
 		<h3>결제한 강의 정보</h3>
 		<div>강의 제목: ${lecture.lect_name}</div>
 		<div>멘토 아이디:${lecture.lect_mentIf_me_id}</div>
+		<div>결제 금액:${lecture.lect_price}</div>
 	</div>
 </body>
 </html>
