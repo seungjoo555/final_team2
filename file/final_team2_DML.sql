@@ -501,7 +501,7 @@ INSERT INTO `mutual_review`(mure_content, mure_rate, mure_me_id, mure_target_id,
 INSERT INTO report(repo_repo_content,repo_repo_state, repo_me_id, repo_detail, repo_date, repo_table, repo_target) 
 		VALUES
 			/* 멘토링 신고 */
-			("욕설 및 혐오 발언", "대기중", "dongdong@final.com", "험한 말을 했습니다.", now(), "mentoring", "asdfg@final.com"),
+			("욕설 및 혐오 발언", "대기중", "dongdong@final.com", "험한 말을 했습니다.", now(), "mentoring", "1"),
         
         
 			/* 그룹 모집 공고 신고 */

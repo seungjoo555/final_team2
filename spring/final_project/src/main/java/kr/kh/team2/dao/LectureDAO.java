@@ -60,4 +60,6 @@ public interface LectureDAO {
 
 	LectureFileVO selectFile(@Param("lectFi_num") int tmp);
 
+	ArrayList<LectureVO> selectMyLecture(@Param("me_id") String me_id);
+
 }

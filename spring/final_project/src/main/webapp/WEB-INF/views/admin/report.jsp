@@ -22,9 +22,6 @@
 						<option value="recruit" <c:if test="${pm.cri.type == 'recruit'}">selected</c:if>>모집공고</option>
 						<option value="mentoring" <c:if test="${pm.cri.type == 'mentoring'}">selected</c:if>>멘토링</option>
 						<option value="lecture" <c:if test="${pm.cri.type == 'lecture'}">selected</c:if>>강의</option>
-						<option value="member" <c:if test="${pm.cri.type == 'member'}">selected</c:if>>유저</option>
-						<option value="post" <c:if test="${pm.cri.type == 'post'}">selected</c:if>>게시글</option>
-						<option value="comment" <c:if test="${pm.cri.type == 'comment'}">selected</c:if>>댓글</option>
 					</select> 
 				</div>
 				<div class="count-report">신고된 게시글 : ${pm.totalCount}개</div>

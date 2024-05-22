@@ -22,6 +22,7 @@ import kr.kh.team2.model.vo.member.MemberVO;
 import kr.kh.team2.pagination.Criteria;
 import kr.kh.team2.pagination.PageMaker;
 import kr.kh.team2.service.GroupService;
+import kr.kh.team2.service.LectureService;
 import kr.kh.team2.service.MemberService;
 import kr.kh.team2.service.MentorService;
 import kr.kh.team2.service.RecruitService;
@@ -53,6 +54,8 @@ public class AdminController {
 	GroupService groupService;
 	@Autowired
 	CommunityService communityService;
+	@Autowired
+	LectureService lectureService;
 	
 	@ResponseBody
 	@PostMapping("/admin/managementor/list")
@@ -218,13 +221,10 @@ public class AdminController {
 			link = "/team2/mypage/profile?me_id="+repo_target;
 		}else if(repo_table.equals("mentoring")) {		//멘토링
 			me_id = mentorService.getMentoring(Integer.parseInt(repo_target)).getMent_me_id();
-			link = "/team2/mentor/list"; //아...이거 주소 어카지...
+			link = "/team2/mentor/list"; 
 		}else if(repo_table.equals("lecture")) {		//강의
-			
-		}else if(repo_table.equals("post")) {		//게시글
-			
-		}else if(repo_table.equals("comment")) {		//댓글
-			
+			me_id = lectureService.getLecture(Integer.parseInt(repo_target)).getLect_mentIf_me_id();
+			link = "/team2/lecture/detail?page=1&type=all&search=&lectNum="+repo_target; 
 		}
 		//멤버 찾기
 		MemberVO member = memberService.getMember(me_id);

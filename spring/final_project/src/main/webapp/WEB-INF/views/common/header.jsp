@@ -65,6 +65,7 @@
 								<a href="<c:url value="/mypage/profile?me_id=${user.me_id}"/>">내 정보</a>
 								<a href="<c:url value="/mypage/mygroup?me_id=${user.me_id}"/>">그룹/프로젝트</a>
 								<a href="<c:url value="/mygroup/list"/>">나의 그룹</a>
+								<a href="<c:url value="/lecture/myList"/>">내가 구매한 강의</a>
 								<c:if test="${user.me_ma_auth.equals('관리자') == true}">
 									<a href="<c:url value="/admin/managemember"/>">멤버 관리</a>
 									<a href="<c:url value="/admin/managementor"/>">멘토 관리</a>
