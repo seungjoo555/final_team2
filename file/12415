@@ -43,3 +43,26 @@ VALUES
 (2, 'recruit', 21),
 (3, 'recruit', 22),
 (4, 'recruit', 23);
+
+INSERT INTO report (repo_repo_content, repo_repo_state, repo_me_id, repo_detail, repo_date, repo_table, repo_target)
+VALUES
+('욕설 및 혐오 발언', '대기중', 'asd20@naver.com', '기타 이유', NOW(), '', 4),
+('스팸 또는 광고', '대기중', 'asd19@naver.com', '부적절한 콘텐츠', NOW(), '', 5),
+('사용자간 분쟁', '대기중', 'asd18@naver.com', '분쟁 발생', NOW(), '', 6),
+('부정확한 정보', '대기중', 'asd17@naver.com', '정보 오류', NOW(), '', 7),
+('부적절한 콘텐츠', '대기중', 'asd16@naver.com', '부적절한 콘텐츠', NOW(), '', 8),
+('기타', '대기중', 'asd15@naver.com', '기타 이유', NOW(), '', 9),
+('가짜 계정 또는 사칭', '대기중', 'asd14@naver.com', '사칭 의심', NOW(), '', 10),
+('욕설 및 혐오 발언', '대기중', 'asd13@naver.com', '욕설 사용', NOW(), '', 11),
+('스팸 또는 광고', '대기중', 'asd12@naver.com', '스팸 메시지', NOW(), '', 12),
+('사용자간 분쟁', '대기중', 'asd11@naver.com', '분쟁 발생', NOW(), '', 13),
+('부정확한 정보', '대기중', 'asd10@naver.com', '정보 오류', NOW(), '', 14),
+('부적절한 콘텐츠', '대기중', 'asd9@naver.com', '부적절한 콘텐츠', NOW(), '', 15),
+('기타', '대기중', 'asd8@naver.com', '기타 이유', NOW(), '', 16),
+('가짜 계정 또는 사칭', '대기중', 'asd7@naver.com', '가짜 계정으로 의심', NOW(), '', 17),
+('욕설 및 혐오 발언', '대기중', 'asd6@naver.com', '욕설 사용', NOW(), '', 18),
+('스팸 또는 광고', '대기중', 'asd5@naver.com', '스팸 메시지', NOW(), '', 19),
+('사용자간 분쟁', '대기중', 'asd4@naver.com', '분쟁 발생', NOW(), '', 20),
+('부정확한 정보', '대기중', 'asd3@naver.com', '정보 오류', NOW(), '', 21),
+('부적절한 콘텐츠', '대기중', 'asd2@naver.com', '부적절한 콘텐츠', NOW(), '', 22),
+('기타', '대기중', 'asd1@naver.com', '기타 이유', NOW(), '', 23);
