@@ -765,6 +765,10 @@ public class GroupController {
 					  return "message";
 				  } else {
 					  boolean res = groupService.insertGroupApply(group, recruit.getRecu_num(), goapVo, user);
+					  if(res) {
+						  apply = true;
+						  break;
+					  }
 				  }
 			  }
 		  }
@@ -772,7 +776,7 @@ public class GroupController {
 	  
 	  if(apply) {
 		  model.addAttribute("msg", "지원서를 제출했습니다.");
-		  model.addAttribute("url", "/group/applydetail?num=" + num);
+		  model.addAttribute("url", "/group/apply/detail?num=" + num);
 	  } else {
 		  model.addAttribute("msg", "지원서를 제출하지 못했습니다.");
 		  model.addAttribute("url", "/group/apply?num=" + num ); 
@@ -822,7 +826,7 @@ public class GroupController {
 	  return "/group/applyupdate";
   }
   
-  @PostMapping("/group/applyupdate")
+  @PostMapping("/group/apply/update")
   public String groupApplyUpdatePost(Model model, HttpSession session, GroupApplyVO goapVo, Integer num) {
 	  MemberVO user = (MemberVO)session.getAttribute("user");
 	  
@@ -849,7 +853,7 @@ public class GroupController {
   
 	  if(updateapply) {
 	  	model.addAttribute("msg", "지원서를 수정했습니다.");
-	  	model.addAttribute("url", "/group/applydetail?num=" + num);
+	  	model.addAttribute("url", "/group/apply/detail?num=" + num);
 	  } else {
 		model.addAttribute("msg", "지원서를 수정하지 못했습니다.");
 		model.addAttribute("url", "/group/apply?num=" + num ); 

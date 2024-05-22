@@ -22,7 +22,7 @@
 		<a href="<c:url value="/group/detail?num=${recruit.recu_num}"/>" class="recruit-detail">공고 보기</a>
 	</div>
 	<hr>
-	<form action="<c:url value="/group/applyupdate"/>" method="post" class="group-apply-form">
+	<form action="<c:url value="/group/apply/update"/>" method="post" class="group-apply-form">
 		<input type="hidden" name="num" value="${recruit.recu_num}">
 		<div class="recruit-title">
 			<c:if test="${recruit.recu_type == 0}">

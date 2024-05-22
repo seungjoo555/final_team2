@@ -98,7 +98,7 @@ function displayApplicantList(list){
 				</td>
 				<td><div class="id">\${apply.goap_me_id}<div></td>
 				<td class="text-center content">
-					<c:url var = 'url2' value = '/group/applydetail'/>
+					<c:url var = 'url2' value = '/group/apply/detail'/>
 					<a href="${url2}?num=\${apply.goap_num}">\${apply.goap_content}</a>
 				</td class="content">
 			`;
