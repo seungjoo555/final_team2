@@ -51,13 +51,11 @@ public class MypageController {
 	public String groupListPost(Model model, String me_id) {
 		// 멤버 가져오기
 		MemberVO member = memberService.getMember(me_id);
-		System.out.println(member);
 		model.addAttribute("member", member);
 		
 		// 상호평가 리스트 가져오기
 		ArrayList<MutualReviewVO> mutualReviewList = reviewService.getMutualReviewList(me_id);
 		model.addAttribute("mutualReviewList", mutualReviewList);
-		System.out.println(mutualReviewList);
 		
 		// 내가 만든 스터디 리스트 가져오기
 		ArrayList<GroupVO> groupList = groupService.getStudyGroupList(me_id);
@@ -123,7 +121,6 @@ public class MypageController {
 		
 		for (MetoringVO mentoring : mentoringList) {
 		    int ment_num = mentoring.getMent_num();
-		    System.out.println("ment_num: " + ment_num);
 		    
 		    ArrayList<TotalCategoryVO> Category = mentorService.getMentoCategory(ment_num, table2);
 		    mentoCategory.addAll(Category);

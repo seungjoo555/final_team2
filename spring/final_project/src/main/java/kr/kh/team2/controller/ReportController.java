@@ -58,6 +58,7 @@ public class ReportController {
 		boolean res = reportService.insertReport(reportVO, user);
 		//페이지 이동하기
 		map.put("result", res);
+		map.put("reportVO", reportVO);
 		return map;
 	}
 	

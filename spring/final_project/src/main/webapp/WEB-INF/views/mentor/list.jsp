@@ -21,10 +21,10 @@
 	<div class="menu-bar">
 		<div class="mentor mentor-insert">
 			<c:if test="${user.me_ma_auth != '멘토'}">
-				<a class="btn-outline-success mentor-insert" href="<c:url value="/mentor/apply"/>">멘토 신청하기</a>
+				<a class="btn-outline-success btn-mentor-insert" href="<c:url value="/mentor/apply"/>">멘토 신청하기</a>
 			</c:if>
 			<c:if test="${user.me_ma_auth == '멘토'}">
-				<a class="btn-outline-success mentor-mentoring-insert" href="<c:url value="/mentor/mentoring/insert"/>">멘토링 열기</a>
+				<a class="btn-outline-success btn-mentor-mentoring-insert" href="<c:url value="/mentor/mentoring/insert"/>">멘토링 열기</a>
 			</c:if>
 		</div>
 		<form action="<c:url value='/mentor/list'/>" method="get" id="searchForm" onsubmit="return false;">
@@ -293,15 +293,16 @@ function displayMentoringDetail(mentoring, mentor, istrue, reco_ment_count) {
 	if(mentor.mentIf_me_id == $("[name=user-meId]").val()){
 		meStr += 
 			`
-			
+			<div class="btn-apply-box">
 			<button class="update-btn" >
-				<a class="btn-outline-success mentor-mentoring-update" 
+				<a class="mentor-mentoring-update" 
 				href="<c:url value="/mentor/mentoring/update?mentNum=\${mentoring.ment_num}"/>">수정</a>
 			</button>	
 			<button class="delete-btn">
-				<a class="btn-outline-success mentor-mentoring-delete" 
+				<a class="mentor-mentoring-delete" 
 					href="<c:url value="/mentor/mentoring/delete?mentNum=\${mentoring.ment_num}"/>">삭제</a>
 			</button>
+			</div>
 			`
 		
 	}else{
@@ -419,6 +420,18 @@ $(document).on('click', '.report-btn', function(){
 		}else{
 			return false;
 		}
+	}
+	
+	if(${user.me_verify ==0}){
+		alert("이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/signup/verify"/>';
+		return false;
+	}
+	
+	if(${user.me_temppw==1}){
+		alert("임시 비밀번호를 변경하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/login/changepwtemp"/>';
+		return false;
 	}
 	
 	//만약 신고내역이 이미 있다면
@@ -563,6 +576,19 @@ $(document).on('click', '.btn-apply', function(){
 			return false;
 		}
 	}
+	
+	if(${user.me_verify ==0}){
+		alert("이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/signup/verify"/>';
+		return false;
+	}
+	
+	if(${user.me_temppw==1}){
+		alert("임시 비밀번호를 변경하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/login/changepwtemp"/>';
+		return false;
+	}
+	
 	let ment_num = $('.btn-apply').val();
 	getMentoringApply(ment_num);
 })
@@ -613,7 +639,7 @@ function displayMentoringApply(mentoring){
 		      	<div class="apply-mentoring_footer">
 					<div class="btn-apply-box">
 						<button type="button" class="btn-apply-prev">이전으로</button> 
-						<button type="button" class="btn-apply-insert"class="btn-apply-insert">신청하기</button>
+						<button type="button" class="btn-apply-insert">신청하기</button>
 					</div>
 				</div>
 		   `
@@ -659,7 +685,7 @@ $(document).on('click', '.btn-apply-insert', function(){
 		dataType : "json", 
 		success : function (data){
 			if(data.result){
-				alert("멘토링을 신청했습니다.");
+				alert("멘토링을 신청했습니다.\n선정된 멘티는 개별적으로 연락됩니다.");
 				$("#modal").css('display','none');
 			   $("body").css('overflow','visible');
 				let cri = {
@@ -688,6 +714,18 @@ $(document).on('click', '.btn-up', function(){
 		}else{
 			return false;
 		}
+	}
+	
+	if(${user.me_verify ==0}){
+		alert("이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/signup/verify"/>';
+		return false;
+	}
+	
+	if(${user.me_temppw==1}){
+		alert("임시 비밀번호를 변경하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/login/changepwtemp"/>';
+		return false;
 	}
 	
 	let ment_num = $('.ment_num').val();

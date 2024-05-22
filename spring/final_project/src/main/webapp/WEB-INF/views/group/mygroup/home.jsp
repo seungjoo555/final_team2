@@ -437,7 +437,7 @@ function insertModalOpen(arg){
 	if(g_arg.event != undefined){
 		let tmp = new Date();
 		
-		$('.modal-title').text('\"' + g_arg.event.title + '\" 일정 수정')
+		$('.modal-title').text('\"' + g_arg.event.title + '\" 일정 조회')
 		
 		$('.insertModal .deleteBtn').css('display', 'inline');
 		$('.insertModal .memo').css('display', 'inline');

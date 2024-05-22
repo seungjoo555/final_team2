@@ -11,7 +11,7 @@
 	<h3 class="apply-title">멘토링 지원서</h3>
 	<div class="sub-box">
 		<h5 class="sub-title">1. 지원서를 확인해 주세요.</h5>
-		<a href="<c:url value="/mentor/detail?num=${mentoring.ment_num}"/>" class="mentoring-detail">공고 보기</a>
+		<a href="<c:url value="/mentoring/detail?num=${mentoring.ment_num}"/>" class="mentoring-detail">공고 보기</a>
 	</div>
 	<hr>
 	<input type="hidden" name="num" value="${mentoring.ment_num}">
@@ -25,7 +25,6 @@
 		<input type="text" class="mentoring-contact-item" id="mentAp_contact" name="mentAp_contact" value="${mentoringAp.mentAp_contact}" readonly>
 	</div>
 	<div class="form-row-content">
-	
 		<label class="apply-container">지원서 내용</label>
 		<textarea rows="10" class="form-control second-box" disabled>${mentoringAp.mentAp_content}</textarea>
 	</div>

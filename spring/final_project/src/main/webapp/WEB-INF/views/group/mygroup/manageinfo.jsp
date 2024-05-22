@@ -110,8 +110,8 @@ $(".change-group-name-btn").click(function(){
 		return;
 	}
 	
-	if( $("[name=group-name]").val().length > 20){
-		alert('그룹 이름은 최대 20글자만 작성할 수 있습니다.')
+	if( $("[name=group-name]").val().length > 30){
+		alert('그룹 이름은 최대 30글자만 작성할 수 있습니다.')
 		return;
 	}
 	

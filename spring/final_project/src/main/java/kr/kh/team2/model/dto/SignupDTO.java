@@ -11,6 +11,7 @@ public class SignupDTO {
 	private String nickname;
 	private String name;
 	private String phone;
+	private int postcode;
 	private String add1;
 	private String add2;
 }

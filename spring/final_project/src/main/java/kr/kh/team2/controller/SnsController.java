@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,7 +25,6 @@ public class SnsController {
 	@ResponseBody
 	@PostMapping("/sns/{sns}/check/id")
 	public int snsCheckId(@PathVariable("sns")String sns, @RequestParam("email")String email) {
-		System.out.println(email);
 		
 		int res = memberService.idCheckSns(email,sns);
 		
@@ -42,12 +42,19 @@ public class SnsController {
 	@ResponseBody
 	@PostMapping("/sns/{sns}/signup")
 	public boolean snsSignup(@PathVariable("sns")String sns, 
-			@RequestParam("name")String name,@RequestParam("email")String email, @RequestParam("nickname")String nickname,
-			@RequestParam("phone")String phone, @RequestParam("address")String address) {
+			@RequestBody SnsSignupDTO ssd,HttpSession session) {
 			
-		SnsSignupDTO ssd = new SnsSignupDTO(sns,email,"",name,phone,nickname,address);
+		ssd.setMe_pw("");
 		
-		return memberService.signupSns(ssd);
+		boolean res = memberService.signupSns(ssd);
+		
+		if(res) {
+			MemberVO user = memberService.getMember(ssd.getEmail());
+			session.setAttribute("user", user);
+		}
+		
+		
+		return res;
 	}
 	
 	@ResponseBody

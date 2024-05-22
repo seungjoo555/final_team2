@@ -93,6 +93,10 @@
 			<mapping path="/group/applyupdate"/>
 			<mapping path="/mentor/mentoring/insert"/>
 			<mapping path="/mypage/mygroup"/>
+			<mapping path="/mypage/profile"/>
+			<mapping path="/mygroup/list"/>
+			<mapping path="/lecture/insert"/>
+			<mapping path="/lecture/update"/>
 			<beans:ref bean="memberInterceptor"/>
 		</interceptor>	
 		<interceptor>

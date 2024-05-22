@@ -20,10 +20,10 @@
 		<img alt="배너" src="<c:url value="/resources/img/banner.svg"/>">
 	</div>
 	<div class="box-group-hot">
-		<h2>HOT 스터디/프로젝트</h2>
+		<h3>HOT 스터디/프로젝트</h3>
 		<div class="box-group-list">
 			<ul class="group-list">
-				<c:if test="${hotGroupList == null }">
+				<c:if test="${hotGroupList.isEmpty()}">
 					<h3>등록된 스터디/프로젝트가 없습니다.</h3>
 				</c:if>
 				<c:forEach items="${hotGroupList}" var="group">
@@ -93,10 +93,10 @@
 	</div>
 	
 	<div class="box-group-hot">
-		<h2>추천 멘토</h2>
+		<h3>추천 멘토</h3>
 		<div class="box-mento-list">
 			<ul class="mento-list">
-				<c:if test="${hotMentoingList == null }">
+				<c:if test="${hotMentoingList.isEmpty()}">
 					<h3>등록된 멘토링 모집글이 없습니다.</h3>
 				</c:if>
 				<c:forEach items="${hotMentoingList }" var="mentoing">
@@ -137,7 +137,7 @@
 	</div>
 
 	<div class="box-group-hot">
-		<h2>인기 강의</h2>
+		<h3>인기 강의</h3>
 		<table class="table table-hover">
 			<thead>
 				<tr>
@@ -149,7 +149,7 @@
 				</tr>
 			</thead>
 			<tbody>
-			<c:if test="${hotLectureList == null }">
+			<c:if test="${hotLectureList.isEmpty()}">
 				<h3>등록된 강의가 없습니다.</h3>
 			</c:if>
 		<c:forEach items="${hotLectureList}" var="lecture">
@@ -655,7 +655,7 @@ $(document).on('click', '.btn-apply-insert', function(){
 		dataType : "json", 
 		success : function (data){
 			if(data.result){
-				alert("멘토링을 신청했습니다.");
+				alert("멘토링을 신청했습니다.\n선정된 멘티는 개별적으로 연락됩니다.");
 				$("#modal").css('display','none');
 			   $("body").css('overflow','visible');
 				let cri = {

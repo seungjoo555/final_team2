@@ -7,6 +7,71 @@
 	<link rel="stylesheet" href="<c:url value="/resources/css/lecture.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/report.css"/>">
 	<link rel="stylesheet" href="<c:url value="/resources/css/report.css"/>">
+	<script src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+	<script>
+        var IMP = window.IMP; 
+        IMP.init("imp07347810");
+        
+        function requestPay() {
+        	if(${user == null}){
+        		if(confirm("로그인이 필요한 서비스입니다.\n로그인 하시겠습니까?") == true){
+        			location.href = '<c:url value="/login"/>';
+        			return;
+        		}else{
+        			return false;
+        		}
+        	}
+            IMP.request_pay({
+                pg: "kakaopay",
+                pay_method: "card",
+                merchant_uid: "${user.me_id}"+"lecture"+"${lecture.lect_num}",   // 주문번호
+                name: "${lecture.lect_name}",
+                amount: ${lecture.lect_price},                         // 숫자 타입
+                buyer_email: "${user.me_id}",
+                buyer_name: "${user.me_name}",
+                buyer_tel: "${user.me_phone}"
+            }, function (response) { // callback
+            	if(response.imp_uid == null){
+            		alert("이미 구매한 강의입니다.");
+            		return;
+            	}
+            	let ornum = {
+            		imp_uid : response.imp_uid
+            	}
+            	$.ajax({
+                    type : "POST",
+                    url : '<c:url value="/verify"/>',
+                    data: ornum
+                }).done(function(data) {
+                    if(response.paid_amount == data.response.amount){
+                        //결제 성공 시 비즈니스 로직
+                    	$.ajax({
+            				type: "post",
+            				url: '<c:url value="/lecture/detail"/>',
+            				data: {
+            					lectRg_lect_num : ${lecture.lect_num},
+            					lectRg_me_id : data.response.buyerEmail,
+            					lectRg_money : data.response.amount,
+            					lectRg_state : 1,
+            				},
+            				success : function (data){
+            					if(data.result){
+            						location.href='<c:url value="/lecture/register"/>';
+            					}else{
+            						alert('데이터베이스에 안들어감');
+            					}
+            				}, 
+            				error : function(jqXHR, textStatus, errorThrown){
+            					console.log(textStatus);
+            				}
+            			});
+                    } else {
+                        alert("결제 실패");
+                    }
+                });
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -76,7 +141,9 @@
 	</c:choose>
 	<del class="cd-price__reg-price"><!-- 원 가격 --></del>
 </div>
-<a class="btn btn-success col-12" href="<c:url value="#"/>">신청하기</a>
+<c:if test="${lecture.lect_price != 0 && user.me_id != lecture.lect_mentIf_me_id}">
+	<button class="btn btn-success col-12" onclick="requestPay()">신청하기</button>
+</c:if>
 <div class="second-container">
 	<h4>강의 소개</h4>
 	<hr>
@@ -88,17 +155,31 @@
 </div>
 <div>
 	<c:choose>
-		<c:when test="${fileList.size() != 0}">
-			<label>첨부파일</label>
+		<c:when test="${fileList.size() != 0 && payment.lectRg_state == true}">
+			<h1>강의파일</h1>
 			<c:forEach items="${fileList}" var="file">
 				<a href="<c:url value="/download/${file.lectFi_path}"/>"
 					class="form-control" download="${file.lectFi_ori_name}">${file.lectFi_ori_name}</a>
 			</c:forEach>
 		</c:when>
+		<c:when test="${lecture.lect_price == 0}">
+			<h1>강의파일</h1>
+			<c:forEach items="${fileList}" var="file">
+				<a href="<c:url value="/download/${file.lectFi_path}"/>"
+					class="form-control" download="${file.lectFi_ori_name}">${file.lectFi_ori_name}</a>
+			</c:forEach>
+		</c:when>
+		<c:when test="${fileList.size() == 0}">
+			<h1>강의파일이 아직 없습니다.</h1>
+		</c:when>
 		<c:otherwise>
-			<div>첨부파일 없음</div>
+			<h1>강의 파일</h1>
+			<div>강의파일은 구매후 보입니다.</div>
 		</c:otherwise>
 	</c:choose>
+	<c:if test="${user.me_id == lecture.lect_mentIf_me_id}">
+		<a href="<c:url value="/lecture/update?lect_num=${lecture.lect_num}"/>" class="btn btn-outline-warning">수정</a>
+	</c:if>
 </div>
 
 
@@ -148,6 +229,18 @@ $(document).on('click', '.report-btn', function(){
 		}else{
 			return false;
 		}
+	}
+	
+	if(${user.me_verify ==0}){
+		alert("이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/signup/verify"/>';
+		return false;
+	}
+	
+	if(${user.me_temppw==1}){
+		alert("임시 비밀번호를 변경하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/login/changepwtemp"/>';
+		return false;
 	}
 	
 	//만약 신고내역이 이미 있다면

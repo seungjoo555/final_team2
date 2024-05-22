@@ -1,13 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<style>
+/* 페이지네이션 */
+.page-item.active .page-link{
+	background-color: #8fa78f;
+    border-color: #8fa78f;
+	
+}
+.page-link {
+  color: #8fa78f;
+  }
+
+</style>
+
 <h1>강의 리스트</h1>
 
 <form action="<c:url value="/lecture/list"/>" method="get">
 	<div class="input-group mb-3">
 		<input type="hidden" name="type" value="all">
 		<input type="text" name="search" class="form-control" placeholder="전체검색창" value="${pm.cri.search}">
-		<button class="btn btn-outline-success">검색</button>
+		<button class="btn btn-outline-success search-btn">검색</button>
 	</div>
 </form>
 
@@ -38,7 +52,7 @@
 						<c:param name="type" value="writer"/>
 						<c:param name="search" value="${lecture.lect_mentIf_me_id}"/>
 					</c:url>
-					<a href="${url}">${lecture.lect_mentIf_me_id}</a>
+					<a href="${url}">${lecture.lect_me_nickname}</a>
 				</td>
 				<td>${lecture.lect_price}</td>
 				<td>${lecture.lect_posting}</td>
@@ -82,5 +96,5 @@
 </ul>
 
 <c:if test="${user.me_ma_auth == '멘토'}">
-	<a class="btn btn-outline-success" href="<c:url value="/lecture/insert"/>">강의 등록하기</a>
+	<a class="btn btn-outline-success lecture-insert-btn" href="<c:url value="/lecture/insert"/>">강의 등록하기</a>
 </c:if>

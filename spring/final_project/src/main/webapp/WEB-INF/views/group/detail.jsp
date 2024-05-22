@@ -18,7 +18,9 @@
 		</a>
 		<div class="recruit_topic">${recruit.recu_topic}(${recruit.recu_state == 1 ? "모집중":"모집 완료"})</div>
 		<div class="recruit_userAndDate">
-			<img class="basic-profile" value="${groupKing_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+			<a href="<c:url value="/mypage/profile?me_id=${groupKing_me_id}"/>">
+				<img class="basic-profile" value="${groupKing_me_id}"  style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
+			</a>
 			<a href="<c:url value="/mypage/profile?me_id=${groupKing_me_id}"/>" class="recruit_user">${groupKing}</a>
 			<div class="btn-box">
 				<!-- 본인 글일 경우 신고기능 비활성화 -->
@@ -114,7 +116,7 @@
 		<hr>
 		<section>
 			<div class="form-row content">
-				<textarea rows="15" class="form-control second-box" id="recu_content">${recruit.recu_content}</textarea>
+				<div style="min-height: 400px; border: 1px solid #f2f2f2" class="second-box" id="recu_content">${recruit.recu_content}</div>
 			</div>
 		</section>
 	</div>
@@ -172,6 +174,18 @@ $(document).on('click', '.report-btn', function(){
 		}
 	}
 	
+	if(${user.me_verify ==0}){
+		alert("이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/signup/verify"/>';
+		return false;
+	}
+	
+	if(${user.me_temppw==1}){
+		alert("임시 비밀번호를 변경하셔야 사이트 이용이 정상적으로 가능합니다.");
+		location.href = '<c:url value="/login/changepwtemp"/>';
+		return false;
+	}
+	
 	//만약 신고내역이 이미 있다면
 	if($(".report-isture").val() =='false'){
 		alert("이미 신고한 게시글입니다.");
@@ -193,7 +207,6 @@ $(document).on('click', '.btn-report-insert', function(){
 		repo_table : "recruit",
 		repo_target : ${recruit.recu_num}
 	}
-	console.log(ReportVO);
 	//null 체크
 	if(ReportVO.repo_repo_content.length == 0 || ReportVO.repo_detail.length == 0){
 		alert("신고 사유를 입력하세요.");
@@ -215,7 +228,7 @@ $(document).on('click', '.btn-report-insert', function(){
 				alert("해당 모집글을 신고했습니다.");
 			    $(".report-modal").css('display','none');
 			   	$("body").css('overflow','visible');
-			   	location.href = '<c:url value="/group/detail"/>';			
+			   	let num = data.reportVO.repo_target;
 			}else{
 				alert("모집글을 신고하지 못했습니다.");
 			}
@@ -245,6 +258,18 @@ $(document).on('click', '#dimmed-report', function(){
 			}else{
 				return false;
 			}
+		}
+		
+		if(${user.me_verify ==0}){
+			alert("이메일 인증을 완료하셔야 사이트 이용이 정상적으로 가능합니다.");
+			location.href = '<c:url value="/signup/verify"/>';
+			return false;
+		}
+		
+		if(${user.me_temppw==1}){
+			alert("임시 비밀번호를 변경하셔야 사이트 이용이 정상적으로 가능합니다.");
+			location.href = '<c:url value="/login/changepwtemp"/>';
+			return false;
 		}
 		
 		let recu_num = $(".reco_recu_num").val();

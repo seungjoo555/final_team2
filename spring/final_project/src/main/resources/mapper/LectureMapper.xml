@@ -7,9 +7,11 @@
 	<!-- 강의 전체검색, 작성자 눌렀을떄 불러오기 -->
 	<select id="selectAllLectureList" resultType="LectureVO">
 		SELECT 
-		    *
+		    lecture.*, member.me_nickname as lect_me_nickname 
 		FROM
 		    lecture
+		    	join
+		    member on lect_mentIf_me_id = me_id
 		where
 			<choose>
 				<when test='cri.type == "all"'>
@@ -29,7 +31,13 @@
 	
 	<!-- 헤더에 강의 눌렀을 때 리스트 불러오기 -->
 	<select id="selectLectureList" resultType="LectureVO">
-		select * from lecture where
+		select
+			lecture.*, member.me_nickname as lect_me_nickname
+		from
+			lecture
+				join
+		    member on lect_mentIf_me_id = me_id
+		where
 			<if test='search.searchType == "cate"'>
 				lect_num in
 				(select toCt_table_pk from total_category where toCt_progCt_num = #{search.progCt_num} and toCt_table_name = 'lecture')
@@ -155,5 +163,26 @@
 	<delete id="deleteFile">
 		delete from lecture_file where lectFi_num = #{fi_num}
 	</delete>
+	
+	<insert id="insertLectureRegister">
+		insert into lecture_register(lectRg_lect_num, lectRg_me_id, lectRg_money, lectRg_state)
+		values(#{lectRg.lectRg_lect_num}, #{lectRg.lectRg_me_id}, #{lectRg.lectRg_money}, #{lectRg.lectRg_state})
+	</insert>
+	
+	<select id="selectLecturePayment" resultType="LectureRegisterVO">
+		select * from lecture_register where lectRg_lect_num = #{lect_num} and lectRg_me_id = #{me_id}
+	</select>
+	
+	<update id="updateLecture">
+		update lecture set
+			lect_intro = #{lecture.lect_intro},
+			lect_update = now()
+		where
+			lect_num = #{lecture.lect_num}
+	</update>
+	
+	<select id="selectFile" resultType="LectureFileVO">
+		select * from lecture_file where lectFi_num = #{lectFi_num}
+	</select>
 	
 </mapper>

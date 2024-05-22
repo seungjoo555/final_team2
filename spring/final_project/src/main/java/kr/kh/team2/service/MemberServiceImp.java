@@ -92,8 +92,19 @@ public class MemberServiceImp implements MemberService {
 		
 		MemberVO user = memberDao.findMemberById(loginDTO.getId());
 		
-		if(user == null ||
-		   !passwordEncoder.matches(loginDTO.getPw(), user.getMe_pw())){
+		if(user == null) {
+			return null;
+		}
+		int failCount = user.getMe_failcount();
+		if(!passwordEncoder.matches(loginDTO.getPw(), user.getMe_pw())){
+			if(user.getMe_type().equals("일반")) {
+				if(failCount<=4) {
+					user.setMe_failcount(++failCount);
+					memberDao.updateMemberFailCount(user);
+				}else {
+					memberDao.updateMemberState(user.getMe_id(),"임시정지");
+				}
+			}
 			return null;
 		}
 		
@@ -105,7 +116,6 @@ public class MemberServiceImp implements MemberService {
 		if(me_id == null) {
 			return null;
 		}
-		System.out.println(memberDao.selectMember(me_id));
 		return memberDao.selectMember(me_id);
 	}
 
@@ -114,23 +124,19 @@ public class MemberServiceImp implements MemberService {
 		if(me_id == null) {
 			return false;
 		}
-		System.out.println(memberDao.updateProfile(me_id, member));
 		return memberDao.updateProfile(me_id, member);
 	}
 
 	@Override
-	public String findId(String me_name, String me_phone) {
+	public MemberVO findId(String me_name, String me_phone) {
 		if(!methods.checkString(me_phone)||!methods.checkString(me_name)) {
 			return null;
 		}
 		
-		String dbMemberId = memberDao.idFind(me_name,me_phone);
+		MemberVO dbMember = memberDao.idFind(me_name,me_phone);
 		
-		if(!methods.checkString(dbMemberId)) {
-			return null;
-		}
 		
-		return dbMemberId;
+		return dbMember;
 		
 		
 	}
@@ -271,6 +277,11 @@ public class MemberServiceImp implements MemberService {
 			dbMember.setMe_pw(passwordEncoder.encode(dbVerify.getMv_code()));
 			boolean res = memberDao.updateMemberPwToTemp(dbMember);
 			if(res) {
+				if(dbMember.getMe_ms_state().equals("임시정지")) {
+					dbMember.setMe_failcount(0);
+					memberDao.updateMemberFailCount(dbMember);
+					memberDao.updateMemberState(dbMember.getMe_id(), "이용중");
+				}
 				return true;
 			}
 		}
@@ -405,6 +416,15 @@ public class MemberServiceImp implements MemberService {
 	@Override
 	public boolean signupSns(SnsSignupDTO ssd) {
 		
+		if(!methods.checkString(ssd.getEmail())||!methods.checkString(ssd.getAddress())||
+				!methods.checkString(ssd.getName())||!methods.checkString(ssd.getNickname())||
+				!methods.checkString(ssd.getSns())||!methods.checkString(ssd.getPhone())||
+				ssd.getAddress().length()>100) {
+			
+			return false;
+			
+		}
+		
 		return memberDao.insertMemberSns(ssd);
 	}
 
@@ -439,5 +459,13 @@ public class MemberServiceImp implements MemberService {
 		
 		return memberDao.updateMemberDetail(me_id, signupDetailDto);
 	}
+
+	@Override
+	public void updateMemberFailCount(MemberVO user) {
+		memberDao.updateMemberFailCount(user);
+		
+	}
+
+
 	
 }

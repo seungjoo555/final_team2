@@ -30,7 +30,7 @@
 				<div class="count-report">신고된 게시글 : ${pm.totalCount}개</div>
 				<div class="check-view-box">
 					<input name="search" value="대기중" type="checkbox" id="check-view" <c:if test="${pm.cri.search == '대기중'}">checked</c:if> >
-					<label for="check-view" > <span>미처리 된 신고 항목만 보기</span></label>
+					<label for="check-view" class="check-label"> <span>미처리 된 신고 항목만 보기</span></label>
 				</div>
 			</div>
 		</form>
