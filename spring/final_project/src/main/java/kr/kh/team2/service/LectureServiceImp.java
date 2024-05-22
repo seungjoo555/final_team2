@@ -72,11 +72,11 @@ public class LectureServiceImp implements LectureService{
 	}
 	
 	@Override
-	public ArrayList<LectureVO> getAllLectureList(Criteria cri) {
+	public ArrayList<LectureVO> getAllLectureList(Criteria cri, SearchMenuVO search) {
 		if(cri == null) {
 			cri = new Criteria(1,5);
 		}
-		return lectureDao.selectAllLectureList(cri);
+		return lectureDao.selectAllLectureList(cri, search);
 	}
 
 	@Override
