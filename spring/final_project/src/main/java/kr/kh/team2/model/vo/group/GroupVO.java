@@ -18,5 +18,6 @@ public class GroupVO {
     private String recu_gome_me_nickname; //리더 닉네임
     private int recu_num;	//공고 번호
     private String leader; // 그룹 리더의 아이디
+    private int gome_go_num; // 그룹지원자 그룹 번호
     
 }

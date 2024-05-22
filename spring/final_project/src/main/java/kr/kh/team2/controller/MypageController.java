@@ -92,12 +92,12 @@ public class MypageController {
 		for(GroupVO group : groupApplyList) {
 			int recu_num = group.getRecu_num();
 			
-			MemberVO groupKing = groupService.getGroupKing(recu_num);
-			model.addAttribute("groupKing", groupKing.getMe_nickname());
+			MemberVO groupKing = groupService.getGroupKing(group.getGo_num());
+			group.setRecu_gome_me_nickname(groupKing.getMe_nickname());
 			
 			ArrayList<TotalCategoryVO> Category = groupService.getCategory(recu_num, table1);
 			ArrayList<TotalLanguageVO> Language = groupService.getLanguage(recu_num, table1);
-
+			
 			totalCategory2.addAll(Category);
 			totalLanguage2.addAll(Language);			
 		}

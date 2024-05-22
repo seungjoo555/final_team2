@@ -144,7 +144,7 @@
 												</div>
 												<div class="apply-list-item-memberInfo">
 													<img class="basic-profile" style="width: 30px; height: 30px;" src="<c:url value="/resources/img/basic_profile.png"/>">
-													<div class="member-nickname">${groupKing}</div>
+													<div class="member-nickname">${applylist.recu_gome_me_nickname}</div>
 													<div class="member-count">${applylist.go_member_count} / ${applylist.recu_count}</div>
 												</div>
 											</li>
