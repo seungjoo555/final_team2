@@ -54,3 +54,33 @@ td{text-align: center;}
 	background-color: white; border: 1px solid #808080; 
 	border-radius: 5px; padding: 2px 5px; 
 }
+
+/* 일괄 정보 처리 화면 */
+.h1-member-process{
+	font-size: 1.3rem;
+}
+.state-select-box{
+	display: flex;
+	justify-content: space-evenly;	
+	align-items: center;
+}
+.label {
+	font-weight: bold;
+	display: flex; justify-content: space-evenly;
+}
+.cut{margin-left: 20px;}
+.box-btn-admin-member-process{
+	display: flex; justify-content: flex-end;
+	margin-top: 15px;
+}
+
+.btn-admin-member-process{
+	background-color: white;
+    border: 1px solid #808080;
+    border-radius: 5px;
+    padding: 2px 5px;
+}
+
+.h1-member-process{
+margin-bottom: 15px;
+}

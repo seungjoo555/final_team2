@@ -151,8 +151,12 @@
       <div id="dimmed" class="dimmed admin-member-process-dimmed"></div>
       <div class="admin-member-process-container">
       	<div class="admin-report-process-box">
-	  	<div> <h1>멤버 정보 변경</h1> </div>
+	  	<div> <h1 class="h1-member-process">멤버 정보 변경</h1> </div>
 	  	<input type="hidden" id="td-list" value="\${tdList}">
+	  	<div class="label">
+	  		<label>권한</label>
+	  		<label class="cut">상태</label>
+	  	</div>
 	  	<div class="state-select-box">
 			<select id="select-auth-all">
 				<c:forEach items="${authList}" var="ma_auth">
@@ -160,7 +164,7 @@
 				</c:forEach>
 			</select>
 
-			<select  id="select-state-all">
+			<select  id="select-state-all cut">
 				<c:forEach items="${stateList}" var="ms_state">
 					<option class="ms_state" value="${ms_state}" >${ms_state}</option>
 				</c:forEach>

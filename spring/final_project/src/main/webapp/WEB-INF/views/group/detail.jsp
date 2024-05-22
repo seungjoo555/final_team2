@@ -205,7 +205,6 @@ $(document).on('click', '.btn-report-insert', function(){
 		repo_table : "recruit",
 		repo_target : ${recruit.recu_num}
 	}
-	console.log(ReportVO);
 	//null 체크
 	if(ReportVO.repo_repo_content.length == 0 || ReportVO.repo_detail.length == 0){
 		alert("신고 사유를 입력하세요.");
@@ -227,7 +226,7 @@ $(document).on('click', '.btn-report-insert', function(){
 				alert("해당 모집글을 신고했습니다.");
 			    $(".report-modal").css('display','none');
 			   	$("body").css('overflow','visible');
-			   	location.href = '<c:url value="/group/detail"/>';			
+			   	let num = data.reportVO.repo_target;
 			}else{
 				alert("모집글을 신고하지 못했습니다.");
 			}
