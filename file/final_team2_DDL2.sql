@@ -64,6 +64,7 @@ CREATE TABLE `mentor_info` (
 	`mentIf_portfolio`	text	NULL,
 	`mentIf_intro`	text	NULL,
 	`mentIf_account`	varchar(20)	NOT NULL,
+	`mentIf_bank`	varchar(20)	NOT NULL,
 	`mentIf_date`	date	NOT NULL,
 	`mentIf_state`	int default 0	NOT NULL,
 	`mentIf_ment_job`	varchar(50)	NOT NULL
