@@ -56,7 +56,7 @@
             				},
             				success : function (data){
             					if(data.result){
-            						location.href='<c:url value="/lecture/register"/>';
+            						location.href='<c:url value="/lecture/register/?lect_num=${lecture.lect_num}"/>';
             					}else{
             						alert('데이터베이스에 안들어감');
             					}
@@ -174,7 +174,7 @@
 		</c:when>
 		<c:otherwise>
 			<h1>강의 파일</h1>
-			<div>강의파일은 구매후 보입니다.</div>
+			<div>강의파일은 구매 후 보입니다.</div>
 		</c:otherwise>
 	</c:choose>
 	<c:if test="${user.me_id == lecture.lect_mentIf_me_id}">

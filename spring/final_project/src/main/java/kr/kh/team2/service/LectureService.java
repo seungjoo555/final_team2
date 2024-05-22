@@ -51,4 +51,6 @@ public interface LectureService {
 
 	boolean updateLecture(LectureVO lecture, MemberVO user, MultipartFile[] file, int[] delNums);
 
+	ArrayList<LectureVO> getMyLecture(MemberVO user);
+
 }

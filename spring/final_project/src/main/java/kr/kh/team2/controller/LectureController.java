@@ -91,6 +91,17 @@ public class LectureController {
 		return "/lecture/list";
 	}
 	
+	@GetMapping("/lecture/myList")
+	public String lectureMyList(Model model, HttpSession session) {
+		MemberVO user = (MemberVO)session.getAttribute("user");
+		ArrayList<LectureVO> list = lectureService.getMyLecture(user);
+		model.addAttribute("list", list);
+		model.addAttribute("title", "내가 구매한 강의모음");
+		return "/lecture/myList";
+	}
+	
+	
+	
 	//강의 동록 화면 띄우기
 	@GetMapping("/lecture/insert")
 	public String lectureInsert(Model model) {
@@ -192,8 +203,12 @@ public class LectureController {
 	}
 	
 	@GetMapping("/lecture/register")
-	public String lecturePayment(Model model) {
+	public String lecturePayment(Model model, int lect_num, HttpSession session) {
+		MemberVO user = (MemberVO) session.getAttribute("user");
+		LectureVO lecture = lectureService.getLecture(lect_num);
 		model.addAttribute("title", "강의 구매 완료");
+		model.addAttribute("user", user);
+		model.addAttribute("lecture", lecture);
 		return "/lecture/register";
 	}
 	
