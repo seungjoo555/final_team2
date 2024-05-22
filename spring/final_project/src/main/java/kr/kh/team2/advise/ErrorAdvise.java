@@ -13,17 +13,19 @@ public class ErrorAdvise {
 	public String handleException(Exception e, Model model) {
 		
 		//model은 화면에 넘겨줄 정보가 있는 경우에 사용
+		e.printStackTrace();
 		return "/error/500";
 	}
 	@ExceptionHandler(NoHandlerFoundException.class)
 	public String handleNoHandlerFoundException(NoHandlerFoundException e, Model model) {
 		
 		//model은 화면에 넘겨줄 정보가 있는 경우에 사용
+		e.printStackTrace();
 		return "/error/404";
 	}
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	public String handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e, Model model) {
-		
+		e.printStackTrace();
 		return "/error/404";
 	}
 }
