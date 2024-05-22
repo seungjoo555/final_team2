@@ -104,10 +104,6 @@ public class ReportServiceImp implements ReportService{
 			target = "강의 제목";
 		}else if(reportSimpleDTO.getRepo_table().equals("member")) {
 			target =reportSimpleDTO.getRepo_target();
-		}else if(reportSimpleDTO.getRepo_table().equals("post")) {
-			target = "게시글 제목";
-		}else if(reportSimpleDTO.getRepo_table().equals("comment")) {
-			target = "댓글 내용";
 		}
     	else {target = reportSimpleDTO.getRepo_table();}
 		
