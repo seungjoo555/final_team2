@@ -84,7 +84,7 @@
 						id="lect_intro" name="lect_intro"></textarea>
 				</div>
 				<div class="form-group">
-				    <input type="file" class="form-control" name="file" id="fileInput" accept="video/*" multiple>
+				    <input type="file" class="form-control" name="file" id="fileInput" multiple>
 				</div>
 				<div id="fileList"></div>
 				<div class="button-area">
